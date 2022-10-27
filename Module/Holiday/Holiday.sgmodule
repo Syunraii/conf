@@ -6,4 +6,4 @@
 Timecard = script-name=Timecard,update-interval=3600
 
 [Script]
-Timecard = type=generic,timeout=10,script-path=syunraii/Holiday.js
+Timecard = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/Syunraii/vpnconf/master/Module/Holiday/Holiday.js
