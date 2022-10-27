@@ -1,0 +1,9 @@
+#!name=Surge Act Time
+#!desc=Show Surge Act time
+#!system=ios
+
+[Panel]
+SurgePro_ReloadProfile = script-name=SurgePro_ReloadProfile,update-interval=1
+
+[Script]
+SurgePro_ReloadProfile = type=generic,timeout=10,script-path= syunraii/SurgeActTime.js ,argument=icon=paperplane.circle&color=#f6c970
