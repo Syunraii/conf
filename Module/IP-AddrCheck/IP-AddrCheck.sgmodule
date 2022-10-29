@@ -1,9 +1,0 @@
-#!name=IP-AddrCheck
-#!desc=Check IP Address
-#!system=ios
-
-[Panel]
-IP-AddrCheck = script-name=IP-AddrCheck, title="节点详情", content="请刷新", style=info, update-interval=1
-
-[Script]
-IP-AddrCheck = type=generic,timeout=3,script-path=https://raw.githubusercontent.com/Syunraii/vpnconf/master/Module/IP-AddrCheck/IP-AddrCheck.js

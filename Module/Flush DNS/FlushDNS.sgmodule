@@ -1,0 +1,9 @@
+#!name=Flush DNS
+#!desc=Clear Surge DNS Cache 
+#!system=ios
+
+[Panel]
+FlushDNS = script-name = FlushDNS, update-interval=3600
+
+[Script]
+FlushDNS = type= generic, timeout=10, script-path= FlushDNS.js, argument=title=DNS FLush&icon=cube&color=#afe59a&server=false

@@ -1,0 +1,9 @@
+#!name=IP Address Check
+#!desc=Check IP Address
+#!system=ios
+
+[Panel]
+IPAddrCheck = script-name = IPAddrCheck, title="节点详情", content="请刷新", style=info, update-interval=1
+
+[Script]
+IPAddrCheck = type = generic,timeout=10,script-path=IPAddrCheck.js
