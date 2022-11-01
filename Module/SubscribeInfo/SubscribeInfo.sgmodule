@@ -13,4 +13,4 @@
 SubscribeInfo = script-name=SubscribeInfo,update-interval=3600
 
 [Script]
-SubscribeInfo = type=generic,timeout=10,script-path=SubscribeInfo.js,script-update-interval=0,argument=url=https%3A%2F%2Fcdn.xmrth.one%2Flink%2FdVbAJnsiiNpaWPeQ%3Flist%3Dshadowrocket&reset_day=25&expire=2022-11-25&title=XMRth&icon=externaldrive.fill.badge.icloud=#007aff
+SubscribeInfo = type=generic,timeout=10,script-path=SubscribeInfo.js,script-update-interval=0,argument=url=[sub-link]&reset_day=xx&expire=xxxx-xx-xx&title=xxxx&icon=externaldrive.fill.badge.icloud=#007aff
