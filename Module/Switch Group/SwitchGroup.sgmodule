@@ -6,4 +6,4 @@
 SwitchGroup = script-name=SwitchGroup,update-interval=1
 
 [Script]
-SwitchGroup = type=generic,timeout=10,script-path=SwitchGroup.js,argument=icon=network&color=#86abee&group=✈️ 节点选择
+SwitchGroup = type=generic,timeout=10,script-path=SwitchGroup.js,argument=icon=network&color=#86abee&group=🌐 GLOBAL
