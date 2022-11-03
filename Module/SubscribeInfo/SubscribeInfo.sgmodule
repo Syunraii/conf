@@ -10,7 +10,10 @@
 # 可选参数"color=xxx" 当使用 icon 字段时，可传入 color 字段控制图标颜色，字段内容为颜色的 HEX 编码。如：color=#007aff
 
 [Panel]
-SubscribeInfo = script-name=SubscribeInfo,update-interval=3600
+AirPlane1 = script-name=SubscribeInfo1,update-interval=1800
+AirPlane2 = script-name=SubscribeInfo2,update-interval=1800
 
 [Script]
-SubscribeInfo = type=generic,timeout=10,script-path=SubscribeInfo.js,script-update-interval=0,argument=url=[sub-link]&reset_day=xx&expire=xxxx-xx-xx&title=xxxx&icon=externaldrive.fill.badge.icloud=#007aff
+SubscribeInfo1=type=generic,timeout=15,script-path=SubscribeInfo.js,script-update-interval=3600,argument=url=[sub-link]&reset_day=xx&expire=xxxx-xx-xx&title=xxxx&icon=icon=airplane.circle&color=#00BC12
+
+SubscribeInfo2=type=generic,timeout=15,script-path=SubscribeInfo.js,script-update-interval=3600,argument=url=[sub-link]&reset_day=xx&expire=xxxx-xx-xx&title=xxxx&icon=icon=airplane.circle.fill&color=#157EFB
