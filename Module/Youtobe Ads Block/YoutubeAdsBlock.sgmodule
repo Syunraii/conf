@@ -1,6 +1,16 @@
 #!name=YouTube Ads Block
 #!desc=YouTube Ads Block
 
+########################################
+#应用名称：  Youtube Block AD
+#脚本作者：  DivineEngine,app2smile,Maasea,ddgksf2013
+#更新时间：  2022-11-02
+#原始仓库：  https://github.com/DivineEngine
+#原始仓库：  https://github.com/Maasea
+#原始仓库：  https://github.com/app2smile
+#原始仓库：  https://ocd0522.tk/ddgksf2013
+########################################
+
 
 [URL Rewrite]
 (^https?:\/\/[\w-]+\.googlevideo\.com\/(?!dclk_video_ads).+?)&ctier=L(&.+?),ctier,(.+) $1$2$3 header

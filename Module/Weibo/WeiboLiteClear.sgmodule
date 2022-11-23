@@ -1,6 +1,8 @@
 #!name=WeiboLite Clear
 #!desc=WeiboLite Clear
 
+# 原作者@ddgksf2013（Cuttlefish）https://ocd0522.tk/ddgksf2013
+
 [URL Rewrite]
 ^https?:\/\/weibointl\.api\.weibo\.c(n|om)\/portal\.php\?a=hot_search_users - reject
 # 热推荐

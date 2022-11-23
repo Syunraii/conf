@@ -1,6 +1,7 @@
 #!name=WeRead
 #!desc=Add WeRead Time
 
+#!作者：@R-E 仓库：https://github.com/I-am-R-E/QuantumultX/tree/main
 
 [Script]
 WeRead = type=http-response,pattern=^https?:\/\/i\.weread\.qq\.com\/pay\/memberCardSummary,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/I-am-R-E/QuantumultX/main/JavaScript/WeRead.js
