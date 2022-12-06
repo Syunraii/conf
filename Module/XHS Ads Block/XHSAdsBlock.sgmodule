@@ -1,0 +1,8 @@
+#!name=XHS Ads Block
+#!desc=XiaoHongShu Ads Block
+#!system=ios
+#!doesn't test
+
+[Script]
+
+XHSAdsBlock = type=http-response,pattern=^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/(system_service|homefeed)\?.*,requires-body=1,max-size=0,script-path=XHSAdsBlock.js
