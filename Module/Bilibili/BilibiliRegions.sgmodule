@@ -2,6 +2,8 @@
 #!desc=Bilibili Auto Switch Regions
 #!system=ios
 
+# 需要添加规则 https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/StreamingSE.list
+
 [MITM]
 hostname = %APPEND% ap?.bilibili.com, ap?.biliapi.net
 

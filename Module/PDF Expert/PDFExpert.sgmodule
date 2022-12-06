@@ -1,0 +1,10 @@
+#!name=PDF Expert
+#!desc=PDF Expert Vip
+#!system=ios
+# doesn't test
+
+[Script]
+Documents-PdfExpert = type=http-response,pattern=^https:\/\/license\.pdfexpert\.com\/api\/.+\/subscription\/(refresh$|check$),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ventusoon/ventus/main/Script/PDFexpert.js,script-update-interval=-1
+
+[MITM]
+hostname = license.pdfexpert.com
