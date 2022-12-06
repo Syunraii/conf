@@ -1,5 +1,6 @@
 #!name=Bilibili Auto
 #!desc=Bilibili Auto Switch Regions
+#!system=ios
 
 [MITM]
 hostname = %APPEND% ap?.bilibili.com, ap?.biliapi.net
