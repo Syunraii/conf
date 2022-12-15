@@ -1,9 +1,10 @@
 #!name=Bilibili Auto
-#!desc=Bilibili Auto Switch Re                gions
+#!desc=Bilibili Auto Switch Regions
 #!system=ios
 
-# 需要添加规则 https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/StreamingSE.list
-# 需要在脚本中添加策略名称，可以本地配置或者使用boxjs 
+# 需要添加规则 https://raw.githubusercontent.com/NobyDa/Script/master/Surge/Bilibili.list
+#          或 https://raw.githubusercontent.com/NobyDa/Script/master/Surge/Bilibili.listStreamingMedia/StreamingSE.list
+# 需要搭配boxjs设置策略组名称，否则下载脚本到本地修改/加入 策略组名称
 
 [MITM]
 hostname = %APPEND% ap?.bilibili.com, ap?.biliapi.net
