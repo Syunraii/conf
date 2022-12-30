@@ -1,1 +1,3 @@
-`homepage:https://github.com/DualSubs/DualSubs`
+homepage:
+
+    https://github.com/DualSubs/DualSubs
