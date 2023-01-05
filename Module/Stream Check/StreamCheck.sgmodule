@@ -1,9 +1,0 @@
-#!name=Media Stream Check
-#!desc=Media Stream Check
-#!system=ios
-
-[Panel]
-StreamCheck = script-name=StreamCheck,update-interval=7200
-
-[Script]
-StreamCheck = type=generic,timeout=30,script-path=StreamCheck.js,script-update-interval=0,argument=title=Media Stream&icon=play.tv.fill&color=#D22F28

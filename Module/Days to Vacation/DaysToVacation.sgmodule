@@ -1,9 +1,0 @@
-#!name=Days to Vacation
-#!desc=Days to Vacation
-#!system=ios
-
-[Panel]
-DaysToVacation = script-name = DaysToVacation, update-interval=86400
-
-[Script]
-DaysToVacation = type = generic, timeout = 10, script-path = DaysToVacation.js
