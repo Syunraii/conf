@@ -4,10 +4,10 @@
 
 
 [Panel]
-NetInfoPanel=title="",content="",style=info,script-name=net-info-panel.js,update-interval=1
+NetInfoPanel=title="",content="",style=info,script-name=NetworkInfo,update-interval=1
 
 [Script]
-net-info-panel.js=script-path=Network-Info.js,type=generic,timeout=30
+NetworkInfo=script-path=NetworkInfo.js,type=generic,timeout=30
 
 [Host]
 ip-api.com = 208.95.112.1
