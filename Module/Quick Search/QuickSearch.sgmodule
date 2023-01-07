@@ -47,6 +47,9 @@ DeepLtoJapanese = type=http-request,pattern=^https:\/\/duckduckgo.com\/\?q=dlj(\
 # bli xxx (哔哩哔哩)
 ^https:\/\/duckduckgo.com\/\?q=bli\+([^&]+).+ https://m.bilibili.com/search?keyword=$1 302
 
+# bv xxx (哔哩哔哩视频)
+^https:\/\/duckduckgo.com\/\?q=bv\+([^&]+).+ https://bilibili.com/Video/?keyword=$1 302
+
 # af  xxx (Acfun)
 ^https:\/\/duckduckgo.com\/\?q=af\+([^&]+).+ https://www.acfun.cn/search?keyword=$1 302
 
