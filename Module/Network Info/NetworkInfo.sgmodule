@@ -2,7 +2,6 @@
 #!desc=Show Network Info
 #!system=ios
 
-
 [Panel]
 NetInfoPanel=title="",content="",style=info,script-name=NetworkInfo,update-interval=1
 
