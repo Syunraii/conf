@@ -6,4 +6,4 @@
 SwitchGroup = script-name=SwitchGroup,update-interval=1
 
 [Script]
-SwitchGroup = type=generic,timeout=10,script-path=SwitchGroup.js,argument=icon=network&color=#86abee&group=🌐 GLOBAL
+SwitchGroup = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/Switch%20Group/SwitchGroup.js,argument=icon=network&color=#86abee&group=🌐 GLOBAL

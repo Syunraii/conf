@@ -6,4 +6,4 @@
 IPAddrCheck = script-name = IPAddrCheck, title="节点详情", content="请刷新", style=info, update-interval=1
 
 [Script]
-IPAddrCheck = type = generic,timeout=10,script-path=IPAddrCheck.js
+IPAddrCheck = type = generic,timeout=10,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/IP%20Addr%20Check/IPAddrCheck.js

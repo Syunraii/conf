@@ -1,5 +1,6 @@
 #!name=Bilibili Checkin
 #!desc=Bilibili Auto Checkin
+#!system=ios
 # 通过boxjs配置投币次数
 
 [Script]

@@ -6,4 +6,4 @@
 DaysToVacation = script-name = DaysToVacation, update-interval=86400
 
 [Script]
-DaysToVacation = type = generic, timeout = 10, script-path = DaysToVacation.js
+DaysToVacation = type = generic, timeout = 10, script-path = https://raw.githubusercontent.com/Syunraii/conf/master/Module/Days%20to%20Vacation/DaysToVacation.js
