@@ -9,4 +9,4 @@
 # 每天8-22点，每30分钟推送一次，可搭配boxjs配置推送数量 
 
 [Script]
-Pixiv Show = type=cron,cronexp=0 0/30 8-22 * * ?,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/PixivShow/Script/PixivShow.js,script-update-interval=0
+Pixiv Show = type=cron,cronexp=0 0/60 10-22 * * ?,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/PixivShow/Script/PixivShow.js,script-update-interval=0
