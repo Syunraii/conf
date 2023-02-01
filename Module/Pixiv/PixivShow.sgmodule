@@ -6,7 +6,7 @@
 #!manual=https://t.me/Functional_Store_Hub/10
 #!icon=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/Files/icon.png
 
-# 每天8-22点，每30分钟推送一次，可搭配boxjs配置推送数量 
+# 每天10-22点，每120分钟推送一次(坚持戒色)，可搭配boxjs配置推送数量 
 
 [Script]
-Pixiv Show = type=cron,cronexp=0 0/60 10-22 * * ?,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/PixivShow/Script/PixivShow.js,script-update-interval=0
+Pixiv Show = type=cron,cronexp=0 0/120 10-22 * * ?,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/PixivShow/Script/PixivShow.js,script-update-interval=0
