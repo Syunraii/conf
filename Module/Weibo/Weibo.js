@@ -431,7 +431,7 @@ function removeHomeVip(data) {
         return data;
     }
     data.header.avatar.badgeUrl = 'https://h5.sinaimg.cn/upload/100/888/2021/04/07/avatar_vip_golden.png';
-    data.header.desc.content = '微博认证：Surge Pro';
+    data.header.desc.content = '微博认证：哔哩哔哩 - ( ゜- ゜)つロ 干杯~';
     // data.items[0].title.content = '0';
     let vipCenter = data.header.vipCenter;
     let vipIcon = data.header.vipIcon;
@@ -460,7 +460,7 @@ function removeHomeVip(data) {
     if (vipView) {
         if (vipView.content1 && vipView.content1.contents && vipView.content1.contents.length > 1) {
             vipView.content1.contents[0].iconUrl = 'https://h5.sinaimg.cn/upload/100/1734/2022/06/01/vip7_title.png';
-            vipView.content1.contents[2].content = '您是尊贵的终身VIP用户';
+            vipView.content1.contents[2].content = '您是尊贵的终身大会员用户';
             vipView.content1.contents[2].style.textColor = '#BB5416';
             vipView.content1.contents[2].style.textColorDark = '#AC521C';
         }
