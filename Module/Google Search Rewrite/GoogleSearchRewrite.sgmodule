@@ -1,6 +1,6 @@
 #!name=Google Rewrite
-#!desc=Safari Google Search
-#!system=ios
+#!desc=Google Search NCR
+
 
 [URL Rewrite]
 ^https?://(www.)?g.cn https://www.google.com 302
