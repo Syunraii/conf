@@ -3,6 +3,8 @@
 # Desc: 快速搜索"sub-link", 查看两步操作完成个人订阅配置
 #       该配置主要用在windows电脑上, mac端未测试是否使能
 
+# 注：该配置为profiles自定义配置，cfw一般有config和cfw-settings配置，cfw-settings.yaml作为软件的base配置，可以将条目粘贴过来（未测试是否可行）；也可以将本配置不需要的条目删掉，其他配置例如开关在cfw的界面操作即可
+
 port: 7890                                  # http代理端口
 socks-port: 7891                            # socks代理端口
 mixed-port: 7890                            # 混合代理端口
@@ -13,6 +15,7 @@ log-level: warning                          # 日志等级
 external-controller: 127.0.0.1:9090         # 远程控制器
 latencyUrl: http://www.aliyun.com/          # 全局测速url
 latencyTimeout: 5000                        # 超时时间 ms
+
 # 跳过代理
 bypass: 
   - localhost
@@ -63,7 +66,7 @@ dns:
   # 'mtalk.google.com': 108.177.125.188
   # '.dev': 127.0.0.1
   enable: true
-  listen: 0.0.0.0:5453
+  listen: 0.0.0.0:53
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
@@ -155,7 +158,8 @@ tun:
   enalbe: false
   stack: system #gvisor
   dns-hijack:
-    - 192.18.0.2.53
+    - any:53
+    - tcp://any:53
   auto-route: true
   auto-detect-interface: true
   
