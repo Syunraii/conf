@@ -947,6 +947,13 @@ rule-providers:
     path: ./Rule/Discord.yaml
     interval: 86400
 
+  RULE-Scholar:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Scholar/Scholar.yaml"
+    path: ./Rule/Scholar.yaml
+    interval: 86400
+
   RULE-Spotify:
     type: http
     behavior: classical
@@ -1591,6 +1598,7 @@ rules:
   - RULE-SET,RULE-Yandex,🍟 Foregin
   - RULE-SET,RULE-Apkpure,🍟 Foregin
   - RULE-SET,RULE-Discord,🍟 Foregin
+  - RULE-SET,RULE-Scholar,🍟 Foregin
   - RULE-SET,RULE-Spotify,🍟 Foregin
   - RULE-SET,RULE-Twitter,🍟 Foregin
   - RULE-SET,RULE-Facebook,🍟 Foregin
@@ -1606,7 +1614,7 @@ rules:
   - RULE-SET,RULE-IPTVOther,🍟 Foregin
   - RULE-SET,RULE-ProxyLite,🍟 Foregin
   - RULE-SET,RULE-Cloudflare,🍟 Foregin
-  - RULE-SET,RULE-AsianMedia,🍟 Foregin
+  # - RULE-SET,RULE-AsianMedia,🍟 Foregin
   - RULE-SET,RULE-GlobalMedia,🍟 Foregin
   - RULE-SET,RULE-Global,🍟 Foregin
   ############################################################################
@@ -1642,8 +1650,8 @@ rules:
   - RULE-SET,RULE-JianShu,🍔 Domestic
   - RULE-SET,RULE-MeiTuan,🍔 Domestic
   - RULE-SET,RULE-DingTalk,🍔 Domestic
-  - RULE-SET,RULE-JingDong,🍔 Domestic
   - RULE-SET,RULE-Himalaya,🍔 Domestic
+  - RULE-SET,RULE-JingDong,🍔 Domestic
   - RULE-SET,RULE-XieCheng,🍔 Domestic
   - RULE-SET,RULE-DanDanZan,🍔 Domestic
   - RULE-SET,RULE-Pinduoduo,🍔 Domestic

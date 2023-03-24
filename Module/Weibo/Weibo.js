@@ -414,8 +414,8 @@ function removeTimeLine(data) {
             element.user.type = 1;
             element.user.star = 1;
             element.user.remark = "";
-            element.user.followers_count = 98760000;
-            element.user.followers_count_str = "9876万";
+            element.user.followers_count = 23333333;
+            element.user.followers_count_str = "2333万";
             element.user.mb_expire_time = 7257139200;
             element.user.icons = [{
                 "url": "https:\/\/h5.sinaimg.cn\/upload\/1004\/409\/2021\/06\/08\/feed_icon_100vip_7.png",
@@ -439,7 +439,7 @@ function removeHomeVip(data) {
     let items = data.items;
     if (items) {
         if (items[3].title) {
-            items[3].title.content = "9876万";
+            items[3].title.content = "2333万";
         }
     }
     if (!vipCenter) {
@@ -460,7 +460,7 @@ function removeHomeVip(data) {
     if (vipView) {
         if (vipView.content1 && vipView.content1.contents && vipView.content1.contents.length > 1) {
             vipView.content1.contents[0].iconUrl = 'https://h5.sinaimg.cn/upload/100/1734/2022/06/01/vip7_title.png';
-            vipView.content1.contents[2].content = '您是尊贵的终身大会员用户';
+            vipView.content1.contents[2].content = '您是尊贵的pilipili终身大会员用户';
             vipView.content1.contents[2].style.textColor = '#BB5416';
             vipView.content1.contents[2].style.textColorDark = '#AC521C';
         }
