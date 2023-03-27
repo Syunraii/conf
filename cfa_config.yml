@@ -1,8 +1,9 @@
 # Author:Syunraii
-# UpdateTime: 2023/3/23
-# Desc: 快速搜索"sub-link", 查看两步操作完成个人订阅配置
-#       该配置主要用在windows电脑上, mac端未测试是否使能
-# 注：该配置为profiles自定义配置，cfw一般有config和cfw-settings配置，cfw-settings.yaml作为软件的base配置，可以将条目粘贴过来（未测试是否可行）；也可以将本配置不需要的条目删掉，其他配置例如开关在cfw的界面操作即可
+# UpdateTime: 2023/3/27
+# Desc: 
+#   配置前须知：
+#       1、该配置仅适用于cfa premium，cfa foss不支持RULE-SET
+#       2、请认真阅读每一行注释
 
 port: 7890                                  # http代理端口
 socks-port: 7891                            # socks代理端口
@@ -13,7 +14,6 @@ log-level: warning                          # 日志等级
 external-controller: 127.0.0.1:9090         # 远程控制器
 latencyUrl: http://www.aliyun.com/          # 全局测速url
 latencyTimeout: 5000                        # 超时时间 ms
-
 # 跳过代理
 bypass: 
   - localhost
@@ -57,21 +57,15 @@ bypass:
   - ::ffff:0:0:0:0/1
   - ::ffff:128:0:0:0/1
 dns:
-  ipv6: false                                 # 启用ipv6
+  enable: true
+  ipv6: false
   use-hosts: true
-  # 仅了解情况下添加,例如谷歌翻译改hosts使能等 
-  hosts:
+  hosts: 
+  # 了解情况下添加，如谷歌翻译改hosts使能
   # 'mtalk.google.com': 108.177.125.188
   # '.dev': 127.0.0.1
-  enable: true
-  listen: 0.0.0.0:53
-  default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
   enhanced-mode: fake-ip
-  #enhanced-mode: redir-host
-  fake-ip-range: 198.18.0.1/16 
-  # 以真实ip返回
+  fake-ip-range: 198.18.0.1/16
   fake-ip-fliter: 
     - '*.lan'
     - cable.auth.com
@@ -136,6 +130,9 @@ dns:
     - PDC._msDCS.*.*
     - DC._msDCS.*.*
     - GC._msDCS.*.*
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
@@ -143,92 +140,94 @@ dns:
     - https://doh.dns.sb/dns-query
     - https://dns.cloudflare.com/dns-query
     - https://dns.twnic.tw/dns-query
-    # - https://9.9.9.9/dns-query
-    # - https://223.5.5.5/dns-query
-    # - https://1.1.1.1/dns-query
-    # - https://dns.google/dns-query
-  fallback-filter:  
-    geoip: true 
-    ipcidr: 
-    - 240.0.0.0/4
-    - 0.0.0.0/32
-# 可以不用打开
-# tun: 
-#   enalbe: false
-#   stack: system #gvisor
-#   dns-hijack:
-#     - any:53
-#     - tcp://any:53
-#   auto-route: true
-#   auto-detect-interface: true
-  
+    - tls://8.8.4.4:853
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
 
-# 本地代理
-# proxies:  
-
-# 远程订阅
 proxy-providers:
-  # 订阅信息
-  MySub :
+  MySub:
     type: http
     interval: 86400
-    # 1、 在此填入订阅链接
-    url: "sub-link"
-    # 2、先在主面板下载，将下载后得到订阅配置信息填入path, cfw一般下载的配置为时间戳.yml形式
-    path: ./profiles/file.yml
+    # 1、将你的订阅链接写入url，在cfa中从文件中导入
+    #   *但此方法无法配置自动更新，建议将此配置填写完毕后放到私有cdn进行每日更新
+    url: sub-link
+    # 2、path表示将url的文件下载到本地并重命名，可以依靠此文件进行过滤
+    path: ./profiles/MySub.yml
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 43200
-  # 节点过滤
-  HK:
-    type: file
-    path: ./profiles/file.yml
+  HK :
+    # file表示从本地文件获取订阅信息
+    # 也可以改成url: sub-link形式，把path去掉，表示分组直接从url文件中过滤
+    type: file  
+    path: ./profiles/MySub.yml
+    # 进行过滤
     filter: '港|香港|Hong Kong|HK|🇭🇰'
     tolerance: 200
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 60
-  TW:
+
+  TW :
     type: file
-    path: ./profiles/file.yml
+    path: ./profiles/MySub.yml
     filter: '台|湾|台湾|台北|TaiWan|TW|🇹🇼'
     tolerance: 200
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 60
-  JP:
+
+  JP :
     type: file
-    path: ./profiles/file.yml
+    path: ./profiles/MySub.yml
     filter: '日|日本|Japan|JP|🇯🇵'
     tolerance: 200
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 60
-  KR:
+
+    # 3、如果提示某类分组无法匹配，那就是订阅中没有该类节点，需要把分组注释或去掉，相应的在proxy-groups:proxies[]也要去掉，否则无法使用，可能软件是不允许存在空的组。见以下举例
+    # 举例： 如果提示 "KR" not match...之类的错误，需要把整段注释
+    #   KR :
+    #     type: file
+    #     path: ./profiles/PusSub-Clash.yml
+    #     filter: '韩|韩国|Korea|KR|🇰🇷'
+    #     tolerance: 200
+    #     health-check:
+    #       enable: true
+    #       url: http://www.gstatic.com/generate_204
+    #       interval: 60
+
+  KR :
     type: file
-    path: ./profiles/file.yml
+    path: ./profiles/PusSub-Clash.yml
     filter: '韩|韩国|Korea|KR|🇰🇷'
     tolerance: 200
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 60
-  US:
+
+  US :
     type: file
-    path: ./profiles/file.yml
+    path: ./profiles/MySub.yml
     filter: '美|美国|United States|US|🇺🇸'
     tolerance: 200
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 60
-  SG:
+
+  SG :
     type: file
-    path: ./profiles/file.yml
+    path: ./profiles/MySub.yml
     filter: '坡|新加坡|狮城|Singapore|SG|🇸🇬'
     tolerance: 200
     health-check:
@@ -236,27 +235,28 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 60
 
-  # 这个可以过滤其他漏掉的信息，依个人修改filter的匹配字段
-  GG:
+  # 漏掉的匹配可在filter中自行添加
+  GG :
     type: file
-    path: ./profiles/file.yml
-    filter: '临时|全球|Global'
+    path: ./profiles/MySub.yml
+    filter: '临时|全球|Global|🇩🇪|🇬🇧|🇨🇴'
     tolerance: 200
     health-check:
       enable: false
       url: http://www.gstatic.com/generate_204
       interval: 60
 
-# 策略组
 proxy-groups:
   - name: 🌏 GOLBAL-SELECT
     type: select
+    # 举例：如果没有 那么需要在这里也去掉 
+    # proxies: [🚀 AUTO, DIRECT,🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
     proxies: [🚀 AUTO, DIRECT,🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  # Tips: interval ≠ 0
+
   - name: 🚀 AUTO
     type: url-test
-    tolerance: 200  # 若速率相差200ms则自动更新最快的节点
+    tolerance: 200
     interval: 120
     url: http://www.gstatic.com/generate_204
     proxies: [🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
@@ -269,7 +269,6 @@ proxy-groups:
     type: select
     proxies: [DIRECT, 🌏 GOLBAL-SELECT, REJECT]
 
-  # 特定应用
   - name: 🍀 WeChat
     type: select
     proxies: [DIRECT, 🌏 GOLBAL-SELECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
@@ -298,7 +297,6 @@ proxy-groups:
     type: select
     proxies: [DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点]
 
-  # 特定服务商
   - name: 🍎 Apple
     type: select
     proxies: [🌏 GOLBAL-SELECT, DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
@@ -313,23 +311,20 @@ proxy-groups:
   
   - name: 🕊️ Google
     type: select
-    proxies: [🌏 GOLBAL-SELECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+    proxies: [🌏 GOLBAL-SELECT, DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
   
   - name: Ⓜ️ Microsoft
     type: select
     proxies: [🌏 GOLBAL-SELECT, DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  # 开发平台
   - name: 🐳 Developer
     type: select
     proxies: [🌏 GOLBAL-SELECT, DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
   
-  # 游戏平台
   - name: 🎮 Games
     type: select
     proxies: [🌏 GOLBAL-SELECT, DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  # 国外或本土
   - name: 🍟 Foregin
     type: select
     proxies: [🌏 GOLBAL-SELECT, DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
@@ -338,72 +333,105 @@ proxy-groups:
     type: select
     proxies: [DIRECT, 🌏 GOLBAL-SELECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  # 节点分组,放在下面就不用一直往下拉了,增/删时上面也要对应
   - name: 🇭🇰 香港节点
     type: url-test
     tolerance: 200
-    interval: 30
+    interval: 60
     url: http://www.gstatic.com/generate_204
     use:
       - HK
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 60
 
   - name: 🇹🇼 台湾节点
     type: url-test
     tolerance: 200
-    interval: 30
+    interval: 60
     url: http://www.gstatic.com/generate_204
     use:
       - TW
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 60
 
   - name: 🇯🇵 日本节点
     type: url-test
     tolerance: 200
-    interval: 30
+    interval: 60
     url: http://www.gstatic.com/generate_204
     use:
       - JP
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 60
+
+    # 举例：如果没有，需要整段注释
+    #   - name: 🇰🇷 韩国节点
+    #     type: url-test
+    #     tolerance: 200
+    #     interval: 60
+    #     url: http://www.gstatic.com/generate_204
+    #     use:
+    #       - KR
+    #     health-check:
+    #       enable: true
+    #       url: http://www.gstatic.com/generate_204
+    #       interval: 60
 
   - name: 🇰🇷 韩国节点
     type: url-test
     tolerance: 200
-    interval: 30
+    interval: 60
     url: http://www.gstatic.com/generate_204
     use:
       - KR
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 60
 
   - name: 🇺🇸 美国节点
     type: url-test
     tolerance: 200
-    interval: 30
+    interval: 60
     url: http://www.gstatic.com/generate_204
     use:
       - US
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 60
 
   - name: 🇸🇬 狮城节点
     type: url-test
     tolerance: 200
-    interval: 30
+    interval: 60
     url: http://www.gstatic.com/generate_204
     use:
       - SG
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 60
 
   - name: 🌓 全球节点
     type: url-test
     tolerance: 200
-    interval: 30
+    interval: 60
     url: http://www.gstatic.com/generate_204
     use:
       - GG
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 60
 
-# 分流规则集
 
-# 3、
-# 如果raw无法更新,可将
-# https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master
-# 更换为
-# https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master
-# 或先使用代理工具将所有规则集先下载下来（手动下载放到cfw目录下的新建Rule文件夹中；或不断切换默认配置和此配置直至Rule文件夹加载完所有规则集方可成功切换配置 =-=!）
-
+# 不需要的规则集可以去掉，相应的在rules: 中也要去掉
 rule-providers:
 
   RULE-LAN:
@@ -441,7 +469,6 @@ rule-providers:
     path: ./Rule/Hijacking.yaml
     interval: 86400
 
-  # 特定应用
   RULE-WeChat:
     type: http
     behavior: classical
@@ -505,7 +532,6 @@ rule-providers:
     path: ./Rule/BiliBiliIntl.yaml
     interval: 86400
 
-  # 地区限定
   RULE-TVB:
     type: http
     behavior: classical
@@ -597,8 +623,6 @@ rule-providers:
     path: ./Rule/Niconico.yaml
     interval: 86400
 
-  ## 国外应用、域名、服务商
-  # 服务商
   RULE-Apple: 
     type: http
     behavior: classical
@@ -662,7 +686,6 @@ rule-providers:
     path: ./Rule/Microsoft.yaml
     interval: 86400
 
-  # 开发工具
   RULE-Imgur:
     type: http
     behavior: classical
@@ -747,8 +770,6 @@ rule-providers:
     path: ./Rule/Jetbrains.yaml
     interval: 86400
 
-
-  # 游戏平台
   RULE-EA: 
     type: http
     behavior: classical
@@ -826,7 +847,6 @@ rule-providers:
     path: ./Rule/GameDownLoad.yaml
     interval: 86400
 
-  # 其他应用
   RULE-BBC:
     type: http
     behavior: classical
@@ -1030,7 +1050,6 @@ rule-providers:
     path: ./Rule/GlobalScholar.yaml
     interval: 86400
 
-  # 国外兜底
   RULE-IPTVOther:
     type: http
     behavior: classical
@@ -1073,7 +1092,6 @@ rule-providers:
     path: ./Rule/Global.yaml
     interval: 86400
 
-  ## 国内应用、域名、服务商
   RULE-NGA:
     type: http
     behavior: classical
@@ -1396,7 +1414,6 @@ rule-providers:
     path: ./Rule/TencentVideo.yaml
     interval: 86400
 
-  # 服务商
   RULE-Baidu:
     type: http
     behavior: classical
@@ -1453,7 +1470,6 @@ rule-providers:
     path: ./Rule/ChinaTelecom.yaml
     interval: 86400
 
-  # 游戏平台
   RULE-SteamCN:
     type: http
     behavior: classical
@@ -1475,7 +1491,6 @@ rule-providers:
     path: ./Rule/GameDownLoadCN.yaml
     interval: 86400  
   
-  # 国内兜底
   RULE-IPTVMainland: 
     type: http
     behavior: classical
@@ -1544,7 +1559,6 @@ rules:
   - RULE-SET,RULE-Bahamut,🇹🇼 台湾节点
   - RULE-SET,RULE-Niconico,🇯🇵 日本节点
   ############################################################################
-  # 服务商
   - RULE-SET,RULE-Apple,🍎 Apple
   - RULE-SET,RULE-AppleID,🍏 AppleID
   - RULE-SET,RULE-Amazon,🦄 Amazon
@@ -1554,7 +1568,7 @@ rules:
   - RULE-SET,RULE-GoogleEarth,🕊️ Google
   - RULE-SET,RULE-Bing,Ⓜ️ Microsoft
   - RULE-SET,RULE-Microsoft,Ⓜ️ Microsoft
-  # 开发工具
+
   - RULE-SET,RULE-Imgur,🐳 Developer
   - RULE-SET,RULE-Unity,🐳 Developer
   - RULE-SET,RULE-Docker,🐳 Developer
@@ -1567,7 +1581,7 @@ rules:
   - RULE-SET,RULE-Synology,🐳 Developer
   - RULE-SET,RULE-Jetbrains,🐳 Developer
   - RULE-SET,RULE-Developer,🐳 Developer
-  # 游戏
+
   - RULE-SET,RULE-EA,🎮 Games
   - RULE-SET,RULE-UBI,🎮 Games
   - RULE-SET,RULE-Epic,🎮 Games
@@ -1579,7 +1593,7 @@ rules:
   - RULE-SET,RULE-Nintendo,🎮 Games
   - RULE-SET,RULE-PlayStation,🎮 Games
   - RULE-SET,RULE-GameDownLoad,🎮 Games
-  # Foregin
+
   - RULE-SET,RULE-BBC,🍟 Foregin
   - RULE-SET,RULE-CNN,🍟 Foregin
   - RULE-SET,RULE-Fox,🍟 Foregin
@@ -1609,15 +1623,12 @@ rules:
   - RULE-SET,RULE-TeamViewer,🍟 Foregin 
   - RULE-SET,RULE-DiscoveryPlus,🍟 Foregin 
   - RULE-SET,RULE-GlobalScholar,🍟 Foregin
-  # 国外兜底
   - RULE-SET,RULE-IPTVOther,🍟 Foregin
   - RULE-SET,RULE-ProxyLite,🍟 Foregin
   - RULE-SET,RULE-Cloudflare,🍟 Foregin
-  # - RULE-SET,RULE-AsianMedia,🍟 Foregin
   - RULE-SET,RULE-GlobalMedia,🍟 Foregin
   - RULE-SET,RULE-Global,🍟 Foregin
   ############################################################################
-  # Domestic
   - RULE-SET,RULE-NGA,🍔 Domestic
   - RULE-SET,RULE-CCTV,🍔 Domestic
   - RULE-SET,RULE-CNKI,🍔 Domestic
@@ -1663,11 +1674,11 @@ rules:
   - RULE-SET,RULE-XiaoHongShu,🍔 Domestic
   - RULE-SET,RULE-NetEaseMusic,🍔 Domestic
   - RULE-SET,RULE-TencentVideo,🍔 Domestic
-  # 游戏
+
   - RULE-SET,RULE-SteamCN,🍔 Domestic
   - RULE-SET,RULE-HoYoverse,🍔 Domestic
   - RULE-SET,RULE-GameDownLoadCN,🍔 Domestic
-  # 服务商
+
   - RULE-SET,RULE-Baidu,🍔 Domestic
   - RULE-SET,RULE-Huawei,🍔 Domestic
   - RULE-SET,RULE-Alibaba,🍔 Domestic
@@ -1676,12 +1687,12 @@ rules:
   - RULE-SET,RULE-ChinaMobile,🍔 Domestic
   - RULE-SET,RULE-ChinaUnicom,🍔 Domestic
   - RULE-SET,RULE-ChinaTelecom,🍔 Domestic
-  # 国内兜底
+
   - RULE-SET,RULE-IPTVMainland,🍔 Domestic
   - RULE-SET,RULE-China,🍔 Domestic
   - RULE-SET,RULE-ChinaIPs,🍔 Domestic
   - RULE-SET,RULE-Download,🍔 Domestic
   - RULE-SET,RULE-ChinaMedia,🍔 Domestic
-  # 全局兜底
+
   - GEOIP,CN,DIRECT
   - MATCH,🚫 FINAL
