@@ -169,7 +169,7 @@ dns:
 # 远程订阅
 proxy-providers:
   # 订阅信息
-  MySub :
+  MySub : &MySub
     type: http
     interval: 86400
     # 1、 在此填入订阅链接
@@ -182,8 +182,7 @@ proxy-providers:
       interval: 43200
   # 节点过滤
   HK:
-    type: file
-    path: ./profiles/file.yml
+    <<: *MySub
     filter: '港|香港|Hong Kong|HK|🇭🇰'
     tolerance: 200
     health-check:
@@ -191,8 +190,7 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 60
   TW:
-    type: file
-    path: ./profiles/file.yml
+    <<: *MySub
     filter: '台|湾|台湾|台北|TaiWan|TW|🇹🇼'
     tolerance: 200
     health-check:
@@ -200,8 +198,7 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 60
   JP:
-    type: file
-    path: ./profiles/file.yml
+    <<: *MySub
     filter: '日|日本|Japan|JP|🇯🇵'
     tolerance: 200
     health-check:
@@ -209,8 +206,7 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 60
   KR:
-    type: file
-    path: ./profiles/file.yml
+    <<: *MySub
     filter: '韩|韩国|Korea|KR|🇰🇷'
     tolerance: 200
     health-check:
@@ -218,8 +214,7 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 60
   US:
-    type: file
-    path: ./profiles/file.yml
+    <<: *MySub
     filter: '美|美国|United States|US|🇺🇸'
     tolerance: 200
     health-check:
@@ -227,8 +222,7 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 60
   SG:
-    type: file
-    path: ./profiles/file.yml
+    <<: *MySub
     filter: '坡|新加坡|狮城|Singapore|SG|🇸🇬'
     tolerance: 200
     health-check:
@@ -238,8 +232,7 @@ proxy-providers:
 
   # 这个可以过滤其他漏掉的信息，依个人修改filter的匹配字段
   GG:
-    type: file
-    path: ./profiles/file.yml
+    <<: *MySub
     filter: '临时|全球|Global'
     tolerance: 200
     health-check:

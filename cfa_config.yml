@@ -148,7 +148,7 @@ dns:
       - 0.0.0.0/32
 
 proxy-providers:
-  MySub:
+  MySub: &MySub
     type: http
     interval: 86400
     # 1、将你的订阅链接写入url，在cfa中从文件中导入
@@ -161,11 +161,7 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 43200
   HK :
-    # file表示从本地文件获取订阅信息
-    # 也可以改成url: sub-link形式，把path去掉，表示分组直接从url文件中过滤
-    type: file  
-    path: ./profiles/MySub.yml
-    # 进行过滤
+    <<: *MySub
     filter: '港|香港|Hong Kong|HK|🇭🇰'
     tolerance: 200
     health-check:
@@ -174,8 +170,7 @@ proxy-providers:
       interval: 60
 
   TW :
-    type: file
-    path: ./profiles/MySub.yml
+    <<: *MySub
     filter: '台|湾|台湾|台北|TaiWan|TW|🇹🇼'
     tolerance: 200
     health-check:
@@ -184,8 +179,7 @@ proxy-providers:
       interval: 60
 
   JP :
-    type: file
-    path: ./profiles/MySub.yml
+    <<: *MySub
     filter: '日|日本|Japan|JP|🇯🇵'
     tolerance: 200
     health-check:
@@ -196,8 +190,7 @@ proxy-providers:
     # 3、如果提示某类分组无法匹配，那就是订阅中没有该类节点，需要把分组注释或去掉，相应的在proxy-groups:proxies[]也要去掉，否则无法使用，可能软件是不允许存在空的组。见以下举例
     # 举例： 如果提示 "KR" not match...之类的错误，需要把整段注释
     #   KR :
-    #     type: file
-    #     path: ./profiles/PusSub-Clash.yml
+    #     <<: *MySub
     #     filter: '韩|韩国|Korea|KR|🇰🇷'
     #     tolerance: 200
     #     health-check:
@@ -206,8 +199,7 @@ proxy-providers:
     #       interval: 60
 
   KR :
-    type: file
-    path: ./profiles/PusSub-Clash.yml
+    <<: *MySub
     filter: '韩|韩国|Korea|KR|🇰🇷'
     tolerance: 200
     health-check:
@@ -216,8 +208,7 @@ proxy-providers:
       interval: 60
 
   US :
-    type: file
-    path: ./profiles/MySub.yml
+    <<: *MySub
     filter: '美|美国|United States|US|🇺🇸'
     tolerance: 200
     health-check:
@@ -226,8 +217,7 @@ proxy-providers:
       interval: 60
 
   SG :
-    type: file
-    path: ./profiles/MySub.yml
+    <<: *MySub
     filter: '坡|新加坡|狮城|Singapore|SG|🇸🇬'
     tolerance: 200
     health-check:
@@ -237,8 +227,7 @@ proxy-providers:
 
   # 漏掉的匹配可在filter中自行添加
   GG :
-    type: file
-    path: ./profiles/MySub.yml
+    <<: *MySub
     filter: '临时|全球|Global|🇩🇪|🇬🇧|🇨🇴'
     tolerance: 200
     health-check:
