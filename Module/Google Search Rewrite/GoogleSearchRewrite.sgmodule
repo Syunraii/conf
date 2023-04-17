@@ -3,8 +3,9 @@
 
 
 [URL Rewrite]
-^https?://(www.)?g.cn https://www.google.com 302
-^https?://(www.)?google.cn https://www.google.com 302
+^https?://(www.)?g.cn https://www.google.com/ncr 302
+^https?://(www.)?google.cn https://www.google.com/ncr 302
+^https?://(www.)?google.com.hk https://www.google.com/ncr 302
 
 [MITM]
 hostname = %APPEND% *.google.cn, *.google.com.hk

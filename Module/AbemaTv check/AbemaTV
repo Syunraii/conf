@@ -1,0 +1,8 @@
+#!name=AbemaTV check
+#!desc=AbemaTV Regions Detection
+
+[URL Rewrite]
+^https?:\/\/api\.abema\.io\/v\d\/ip\/check - reject
+
+[MITM]
+hostname = %APPEND% api.abema.io
