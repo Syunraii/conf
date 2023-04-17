@@ -1,6 +1,7 @@
 #!name=AbemaTV check
 #!desc=AbemaTV Regions Detection
 
+# AdvertisingLite exist
 # [URL Rewrite]
 # ^https?:\/\/api\.abema\.io\/v\d\/ip\/check - reject
 
