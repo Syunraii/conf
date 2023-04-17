@@ -1,0 +1,11 @@
+#!name=AbemaTV check
+#!desc=AbemaTV Regions Detection
+
+# [URL Rewrite]
+# ^https?:\/\/api\.abema\.io\/v\d\/ip\/check - reject
+
+[Script]
+abema_region = type = http-response,pattern=^https:\/\/abema\.tv\/*,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/AbemaTv%20check/abema_region_bypass.user.js
+
+[MITM]
+hostname = %APPEND% *.abema.tv, api.abema.io
