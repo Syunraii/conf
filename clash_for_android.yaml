@@ -1,5 +1,5 @@
 # Author:Syunraii
-# UpdateTime: 2023/4/24
+# UpdateTime: 2023/4/25
 # Desc: 快速搜索"sub-link"，填入订阅信息
 #       该配置仅适用于cfa premium，cfa foss版本不支持RULE-SET
 # use : 
@@ -59,17 +59,15 @@ bypass:
   - ::ffff:128:0:0:0/1
 dns:
   enable: true
-  ipv6: false
+  ipv6: false                                 # 启用ipv6
   use-hosts: true
-  hosts: 
-  # 了解情况下添加，如谷歌翻译改hosts使能
-  # 'mtalk.google.com': 108.177.125.188
-  # '.dev': 127.0.0.1
+  listen: '0.0.0.0:53'
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
   enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
+  fake-ip-range: 198.18.0.1/16 
+  # 以真实ip返回
   fake-ip-fliter: 
     - '*.lan'
     - cable.auth.com
@@ -142,18 +140,35 @@ dns:
     - https://dns.cloudflare.com/dns-query
     - https://dns.twnic.tw/dns-query
     - tls://8.8.4.4:853
-  fallback-filter:
-    geoip: true
-    ipcidr:
-      - 240.0.0.0/4
-      - 0.0.0.0/32
+  fallback-filter:  
+    geoip: true 
+    ipcidr: 
+    - 240.0.0.0/4
+    - 0.0.0.0/32
+# hosts:
+#   # 仅了解情况下添加,例如谷歌翻译改hosts使能等 
+#   # 'mtalk.google.com': 108.177.125.188
+#   # '.dev': 127.0.0.1
+# tun:
+#  
 
+# 远程订阅
 proxy-providers:
   MySub: &MySub
     type: http
     interval: 86400
-    url: [sub-link]
+    url: []
     path: ./profiles/MySub.yml
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 43200
+
+  Fallback: &Fallback
+    type: http
+    interval: 86400
+    url: []
+    path: ./profiles/Fallback.yml
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
@@ -162,119 +177,105 @@ proxy-providers:
   HK :
     <<: *MySub
     filter: '港|香港|Hong Kong|HK|🇭🇰'
-    tolerance: 200
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 60
 
   TW :
     <<: *MySub
     filter: '台|湾|台湾|台北|TaiWan|TW|🇹🇼'
-    tolerance: 200
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 60
 
   JP :
     <<: *MySub
     filter: '日|日本|Japan|JP|🇯🇵'
-    tolerance: 200
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 60
 
   KR :
     <<: *MySub
     filter: '韩|韩国|Korea|KR|🇰🇷'
-    tolerance: 200
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 60
 
   US :
     <<: *MySub
     filter: '美|美国|United States|US|🇺🇸'
-    tolerance: 200
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 60
 
   SG :
     <<: *MySub
     filter: '坡|新加坡|狮城|Singapore|SG|🇸🇬'
-    tolerance: 200
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 60
 
+  # 添加filter过滤漏掉节点
   GG :
     <<: *MySub
     filter: '临时|全球|Global|🇩🇪|🇬🇧|🇨🇴'
-    tolerance: 200
-    health-check:
-      enable: false
-      url: http://www.gstatic.com/generate_204
-      interval: 60
 
+  FB :
+    <<: *Fallback
+
+# 策略组
 proxy-groups:
-  - name: 🌏 GOLBAL-SELECT
+  - name: 🌏 全局选择
     type: select
-    proxies: [🚀 AUTO, DIRECT,🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+    proxies: [🚀 自动选择, 🎯 直接连接, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  - name: 🚀 AUTO
+  - name: 🚀 自动选择
     type: url-test
-    tolerance: 200
-    interval: 120
+    tolerance: 200  # 若速率相差200ms则自动更新最快的节点
+    interval: 120   # interval ≠ 0
     url: http://www.gstatic.com/generate_204
     proxies: [🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  - name: ⛔ ADBlock 
+  - name: ⛔ 广告拦截 
     type: select
-    proxies: [REJECT, DIRECT, 🌏 GOLBAL-SELECT] 
+    proxies: [🈲 禁止访问, 🎯 直接连接, 🌏 全局选择] 
 
-  - name: 🚫 FINAL
+  - name: 🚫 最后匹配
     type: select
-    proxies: [DIRECT, 🌏 GOLBAL-SELECT, REJECT]
+    proxies: [🎯 直接连接, 🌏 全局选择, 🈲 禁止访问]
 
-  - name: 🎥 Bilibili
+# 特定应用
+  - name: 📲 电报通讯
     type: select
-    proxies: [DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点]
+    proxies: [🌏 全局选择, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+ 
+  - name: 🎞️ 油管视频
+    type: select
+    proxies: [🌏 全局选择, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  - name: 🖼️ EhViewer
+  - name: 🎥 哔哩哔哩
     type: select
-    proxies: [DIRECT, 🌏 GOLBAL-SELECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+    proxies: [🎯 直接连接, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点]
 
-  - name: 🍀 WeChat
+  - name: 🍀 微信聊天
     type: select
-    proxies: [DIRECT, 🌏 GOLBAL-SELECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+    proxies: [🎯 直接连接, 🌏 全局选择, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  - name: 📲 Telegram
+  # 游戏平台
+  - name: 🎮 游戏平台
     type: select
-    proxies: [🌏 GOLBAL-SELECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+    proxies: [🌏 全局选择, 🎯 直接连接, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  - name: 🎞️ YouTube
+  # 开发平台
+  - name: 🐳 开发工具
     type: select
-    proxies: [🌏 GOLBAL-SELECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
-
-  - name: 🐳 Developer
-    type: select
-    proxies: [🌏 GOLBAL-SELECT, DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+    proxies: [🌏 全局选择, 🎯 直接连接, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
   
-  - name: 🍟 Foregin
+  # 国外或本土
+  - name: 🍟 整点薯条
     type: select
-    proxies: [🌏 GOLBAL-SELECT, DIRECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+    proxies: [🌏 全局选择, 🎯 直接连接, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-  - name: 🍔 Domestic
+  - name: 🍔 整点汉堡
     type: select
-    proxies: [DIRECT, 🌏 GOLBAL-SELECT, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
+    proxies: [🎯 直接连接, 🌏 全局选择, 🦄 故障转移, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌓 全球节点]
 
-#######################################################
+# 节点分组,放在下面就不用一直往下拉了,增/删时上面也要对应
+  - name: 🦄 故障转移
+    type: select
+    tolerance: 200
+    interval: 3600
+    url: http://www.gstatic.com/generate_204
+    use:
+      - FB
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
   - name: 🇭🇰 香港节点
     type: url-test
     tolerance: 200
@@ -359,8 +360,16 @@ proxy-groups:
       url: http://www.gstatic.com/generate_204
       interval: 60
 
-rule-providers:
+  - name: 🎯 直接连接
+    type: select
+    proxies :
+      - DIRECT
+  - name: 🈲 禁止访问
+    type: select
+    proxies :
+      - REJECT
 
+rule-providers:
   RULE-LAN:
     type: http
     behavior: classical
@@ -396,27 +405,19 @@ rule-providers:
     path: ./Rule/Hijacking.yaml
     interval: 86400
 
-####################################################### 
-
-  RULE-Bilibili:
-    type: http
-    behavior: classical
-    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml"
-    path: ./Rule/Bilibili.yaml
-    interval: 86400
-
-  RULE-EHGallery:
-    type: http
-    behavior: classical
-    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/EHGallery/EHGallery.yaml"
-    path: ./Rule/EHGallery.yaml
-    interval: 86400
-
+# 特定应用
   RULE-WeChat:
     type: http
     behavior: classical
     url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/WeChat/WeChat.yaml"
     path: ./Rule/WeChat.yaml
+    interval: 86400
+
+  RULE-Telegram:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml"
+    path: ./Rule/Telegram.yaml
     interval: 86400
 
   RULE-YouTube: 
@@ -425,14 +426,22 @@ rule-providers:
     url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml"
     path: ./Rule/YouTube.yaml
     interval: 86400
-    
-  RULE-Telegram:
+
+  RULE-Bilibili:
     type: http
     behavior: classical
-    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Telegram/Telegram.yaml"
-    path: ./Rule/Telegram.yaml
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/BiliBili/BiliBili.yaml"
+    path: ./Rule/Bilibili.yaml
     interval: 86400
 
+  RULE-Game: 
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Game/Game.yaml"
+    path: ./Rule/Game.yaml
+    interval: 86400
+
+# 地区限定
   RULE-Pixiv:
     type: http
     behavior: classical
@@ -447,36 +456,49 @@ rule-providers:
     path: ./Rule/Bahamut.yaml
     interval: 86400
 
-####################################################### 
-
-  RULE-Apple:
+# 开发工具
+  RULE-GitHub: 
     type: http
     behavior: classical
-    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple_Classical.yaml"
-    path: ./Rule/Apple.yaml
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GitHub/GitHub.yaml"
+    path: ./Rule/Microsoft.yaml
     interval: 86400
 
-  RULE-Google:
+  RULE-Google: 
     type: http
     behavior: classical
     url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml"
     path: ./Rule/Google.yaml
     interval: 86400
 
-  RULE-OpenAI:
+  RULE-OpenAI: 
     type: http
     behavior: classical
     url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OpenAI/OpenAI.yaml"
     path: ./Rule/OpenAI.yaml
     interval: 86400
-
-  RULE-Microsoft:
+  
+  RULE-Microsoft: 
     type: http
     behavior: classical
     url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml"
     path: ./Rule/Microsoft.yaml
     interval: 86400
 
+  RULE-Developer:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Developer/Developer.yaml"
+    path: ./Rule/Developer.yaml
+    interval: 86400
+
+# 国外兜底
+  RULE-Cloudflare:
+    type: http
+    behavior: classical
+    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Cloudflare/Cloudflare.yaml"
+    path: ./Rule/Cloudflare.yaml
+    interval: 86400
 
   RULE-GlobalMedia: 
     type: http
@@ -485,13 +507,6 @@ rule-providers:
     path: ./Rule/GlobalMedia.yaml
     interval: 86400
 
-  RULE-Cloudflare:
-    type: http
-    behavior: classical
-    url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Cloudflare/Cloudflare.yaml"
-    path: ./Rule/Cloudflare.yaml
-    interval: 86400
-    
   RULE-Global: 
     type: http
     behavior: classical
@@ -499,15 +514,14 @@ rule-providers:
     path: ./Rule/Global.yaml
     interval: 86400
 
-#######################################################
-
+# 国内兜底
   RULE-Download: 
     type: http
     behavior: classical
     url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Download/Download.yaml"
     path: ./Rule/Download.yaml
     interval: 86400
-
+    
   RULE-ChinaMedia: 
     type: http
     behavior: classical
@@ -531,35 +545,36 @@ rule-providers:
 
 rules:
   # Local Area Network
-  - RULE-SET,RULE-LAN,DIRECT
-  - RULE-SET,RULE-Direct,DIRECT
-  # ADs Block / Privacy / Hijacking
-  - RULE-SET,RULE-ADBlock,⛔ ADBlock
-  - RULE-SET,RULE-Privacy,⛔ ADBlock
-  - RULE-SET,RULE-Hijacking,⛔ ADBlock
+  - RULE-SET,RULE-LAN,🎯 直接连接
+  - RULE-SET,RULE-Direct,🎯 直接连接
+  # ADs block / Privacy / Hijacking
+  - RULE-SET,RULE-ADBlock,⛔ 广告拦截
+  - RULE-SET,RULE-Privacy,⛔ 广告拦截
+  - RULE-SET,RULE-Hijacking,⛔ 广告拦截
   # Special
-  - RULE-SET,RULE-Bilibili,🎥 Bilibili
-  - RULE-SET,RULE-EHGallery,🖼️ EhViewer
-  - RULE-SET,RULE-WeChat,🍀 WeChat
-  - RULE-SET,RULE-YouTube,🎞️ YouTube
-  - RULE-SET,RULE-Telegram,📲 Telegram
+  - RULE-SET,RULE-YouTube,🎞️ 油管视频
+  - RULE-SET,RULE-Telegram,📲 电报通讯
+  - RULE-SET,RULE-Bilibili,🎥 哔哩哔哩
+  - RULE-SET,RULE-WeChat,🍀 微信聊天
+  - RULE-SET,RULE-Game,🎮 游戏平台
   # Limit area
   - RULE-SET,RULE-Pixiv,🇯🇵 日本节点
   - RULE-SET,RULE-Bahamut, 🇹🇼 台湾节点
   ####################################################### 
-  - RULE-SET,RULE-Apple,🐳 Developer
-  - RULE-SET,RULE-Google,🐳 Developer
-  - RULE-SET,RULE-OpenAI,🐳 Developer
-  - RULE-SET,RULE-Microsoft,🐳 Developer
+  - RULE-SET,RULE-GitHub,🐳 开发工具
+  - RULE-SET,RULE-Google,🐳 开发工具
+  - RULE-SET,RULE-OpenAI,🐳 开发工具
+  - RULE-SET,RULE-Microsoft,🐳 开发工具
+  - RULE-SET,RULE-Developer,🐳 开发工具
   ####################################################### 
-  - RULE-SET,RULE-Cloudflare,🍟 Foregin
-  - RULE-SET,RULE-GlobalMedia,🍟 Foregin
-  - RULE-SET,RULE-Global,🍟 Foregin
+  - RULE-SET,RULE-Cloudflare,🍟 整点薯条
+  - RULE-SET,RULE-GlobalMedia,🍟 整点薯条
+  - RULE-SET,RULE-Global,🍟 整点薯条
   ####################################################### 
-  - RULE-SET,RULE-Download,🍔 Domestic
-  - RULE-SET,RULE-ChinaMedia,🍔 Domestic
-  - RULE-SET,RULE-ChinaIPs,🍔 Domestic
-  - RULE-SET,RULE-China,🍔 Domestic
-  # Final / Dns Failed
-  - GEOIP,CN,DIRECT
-  - MATCH,🚫 FINAL
+  - RULE-SET,RULE-Download,🍔 整点汉堡
+  - RULE-SET,RULE-ChinaMedia,🍔 整点汉堡
+  - RULE-SET,RULE-ChinaIPs,🍔 整点汉堡
+  - RULE-SET,RULE-China,🍔 整点汉堡
+
+  - GEOIP,CN,🎯 直接连接
+  - MATCH,🚫 最后匹配
