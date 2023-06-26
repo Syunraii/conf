@@ -1,1 +1,0 @@
-https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.module
