@@ -4,9 +4,7 @@
 #!author=@R·E https://t.me/Functional_Store_Hub
 
 [Script]
-Nicegram Vip= type=http-request,pattern=^https?:\/\/restore-access\.indream\.app\/restoreAccess\?id=\w+$,requires-body=0,max-size=0,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/Nicegram/Script/Nicegram.js,script-update-interval=0
-
-Nicegram: Unlimited Text+解锁订阅 = type=http-response,pattern=https?:\/\/restore-access\.indream\.app\/restoreAccess\?id=\d{5,10},requires-body=1,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/Nicegram.js
+Nicegram VIP = type=http-request,pattern=^https?:\/\/restore-access\.indream\.app\/restoreAccess\?id=\w+$,requires-body=0,max-size=0,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/Nicegram/Script/Nicegram.js,script-update-interval=0
 
 [MITM]
 hostname = %APPEND% restore-access.indream.app
