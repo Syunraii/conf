@@ -1,5 +1,5 @@
 #!name=Flush DNS
-#!desc=刷新软件DNS缓存
+#!desc=刷新DNS缓存
 #!system=ios
 
 [Panel]

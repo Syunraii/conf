@@ -1,5 +1,5 @@
 #!name=Act Time
-#!desc=显示软件运行时长
+#!desc=显示运行时长
 #!system=ios
 
 [Panel]

@@ -1,0 +1,1 @@
+sub-store搭配rename.js统一修改节点名称
