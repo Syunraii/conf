@@ -1,9 +1,0 @@
-#!name=Redirect-Baidu
-#!desc=防止百度跳转AppStore
-#!system=ios
-
-[Script]
-Redirect-Baidu = type=http-response,pattern=^https:\/\/boxer\.baidu\.com\/scheme\?scheme,script-path=https://raw.githubusercontent.com/ventusoon/ventus/main/Script/baidu-no-redirect.js
-
-[MITM]
-hostname = boxer.baidu.com

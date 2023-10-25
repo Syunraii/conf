@@ -1,0 +1,10 @@
+#!name=Google
+#!desc=防止谷歌搜索自动换区
+
+[URL Rewrite]
+^https?://(www.)?g.cn https://www.google.com 302
+^https?://(www.)?google.cn https://www.google.com 302
+^https?://(www.)?google.com.hk https://www.google.com/ 302
+
+[MITM]
+hostname = %APPEND% *.google.cn, *.g.cn, *.google.com.hk 

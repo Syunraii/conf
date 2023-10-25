@@ -1,0 +1,15 @@
+#!name=Bilibili Auto
+#!desc=哔哩哔哩自动换区
+#!system=ios
+
+# 需要添加规则 https://raw.githubusercontent.com/NobyDa/Script/master/Surge/Bilibili.list
+#          或 https://raw.githubusercontent.com/NobyDa/Script/master/Surge/Bilibili.listStreamingMedia/StreamingSE.list
+# 需要搭配boxjs设置策略组名称，否则下载脚本到本地修改/加入 策略组名称
+
+[Script]
+bilibili_auto_search = type=http-request,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/Bili_Auto_Regions.js,pattern=^https:\/\/ap(p|i)\.bili(bili|api)\.(com|net)\/x\/v\d\/search(\/type)?\?.+?%20(%E6%B8%AF|%E5%8F%B0|%E4%B8%AD)&,timeout=10,enable=true
+bilibili_auto_region = type=http-response,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/Bili_Auto_Regions.js,pattern=https:\/\/ap(p|i)\.bili(bili|api)\.(com|net)\/(pgc\/view\/v\d\/app\/season|x\/v\d\/search\/defaultwords)\?access_key,max-size=0,requires-body=true,timeout=10,enable=true
+
+
+[MITM]
+hostname = %APPEND% ap?.bilibili.com, ap?.biliapi.net

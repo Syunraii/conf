@@ -1,0 +1,16 @@
+#!name=Bilibili Checkin
+#!desc=哔哩哔哩自动签到
+#!system=ios
+
+# 通过boxjs配置投币次数
+
+[Script]
+bilibili_checkin = type=cron,cronexp=4 10 * * *,script-path=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
+
+#以下cookie获取方式二选其一即可
+#bilibili_get_cookie(APP) = type=http-request,pattern=^https:\/\/app\.bilibili\.com\/x\/resource\/domain\?,script-path=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
+
+#bilibili_get_cookie(WEB) = type=http-request,pattern=^https:\/\/m.bilibili.com/$,script-path=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
+
+[MITM]
+hostname= %APPEND% app.bilibili.com, m.bilibili.com

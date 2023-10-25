@@ -1,1 +1,0 @@
-https://raw.githubusercontent.com/Patickhuang/surge/main/zyzchongxie.sgmodule
