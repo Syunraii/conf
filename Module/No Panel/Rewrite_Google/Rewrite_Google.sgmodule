@@ -1,4 +1,4 @@
-#!name=Google
+#!name=Rewrite Google
 #!desc=防止谷歌搜索自动换区
 
 [URL Rewrite]

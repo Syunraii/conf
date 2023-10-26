@@ -1,0 +1,12 @@
+#!name=Tiktok
+#!desc=Tiktok去水印+去广告
+
+[URL Rewrite]
+^https://aweme-eagle(.*)\.snssdk\.com/aweme/v2/ https://aweme-eagle$1.snssdk.com/aweme/v1/ 302
+
+[Script]
+TikTok_AdBlock = type=http-request,pattern=^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post),requires-body=1,max-size=0,script-path=https://hub.nange.cn/Script/ByteDance/Aweme.js
+TikTok_AdBlock = type=http-response,pattern=^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post),requires-body=1,max-size=0,script-path=https://hub.nange.cn/Script/ByteDance/Aweme.js
+
+[MITM]
+hostname = %APPEND% *.snssdk.com, *.amemv.com, *.musical.ly
