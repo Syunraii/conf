@@ -1,3 +1,7 @@
+/*
+ * origin：https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+*/
+
 let args = getArgs();
 
 (async () => {

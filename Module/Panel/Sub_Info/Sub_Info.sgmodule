@@ -15,6 +15,6 @@ AirPlane1 = script-name=SubscribeInfo1,update-interval=1800
 AirPlane2 = script-name=SubscribeInfo2,update-interval=1800
 
 [Script]
-SubscribeInfo1=type=generic,timeout=15,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/Subscribe%20Info/SubscribeInfo.js,script-update-interval=3600,argument=url=[sub-link]&reset_day=[xx]&expire=[xxxx-xx-xx]&title=[xxxx]&icon=icon=airplane.circle&color=#00BC12
+SubscribeInfo1=type=generic,timeout=15,script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js,script-update-interval=3600,argument=url=[sub-link]&reset_day=[xx]&expire=[xxxx-xx-xx]&title=[xxxx]&icon=icon=airplane.circle&color=#00BC12
 
-SubscribeInfo2=type=generic,timeout=15,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/Subscribe%20Info/SubscribeInfo.js,script-update-interval=3600,argument=url=[sub-link]&reset_day=[xx]&expire=[xxxx-xx-xx]&title=[xxxx]&icon=icon=airplane.circle.fill&color=#157EFB
+SubscribeInfo2=type=generic,timeout=15,script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js,script-update-interval=3600,argument=url=[sub-link]&reset_day=[xx]&expire=[xxxx-xx-xx]&title=[xxxx]&icon=icon=airplane.circle.fill&color=#157EFB

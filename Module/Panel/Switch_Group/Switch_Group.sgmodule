@@ -1,5 +1,5 @@
 #!name=Switch Group
-#!desc=快速切换
+#!desc=快速切换策略组
 #!system=ios
 
 [Panel]
