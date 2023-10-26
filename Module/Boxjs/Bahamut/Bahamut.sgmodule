@@ -1,13 +1,12 @@
 #!name=Bahamut
-#!desc=巴哈姆特签到+广告屏蔽
+#!desc=巴哈姆特使用增强
 #!system=ios
 
 [Script]
-# 自动签到
-Bahamut_Checkin = type = cron, cronexp = "0 10 10 * * ? *", script-path = https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutDailyBonus.js, wake-system =1, timeout = 300
+# 通过boxjs配置账密
+巴哈姆特_自动签到 = type = cron, cronexp = "0 10 10 * * ? *", script-path = https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutDailyBonus.js, wake-system =1, timeout = 300
 
-# 屏蔽广告
-Bahamut_AdBlock = type=http-response,pattern=^https:\/\/api\.gamer\.com\.tw\/mobile_app\/anime\/v\d/(token|m3u8).php\?,requires-body=1,max-size=0,timeout=40,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutAnimeAds.js
+巴哈姆特_广告屏蔽 = type=http-response,pattern=^https:\/\/api\.gamer\.com\.tw\/mobile_app\/anime\/v\d/(token|m3u8).php\?,requires-body=1,max-size=0,timeout=40,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutAnimeAds.js
 
 [MITM]
 hostname = %APPEND% api.gamer.com.tw
