@@ -1,10 +1,8 @@
 #!name=Nicegram
-#!desc=解锁Vip
-#!openUrl=https://github.com/I-am-R-E/Functional-Store-Hub/tree/Master/Nicegram
-#!author=@R·E https://t.me/Functional_Store_Hub
+#!desc=Nicegrame解锁Vip
 
 [Script]
-Nicegram VIP = type=http-request,pattern=^https?:\/\/restore-access\.indream\.app\/restoreAccess\?id=\w+$,requires-body=0,max-size=0,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/Nicegram/Script/Nicegram.js,script-update-interval=0
+Nicegram_Vip = type=http-request,pattern=^https?:\/\/restore-access\.indream\.app\/restoreAccess\?id=\w+$,requires-body=0,max-size=0,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/Nicegram/Script/Nicegram.js,script-update-interval=0
 
 [MITM]
 hostname = %APPEND% restore-access.indream.app
