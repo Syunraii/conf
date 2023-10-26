@@ -13,6 +13,5 @@
 TikTok_AdBlock = type=http-request,pattern=^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post),requires-body=1,max-size=0,script-path=https://hub.nange.cn/Script/ByteDance/Aweme.js
 TikTok_AdBlock = type=http-response,pattern=^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post),requires-body=1,max-size=0,script-path=https://hub.nange.cn/Script/ByteDance/Aweme.js
 
-
 [MITM]
 hostname = %APPEND% *.snssdk.com, *.amemv.com, *.musical.ly, *.tiktokv.com, *.byteoversea.com, *.tik-tokapi.com

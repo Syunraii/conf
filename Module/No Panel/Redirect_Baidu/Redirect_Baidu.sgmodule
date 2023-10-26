@@ -6,4 +6,4 @@
 redirect_baidu = type=http-response,pattern=^https:\/\/boxer\.baidu\.com\/scheme\?scheme,script-path=https://raw.githubusercontent.com/ventusoon/ventus/main/Script/baidu-no-redirect.js
 
 [MITM]
-hostname = boxer.baidu.com
+hostname = %APPEND% boxer.baidu.com

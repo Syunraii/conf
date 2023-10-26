@@ -11,4 +11,4 @@ Pixiv_Daily = type=cron,cronexp="0 0 10-20/2 * * ?",script-path=https://raw.gith
 Pixiv_AdBlock = type=http-response,pattern=^https?:\/\/oauth\.secure\.pixiv\.net\/(auth\/token),requires-body=1,max-size=0,script-path=https://github.com/ddgksf2013/Scripts/raw/master/pixivAds.js
  
 [MITM]
-hostname = oauth.secure.pixiv.net
+hostname = %APPEND% oauth.secure.pixiv.net
