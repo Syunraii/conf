@@ -1,21 +1,16 @@
 # Author:Syunraii
 # UpdateTime: 2023/11/4
-# Desc: 快速搜索"sub-link"，填入订阅信息
-#       该配置仅适用于cfa premium内核，cfa foss版本不支持RULE-SET
-# use : 
-#       1、新建一个.yaml文件，在配置面板找到并导入，保存等待规则下载完毕即可
-#       2、如果你的订阅中缺少某个分组，一定要在策略组中删除或屏蔽掉，否则会提示错误
+# Desc: search "sub-link"，insert your sub
 
-port: 7890                                  # http代理端口
-socks-port: 7891                            # socks代理端口
-mixed-port: 7890                            # 混合代理端口
+port: 7890
+socks-port: 7891
+mixed-port: 7890
 bind-address: '*'
-mode: Rule                                  # 模式（直连、规则、全局）
-log-level: warning                          # 日志等级
-external-controller: 127.0.0.1:9090         # 远程控制器
-latencyUrl: http://www.aliyun.com/          # 全局测速url
-latencyTimeout: 5000                        # 超时时间 ms
-# 跳过代理
+mode: Rule
+log-level: warning
+external-controller: 127.0.0.1:9090
+latencyUrl: http://www.aliyun.com/
+latencyTimeout: 5000
 bypass: 
   - localhost
   - '*.local'
@@ -59,7 +54,7 @@ bypass:
   - ::ffff:128:0:0:0/1
 dns:
   enable: true
-  ipv6: false                                 # 启用ipv6
+  ipv6: false
   use-hosts: true
   listen: '0.0.0.0:53'
   default-nameserver:
@@ -67,7 +62,6 @@ dns:
     - 119.29.29.29
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16 
-  # 以真实ip返回
   fake-ip-fliter: 
     - '*.lan'
     - cable.auth.com
@@ -146,15 +140,12 @@ dns:
     - 240.0.0.0/4
     - 0.0.0.0/32
 # hosts:
-#   # 仅了解情况下添加,例如谷歌翻译改hosts使能等 
 #   # 'mtalk.google.com': 108.177.125.188
 #   # '.dev': 127.0.0.1
 # tun:
 #  
 
-# 远程订阅
 proxy-providers:
-  # 普通的订阅: 满足一般上网需求
   MySub: &MySub
     type: http
     interval: 86400
@@ -165,7 +156,6 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 86400
 
-  # 稳定且干净的订阅: 通过IP限制等(没有就删)
   Fallback: &Fallback
     type: http
     interval: 86400
@@ -200,15 +190,6 @@ proxy-providers:
     <<: *MySub
     filter: '坡|新加坡|狮城|Singapore|SG|🇸🇬'
 
-  # 不过滤, 显示所有普通订阅
-  MySub :
-    <<: *MySub
-
-  # 不过滤, 显示所有故障转移订阅
-  Fallback :
-    <<: *Fallback
-
-# 策略组
 proxy-groups:
   - name: 🌏 全局选择
     type: select
@@ -216,7 +197,7 @@ proxy-groups:
 
   - name: 🚀 自动选择
     type: url-test
-    tolerance: 200  # 若速率相差200ms则自动更新最快的节点
+    tolerance: 200
     interval: 120   # interval ≠ 0
     url: http://www.gstatic.com/generate_204
     proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
@@ -229,7 +210,6 @@ proxy-groups:
     type: select
     proxies: [🎯 直接连接, 🌏 全局选择, 🈲 禁止访问, 🛩️ 手动选择]
 
-# 特定应用
   - name: 📲 电报通讯
     type: select
     proxies: [🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
@@ -240,14 +220,12 @@ proxy-groups:
 
   - name: 🍀 微信聊天
     type: select
-    proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
+    proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
-  # 开发平台
   - name: 🐳 开发工具
     type: select
     proxies: [🌏 全局选择, 🎯 直接连接, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
   
-  # 国外或本土
   - name: 🍟 整点薯条
     type: select
     proxies: [🌏 全局选择, 🎯 直接连接, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
@@ -256,7 +234,6 @@ proxy-groups:
     type: select
     proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
-# 节点分组,放在下面就不用一直往下拉了,增/删时上面也要对应
   - name: 🛩️ 手动选择 
     type: url-test
     tolerance: 200
@@ -332,10 +309,10 @@ proxy-groups:
       - REJECT
 
 rule-providers:
-  RULE-LAN:
+  RULE-Lan:
     type: http
     behavior: classical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml"
     path: ./Rule/Lan.yaml
     interval: 86400
 
@@ -346,11 +323,11 @@ rule-providers:
     path: ./Rule/Direct.yaml
     interval: 86400
  
-  RULE-ADBlock:
+  RULE-AdBlock:
     type: http
     behavior: classical
     url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingLite/AdvertisingLite.yaml"
-    path: ./Rule/ADBlock.yaml
+    path: ./Rule/AdBlock.yaml
     interval: 86400
 
   RULE-Privacy:
@@ -367,7 +344,6 @@ rule-providers:
     path: ./Rule/Hijacking.yaml
     interval: 86400
 
-# 特定应用
   RULE-WeChat:
     type: http
     behavior: classical
@@ -389,7 +365,6 @@ rule-providers:
     path: ./Rule/Bilibili.yaml
     interval: 86400
 
-# 地区限定
   RULE-Pixiv:
     type: http
     behavior: classical
@@ -404,7 +379,6 @@ rule-providers:
     path: ./Rule/Bahamut.yaml
     interval: 86400
 
-# 开发工具
   RULE-GitHub: 
     type: http
     behavior: classical
@@ -412,7 +386,6 @@ rule-providers:
     path: ./Rule/Github.yaml
     interval: 86400
 
-# 国外兜底
   RULE-Proxy: 
     type: http
     behavior: classical
@@ -441,7 +414,6 @@ rule-providers:
     path: ./Rule/Global.yaml
     interval: 86400
 
-# 国内兜底
   RULE-Download: 
     type: http
     behavior: classical
@@ -464,18 +436,18 @@ rule-providers:
     interval: 86400
 
 rules:
-  # Local Area Network
-  - RULE-SET,RULE-LAN,🎯 直接连接
+  ####################################################### 
+  - RULE-SET,RULE-Lan,🎯 直接连接
   - RULE-SET,RULE-Direct,🎯 直接连接
-  # ADs block / Privacy / Hijacking
-  - RULE-SET,RULE-ADBlock,⛔ 广告拦截
+  ####################################################### 
+  - RULE-SET,RULE-AdBlock,⛔ 广告拦截
   - RULE-SET,RULE-Privacy,⛔ 广告拦截
   - RULE-SET,RULE-Hijacking,⛔ 广告拦截
-  # Special
+  ####################################################### 
   - RULE-SET,RULE-Telegram,📲 电报通讯
   - RULE-SET,RULE-Bilibili,🎥 哔哩哔哩
   - RULE-SET,RULE-WeChat,🍀 微信聊天
-  # Limit area
+  ####################################################### 
   - RULE-SET,RULE-Pixiv,🇯🇵 日本节点
   - RULE-SET,RULE-Bahamut,🇨🇳 台湾节点
   ####################################################### 
