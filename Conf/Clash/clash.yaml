@@ -209,6 +209,10 @@ proxy-groups:
   - name: 🚫 最后匹配
     type: select
     proxies: [🎯 直接连接, 🌏 全局选择, 🈲 禁止访问, 🛩️ 手动选择]
+    
+  - name: 🍀 微信聊天
+    type: select
+    proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
   - name: 📵 电报通讯
     type: select
@@ -218,9 +222,6 @@ proxy-groups:
     type: select
     proxies: [🎯 直接连接, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点]
 
-  - name: 🍀 微信聊天
-    type: select
-    proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
   - name: 🐳 开发工具
     type: select
@@ -454,9 +455,9 @@ rules:
   - RULE-SET,RULE-Pixiv,🇯🇵 日本节点
   - RULE-SET,RULE-Bahamut,🇨🇳 台湾节点
   ####################################################### 
+  - RULE-SET,RULE-WeChat,🍀 微信聊天
   - RULE-SET,RULE-Telegram,📵 电报通讯
   - RULE-SET,RULE-Bilibili,📹 哔哩哔哩
-  - RULE-SET,RULE-WeChat,🍀 微信聊天
   ####################################################### 
   - RULE-SET,RULE-GitHub,🐳 开发工具
   ####################################################### 
