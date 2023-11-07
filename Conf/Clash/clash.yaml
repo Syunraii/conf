@@ -407,6 +407,13 @@ rule-providers:
     path: ./Rule/Global.yaml
     interval: 86400
 
+  RULE-Proxy: 
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy_Classical.yaml"
+    path: ./Rule/Proxy.yaml
+    interval: 86400
+
   RULE-Download: 
     type: http
     behavior: classical
@@ -456,11 +463,12 @@ rules:
   - RULE-SET,RULE-Cloudflare,🍟 整点薯条
   - RULE-SET,RULE-GlobalMedia,🍟 整点薯条
   - RULE-SET,RULE-Global,🍟 整点薯条
+  - RULE-SET,RULE-Proxy,🍟 整点薯条
   ####################################################### 
   - RULE-SET,RULE-Download,🍔 整点汉堡
   - RULE-SET,RULE-ChinaMedia,🍔 整点汉堡
-  - RULE-SET,RULE-ChinaIPs,🍔 整点汉堡
   - RULE-SET,RULE-China,🍔 整点汉堡
+  - RULE-SET,RULE-ChinaIPs,🍔 整点汉堡
 
   - GEOIP,CN,🎯 直接连接
   - MATCH,🚫 最后匹配
