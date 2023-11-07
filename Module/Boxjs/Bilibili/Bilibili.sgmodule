@@ -4,10 +4,7 @@
 
 [Script]
 # 哔哩哔哩App
-# 以下cookie获取方式二选其一即可
 哔哩哔哩_获取Cookie(App) = type=http-request,pattern=^https:\/\/app\.bilibili\.com\/x\/resource\/domain\?,script-path=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
-#! 哔哩哔哩_获取Cookie(Web) = type=http-request,pattern=^https:\/\/m.bilibili.com/$,script-path=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
-
 # 通过boxjs配置投币次数
 哔哩哔哩_每日签到 = type=cron,cronexp=4 10 * * *,script-path=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
 
