@@ -311,14 +311,14 @@ var locationList = [
       custom: 'HK',
       flag: '🇭🇰'
   },
-//   {
-//       zh: '澳门',
-//       enShort: 'MO',
-//       enFull: 'Macao',
-//       reg: '澳门|Macao|澳门|澳門|CTM',
-//       custom: 'MO',
-//       flag: '🇲🇴'
-//   },
+/**   {
+       zh: '澳门',
+       enShort: 'MO',
+       enFull: 'Macao',
+       reg: '澳门|Macao|澳门|澳門|CTM',
+       custom: 'MO',
+       flag: '🇲🇴'
+   }, */
   {
       zh: '台湾',
       enShort: 'TW',
