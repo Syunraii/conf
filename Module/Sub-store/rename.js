@@ -1333,7 +1333,7 @@ var deleteList = [
       zh: '无用节点',
       enFull: '',
       enShort: '',
-      reg: '欢迎|过期|流量|时间|应急|expire|traffic|更新|测速|官网|http|电报'
+      reg: '加入|会员|欢迎|过期|流量|时间|应急|expire|traffic|更新|测速|官网|http|电报|流媒体'
   }
 ];
 var actionObject = {
