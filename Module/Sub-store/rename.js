@@ -311,14 +311,6 @@ var locationList = [
       custom: 'HK',
       flag: '🇭🇰'
   },
-/**   {
-       zh: '澳门',
-       enShort: 'MO',
-       enFull: 'Macao',
-       reg: '澳门|Macao|澳门|澳門|CTM',
-       custom: 'MO',
-       flag: '🇲🇴'
-   }, */
   {
       zh: '台湾',
       enShort: 'TW',
@@ -667,7 +659,7 @@ var locationList = [
       zh: '印度',
       enShort: 'IN',
       enFull: 'India',
-      reg: 'IN|India|India|IND|INDIA|印度|孟买|MFumbai',
+      reg: 'IN|India|India|IND|INDIA|印度|孟买|Mumbai',
       flag: '🇮🇳'
   },
   {
@@ -1043,7 +1035,7 @@ var locationList = [
       flag: '🇨🇭'
   },
   { zh: '叙利亚', enShort: 'SY', enFull: 'Syria', reg: 'SY|Syria' },
-  { zh: '塔吉克斯坦', enShort: 'TJ', enFull: 'Tajikstan', reg: 'TJ|Tajikstan' },
+  { zh: '塔吉克斯坦', enShort: 'TJ', enFull: 'Tajikistan', reg: 'TJ|Tajikistan' },
   { zh: '坦桑尼亚', enShort: 'TZ', enFull: 'Tanzania', reg: 'TZ|Tanzania' },
   {
       zh: '泰国',
@@ -1156,7 +1148,7 @@ var locationList = [
       zh: '孟买',
       enShort: 'Mumbai',
       enFull: 'Mumbai',
-      reg: 'Mumbai|Mumbai|India|IND|INDIA|印度|孟买|MFumbai',
+      reg: 'Mumbai|Mumbai|India|IND|INDIA|印度|孟买|Mumbai',
       flag: '🇮🇳'
   },
   {
@@ -1341,7 +1333,7 @@ var deleteList = [
       zh: '无用节点',
       enFull: '',
       enShort: '',
-      reg: '过期|流量|时间|应急|expire|traffic|更新|测速|官网|http'
+      reg: '欢迎|过期|流量|时间|应急|expire|traffic|更新|测速|官网|http|电报|t.me'
   }
 ];
 var actionObject = {
