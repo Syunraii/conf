@@ -315,7 +315,7 @@ var locationList = [
       zh: '澳门',
       enShort: 'MO',
       enFull: 'Macao',
-      reg: 'MO|Macao|MO|Macao|澳门|澳門|CTM',
+      reg: '澳门|Macao|澳门|澳門|CTM',
       custom: 'MO',
       flag: '🇲🇴'
   },
