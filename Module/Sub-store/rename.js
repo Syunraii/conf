@@ -371,7 +371,7 @@ var locationList = [
       zh: '德国',
       enShort: 'DE',
       enFull: 'Germany',
-      reg: 'DE|Germany|DE|German|GERMAN|德国|德國|法兰克福|京德|滬德|廣德|沪德|广德|Frankfurt|「德国」',
+      reg: 'DE|Germany|DE|German|GERMAN|德国|德國|法兰克福|京德|滬德|廣德|沪德|广德|Frankfurt|「🇩🇪」',
       custom: 'DE',
       flag: '🇩🇪'
   },
@@ -663,7 +663,7 @@ var locationList = [
   {
       zh: '印度',
       enShort: 'IN',
-      enFull: 'India',
+      enFull: 'IN',
       reg: 'IN|India|India|IND|INDIA|印度|孟买|Mumbai|「🇮🇳」',
       flag: '🇮🇳'
   },
