@@ -431,7 +431,7 @@ var locationList = [
   },
   { zh: '伯利兹', enShort: 'BZ', enFull: 'Belize', reg: 'BZ|Belize' },
   { zh: '贝宁', enShort: 'BJ', enFull: 'Benin', reg: 'BJ|Benin' },
-  { zh: '不丹', enShort: 'BT', enFull: 'Bhutan', reg: 'BT|Bhutan' },
+  { zh: '不丹', enShort: 'BT', enFull: 'Bhutan', reg: 'Bhutan' },
   { zh: '玻利维亚', enShort: 'BO', enFull: 'Bolivia', reg: 'BO|Bolivia' },
   {
       zh: '波黑',
