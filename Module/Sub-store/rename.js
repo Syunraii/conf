@@ -387,7 +387,8 @@ var locationList = [
       zh: '阿富汗',
       enShort: 'AF',
       enFull: 'Afghanistan',
-      reg: 'AF|Afghanistan'
+      reg: 'AF|Afghanistan',
+      flag: '🇦🇫'
   },
   {
       zh: '阿尔巴尼亚',
@@ -400,13 +401,15 @@ var locationList = [
       zh: '阿尔及利亚',
       enShort: 'DZ',
       enFull: 'Algeria',
-      reg: 'DZ|Algeria'
+      reg: 'DZ|Algeria',
+      flag: '🇩🇿'
   },
   {
       zh: '安哥拉',
       enShort: 'AO',
       enFull: 'Angola',
-      reg: 'AO|Angola'
+      reg: 'AO|Angola',
+      flag: '🇦🇴'
   },
   {
       zh: '阿根廷',
@@ -419,7 +422,8 @@ var locationList = [
       zh: '亚美尼亚',
       enShort: 'AM',
       enFull: 'Armenia',
-      reg: 'AM|Armenia'
+      reg: 'AM|Armenia',
+      flag: '🇦🇲'
   },
   {
       zh: '奥地利',
@@ -453,25 +457,29 @@ var locationList = [
       zh: '伯利兹',
       enShort: 'BZ',
       enFull: 'Belize',
-      reg: 'BZ|Belize'
+      reg: 'BZ|Belize',
+      flag: '🇧🇿'
   },
   {
       zh: '贝宁',
       enShort: 'BJ',
       enFull: 'Benin',
-      reg: 'BJ|Benin'
+      reg: 'BJ|Benin',
+      flag: '🇧🇯'
   },
   {
       zh: '不丹',
       enShort: 'BT',
       enFull: 'Bhutan',
-      reg: 'Bhutan'
+      reg: 'Bhutan',
+      flag: '🇧🇹'
   },
   {
       zh: '玻利维亚',
       enShort: 'BO',
       enFull: 'Bolivia',
-      reg: 'BO|Bolivia'
+      reg: 'BO|Bolivia',
+      flag: '🇧🇴'
   },
   {
       zh: '波黑',
@@ -484,7 +492,8 @@ var locationList = [
       zh: '博茨瓦纳',
       enShort: 'BW',
       enFull: 'Botswana',
-      reg: 'BW|Botswana'
+      reg: 'BW|Botswana',
+      flag: '🇧🇼'
   },
   {
       zh: '巴西',
@@ -497,13 +506,15 @@ var locationList = [
       zh: '英属维京群岛',
       enShort: 'VG',
       enFull: 'British Virgin Islands',
-      reg: 'VG|British Virgin Islands'
+      reg: 'VG|British Virgin Islands',
+      flag: '🇻🇬'
   },
   {
       zh: '文莱',
       enShort: 'BN',
       enFull: 'Brunei',
-      reg: 'BN|Brunei'
+      reg: 'BN|Brunei',
+      flag: '🇧🇳'
   },
   {
       zh: '保加利亚',
@@ -516,13 +527,15 @@ var locationList = [
       zh: '布基纳法索',
       enShort: 'BF',
       enFull: 'Burkina-faso',
-      reg: 'BF|Burkina-faso'
+      reg: 'BF|Burkina-faso',
+      flag: '🇧🇫'
   },
   {
       zh: '布隆迪',
       enShort: 'BI',
       enFull: 'Burundi',
-      reg: 'BI|Burundi'
+      reg: 'BI|Burundi',
+      flag: '🇧🇮'
   },
   {
       zh: '柬埔寨',
@@ -535,7 +548,8 @@ var locationList = [
       zh: '喀麦隆',
       enShort: 'CM',
       enFull: 'Cameroon',
-      reg: 'CM|Cameroon'
+      reg: 'CM|Cameroon',
+      flag: '🇨🇲'
   },
   {
       zh: '加拿大',
@@ -548,25 +562,29 @@ var locationList = [
       zh: '佛得角',
       enShort: 'CV',
       enFull: 'Cape Verde',
-      reg: 'CV|Cape Verde'
+      reg: 'CV|Cape Verde',
+      flag: '🇨🇻'
   },
   {
       zh: '开曼群岛',
       enShort: 'KY',
       enFull: 'Cayman Islands',
-      reg: 'KY|Cayman Islands'
+      reg: 'KY|Cayman Islands',
+      flag: '🇰🇾'
   },
   {
       zh: '中非共和国',
       enShort: 'CF',
       enFull: 'Central African Republic',
-      reg: 'CF|Central African Republic'
+      reg: 'CF|Central African Republic',
+      flag: '🇨🇫'
   },
   {
       zh: '乍得',
       enShort: 'TD',
       enFull: 'Chad',
-      reg: 'TD|Chad'
+      reg: 'TD|Chad',
+      flag: '🇹🇩'
   },
   {
       zh: '智利',
@@ -594,19 +612,22 @@ var locationList = [
       zh: '科摩罗',
       enShort: 'KM',
       enFull: 'Comoros', 
-      reg: 'KM|Comoros' 
+      reg: 'KM|Comoros' ,
+      flag: '🇰🇲'
   },
   {
       zh: '刚果(布)',
       enShort: 'CG',
       enFull: 'Congo - Brazzaville',
-      reg: 'CG|Congo - Brazzaville'
+      reg: 'CG|Congo - Brazzaville',
+      flag: '🇨🇬'
   },
   {
       zh: '刚果(金)',
       enShort: 'CD',
       enFull: 'Congo - Kinshasa',
-      reg: 'CD|Congo - Kinshasa'
+      reg: 'CD|Congo - Kinshasa',
+      flag: '🇨🇩'
   },
   {
       zh: '哥斯达黎加',
@@ -647,13 +668,15 @@ var locationList = [
       zh: '吉布提',
       enShort: 'DJ',
       enFull: 'Djibouti',
-      reg: 'DJ|Djibouti'
+      reg: 'DJ|Djibouti',
+      flag: '🇩🇯'
   },
   {
       zh: '多米尼加共和国',
       enShort: 'DO',
       enFull: 'Dominican Republic',
-      reg: 'DO|Dominican Republic|「🇩🇴」'
+      reg: 'DO|Dominican Republic|「🇩🇴」',
+      flag: '🇩🇴'
   },
   {
       zh: '厄瓜多尔',
@@ -673,19 +696,22 @@ var locationList = [
       zh: '萨尔瓦多',
       enShort: 'SV',
       enFull: 'EI Salvador',
-      reg: 'SV|EI Salvador'
+      reg: 'SV|EI Salvador',
+      flag: '🇸🇻'
   },
   {
       zh: '赤道几内亚',
       enShort: 'GQ',
       enFull: 'Equatorial Guinea',
-      reg: 'GQ|Equatorial Guinea'
+      reg: 'GQ|Equatorial Guinea',
+      flag: '🇬🇶'
   },
   {
       zh: '厄立特里亚',
       enShort: 'ER',
       enFull: 'Eritrea',
-      reg: 'ER|Eritrea'
+      reg: 'ER|Eritrea',
+      flag:'🇪🇷'
   },
   {
       zh: '爱沙尼亚',
@@ -698,13 +724,15 @@ var locationList = [
       zh: '埃塞俄比亚',
       enShort: 'ET',
       enFull: 'Ethiopia',
-      reg: 'ET|Ethiopia'
+      reg: 'ET|Ethiopia',
+      flag: '🇪🇹'
   },
   {
       zh: '斐济',
       enShort: 'FJ',
       enFull: 'Fiji',
-      reg: 'FJ|Fiji'
+      reg: 'FJ|Fiji',
+      flag: '🇫🇯'
   },
   {
       zh: '芬兰',
@@ -717,13 +745,15 @@ var locationList = [
       zh: '加蓬',
       enShort: 'GA',
       enFull: 'Gabon',
-      reg: 'GA|Gabon'
+      reg: 'GA|Gabon',
+      flag: '🇬🇦'
   },
   {
       zh: '冈比亚',
       enShort: 'GM',
       enFull: 'Gambia',
-      reg: 'GM|Gambia'
+      reg: 'GM|Gambia',
+      flag: '🇬🇲'
   },
   {
       zh: '格鲁吉亚',
@@ -736,7 +766,8 @@ var locationList = [
       zh: '加纳',
       enShort: 'GH',
       enFull: 'Ghana',
-      reg: 'GH|Ghana'
+      reg: 'GH|Ghana',
+      flag: '🇬🇭'
   },
   {
       zh: '希腊',
@@ -749,37 +780,43 @@ var locationList = [
       zh: '格陵兰',
       enShort: 'GL',
       enFull: 'Greenland',
-      reg: 'GL|Greenland'
+      reg: 'GL|Greenland',
+      flag: '🇬🇱'
   },
   {
       zh: '危地马拉',
       enShort: 'GT',
       enFull: 'Guatemala',
-      reg: 'GT|Guatemala'
+      reg: 'GT|Guatemala',
+      flag: '🇬🇹'
   },
   {
       zh: '几内亚',
       enShort: 'GN',
       enFull: 'Guinea',
-      reg: 'GN|Guinea'
+      reg: 'GN|Guinea',
+      flag: '🇬🇳'
   },
   {
       zh: '圭亚那',
       enShort: 'GY',
       enFull: 'Guyana',
-      reg: 'GY|Guyana'
+      reg: 'GY|Guyana',
+      flag: '🇬🇾'
   },
   {
       zh: '海地',
       enShort: 'HT',
       enFull: 'Haiti',
-      reg: 'HT|Haiti'
+      reg: 'HT|Haiti',
+      flag: '🇭🇹'
   },
   {
       zh: '洪都拉斯',
       enShort: 'HN',
       enFull: 'Honduras',
-      reg: 'HN|Honduras'
+      reg: 'HN|Honduras',
+      flag: '🇭🇳'
   },
   {
       zh: '匈牙利',
@@ -854,13 +891,15 @@ var locationList = [
       zh: '科特迪瓦',
       enShort: 'CI',
       enFull: 'Ivory Coast',
-      reg: 'CI|Ivory Coast'
+      reg: 'CI|Ivory Coast',
+      flag: '🇨🇮'
   },
   {
       zh: '牙买加',
       enShort: 'JM',
       enFull: 'Jamaica',
-      reg: 'JM|Jamaica'
+      reg: 'JM|Jamaica',
+      flag: '🇯🇲'
   },
   {
       zh: '约旦',
@@ -887,19 +926,22 @@ var locationList = [
       zh: '科威特',
       enShort: 'KW',
       enFull: 'Kuwait',
-      reg: 'KW|Kuwait'
+      reg: 'KW|Kuwait',
+      flag: '🇰🇼'
   },
   {
       zh: '吉尔吉斯斯坦',
       enShort: 'KG',
       enFull: 'Kyrgyzstan',
-      reg: 'KG|Kyrgyzstan'
+      reg: 'KG|Kyrgyzstan',
+      flag: '🇰🇬'
   },
   {
       zh: '老挝',
       enShort: 'LA',
       enFull: 'Laos',
-      reg: 'LA|Laos'
+      reg: 'LA|Laos',
+      flag: '🇱🇦'
   },
   {
       zh: '拉脱维亚',
@@ -912,25 +954,29 @@ var locationList = [
       zh: '黎巴嫩',
       enShort: 'LB',
       enFull: 'Lebanon',
-      reg: 'LB|Lebanon'
+      reg: 'LB|Lebanon',
+      flag: '🇱🇧'
   },
   {
       zh: '莱索托',
       enShort: 'LS',
       enFull: 'Lesotho',
-      reg: 'LS|Lesotho'
+      reg: 'LS|Lesotho',
+      flag: '🇱🇸'
   },
   {
       zh: '利比里亚',
       enShort: 'LR',
       enFull: 'Liberia',
-      reg: 'LR|Liberia'
+      reg: 'LR|Liberia',
+      flag: '🇱🇷'
   },
   {
       zh: '利比亚',
       enShort: 'LY',
       enFull: 'Libya',
-      reg: 'LY|Libya'
+      reg: 'LY|Libya',
+      flag: '🇱🇾'
   },
   {
       zh: '立陶宛',
@@ -957,13 +1003,15 @@ var locationList = [
       zh: '马达加斯加',
       enShort: 'MG',
       enFull: 'Madagascar',
-      reg: 'MG|Madagascar'
+      reg: 'MG|Madagascar',
+      flag: '🇲🇬'
   },
   {
       zh: '马拉维',
       enShort: 'MW',
       enFull: 'Malawi',
-      reg: 'MW|Malawi'
+      reg: 'MW|Malawi',
+      flag: '🇲🇼'
   },
   {
       zh: '马来西亚',
@@ -976,13 +1024,15 @@ var locationList = [
       zh: '马尔代夫',
       enShort: 'MV',
       enFull: 'Maldives',
-      reg: 'MV|Maldives'
+      reg: 'MV|Maldives',
+      flag: '🇲🇻'
   },
   {
       zh: '马里',
       enShort: 'ML',
       enFull: 'Mali',
-      reg: 'ML|Mali'
+      reg: 'ML|Mali',
+      flag: '🇲🇱'
   },
   {
       zh: '马耳他',
@@ -995,13 +1045,15 @@ var locationList = [
       zh: '毛利塔尼亚',
       enShort: 'MR',
       enFull: 'Mauritania',
-      reg: 'MR|Mauritania'
+      reg: 'MR|Mauritania',
+      flag: '🇲🇷'
   },
   {
       zh: '毛里求斯',
       enShort: 'MU',
       enFull: 'Mauritius',
-      reg: 'MU|Mauritius'
+      reg: 'MU|Mauritius',
+      flag: '🇲🇺'
   },
   {
       zh: '墨西哥',
@@ -1021,7 +1073,8 @@ var locationList = [
       zh: '摩纳哥',
       enShort: 'MC',
       enFull: 'Monaco',
-      reg: 'MC|Monaco'
+      reg: 'MC|Monaco',
+      flag: '🇲🇨'
   },
   {
       zh: '蒙古',
@@ -1041,7 +1094,8 @@ var locationList = [
       zh: '莫桑比克',
       enShort: 'MZ',
       enFull: 'Mozambique',
-      reg: 'MZ|Mozambique'
+      reg: 'MZ|Mozambique',
+      flag: '🇲🇿'
   },
   {
       zh: '缅甸',
@@ -1054,7 +1108,8 @@ var locationList = [
       zh: '纳米比亚',
       enShort: 'NA',
       enFull: 'Namibia',
-      reg: 'NA|Namibia'
+      reg: 'NA|Namibia',
+      flag: '🇳🇦'
   },
   {
       zh: '尼泊尔',
@@ -1081,13 +1136,15 @@ var locationList = [
       zh: '尼加拉瓜',
       enShort: 'NI',
       enFull: 'Nicaragua',
-      reg: 'NI|Nicaragua'
+      reg: 'NI|Nicaragua',
+      flag: '🇳🇮'
   },
   {
       zh: '尼日尔',
       enShort: 'NE',
       enFull: 'Niger',
-      reg: 'NE|Niger'
+      reg: 'NE|Niger',
+      flag: '🇳🇪'
   },
   {
       zh: '尼日利亚',
@@ -1114,7 +1171,8 @@ var locationList = [
       zh: '阿曼',
       enShort: 'OM',
       enFull: 'Oman',
-      reg: 'OM|Oman'
+      reg: 'OM|Oman',
+      flag: '🇴🇲'
   },
   {
       zh: '巴基斯坦',
@@ -1134,7 +1192,8 @@ var locationList = [
       zh: '巴拉圭',
       enShort: 'PY',
       enFull: 'Paraguay',
-      reg: 'PY|Paraguay'
+      reg: 'PY|Paraguay',
+      flag: '🇵🇾'
   },
   {
       zh: '秘鲁',
@@ -1175,13 +1234,15 @@ var locationList = [
       zh: '卡塔尔',
       enShort: 'QA',
       enFull: 'Qatar',
-      reg: 'QA|Qatar'
+      reg: 'QA|Qatar',
+      flag: '🇶🇦'
   },
   {
     zh: '留尼旺',
     enShort: 'RE',
     enFull: 'Reunion',
-    reg: 'RE|Reunion'
+    reg: 'RE|Reunion',
+    flag: '🇷🇪'
   },
   {
       zh: '罗马尼亚',
@@ -1208,25 +1269,29 @@ var locationList = [
       zh: '卢旺达',
       enShort: 'RW',
       enFull: 'Rwanda',
-      reg: 'RW|Rwanda'
+      reg: 'RW|Rwanda',
+      flag: '🇷🇼'
   },
   {
       zh: '圣马力诺',
       enShort: 'SM',
       enFull: 'San Marino',
-      reg: 'SM|San Marino'
+      reg: 'SM|San Marino',
+      flag: '🇸🇲'
   },
   {
       zh: '沙特阿拉伯',
       enShort: 'SA',
       enFull: 'Saudi Arabia',
-      reg: 'SA|Saudi Arabia'
+      reg: 'SA|Saudi Arabia',
+      flag: '🇸🇦'
   },
   {
       zh: '塞内加尔',
       enShort: 'SN',
       enFull: 'Senegal',
-      reg: 'SN|Senegal'
+      reg: 'SN|Senegal',
+      flag: '🇸🇳'
   },
   {
       zh: '塞尔维亚',
@@ -1239,7 +1304,8 @@ var locationList = [
       zh: '塞拉利昂',
       enShort: 'SL',
       enFull: 'Sierra Leone',
-      reg: 'SL|Sierra Leone'
+      reg: 'SL|Sierra Leone',
+      flag: '🇸🇱'
   },
   {
       zh: '斯洛伐克',
@@ -1259,7 +1325,8 @@ var locationList = [
     zh: '索马里',
     enShort: 'SO',
     enFull: 'Somalia',
-    reg: 'SO|Somalia'
+    reg: 'SO|Somalia',
+    flag: '🇸🇴'
   },
   {
       zh: '南非',
@@ -1279,25 +1346,29 @@ var locationList = [
       zh: '斯里兰卡',
       enShort: 'LK',
       enFull: 'Sri Lanka',
-      reg: 'LK|Sri Lanka'
+      reg: 'LK|Sri Lanka',
+      flag: '🇱🇰'
   },
   {
       zh: '苏丹',
       enShort: 'SD',
       enFull: 'Sudan',
-      reg: 'SD|Sudan'
+      reg: 'SD|Sudan',
+      flag: '🇸🇩'
   },
   {
       zh: '苏里南',
       enShort: 'SR',
       enFull: 'Suriname',
-      reg: 'SR|Suriname'
+      reg: 'SR|Suriname',
+      flag: '🇸🇷'
   },
   {
       zh: '斯威士兰',
       enShort: 'SZ',
       enFull: 'Swaziland',
-      reg: 'SZ|Swaziland'
+      reg: 'SZ|Swaziland',
+      flag: '🇸🇿'
   },
   {
       zh: '瑞典',
@@ -1317,19 +1388,22 @@ var locationList = [
       zh: '叙利亚',
       enShort: 'SY',
       enFull: 'Syria',
-      reg: 'SY|Syria'
+      reg: 'SY|Syria',
+      flag: '🇸🇾'
   },
   {
       zh: '塔吉克斯坦',
       enShort: 'TJ',
       enFull: 'Tajikistan',
-      reg: 'TJ|Tajikistan'
+      reg: 'TJ|Tajikistan',
+      flag: '🇹🇯'
   },
   {
       zh: '坦桑尼亚',
       enShort: 'TZ',
       enFull: 'Tanzania',
-      reg: 'TZ|Tanzania'
+      reg: 'TZ|Tanzania',
+      flag: '🇹🇿'
   },
   {
       zh: '泰国',
@@ -1342,19 +1416,22 @@ var locationList = [
       zh: '多哥',
       enShort: 'TG',
       enFull: 'Togo',
-      reg: 'TG|Togo'
+      reg: 'TG|Togo',
+      flag: '🇹🇬'
   },
   {
       zh: '汤加',
       enShort: 'TO',
       enFull: 'Tonga',
-      reg: 'TO|Tonga'
+      reg: 'TO|Tonga',
+      flag: '🇹🇴'
   },
   {
       zh: '特立尼达和多巴哥',
       enShort: 'TT',
       enFull: 'Trinidad and Tobago',
-      reg: 'TT|Trinidad and Tobago'
+      reg: 'TT|Trinidad and Tobago',
+      flag: '🇹🇹'
   },
   {
       zh: '突尼斯',
@@ -1374,19 +1451,22 @@ var locationList = [
       zh: '土库曼斯坦',
       enShort: 'TM',
       enFull: 'Turkmenistan',
-      reg: 'TM|Turkmenistan'
+      reg: 'TM|Turkmenistan',
+      flag: '🇹🇲'
   },
   {
       zh: '美属维尔京群岛',
       enShort: 'VI',
       enFull: 'U.S. Virgin Islands',
-      reg: 'VI|U.S. Virgin Islands'
+      reg: 'VI|U.S. Virgin Islands',
+      flag: '🇻🇮'
   },
   {
       zh: '乌干达',
       enShort: 'UG',
       enFull: 'Uganda',
-      reg: 'UG|Uganda'
+      reg: 'UG|Uganda',
+      flag: '🇺🇬'
   },
   {
       zh: '乌克兰',
@@ -1413,13 +1493,15 @@ var locationList = [
       zh: '乌兹别克斯坦',
       enShort: 'UZ',
       enFull: 'Uzbekistan',
-      reg: 'UZ|Uzbekistan'
+      reg: 'UZ|Uzbekistan',
+      flag: '🇺🇿'
   },
   {
       zh: '梵蒂冈城',
       enShort: 'VA',
       enFull: 'Vatican City',
-      reg: 'VA|Vatican City'
+      reg: 'VA|Vatican City',
+      flag: '🇻🇦'
   },
   {
       zh: '委内瑞拉',
@@ -1446,25 +1528,29 @@ var locationList = [
       zh: '南斯拉夫',
       enShort: 'YU',
       enFull: 'Yugoslavia',
-      reg: 'YU|Yugoslavia'
+      reg: 'YU|Yugoslavia',
+      flag: '🇷🇸'
   },
   {
       zh: '扎伊尔',
       enShort: 'ZR',
       enFull: 'Zaire',
-      reg: 'ZR|Zaire'
+      reg: 'ZR|Zaire',
+      flag: '🇨🇩'
   },
   {
       zh: '赞比亚',
       enShort: 'ZM',
       enFull: 'Zambia',
-      reg: 'ZM|Zambia'
+      reg: 'ZM|Zambia',
+      flag: '🇿🇲'
   },
   {
       zh: '津巴布韦',
       enShort: 'ZW',
       enFull: 'Zimbabwe',
-      reg: 'ZW|Zimbabwe'
+      reg: 'ZW|Zimbabwe',
+      flag: '🇿🇼'
   },
   {
       zh: '孟加拉国',
