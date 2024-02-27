@@ -1641,7 +1641,7 @@ var deleteList = [
       zh: '无用节点',
       enFull: '',
       enShort: '',
-      reg: '失联|网址|加入|会员|欢迎|套餐|过期|到期|流量|时间|应急|expire|traffic|更新|测速|官网|http|电报|流媒体'
+      reg: '失联|网址|加入|会员|欢迎|套餐|过期|到期|流量|时间|应急|expire|traffic|更新|测速|官网|http|电报|流媒体|重置|距离'
   }
 ];
 var actionObject = {
