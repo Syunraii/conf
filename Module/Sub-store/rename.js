@@ -682,7 +682,7 @@ var locationList = [
       zh: '厄瓜多尔',
       enShort: 'EC',
       enFull: 'Ecuador',
-      reg: 'EC|Ecuador|EC|厄瓜多尔|「🇪🇨」',
+      reg: 'EC|Ecuador|厄瓜多尔|「🇪🇨」',
       flag: '🇪🇨'
   },
   {
@@ -759,7 +759,7 @@ var locationList = [
       zh: '格鲁吉亚',
       enShort: 'GE',
       enFull: 'Georgia',
-      reg: 'GE|Georgia|格魯吉亞|格鲁吉亚|「🇬🇪」',
+      reg: 'Georgia|格魯吉亞|格鲁吉亚|「🇬🇪」',
       flag: '🇬🇪'
   },
   {
@@ -961,7 +961,7 @@ var locationList = [
       zh: '莱索托',
       enShort: 'LS',
       enFull: 'Lesotho',
-      reg: 'LS|Lesotho',
+      reg: 'Lesotho',
       flag: '🇱🇸'
   },
   {
@@ -1727,7 +1727,7 @@ var deleteList = [
       zh: '无用节点',
       enFull: '',
       enShort: '',
-      reg: '失联|网址|加入|会员|欢迎|套餐|过期|到期|流量|时间|应急|expire|traffic|更新|测速|官网|http|电报|流媒体|重置|距离|剩余'
+      reg: '失联|网址|加入|会员|欢迎|套餐|过期|到期|流量|时间|应急|expire|traffic|测速|官网|http|电报|流媒体|重置|距离|剩余'
   }
 ];
 var actionObject = {
