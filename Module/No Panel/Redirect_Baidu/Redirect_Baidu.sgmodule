@@ -3,7 +3,7 @@
 #!system=ios
 
 [Script]
-redirect_baidu = type=http-response,pattern=^https:\/\/boxer\.baidu\.com\/scheme\?scheme,script-path=https://raw.githubusercontent.com/ventusoon/ventus/main/Script/baidu-no-redirect.js
+redirect_baidu = type=http-response,pattern=^https:\/\/boxer\.baidu\.com\/scheme\?scheme,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/baidu-no-redirect.js
 
 [MITM]
 hostname = %APPEND% boxer.baidu.com
