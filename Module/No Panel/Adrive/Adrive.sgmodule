@@ -7,7 +7,7 @@
 [Script]
 阿里云盘_每日签到 = type = cron, cronexp = "5 10 10 * *", wake-system = 1, script-path = https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js
 
-阿里云盘_获取Cookie = requires-body = 1, type = http-response, pattern = https:\/\/auth.(aliyundrive|alipan).com\/v2\/account\/token, script-path=https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js
+阿里云盘_获取Cookie = requires-body = 1, type = http-response, pattern = https:\/\/auth.(aliyundrive|alipan).com\/v2\/oauth\/token_login, script-path=https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js
 
 [MITM] 
 hostname= %APPEND% auth.aliyundrive.com

@@ -1,0 +1,5 @@
+#!name=Gossips
+#!desc=Gossips Daily
+
+[Script]
+Gossips = type = cron,cronexp = "0 12,20 * * *", script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/hlbdy.js, timeout = 60,script-update-interval = 86400
