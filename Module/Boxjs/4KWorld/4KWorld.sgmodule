@@ -2,4 +2,4 @@
 #!desc=4KWorld Daily
 
 [Script]
-4KWorld = type=cron, cronexp = "3 10 * * *", wake-system = 1,script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/4ksj.js, timeout=60
+4KWorld = type = cron, cronexp = "3 10 * * *", wake-system = 1,script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/4ksj.js, timeout=60
