@@ -8,4 +8,4 @@
 阿里网盘签到 = type=cron,cronexp=10 7 * * *,script-path=https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/js/Mine/aDriveCheckIn/aDriveCheckIn.js
 
 [MITM]
-hostname = %APPEND% auth.aliyundrive.com
+hostname = %APPEND% aliyundrive.com
