@@ -7,7 +7,7 @@
 #!homepage=https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js
 
 #!arguments=cronexp:2 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n订阅地址:https://raw.githubusercontent.com/lowking/Scripts/master/lowking.boxjs.json\napp:阿里云盘签到\n\n2️⃣ cronexp\n定时任务, 默认每天10:02:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n签到超时时间, 默认60秒
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n订阅地址:https://raw.githubusercontent.com/lowking/Scripts/master/lowking.boxjs.json\n\napp:阿里云盘签到\n\n2️⃣ cronexp\n定时任务, 默认每天10:02:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n签到超时时间, 默认60秒
 
 [Script]
 阿里云盘_获取Cookie = type = http-response, requires-body = 1, pattern = https:\/\/auth.(aliyundrive|alipan).com\/v2\/account\/token, script-path = https://raw.githubusercontent.com/lowking/Scripts/master/ali/aliYunPanCheckIn.js

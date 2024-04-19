@@ -1,7 +1,7 @@
-﻿#!name=⌥ Info: Act Time
+﻿#!name=⌥ Panel: Act Time
 #!desc=信息面板: Surge运行时间
 #!system=ios
-#!category=⌥ Info
+#!category=⌥ Panel
 
 #!author=fishingworld
 #!homepage=https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js

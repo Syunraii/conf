@@ -1,7 +1,7 @@
-﻿#!name=⌥ Info: IP Address
+﻿#!name=⌥ Panel: IP Address
 #!desc=信息面板: 显示当前IP地址
 #!system=ios
-#!category=⌥ Info
+#!category=⌥ Panel
 
 #!author=congcong0806
 #!homepage=https://raw.githubusercontent.com/congcong0806/surge-list/master/Script/ipcheck.js

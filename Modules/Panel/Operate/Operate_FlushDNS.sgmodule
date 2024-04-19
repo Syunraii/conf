@@ -1,7 +1,7 @@
-﻿#!name=^ Operate: Flush DNS
+﻿#!name=⌥ Panel: Flush DNS
 #!desc=操作面板: 刷新DNS缓存
 #!system=ios
-#!category=^ Operate
+#!category=⌥ Panel
 
 #!author=zZPiglet
 #!homepage=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js

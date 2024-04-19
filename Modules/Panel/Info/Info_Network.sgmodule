@@ -1,7 +1,7 @@
-﻿#!name=⌥ Info: Network
+﻿#!name=⌥ Panel: Network
 #!desc=信息面板: 显示当前网络信息
 #!system=ios
-#!category=⌥ Info
+#!category=⌥ Panel
 
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Network-Info/Moore/Network-Info.js

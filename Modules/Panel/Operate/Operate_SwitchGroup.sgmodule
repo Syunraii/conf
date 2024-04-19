@@ -1,7 +1,7 @@
-﻿#!name=^ Operate: Switch Group
+﻿#!name=⌥ Panel: Switch Group
 #!desc=操作面板: 快速切换策略组
 #!system=ios
-#!category=^ Operate
+#!category=⌥ Panel
 
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js

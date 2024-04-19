@@ -1,7 +1,7 @@
-﻿#!name=⌥ Info: Vacation
+﻿#!name=⌥ Panel: Vacation
 #!desc=信息面板: 假期倒计时
 #!system=ios
-#!category=⌥ Info
+#!category=⌥ Panel
 
 #!author=smartmimi
 #!homepage=https://raw.githubusercontent.com/smartmimi/conf/master/surge/timecard.js

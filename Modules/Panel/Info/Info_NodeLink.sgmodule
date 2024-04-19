@@ -1,7 +1,7 @@
-﻿#!name=⌥ Info: NodeLink
+﻿#!name=⌥ Panel: NodeLink
 #!desc=信息面板: 显示当前节点信息
 #!system=ios
-#!category=⌥ Info
+#!category=⌥ Panel
 
 #!author=I-am-R-E
 #!homepage=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js
