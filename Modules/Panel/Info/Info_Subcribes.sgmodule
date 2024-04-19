@@ -6,7 +6,7 @@
 #!author=Syunraii
 #!homepage=https://github.com/Syunraii/conf/master/Modules/Panel/Info/Info_Subcribes.sgmodule
 
-#!arguments= script-update-interval:86400, update-interval:21600, timeout:20, sub_link1:sublink1, reset_day1:1, expire1:2024-12-31, title1:"订阅信息1", sub_link2:sublink2, reset_day2:1, expire2:2024-12-31, title1:"订阅信息2", sub_link3:sublink3, reset_day3:1, expire3:2024-12-31, title1:"订阅信息3"
+#!arguments= script-update-interval:86400, update-interval:21600, timeout:20, sub_link1:sublink1, reset_day1:1, expire1:2024-12-31, title1:"订阅信息1", sub_link2:sublink2, reset_day2:1, expire2:2024-12-31, title2:"订阅信息2", sub_link3:sublink3, reset_day3:1, expire3:2024-12-31, title3:"订阅信息3"
 #!arguments-desc=1️⃣ update-interval\n\n刷新时间, 默认3600秒\n\n2️⃣ timeout\n\n超时时间, 默认20秒\n\n3️⃣ script-update-interval\n\n脚本更新时间, 默认3600秒\n\n4️⃣ sub_link\n\n订阅链接\n\n注:使用https://www.urlencoder.org进行encode然后再填入\n\n5️⃣ reset_day\n\n流量重置日期\n\n6️⃣ expire\n\n到期日期\n\n7️⃣ title\n\n订阅名称
 
 [Panel]
