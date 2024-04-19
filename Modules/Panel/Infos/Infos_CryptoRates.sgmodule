@@ -1,0 +1,17 @@
+﻿#!name=⌥ Panel: Crypto Rates
+#!desc=资讯面板: 加密货币汇率
+#!system=ios
+#!category=⌥ Panel
+
+#!author=deezertidal
+#!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/crypto.js
+
+#!arguments=update-interval:86400, timeout:20
+#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认每天刷新\n\n2️⃣ timeout\n超时时间, 默认20秒
+
+[Panel]
+Panel_Infos_CryptoRates = style = info, title = "加密货币汇率", content = "请刷新", update-interval = {{{update-interval}}}, script-name = Infos_CryptoRates
+
+[Script]
+Infos_CryptoRates = type = generic, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/crypto.js
+

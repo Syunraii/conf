@@ -1,0 +1,17 @@
+﻿#!name=⌥ Panel: AppStore Free App
+#!desc=资讯面板: AppStore限免App
+#!system=ios
+#!category=⌥ Panel
+
+#!author=deezertidal
+#!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/appsdoor.js
+
+#!arguments=update-interval:86400, timeout:20, apps:8
+#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认每天刷新\n\n2️⃣ timeout\n超时时间, 默认20秒\n\n3️⃣ apps\n想要显示的条数, 不填默认8条
+
+[Panel]
+Panel_Infos_AppStoreFreeApp = style = info, title = "AppStore限免App", content = "请刷新", update-interval = {{{update-interval}}}, script-name = Infos_AppStoreFreeApp
+
+[Script]
+Infos_AppStoreFreeApp = type = generic, timeout = {{{timeout}}}, argument=icon=applelogo&color=#b8b8b8&appCount={{{apps}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/appsdoor.js
+
