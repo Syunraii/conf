@@ -10,9 +10,9 @@
 #!arguments-desc=1️⃣ update-interval\n\n刷新时间, 默认3600秒\n\n2️⃣ timeout\n\n超时时间, 默认20秒\n\n3️⃣ script-update-interval\n\n脚本更新时间, 默认3600秒\n\n4️⃣ sub_link\n\n订阅链接\n\n注:使用https://www.urlencoder.org进行encode然后再填入\n\n5️⃣ reset_day\n\n流量重置日期\n\n6️⃣ expire\n\n到期日期\n\n7️⃣ title\n\n订阅名称
 
 [Panel]
-Panel_Info_Subscribe1 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = SubscribeInfo1
-Panel_Info_Subscribe2 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = SubscribeInfo2
-Panel_Info_Subscribe3 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = SubscribeInfo3
+Panel_Info_Subscribe1 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = Info_Subscribe1
+Panel_Info_Subscribe2 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = Info_Subscribe2
+Panel_Info_Subscribe3 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = Info_Subscribe3
 
 [Script]
 Info_Subscribe1= style = info, title = "订阅信息1", content = "请刷新", argument=url={{{sub-link2}}}&reset_day={{{reset_day1}}}&expire={{{expire1}}}&title={{{title}}}&icon=icon=airplane.circle.fill&color=#00BC12, script-name = Info_Subscribe
