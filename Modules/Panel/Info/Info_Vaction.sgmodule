@@ -7,7 +7,7 @@
 #!homepage=https://raw.githubusercontent.com/smartmimi/conf/master/surge/timecard.js
 
 #!arguments=update-interval:86400, timeout:20
-#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认每天刷新\n\n2️⃣ timeout\n\n超时时间, 默认20秒
+#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认每天刷新\n\n2️⃣ timeout\n超时时间, 默认20秒
 
 [Panel]
 Panel_Info_Vacation = update-interval = {{{update-interval}}}, script-name = Info_Vacation
