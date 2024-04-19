@@ -10,7 +10,7 @@
 #!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n\n超时时间, 默认10秒
 
 [Panel]
-Panel_Info_ActTime = icon = paperplane.circle, color = ##f6c970, update-interval = {{{update-interval}}}, script-name = Info_ActTime
+Panel_Info_ActTime = icon = paperplane.circle&color = #f6c970, update-interval = {{{update-interval}}}, script-name = Info_ActTime
 
 [Script]
 Info_ActTime = type = generic, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js
