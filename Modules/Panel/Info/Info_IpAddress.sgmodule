@@ -6,7 +6,7 @@
 #!author=congcong0806
 #!homepage=https://raw.githubusercontent.com/congcong0806/surge-list/master/Script/ipcheck.js
 
-#!argumentts=update-interval:1, timeout:30
+#!arguments=update-interval:1, timeout:30
 #!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n\n超时时间, 默认30秒
 
 [Panel]

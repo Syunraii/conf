@@ -6,7 +6,7 @@
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js
 
-#!argumentts=update-interval:1, timeout:10, group:🌐 全局选择
+#!arguments=update-interval:1, timeout:10, group:🌐 全局选择
 #!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n\n超时时间, 默认10秒\n\n3️⃣ group\n策略组, 默认在🌐 全局选择中切换
 
 [Panel]

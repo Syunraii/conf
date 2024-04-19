@@ -6,7 +6,7 @@
 #!author=blackmatrix7
 #!homepage=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
 
-#!argumentts=cronexp:8 10 * * *, timeout:60
+#!arguments=cronexp:8 10 * * *, timeout:60
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/boxjs.json\napp:什么值得买\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:08:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n签到超时时间, 默认60秒
 
 [Script]

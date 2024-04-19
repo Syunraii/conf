@@ -6,7 +6,7 @@
 #!author=fishingworld
 #!homepage=https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js
 
-#!argumentts=update-interval:1, timeout:10
+#!arguments=update-interval:1, timeout:10
 #!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n\n超时时间, 默认10秒
 
 [Panel]

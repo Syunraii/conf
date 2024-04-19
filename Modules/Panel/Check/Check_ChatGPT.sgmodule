@@ -6,7 +6,7 @@
 #!author=deezertidal
 #!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/gpt.js
 
-#!argumentts=update-interval:7200, timeout:10, script-update-interval:86400
+#!arguments=update-interval:7200, timeout:10, script-update-interval:86400
 #!arguments-desc=1️⃣ update-interval\n刷新时间, 默认2小时刷新\n\n2️⃣ timeout\n超时时间, 默认10秒\n\n3️⃣ script-update-interval\n脚本更新时间, 默认86400秒
 
 [Panel]

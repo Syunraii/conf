@@ -6,7 +6,7 @@
 #!author=NobyDa
 #!homepage=https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js
 
-#!argumentts=cronexp:7 10 * * *, timeout:60
+#!arguments=cronexp:7 10 * * *, timeout:60
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/ClydeTime/BiliBili/main/boxjs/BiliBili.boxjs.json\napp:哔哩漫画\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:07:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n签到超时时间, 默认60秒
 
 [Script]
