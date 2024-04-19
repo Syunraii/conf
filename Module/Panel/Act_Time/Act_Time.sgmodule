@@ -1,9 +1,0 @@
-#!name=Act Time
-#!desc=显示运行时长
-#!system=ios
-
-[Panel]
-Act_Time = script-name=Act_Time,update-interval=1
-
-[Script]
-Act_Time = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js,argument=icon=paperplane.circle&color=#f6c970

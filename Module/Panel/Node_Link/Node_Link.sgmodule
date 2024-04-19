@@ -1,8 +1,0 @@
-#!name = Node Link
-#!desc = 显示节点信息
-
-[Panel]
-Node_Link = script-name = Node_Link,update-interval=21600
-
-[Script]
-Node_Link = type=generic,timeout=30,script-path=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js, argument=title=代理链路检测&icon=network&color=#86abee

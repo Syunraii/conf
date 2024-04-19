@@ -1,9 +1,0 @@
-#!name=Vacation
-#!desc=显示假期倒计时
-#!system=ios
-
-[Panel]
-Vacation = script-name = Vacation, update-interval=86400
-
-[Script]
-Vacation = type = generic, timeout = 20, script-path = https://raw.githubusercontent.com/smartmimi/conf/master/surge/timecard.js
