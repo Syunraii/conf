@@ -1,0 +1,18 @@
+﻿#!name=⇧ Pushs: Pixiv
+#!desc=Pixiv推送
+#!system=ios
+#!category=⇧ Pushs
+
+#!author=I-am-R-E
+#!homepage=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/PixivShow/Script/PixivShow.js
+
+#!argumentts=cronexp:0 0 10-20/2 * * ?, timeout:60, update-interval:86400
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/BoxJsFiles/Functional-Store-Hub.json\napp:Pixiv Show\n\n2️⃣ cronexp\n\n定时任务, 默认每天10-20点每隔两小时推送一次\n如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n推送超时时间, 默认60秒\n\n4️⃣ update-interval\n\n脚本更新间隔, 默认86400秒
+
+[Script]
+Pixiv_每日推送 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-update-interval = {{{update-interval}}}, script-path = https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/PixivShow/Script/PixivShow.js,
+
+Pixiv_广告屏蔽 = type = http-response, requires-body = 1,max-size = 0, pattern = ^https?:\/\/oauth\.secure\.pixiv\.net\/(auth\/token), script-path = https://github.com/ddgksf2013/Scripts/raw/master/pixivAds.js
+
+[MITM]
+hostname = %APPEND% oauth.secure.pixiv.net

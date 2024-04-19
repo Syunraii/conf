@@ -1,0 +1,16 @@
+﻿#!name=⌥ Info: Act Time
+#!desc=信息面板: Surge运行时间
+#!system=ios
+#!category=⌥ Info
+
+#!author=fishingworld
+#!homepage=https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js
+
+#!argumentts=update-interval:1, timeout:10
+#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n\n超时时间, 默认10秒
+
+[Panel]
+Panel_Info_ActTime = icon = paperplane.circle, color = #f6c970, update-interval = {{{update-interval}}}, script-name = Info_ActTime
+
+[Script]
+Info_ActTime = type = generic, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js

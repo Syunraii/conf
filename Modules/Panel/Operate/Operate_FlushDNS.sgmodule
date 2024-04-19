@@ -1,0 +1,16 @@
+﻿#!name=^ Operate: Flush DNS
+#!desc=操作面板: 刷新DNS缓存
+#!system=ios
+#!category=^ Operate
+
+#!author=zZPiglet
+#!homepage=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js
+
+#!argumentts=update-interval:1, timeout:10
+#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n\n超时时间, 默认10秒
+
+[Panel]
+Panel_Operate_FlushDNS = title = "快速刷新DNS缓存", icon = cube, color = #afe59a, server = false, update-interval = {{{update-interval}}}, script-name = Operate_FlushDNS
+
+[Script]
+Operate_FlushDNS = type = generic, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js
