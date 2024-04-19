@@ -1,5 +1,5 @@
 /*
- * origin：https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Spec/Weibo/Moore/Weibo.js
+ * origin：https://raw.githubusercontent.com/xOS/Config/Her/Script/Weibo/Weibo.js
  */
 
 const version = 'v0717.0220';

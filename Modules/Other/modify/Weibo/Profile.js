@@ -1,5 +1,5 @@
 /*
- * origin：https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Spec/Weibo/Moore/Profile.js
+ * origin：https://raw.githubusercontent.com/xOS/Config/Her/Script/Weibo/Profile.js
  */
 
 var obj = JSON.parse($response.body);
