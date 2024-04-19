@@ -16,8 +16,8 @@ Panel_Info_Subscribe2 = script-update-interval = {{{script-update-interval}}}, u
 Panel_Info_Subscribe3 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = Info_Subscribe3
 
 [Script]
-Info_Subscribe1= style = info, title = "订阅信息1", content = "请刷新", timeout = {{{timeout}}}, argument=url={{{sub-link1}}}&reset_day={{{reset_day1}}}&expire={{{expire1}}}&title={{{title1}}}&icon=icon=airplane.circle.fill&color=#00BC12, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Info_Subscribe1= style = info, title = "订阅信息1", content = "请刷新", timeout = {{{timeout}}}, argument=url={{{sub-link1}}}&reset_day={{{reset_day1}}}&expire={{{expire1}}}&title={{{title1}}}&icon=airplane.circle.fill&color=#00BC12, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
 
-Info_Subscribe2= style = info, title = "订阅信息2", content = "请刷新", timeout = {{{timeout}}}, argument=url={{{sub_link2}}}&reset_day={{{reset_day2}}}&expire={{{expire2}}}&title={{{title2}}}&icon=icon=airplane.circle.fill&color=#157EFB, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Info_Subscribe2= style = info, title = "订阅信息2", content = "请刷新", timeout = {{{timeout}}}, argument=url={{{sub_link2}}}&reset_day={{{reset_day2}}}&expire={{{expire2}}}&title={{{title2}}}&icon=airplane.circle.fill&color=#157EFB, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
 
-Info_Subscribe3= style = info, title = "订阅信息3", content = "请刷新", timeout = {{{timeout}}}, argument=url={{{sub_link3}}}&reset_day={{{reset_day3}}}&expire={{{expire3}}}&title={{{title3}}}&icon=icon=airplane.circle.fill&color=#157EFB, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Info_Subscribe3= style = info, title = "订阅信息3", content = "请刷新", timeout = {{{timeout}}}, argument=url={{{sub_link3}}}&reset_day={{{reset_day3}}}&expire={{{expire3}}}&title={{{title3}}}&icon=airplane.circle.fill&color=#157EFB, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
