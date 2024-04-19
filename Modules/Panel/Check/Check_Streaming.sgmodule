@@ -1,7 +1,7 @@
 ﻿#!name=⌫ Check: Streaming Media
 #!desc=检测面板: 流媒体解锁检测
 #!system=ios
-#!category=⌫ Info
+#!category=⌫ Check
 
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Stream-All-Lite/Moore/Stream-All-Lite.js
