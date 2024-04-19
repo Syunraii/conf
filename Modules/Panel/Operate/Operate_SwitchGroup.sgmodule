@@ -6,11 +6,11 @@
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js
 
-#!arguments=update-interval:1, timeout:10, group:🌐 全局选择
-#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n超时时间, 默认10秒\n\n3️⃣ group\n默认在🌐 全局选择中随机切换
+#!arguments=script-update-interval:86400, update-interval:1, timeout:10, group:🌐 全局选择
+#!arguments-desc=1️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n2️⃣ update-interval\n面板刷新时间, 默认立即刷新\n\n3️⃣ timeout\n\n超时时间, 默认10秒\n\n4️⃣ group\n\n默认在🌐 全局选择中随机切换
 
 [Panel]
-Panel_Operate_SwitchGroup = title = "快速切换策略组", content = "请刷新", update-interval = {{{update-interval}}}, script-name = Operate_SwitchGroup
+Panel_Operate_SwitchGroup = title = "快速切换策略组", content = "请刷新", script-update-interval = {{{script-update-interval}}}, update-interval = {{{update-interval}}}, script-name = Operate_SwitchGroup
 
 [Script]
 Operate_SwitchGroup = type = generic, timeout = {{{timeout}}}, argument=icon=network&color=#86abee&group={{{group}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js

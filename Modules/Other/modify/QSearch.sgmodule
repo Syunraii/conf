@@ -4,7 +4,7 @@
 #!category=↹ Modify
 
 #!arguments=engine:duckduckgo
-#!arguments-desc=1️⃣ engine\n\n在safari设置默认搜索引擎, 然后在这里修改相应引擎即可, 默认duckduckgo\n如修改为百度, 则输入baidu
+#!arguments-desc=1️⃣ engine\n\n在safari设置默认搜索引擎, 然后在这里修改相应引擎即可, 默认duckduckgo\n\n如修改为百度, 则输入baidu
 
 
 ##################################################################################################

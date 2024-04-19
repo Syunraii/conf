@@ -7,7 +7,7 @@
 #!homepage=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/manmanbuy/manmanbuy_checkin.js
 
 #!arguments=cronexp:9 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n订阅地址:https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/boxjs.json\n\napp:慢慢买\n\n2️⃣ cronexp\n定时任务, 默认每天10:09:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n签到超时时间, 默认60秒
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/boxjs.json\n\napp:慢慢买\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:09:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n签到超时时间, 默认60秒
 
 [Script]
 慢慢买_获取Cookie = type = http-request, requires-body = 1, pattern = ^https?:\/\/apph5\.manmanbuy\.com\/taolijin\/(login.aspx|logserver.aspx), script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/manmanbuy/manmanbuy_checkin.js

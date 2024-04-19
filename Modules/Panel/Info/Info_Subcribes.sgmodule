@@ -8,23 +8,19 @@
 #!author=
 #!homepage=
 
-#!arguments=update-interval:1800, timeout:20, script-update-interval:3600
-#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认3600秒\n\n2️⃣ timeout\n超时时间, 默认20秒\n\n3️⃣ script-update-interval\n脚本更新时间, 默认3600秒
-
-# encode链接： https://www.urlencoder.org
-# 先将带有流量信息的节点订阅链接encode，用encode后的链接替换"url="后面的[encode后的机场节点链接],机场链接需要转为ssr或其他格式,否则可能无法获取
-# 可选参数 &reset_day，后面的数字替换成流量每月重置的日期，如1号就写1，8号就写8。如"&reset_day=8",不加该参数不显示流量重置信息。
-# 可选参数 &expire，机场链接不带expire信息的，可以手动传入expire参数，如"&expire=2022-02-01",注意一定要按照yyyy-MM-dd的格式。不希望显示到期信息也可以添加&expire=false取消显示。
-# 可选参数"title=xxx" 可以自定义标题。
-# 可选参数"icon=xxx" 可以自定义图标，内容为任意有效的 SF Symbol Name，如 bolt.horizontal.circle.fill，详细可以下载app https://apps.apple.com/cn/app/sf-symbols-browser/id1491161336
-# 可选参数"color=xxx" 当使用 icon 字段时，可传入 color 字段控制图标颜色，字段内容为颜色的 HEX 编码。如：color=#007aff
+#!arguments= script-update-interval:86400, update-interval:21600, timeout:20, sub_link1:sublink1, reset_day1:1, expire1:2024-12-31, title1:"订阅信息1", sub_link2:sublink2, reset_day2:1, expire2:2024-12-31, title1:"订阅信息2", sub_link3:sublink3, reset_day3:1, expire3:2024-12-31, title1:"订阅信息3"
+#!arguments-desc=1️⃣ update-interval\n\n刷新时间, 默认3600秒\n\n2️⃣ timeout\n\n超时时间, 默认20秒\n\n3️⃣ script-update-interval\n\n脚本更新时间, 默认3600秒\n\n4️⃣ sub_link\n\n订阅链接\n\n注:使用https://www.urlencoder.org进行encode然后再填入\n\n5️⃣ reset_day\n\n流量重置日期\n\n6️⃣ expire\n\n到期日期\n\n7️⃣ title\n\n订阅名称
 
 [Panel]
-Panel_Subscribe1 = script-name = SubscribeInfo1, update-interval={{{update-interval}}}
-Panel_Subscribe2 = script-name = SubscribeInfo2, update-interval={{{update-interval}}}
-Panel_Subscribe3 = script-name = SubscribeInfo3, update-interval={{{update-interval}}}
+Panel_Info_Subscribe1 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = SubscribeInfo1
+Panel_Info_Subscribe2 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = SubscribeInfo2
+Panel_Info_Subscribe3 = script-update-interval = {{{script-update-interval}}}, update-interval={{{update-interval}}}, script-name = SubscribeInfo3
 
 [Script]
-Subscribe1= type = generic, timeout = {{{timeout}}}, script-update-interval = {{{script-update-interval}}}, argument=url=[sub-link]&reset_day=[xx]&expire=[xxxx-xx-xx]&title=[xxxx]&icon=icon=airplane.circle&color=#00BC12, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Info_Subscribe1= style = info, title = "订阅信息1", content = "请刷新", argument=url={{{sub-link2}}}&reset_day={{{reset_day1}}}&expire={{{expire1}}}&title={{{title}}}&icon=icon=airplane.circle.fill&color=#00BC12, script-name = Info_Subscribe
 
-Subscribe2= type = generic, timeout = {{{timeout}}}, script-update-interval = {{{script-update-interval}}}, argument=url=[sub-link]&reset_day=[xx]&expire=[xxxx-xx-xx]&title=[xxxx]&icon=icon=airplane.circle.fill&color=#157EFB, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Info_Subscribe2= style = info, title = "订阅信息2", content = "请刷新", argument=url={{{sub_link2}}}&reset_day={{{reset_day2}}}&expire={{{expire2}}}&title={{{title}}}&icon=icon=airplane.circle.fill&color=#157EFB, script-name = Info_Subscribe
+
+Info_Subscribe3= style = info, title = "订阅信息3", content = "请刷新", argument=url={{{sub_link3}}}&reset_day={{{reset_day3}}}&expire={{{expire3}}}&title={{{title}}}&icon=icon=airplane.circle.fill&color=#157EFB, script-name = Info_Subscribe
+
+Info_Subscribe = type = generic, timeout = {{{timeout}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
