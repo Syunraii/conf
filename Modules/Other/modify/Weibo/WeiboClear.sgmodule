@@ -1,6 +1,7 @@
-#!name=Weibo Clear
-#!desc=微博官方App净化
+#!name=↹ Modify: Weibo Clear
+#!desc=微博App净化
 #!system=ios
+#!category=↹ Modify
 
 [Rule]
 # > 微博其它
@@ -85,19 +86,19 @@ URL-REGEX,^https?:\/\/wx[0-9]\.sinaimg\.cn\/large\/.+\.gif$,REJECT
 [Script]
 # > 微博个人信息
 # 修改的start
-主页 = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/2\/profile\?gsid=,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/No%20Panel/Weibo/Profile.js
-个人信息 = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/2\/users\/(show|relation),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/No%20Panel/Weibo/UserShow.js
-去广告 = type=http-response,pattern=^https?://m?api\.weibo\.c(n|om)/2/(profile/(me|statuses)|searchall|statuses/(unread_hot_timeline|extend|video_mixtimeline)|video/(community_tab|remind_info|tiny_stream_video_list)|checkin/show|container/get_item),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/No%20Panel/Weibo/Weibo.js
+主页 = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/2\/profile\?gsid=,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Modules/Other/modify/Weibo/Profile.js
+个人信息 = type=http-response,pattern=^https?:\/\/api\.weibo\.cn\/2\/users\/(show|relation),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Modules/Other/modify/Weibo/UserShow.js
+去广告 = type=http-response,pattern=^https?://m?api\.weibo\.c(n|om)/2/(profile/(me|statuses)|searchall|statuses/(unread_hot_timeline|extend|video_mixtimeline)|video/(community_tab|remind_info|tiny_stream_video_list)|checkin/show|container/get_item),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/Syunraii/conf/master/Module/Other/modify/Weibo/Weibo.js
 # 修改的end
 
 开屏 = requires-body=1,script-path=https://hub.nange.cn/Script/Weibo/Launch.js,type=http-response,pattern=^https?:\/\/(sdk|wb)app\.uve\.weibo\.com(/interface/sdk/sdkad.php|/wbapplua/wbpullad.lua)
 
 微博信息流 = type=http-response,requires-body=1,max-size=-1,pattern=^https?:\/\/m?api\.weibo\.c(n|om)/2/(statuses/(unread|extend|positives/get|(friends|video)(/|_)(mix)?timeline)|stories/(video_stream|home_list)|(groups|fangle)/timeline|profile/statuses|comments/build_comments|photo/recommend_list|service/picfeed|cardlist|page|!/(photos/pic_recommend_status|live/media_homelist|wbox\/.+\/createrIndex|st_videos\/tiny\/effect\/shoot_display_config)|video/tiny_stream_video_list|photo/info|remind/unread_count|search/finder|search/container_timeline|!\/huati\/discovery_home_bottom_channel_list|statuses\/unread_topic_timeline),script-path=https://hub.nange.cn/Script/Weibo/Timeline.js
 
-微博钱包订单 = type=http-response,pattern=(^https?:\/\/js\.t\.sinajs\.cn\/c2p\/sam\/frontend\/assets\/walletcache\.json|^https?:\/\/pay\.sc\.weibo\.com\/api\/client\/sdk\/app\/indexnew\/(index|person)|^https?:\/\/shop\.sc\.weibo\.com\/aj\/h5\/order\/center),requires-body=1,max-size=0,script-path=https://hub.nange.cn/Script/Weibo/Wallet.js
+##微博钱包订单 = type=http-response,pattern=(^https?:\/\/js\.t\.sinajs\.cn\/c2p\/sam\/frontend\/assets\/walletcache\.json|^https?:\/\/pay\.sc\.weibo\.com\/api\/client\/sdk\/app\/indexnew\/(index|person)|^https?:\/\/shop\.sc\.weibo\.com\/aj\/h5\/order\/center),requires-body=1,max-size=0,script-path=https://hub.nange.cn/Script/Weibo/Wallet.js
 
-# > 微博配置注入
-微博去广告配置注入 = type=cron,cronexp="0 0 1 ? * MON",debug=1,script-path=https://hub.nange.cn/Script/Weibo/Config.js
+## > 微博配置注入
+##微博去广告配置注入 = type=cron,cronexp="0 0 1 ? * MON",debug=1,script-path=https://hub.nange.cn/Script/Weibo/Config.js
 
 [MITM]
 hostname = %APPEND% *.uve.weibo.com, *api.weibo.cn, *api.weibo.com, h5.sinaimg.cn, new.vip.weibo.cn, *.sc.weibo.com, captcha.weibo.com, wx*.sinaimg.cn, js.t.sinajs.cn, *.e.weibo.com

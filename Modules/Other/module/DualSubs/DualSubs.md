@@ -1,8 +1,4 @@
-主页:
-
-    https://github.com/DualSubs/DualSubs
-
-参考方法2 
+module: DualSubs.Universal
 
     https://raw.githubusercontent.com/DualSubs/Universal/main/modules/DualSubs.Universal.sgmodule
 

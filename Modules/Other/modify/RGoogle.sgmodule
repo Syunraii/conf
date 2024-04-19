@@ -1,5 +1,7 @@
-#!name=Rewrite Google
+#!name=↹ Modify: RGoogle
 #!desc=防止谷歌搜索自动换区
+#!system=ios
+#!category=↹ Modify
 
 [URL Rewrite]
 ^https?://(www.)?g.cn https://www.google.com 302

@@ -1,0 +1,9 @@
+﻿#!name=Tiktok
+#!desc=Tiktok 去水印 去广告
+
+[Script]
+TikTok_去水印 = type = http-request, requires-body = 1, max-size = 0, pattern = ^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post), script-path = https://hub.nange.cn/Script/ByteDance/Aweme.js
+TikTok_去广告 = type = http-response, requires-body = 1, max-size = 0, pattern = ^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post), script-path = https://hub.nange.cn/Script/ByteDance/Aweme.js
+
+[MITM]
+hostname = %APPEND% *.snssdk.com, *.amemv.com, *.musical.ly, *.tiktokv.com, *.byteoversea.com, *.tik-tokapi.com
