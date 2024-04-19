@@ -13,4 +13,4 @@
 Panel_Info_NodeLink = style = info, title = "代理链路检测", content = "请刷新", icon = network, update-interval = {{{update-interval}}}, script-name = Info_NodeLink
 
 [Script]
-Info_NodeLink = type = generic, timeout = {{{timeout}}}, argument = color = #86abee, script-path = https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js
+Info_NodeLink = type = generic, timeout = {{{timeout}}}, argument=color=#86abee, script-path = https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js

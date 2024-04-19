@@ -13,4 +13,4 @@
 Panel_Info_ActTime = update-interval = {{{update-interval}}}, script-name = Info_ActTime
 
 [Script]
-Info_ActTime = type = generic, timeout = {{{timeout}}}, argument = icon = paperplane.circle & color = #f6c970, script-path = https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js
+Info_ActTime = type = generic, timeout = {{{timeout}}}, argument=icon=paperplane.circle&color=#f6c970, script-path = https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js

@@ -13,4 +13,4 @@
 Panel_Operate_SwitchGroup = title = "快速切换策略组", content = "请刷新", group = {{{group}}} , script-name = Operate_SwitchGroup
 
 [Script]
-Operate_SwitchGroup = type = generic, timeout = {{{timeout}}}, argument = icon = network & color = #86abee, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js
+Operate_SwitchGroup = type = generic, timeout = {{{timeout}}}, argument=icon=network&color=#86abee, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js

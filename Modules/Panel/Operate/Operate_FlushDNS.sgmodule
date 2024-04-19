@@ -13,4 +13,4 @@
 Panel_Operate_FlushDNS = title = "快速刷新DNS缓存", content = "请刷新", server = false, update-interval = {{{update-interval}}}, script-name = Operate_FlushDNS
 
 [Script]
-Operate_FlushDNS = type = generic, timeout = {{{timeout}}}, argument = icon = cube & color = #afe59a, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js
+Operate_FlushDNS = type = generic, timeout = {{{timeout}}}, argument=icon=cube&color=#afe59a, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js

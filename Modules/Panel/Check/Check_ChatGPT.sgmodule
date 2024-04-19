@@ -13,5 +13,5 @@
 Panel_Check_ChatGPT = title = "ChatGPT解锁检测", content = "请刷新", update-interval = {{{update-interval}}}, script-update-interval = {{{script-update-interval}}}, script-name = Check_ChatGPT
 
 [Script]
-Check_ChatGPT = type = generic, timeout = {{{timeout}}}, argument = icon = ellipses.bubble.fill & color = #008000, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/gpt.js
+Check_ChatGPT = type = generic, timeout = {{{timeout}}}, argument=icon=ellipses.bubble.fill&color=#008000, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/gpt.js
 
