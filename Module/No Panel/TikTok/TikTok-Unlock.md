@@ -14,6 +14,6 @@ Add remote module:
 
     US : https://raw.githubusercontent.com/Semporia/TikTok-Unlock/master/Surge/TiKTok-US.sgmodule
 
-or use Frie modules:
+or use Fries's modules:
 
     https://raw.githubusercontent.com/VirgilClyne/GetSomeFries/main/modules/Fries.TikTok.sgmodule
