@@ -7,7 +7,7 @@
 #!homepage=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js
 
 #!arguments=update-interval:21600, timeout:30
-#!arguments-desc=1️⃣ 注意\n\n需要在sub-store中配置节点操作脚本:mynotice\n\n2️⃣ update-interval\n\n刷新时间, 默认每六小时刷新\n\n3️⃣ timeout\n\n超时时间, 默认30秒
+#!arguments-desc=1️⃣ 注意\n需要在sub-store中配置节点操作脚本:mynotice\n\n2️⃣ update-interval\n刷新时间, 默认每六小时刷新\n\n3️⃣ timeout\n超时时间, 默认30秒
 
 [Panel]
 Panel_Info_NodeLink = style = info, title = "代理链路检测", content = "请刷新", icon = network, update-interval = {{{update-interval}}}, script-name = Info_NodeLink

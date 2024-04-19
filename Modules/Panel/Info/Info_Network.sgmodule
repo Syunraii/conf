@@ -7,7 +7,7 @@
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Network-Info/Moore/Network-Info.js
 
 #!arguments=update-interval:1, timeout:30
-#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n\n超时时间, 默认30秒
+#!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n超时时间, 默认30秒
 
 [Panel]
 Panel_Info_Network = style = info, title = "当前网络信息", content = "请刷新", update-interval = {{{update-interval}}}, script-name = Info_Network
