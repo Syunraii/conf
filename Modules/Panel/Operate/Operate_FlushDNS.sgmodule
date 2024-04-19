@@ -10,7 +10,7 @@
 #!arguments-desc=1️⃣ update-interval\n刷新时间, 默认立即刷新\n\n2️⃣ timeout\n\n超时时间, 默认10秒
 
 [Panel]
-Panel_Operate_FlushDNS = title = "快速刷新DNS缓存", icon = cube, color = #afe59a, server = false, update-interval = {{{update-interval}}}, script-name = Operate_FlushDNS
+Panel_Operate_FlushDNS = title = "快速刷新DNS缓存", server = false, update-interval = {{{update-interval}}}, script-name = Operate_FlushDNS
 
 [Script]
-Operate_FlushDNS = type = generic, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js
+Operate_FlushDNS = type = generic, timeout = {{{timeout}}}, argument=icon = cube&color = #afe59a,,script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js
