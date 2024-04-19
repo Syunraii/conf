@@ -3,12 +3,13 @@
  */
 
 var obj = JSON.parse($response.body);
-const profile = "/profile";
+const profile = "/profile\?";
 const users = "/users";
 const comments = "/comments";
 const statuses = "/statuses";
 const userList = "/direct_messages/user_list";
 const notice = "/messageflow/notice";
+const userInfo = "/profile/userinfo";
 const url = $request.url;
 const verified = {
   "scheme": "",
@@ -26,7 +27,7 @@ const verified = {
     "oid": ""
   },
   "icon": "https:\/\/h5.sinaimg.cn\/upload\/1059\/799\/2020\/05\/19\/verified.png",
-  "desc": "Pilipili"
+  "desc": "pilipili"
 };
 const badge = {
   "uc_domain": 1,
@@ -206,9 +207,68 @@ const badge = {
 if (url.indexOf(userList) != -1 || url.indexOf(notice) != -1) {
   let data = $response.body.replace(/\"verified_type\":-1/g, '"verified_type": 0').replace(/\"verified\":false/g, '"verified": true, "verified_type_ext": 1').replace(/\"verified_type_ext\":(\d)/g, '"verified_type_ext": 1');
   obj = JSON.parse(data);
-  if(obj.messages) obj.messages = obj.messages.filter(element => !(element['isrecommend'] == true));
+  if (obj.messages) obj.messages = obj.messages.filter(element => !(element['isrecommend'] == true));
 }
-if (url.indexOf(profile) != -1) {
+
+if (url.indexOf(userInfo) != -1) {
+  obj.header.data.userInfo.verified_reason = "我是傻逼";
+  obj.header.data.userInfo.remark = "";
+  obj.header.data.userInfo.verified = true;
+  obj.header.data.userInfo.verified_type = 0;
+  obj.header.data.userInfo.has_ability_tag = 1;
+  obj.header.data.userInfo.type = 1;
+  obj.header.data.userInfo.followers_count = 22332333;
+  obj.header.data.userInfo.followers_count_str = "2233万";
+  obj.header.data.userInfo.star = 1;
+  obj.header.data.userInfo.mb_expire_time = 7257139200;
+  obj.header.data.userInfo.ip_location = "二次元";
+  obj.header.data.userInfo.verified_type_ext = 1;
+  obj.header.data.userInfo.user_ability_extend = 1;
+  obj.header.data.userInfo.svip = 1;
+  obj.header.data.userInfo.extend.chaohua_ability = 1;
+  obj.header.data.userInfo.orange_v = "我是傻逼";
+  obj.header.data.userInfo.extend.chaohua_ability = 1;
+  obj.header.data.userInfo.extend.brand_ability = 1;
+  obj.header.data.userInfo.extend.nft_ability = 1;
+  obj.header.data.userInfo.extend.vplus_ability = 1;
+  obj.header.data.userInfo.extend.wenda_ability = 1;
+  obj.header.data.userInfo.extend.live_ability = 1;
+  obj.header.data.userInfo.extend.gongyi_ability = 1;
+  obj.header.data.userInfo.extend.paycolumn_ability = 1;
+  obj.header.data.userInfo.extend.newbrand_ability = 1;
+  obj.header.data.userInfo.extend.ecommerce_ability = 1;
+  obj.header.data.userInfo.extend.hardfan_ability = 1;
+  obj.header.data.userInfo.verified_detail = {
+    custom: 1,
+    data: [
+      {
+        key: 1,
+        sub_key: 0,
+        weight: 10,
+        desc: "我是傻逼",
+        timestamp: 0,
+      },
+    ],
+  };
+  obj.header.data.userInfo.icons = [
+    {
+      name: "svip",
+      url: "https://h5.sinaimg.cn/upload/1004/409/2021/06/08/feed_icon_100vip_7.png",
+      isgif: true,
+      scheme: "https://me.verified.weibo.com/fans/intro?topnavstyle=1",
+    },
+  ];
+
+  if (obj.header.data.infoList[0].actionlog.ext != "name:verified") {
+    obj.header.data.infoList.splice(0, 0, verified);
+  } else {
+    obj.header.data.infoList[0].desc = "我是傻逼";
+  }
+  obj.header.data.userInfo.badge = badge;
+  obj.header.data.userDescribe[0].text[0].content = "2233万";
+}
+
+if (url.indexOf(profile) != -1 && url.indexOf(userInfo) == -1) {
   obj.userInfo.user_ability_extend = 1;
   obj.userInfo.verified_type_ext = 1;
   obj.userInfo.verified_type = 0;
@@ -219,34 +279,40 @@ if (url.indexOf(profile) != -1) {
         "key": 1,
         "weight": 10,
         "sub_key": 0,
-        "desc": "Pilipili"
+        "desc": "我是傻逼"
       }
     ]
   };
-  obj.userInfo.ip_location = '二次元老家';
+  obj.userInfo.ip_location = '二次元';
   obj.userInfo.geo_enabled = false;
   obj.userInfo.verified_detail = verified_detail;
   obj.userInfo.svip = 1;
-  obj.userInfo.verified_reason = 'Pilipili';
+  obj.userInfo.verified_reason = '我是傻逼';
   obj.userInfo.statuses_count = 0;
-  obj.userInfo.orange_v = 'Pilipili';
+  obj.userInfo.orange_v = '我是傻逼';
   obj.userInfo.verified_level = 2;
   obj.userInfo.verified = true;
   obj.userInfo.has_ability_tag = 1;
   obj.userInfo.type = 1;
   obj.userInfo.star = 1;
   obj.userInfo.friendships_relation = 2;
+  obj.userInfo.remark = "";
+  obj.userInfo.followers_count = 22332333;
+  obj.userInfo.followers_count_str = "2233万";
+  obj.userInfo.mb_expire_time = 7257139200;
   obj.userInfo.icons = [
     {
-      "url": "https:\/\/h5.sinaimg.cn\/upload\/1004\/409\/2021\/06\/08\/feed_icon_100vip_7.png",
-      "scheme": "https:\/\/me.verified.weibo.com\/fans\/intro?topnavstyle=1"
+      name: "svip",
+      url: "https://h5.sinaimg.cn/upload/1004/409/2021/06/08/feed_icon_100vip_7.png",
+      isgif: true,
+      scheme: "https://me.verified.weibo.com/fans/intro?topnavstyle=1",
     }
   ];
 
   if (obj.userInfo.infoList[0].actionlog.ext != 'name:verified') {
     obj.userInfo.infoList.splice(0, 0, verified);
   } else {
-    obj.userInfo.infoList[0].desc = 'Pilipili';
+    obj.userInfo.infoList[0].desc = '我是傻逼';
   }
   obj.userInfo.badge = badge;
 }
@@ -261,27 +327,34 @@ if (url.indexOf(users) != -1) {
         "key": 1,
         "weight": 10,
         "sub_key": 0,
-        "desc": "Pilipili"
+        "desc": "我是傻逼"
       }
     ]
   };
-  obj.ip_location = '二次元老家';
+  obj.ip_location = '二次元';
   obj.geo_enabled = false;
   obj.verified_detail = verified_detail;
   obj.svip = 1;
-  obj.verified_reason = "Pilipili";
+  obj.verified_reason = "我是傻逼";
   obj.statuses_count = 0;
-  obj.orange_v = "Pilipili";
+  obj.orange_v = "我是傻逼";
+  obj.verified_type = 0;
   obj.verified_level = 2;
   obj.verified = true;
   obj.has_ability_tag = 1;
   obj.type = 1;
   obj.star = 1;
+  obj.remark = "";
   obj.friendships_relation = 2;
+  obj.followers_count = 22332333;
+  obj.followers_count_str = "2233万";
+  obj.mb_expire_time = 7257139200;
   obj.icons = [
     {
-      "url": "https:\/\/h5.sinaimg.cn\/upload\/1004\/409\/2021\/06\/08\/feed_icon_100vip_7.png",
-      "scheme": "https:\/\/me.verified.weibo.com\/fans\/intro?topnavstyle=1"
+      name: "svip",
+      url: "https://h5.sinaimg.cn/upload/1004/409/2021/06/08/feed_icon_100vip_7.png",
+      isgif: true,
+      scheme: "https://me.verified.weibo.com/fans/intro?topnavstyle=1",
     }
   ];
 
@@ -300,27 +373,33 @@ if (url.indexOf(comments) != -1) {
         "key": 1,
         "weight": 10,
         "sub_key": 0,
-        "desc": "Pilipili"
+        "desc": "我是傻逼"
       }
     ]
   };
-  obj.user.ip_location = '二次元老家';
+  obj.user.ip_location = '二次元';
   obj.user.geo_enabled = false;
   obj.user.verified_detail = verified_detail;
   obj.user.svip = 1;
-  obj.user.verified_reason = 'Pilipili';
+  obj.user.verified_reason = '我是傻逼';
   obj.user.statuses_count = 0;
-  obj.user.orange_v = 'Pilipili';
+  obj.user.orange_v = '我是傻逼';
   obj.user.verified_level = 2;
   obj.user.verified = true;
   obj.user.has_ability_tag = 1;
   obj.user.type = 1;
   obj.user.star = 1;
+  obj.user.remark = "";
   obj.user.friendships_relation = 2;
+  obj.user.followers_count = 22332333;
+  obj.user.followers_count_str = "2233万";
+  obj.user.mb_expire_time = 7257139200;
   obj.user.icons = [
     {
-      "url": "https:\/\/h5.sinaimg.cn\/upload\/1004\/409\/2021\/06\/08\/feed_icon_100vip_7.png",
-      "scheme": "https:\/\/me.verified.weibo.com\/fans\/intro?topnavstyle=1"
+      name: "svip",
+      url: "https://h5.sinaimg.cn/upload/1004/409/2021/06/08/feed_icon_100vip_7.png",
+      isgif: true,
+      scheme: "https://me.verified.weibo.com/fans/intro?topnavstyle=1",
     }
   ];
 
@@ -345,31 +424,38 @@ if (url.indexOf(statuses) != -1) {
         "key": 1,
         "weight": 10,
         "sub_key": 0,
-        "desc": "Pilipili"
+        "desc": "我是傻逼"
       }
     ]
   };
-  obj.user.ip_location = '二次元老家';
+  obj.user.ip_location = '二次元';
   obj.user.geo_enabled = false;
   obj.user.verified_detail = verified_detail;
   obj.user.svip = 1;
-  obj.user.verified_reason = 'Pilipili';
+  obj.user.verified_reason = '我是傻逼';
   obj.user.statuses_count = 0;
-  obj.user.orange_v = 'Pilipili';
+  obj.user.orange_v = '我是傻逼';
   obj.user.verified_level = 2;
   obj.user.verified = true;
   obj.user.has_ability_tag = 1;
   obj.user.type = 1;
   obj.user.star = 1;
+  obj.user.remark = "";
   obj.user.friendships_relation = 2;
+  obj.user.followers_count = 22332333;
+  obj.user.followers_count_str = "2233万";
+  obj.user.mb_expire_time = 7257139200;
   obj.user.icons = [
     {
-      "url": "https:\/\/h5.sinaimg.cn\/upload\/1004\/409\/2021\/06\/08\/feed_icon_100vip_7.png",
-      "scheme": "https:\/\/me.verified.weibo.com\/fans\/intro?topnavstyle=1"
+      name: "svip",
+      url: "https://h5.sinaimg.cn/upload/1004/409/2021/06/08/feed_icon_100vip_7.png",
+      isgif: true,
+      scheme: "https://me.verified.weibo.com/fans/intro?topnavstyle=1",
     }
   ];
 
   obj.user.badge = badge;
-  obj.region_name = "二次元老家";
+  obj.region_name = "二次元";
 }
+
 $done({ body: JSON.stringify(obj) });
