@@ -7,14 +7,14 @@
 #!homepage=https://github.com/Guding88/Script/blob/main/bawangchaji/Readme.md
 
 #!arguments=cronexp1:13 10 * * *, cronexp2:14 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 打开霸王茶姬小程序, 进入"我的"页面\n\n2️⃣ cronexp1\n\n定时任务, 默认每天10:13:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ cronexp2\n\n定时任务, 默认每天10:13:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n签到超时时间, 默认60秒
+#!arguments-desc=1️⃣ 打开霸王茶姬小程序, 进入"我的"页面获取Cookie\n\n2️⃣ cronexp1\n\n定时任务, 默认每天10:13:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ cronexp2\n\n定时任务, 默认每天10:13:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n签到超时时间, 默认60秒
 
 [Script]
-霸王茶姬_token = type = http-request, requires-body = 0, wake-system = 1, max-size = 0, timeout = {{{timeout}}}, pattern = ^https?:\/\/(webapi|qmwebapi)\.qmai\.cn\/web\/(catering2-apiserver\/customer-suggest\/query-feedback-config|catering\/crm\/points-info), script-path = https://raw.githubusercontent.com/Guding88/Script/main/bawangchaji/bwcj_token.js
+霸王茶姬_获取Cookie = type = http-request, requires-body = 0, wake-system = 1, max-size = 0, timeout = {{{timeout}}}, pattern = ^https?:\/\/(webapi|qmwebapi)\.qmai\.cn\/web\/(catering2-apiserver\/customer-suggest\/query-feedback-config|catering\/crm\/points-info), script-path = https://raw.githubusercontent.com/Guding88/Script/main/bawangchaji/bwcj_token.js
 
-霸王茶姬_小程序签到v1 = type = cron, cronexp = "{{{cronexp1}}}", wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/Guding88/Script/main/bawangchaji/bwcj.js
+霸王茶姬_每日签到v1 = type = cron, cronexp = "{{{cronexp1}}}", wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/Guding88/Script/main/bawangchaji/bwcj.js
 
-霸王茶姬_小程序签到v2 = type = cron, cronexp = "{{{cronexp2}}}", wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/Guding88/Script/main/bawangchaji/bwcj2024.js
+霸王茶姬_每日签到v2 = type = cron, cronexp = "{{{cronexp2}}}", wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/Guding88/Script/main/bawangchaji/bwcj2024.js
 
 [MITM]
 hostname = %APPEND% qmwebapi.qmai.cn, webapi.qmai.cn
