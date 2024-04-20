@@ -10,4 +10,4 @@
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json\n\napp:某榴最新技术推送\n\n2️⃣ cronexp\n\n定时任务, 默认每天20点,22点推送\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n推送超时时间, 默认60秒\n\n4️⃣ script-update-interval\n\n脚本更新间隔, 默认每天更新
 
 [Script]
-1024_每日推送 = type = cron, wake-system = 1cronexp = "{{{cronexp}}}", timeout={{{timeout}}}, script-update-interval = {{{script-update-interval}}}, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/1024.js
+1024_每日推送 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-update-interval = {{{script-update-interval}}}, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/1024.js
