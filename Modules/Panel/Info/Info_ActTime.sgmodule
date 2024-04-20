@@ -6,11 +6,11 @@
 #!author=fishingworld
 #!homepage=https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js
 
-#!arguments= script-update-interval:86400, update-interval:1, timeout:10
-#!arguments-desc=1️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n2️⃣ update-interval\n\n面板刷新时间, 默认立即刷新\n\n3️⃣ timeout\n\n超时时间, 默认10秒
+#!arguments= script-update-interval:86400, update-interval:1, timeout:10, icon:paperplane.circle, color:#f6c970
+#!arguments-desc=1️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n2️⃣ update-interval\n\n面板刷新时间, 默认立即刷新\n\n3️⃣ timeout\n\n超时时间, 默认10秒\n\n4️⃣ icon\n\n图标, 默认paperplane.circle\n\n5️⃣ color\n\n颜色, 默认#f6c970
 
 [Panel]
 Panel_Info_ActTime = title = "Surge运行时间", content = "请刷新", script-update-interval = {{{script-update-interval}}}, update-interval = {{{update-interval}}}, script-name = Info_ActTime
 
 [Script]
-Info_ActTime = type = generic, timeout = {{{timeout}}}, argument=icon=paperplane.circle&color=#f6c970, script-path = https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js
+Info_ActTime = type = generic, timeout = {{{timeout}}}, argument=icon={{{icon}}}&color={{{color}}}, script-path = https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js

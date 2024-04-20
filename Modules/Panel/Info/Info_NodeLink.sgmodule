@@ -6,11 +6,11 @@
 #!author=I-am-R-E
 #!homepage=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js
 
-#!arguments=script-update-interval:86400, update-interval:21600, timeout:30
-#!arguments-desc=1️⃣ 注意\n\n需要在sub-store中配置节点操作脚本:https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Sub-Store/Operator.js\n\n2️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n3️⃣ update-interval\n\n面板刷新时间, 默认每六小时刷新\n\n 4️⃣ timeout\n\n超时时间, 默认30秒
+#!arguments=script-update-interval:86400, update-interval:21600, timeout:30, icon:network, color:#86abee
+#!arguments-desc=1️⃣ 注意\n\n需要在sub-store中配置节点操作脚本:https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Sub-Store/Operator.js\n\n2️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n3️⃣ update-interval\n\n面板刷新时间, 默认每六小时刷新\n\n4️⃣ timeout\n\n超时时间, 默认30秒\n\n5️⃣ icon\n\n图标, 默认network\n\n6️⃣ color\n\n颜色, 默认#86abee
 
 [Panel]
 Panel_Info_NodeLink = style = info, title = "代理链路检测", content = "请刷新", script-update-interval = {{{script-update-interval}}}, update-interval = {{{update-interval}}}, script-name = Info_NodeLink
 
 [Script]
-Info_NodeLink = type = generic, timeout = {{{timeout}}}, argument=icon=network&color=#86abee, script-path = https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js
+Info_NodeLink = type = generic, timeout = {{{timeout}}}, argument=icon={{{icon}}}&color={{{color}}}, script-path = https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js

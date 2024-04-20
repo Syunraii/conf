@@ -6,11 +6,11 @@
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Stream-All-Lite/Moore/Stream-All-Lite.js
 
-#!arguments=script-update-interval:86400, update-interval:7200, timeout:20
-#!arguments-desc=1️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n2️⃣ update-interval\n\n面板刷新时间, 默认每两小时刷新\n\n3️⃣ timeout\n\n超时时间, 默认20秒
+#!arguments=script-update-interval:86400, update-interval:7200, timeout:20, icon:play.tv.fill, color:#d22f28
+#!arguments-desc=1️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n2️⃣ update-interval\n\n面板刷新时间, 默认每两小时刷新\n\n3️⃣ timeout\n\n超时时间, 默认20秒\n\n4️⃣ icon\n\n图标, 默认play.tv.fill\n\n5️⃣ color\n\n颜色, 默认#d22f28
 
 [Panel]
 Panel_Check_StreamingMedia = title = "流媒体解锁检测", content = "请刷新", script-update-interval = {{{script-update-interval}}}, update-interval = {{{update-interval}}},  script-name = Check_StreamingMedia
 
 [Script]
-Check_StreamingMedia = type = generic, timeout = {{{timeout}}}, argument=icon=play.tv.fill&color=#d22f28, script-path = https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Stream-All-Lite/Moore/Stream-All-Lite.js
+Check_StreamingMedia = type = generic, timeout = {{{timeout}}}, argument=icon={{{icon}}}&color={{{color}}}, script-path = https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Stream-All-Lite/Moore/Stream-All-Lite.js
