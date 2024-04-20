@@ -1,0 +1,16 @@
+﻿#!name=⌘ Tasks: Mxbc
+#!desc=蜜雪冰城每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=Sliverkiss
+#!homepage=https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
+
+#!arguments=cronexp:12 10 * * *, timeout:60
+#!arguments-desc=1️⃣ 使用方法\n\n打开蜜雪冰城小程序, 进入"我的"页面\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:12:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n签到超时时间, 默认60秒
+
+[Script]
+蜜雪冰城_小程序签到 = type = http-response, requires-body = 1, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-update-interval = {{{script-update-interval}}},pattern = ^https:\/\/mxsa\.mxbc\.net\/api\/v1\/customer\/info, script-path = https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
+
+[MITM]
+hostname = mxsa.mxbc.net
