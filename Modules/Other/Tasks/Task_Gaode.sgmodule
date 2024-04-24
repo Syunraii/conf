@@ -7,7 +7,7 @@
 #!homepage=https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
 
 #!arguments=cronexp:12 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 使用方法\n\n进入【高德地图/微信/支付宝 小程序[高德打车]，打车，福利中心】，任意一端获取成功即可3端签到\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:15:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n签到超时时间, 默认60秒
+#!arguments-desc=1️⃣ 使用方法\n\n进入【高德地图/微信/支付宝 小程序[高德打车]，打车，福利中心】，任意一端获取成功即可3端签到\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:15:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n脚本执行超时时间, 默认60秒
 
 [Script]
 高德打车_获取Cookie = type = http-response, requires-body = 1, wake-system = 1, max-size = 0, timeout = {{{timeout}}}, pattern = ^https:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=), script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js

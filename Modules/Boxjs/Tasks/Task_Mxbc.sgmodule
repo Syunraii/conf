@@ -7,7 +7,7 @@
 #!homepage=https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
 
 #!arguments=cronexp:12 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:蜜雪冰城\n\n2️⃣ 使用方法\n\n打开蜜雪冰城小程序, 进入"我的"页面获取Cookie\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:12:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n签到超时时间, 默认60秒
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:蜜雪冰城\n\n2️⃣ 使用方法\n\n打开蜜雪冰城小程序, 进入"我的"页面获取Cookie\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:12:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒
 
 [Script]
 蜜雪冰城_获取Cookie = type = http-response, requires-body = 1, wake-system = 1, max-size = 0, timeout = {{{timeout}}}, pattern = ^https:\/\/mxsa\.mxbc\.net\/api\/v1\/customer\/info, script-path = https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
