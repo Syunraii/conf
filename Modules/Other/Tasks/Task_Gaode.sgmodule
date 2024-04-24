@@ -15,4 +15,4 @@
 高德打车_每日签到 = type = cron, cronexp = {{{cronexp}}}, wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
 
 [MITM]
-hostname = *.amap.com
+hostname = %APPEND% *.amap.com

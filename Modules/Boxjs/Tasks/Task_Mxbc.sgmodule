@@ -15,4 +15,4 @@
 蜜雪冰城_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
 
 [MITM]
-hostname = mxsa.mxbc.net
+hostname = %APPEND% mxsa.mxbc.net

@@ -18,4 +18,4 @@
 夸克网盘_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
 
 [MITM]
-hostname = coral2.quark.cn,drive-pc.quark.cn
+hostname = %APPEND% coral2.quark.cn,drive-pc.quark.cn
