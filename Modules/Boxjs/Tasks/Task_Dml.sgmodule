@@ -1,0 +1,18 @@
+﻿#!name=⌘ Tasks: Dml(❌)
+#!desc=达美乐披萨每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=Sliverkiss
+#!homepage=https://gist.githubusercontent.com/Sliverkiss/6b4da0d367d13790a9fd1d928c82bdf8/raw/dlm.js
+
+#!arguments=cronexp:19 10 * * *, timeout:60
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:达美乐披萨\n\n2️⃣ 使用方法\n\n打开达乐美披萨公众号->优惠｜咨询->有奖游戏->手动完成一次游戏，若提示获取Cookie成功则可以使用\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:18:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+
+[Script]
+达美乐披萨_获取Cookie = type = http-request, requires-body = 1, wake-system = 1, max-size = 0, timeout = {{{timeout}}}, pattern = ^https:\/\/game\.dominos\.com\.cn\/.+\/game\/gameDone, script-path = https://gist.githubusercontent.com/Sliverkiss/6b4da0d367d13790a9fd1d928c82bdf8/raw/dlm.js
+
+达美乐披萨_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/6b4da0d367d13790a9fd1d928c82bdf8/raw/dlm.js
+
+[MITM]
+hostname = %APPEND% game.dominos.com.cn

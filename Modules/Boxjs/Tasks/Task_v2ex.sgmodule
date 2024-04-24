@@ -1,0 +1,18 @@
+﻿#!name=⌘ Tasks: V2ex
+#!desc=v2ex每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=anyehttp
+#!homepage=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex-surge.sgmodule
+
+#!arguments=cronexp:17 10 * * *, timeout:60
+#!arguments-desc=1️⃣ 多账号需要配合boxjs使用\n\n使用方式:\n1.抓包v2ex.com域名下的cookie\n2.打开boxjs->我的->数据查看器->在数据键输入v2ex_data,点击VIEW->在数据内容输入抓取到的cookie，点击保存\n3.若有多账号，用@分割，如cookie@cookie\n\n2️⃣ 使用方法\n\n打开v2ex网站，随便逛逛，提示获取cookie成功则可以使用本\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:12:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+
+[Script]
+v2ex_获取Cookie = type = http-request, requires-body = 1, wake-system = 1, max-size = 0, timeout = {{{timeout}}}, pattern = ^https:\/\/www\.v2ex\.com\/b\/i\/, script-path = https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex.js
+
+v2ex_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex.js
+
+[MITM]
+hostname = %APPEND% www.v2ex.com
