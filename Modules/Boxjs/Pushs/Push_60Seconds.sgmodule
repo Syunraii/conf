@@ -6,7 +6,7 @@
 #!author=Yuheng0101
 #!homepage=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/60s.js
 
-#!arguments=cronexp:0 30 9 * * *, timeout:60, script-update-interval:86400
+#!arguments=cronexp:30 9 * * *, timeout:60, script-update-interval:86400
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json\n\napp:每天60秒读懂世界\n\n2️⃣ cronexp\n\n定时任务, 默认每天9点30分推送\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n推送超时时间, 默认60秒\n\n4️⃣ script-update-interval\n\n脚本更新间隔, 默认每天更新
 
 [Script]
