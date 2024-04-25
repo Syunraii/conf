@@ -6,8 +6,8 @@
 #!author=deezertidal
 #!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/gpt.js
 
-#!arguments=script-update-interval:86400, update-interval:7200, timeout:20, icon:ellipses.bubble.fill, color:#008000
-#!arguments-desc=1️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n2️⃣ update-interval\n\n面板刷新时间, 默认每两小时刷新\n\n3️⃣ timeout\n\n超时时间, 默认10秒\n\n4️⃣ icon\n\n图标, 默认ellipses.bubble.fill\n\n5️⃣ color\n\n颜色, 默认#008000
+#!arguments=script-update-interval:86400, update-interval:7200, timeout:20, icon:ellipses.bubble.fill, color:#800030
+#!arguments-desc=1️⃣ script-update-interval\n\n脚本更新时间, 默认每天更新\n\n2️⃣ update-interval\n\n面板刷新时间, 默认每两小时刷新\n\n3️⃣ timeout\n\n超时时间, 默认10秒\n\n4️⃣ icon\n\n图标, 默认ellipses.bubble.fill\n\n5️⃣ color\n\n颜色, 默认#800030
 
 [Panel]
 Panel_Check_ChatGPT = title = "ChatGPT解锁检测", content = "请刷新", script-update-interval = {{{script-update-interval}}}, update-interval = {{{update-interval}}},  script-name = Check_ChatGPT
