@@ -5,7 +5,6 @@
 
 #!author = jkgtw
 #!homepage = https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Loon/Plugin/Line_remove_ads.plugin
-#!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/Line.png
 
 [URL Rewrite]
 "^https:\/\/a\.line\.me\/er\/lads\/v\d\/ei\?" - reject
