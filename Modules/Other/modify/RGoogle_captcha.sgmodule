@@ -1,0 +1,13 @@
+﻿#!name=↹ Modify: RGoogle_CAPTCHA
+#!desc=Google搜索内容时并发使用多个策略/策略组，以避免可能出现的人机验证。注意：需要在模块参数填写策略/策略组名的正则表达式。
+#!system=ios/macos
+#!category=↹ Modify
+
+#!arguments=策略正则, 脚本引擎:auto
+#!arguments-desc=1️⃣ 策略正则\n\n策略/策略组名的正则表达式, 例如 ^(🇸🇬|🇭🇰)\s.*\d+$ 如需同时使用所有策略/策略组可使用 .+ 表示\n\n2️⃣ 脚本引擎\n\njsc/webview/auto，默认auto
+
+[Script]
+Google CAPTCHA = type = http-response, requires-body = 1, debug = 0, max-size = 0, timeout = 10, ability = http-client-policy, engine = {{{脚本引擎}}}, argument={{{策略正则}}}, pattern = ^https:\/\/www\.google\.com(?:\.[a-z]+|)\/(?:search\?(?:|.+?&)q=|$), script-path = https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/Google_CAPTCHA.js
+
+[MITM]
+hostname = www.google.com*

@@ -1,0 +1,19 @@
+﻿#!name=⌘ Tasks: QQMusic
+#!desc=QQ音乐每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=
+#!homepage=
+
+#!arguments=cronexp:4 10 * * *, timeout:60
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:\n\napp:阿里云盘签到\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:02:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+
+
+[Script]
+QQ音乐_获取Cookie = type = http-requzest, requires-body = 1, wake-system = 1, max-size = 0, timeout = {{{timeout}}}, pattern = ^https:\/\/www\.v2ex\.com\/b\/i\/, script-path = https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex.js
+
+QQ音乐_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/qqMusic.js
+
+[MITM]
+hostname = %APPEND% *.y.qq.com
