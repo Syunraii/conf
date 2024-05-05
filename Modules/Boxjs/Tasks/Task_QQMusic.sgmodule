@@ -6,15 +6,15 @@
 #!author=WowYiJiu
 #!homepage=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/qqMusic.js
 
-#!arguments=cronexp:25 12-17/1 * * *, timeout:60, enable1:1, enable2:1, hostname:hostname
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/WowYiJiu/Personal/main/WowYiJiu.box.json\n\napp:QQ音乐\n\n2️⃣ 使用方法\n\n1.进入QQ音乐app，点击我的，点击头像下的金币按钮进入任务页面看到系统消息提示'成功'即可\n2.进入桌面版https://y.qq.com/，点击我的音乐-->(我的已购)看到系统消息提示'成功'即可\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:05:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n5️⃣ enable\n\n是否启用脚本, 默认启用, 获取cookie后可输入0禁用\n\n6️⃣ hostname\n\n获取后输入"#"号避免不必要的MITM
+#!arguments=cronexp:25 12-17/1 * * *, timeout:60, enable1:1, enable2:1
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/WowYiJiu/Personal/main/WowYiJiu.box.json\n\napp:QQ音乐\n\n2️⃣ 使用方法\n\n1.进入QQ音乐app，点击我的，点击头像下的金币按钮进入任务页面看到系统消息提示'成功'即可\n2.进入桌面版https://y.qq.com/，点击我的音乐-->(我的已购)看到系统消息提示'成功'即可\n\n3️⃣ enable\n\n是否启用脚本, 默认启用, 获取cookie后可输入0禁用\n\n4️⃣ cronexp\n\n定时任务, 默认每天10:05:00执行\n注:如需修改请依照cron表达式格式\n\n5️⃣ timeout\n\n脚本执行超时时间, 默认60秒
 
 [Script]
-QQ音乐_每日签到 = type = cron, cronexp = {{{cronexp}}}, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/qqMusic.js
-
 QQ音乐_获取Cookie_1 = type = http-request, requires-body = 0, enable = {{{enable1}}}, pattern = https://c6.y.qq.com/shop/fcgi-bin/fcg_get_order?, script-path = https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/qqMusic.js
 
 QQ音乐_获取Cookie_2 = type = http-request, requires-body = 0, enable = {{{enable2}}}, pattern = https://u6.y.qq.com/cgi-bin/musics.fcg?, script-path = https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/qqMusic.js
 
+QQ音乐_每日签到 = type = cron, cronexp = {{{cronexp}}}, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/qqMusic.js
+
 [MITM]
-{{{hostname}}} = %APPEND% *.y.qq.com
+hostname = %APPEND% *.y.qq.com

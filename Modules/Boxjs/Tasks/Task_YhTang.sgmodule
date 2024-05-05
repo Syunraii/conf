@@ -6,11 +6,11 @@
 #!author=Sliverkiss
 #!homepage=https://gist.githubusercontent.com/Sliverkiss/df5dbbf01bc3acc3bccaf7880acd242b/raw/yht.js
 
-#!arguments=cronexp:17 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:益禾堂\n\n2️⃣ 使用方法\n\n打开益禾堂小程序, 进入"我的"页面获取Cookie\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:17:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+#!arguments=cronexp:17 10 * * *, timeout:60, enable:1
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:益禾堂\n\n2️⃣ 使用方法\n\n打开益禾堂小程序, 进入"我的"页面获取Cookie\n\n3️⃣ enable\n\n是否启用该任务, 默认启用, 获取cookie后可输入0禁用\n\n4️⃣ cronexp\n\n定时任务, 默认每天10:17:00执行\n注:如需修改请依照cron表达式格式\n\n5️⃣ timeout\n\n脚本执行超时时间, 默认60秒
 
 [Script]
-益禾堂_获取Cookie = type = http-request, requires-body = 1, wake-system = 1, timeout = {{{timeout}}}, pattern = ^https:\/\/(webapi|qmwebapi)\.qmai\.cn\/web\/(catering|catering2-apiserver)\/crm\/points-info, script-path = https://gist.githubusercontent.com/Sliverkiss/df5dbbf01bc3acc3bccaf7880acd242b/raw/yht.js
+益禾堂_获取Cookie = type = http-request, requires-body = 1, wake-system = 1, enable = {{{enable}}}, pattern = ^https:\/\/(webapi|qmwebapi)\.qmai\.cn\/web\/(catering|catering2-apiserver)\/crm\/points-info, script-path = https://gist.githubusercontent.com/Sliverkiss/df5dbbf01bc3acc3bccaf7880acd242b/raw/yht.js
 
 益禾堂_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/df5dbbf01bc3acc3bccaf7880acd242b/raw/yht.js
 
