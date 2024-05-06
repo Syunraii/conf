@@ -14,7 +14,6 @@
 
 夸克网盘_获取Cookie_2 = type = http-request, requires-body = 1, wake-system = 1, max-size = 0, enbale = {{{enable}}}, pattern = ^https:\/\/coral2\.quark\.cn\/quark\/(carbon|welfare)\/(v1|v2)\/signIn, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
 
-
 夸克网盘_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
 
 [MITM]
