@@ -6,8 +6,8 @@
 #!author=wf021325
 #!homepage=https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
 
-#!arguments=enable:1, cronexp:20 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 使用方法\n\n进入【高德地图/微信/支付宝 小程序[高德打车]，打车，福利中心】，任意一端获取成功即可3端签到\n\n4️⃣ enable\n\n是否启用该任务, 默认启用, 获取cookie后可输入0禁用\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:20:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+#!arguments=enable:1, cronexp:20 10 * * *, timeout:60, hostname:hostname
+#!arguments-desc=1️⃣ 使用方法\n\n进入【高德地图/微信/支付宝 小程序[高德打车]，打车，福利中心】，任意一端获取成功即可3端签到\n\n4️⃣ enable\n\n是否启用该任务, 默认启用, 获取cookie后可输入0禁用\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:20:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n5️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
 
 [Script]
 高德打车_获取Cookie = type = http-response, requires-body = 1, wake-system = 1, max-size = 0, enable = {{{enable}}},pattern = ^https:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=), script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
@@ -15,4 +15,4 @@
 高德打车_每日签到 = type = cron, cronexp = {{{cronexp}}}, wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
 
 [MITM]
-hostname = %APPEND% *.amap.com
+{{{hostname}}} = %APPEND% *.amap.com

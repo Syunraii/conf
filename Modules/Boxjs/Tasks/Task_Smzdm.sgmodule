@@ -6,8 +6,8 @@
 #!author=blackmatrix7
 #!homepage=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
 
-#!arguments=enable:1, cronexp:10 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/boxjs.json\n\napp:什么值得买\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:10:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ enable\n\n是否启用脚本, 默认启用, 获取cookie后可输入0禁用\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+#!arguments=enable:1, cronexp:10 10 * * *, timeout:60, hostname:hostname
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/boxjs.json\n\napp:什么值得买\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:10:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ enable\n\n是否启用脚本, 默认启用, 获取cookie后可输入0禁用\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n5️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
 
 [Script]
 什么值得买_获取Cookie = type = http-request, requires-body = 1, enable = {{{enable}}}, pattern = ^https?:\/\/user-api\.smzdm\.com\/checkin$, script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
@@ -31,4 +31,4 @@
 什么值得买_值会员权益中心banner去广告 = type = http-response, requires-body = 1, max-size = 0, pattern = ^https?:\/\/zhiyou\.m\.smzdm\.com\/user\/vip\/ajax_get_banner, script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_remove_ads.js
 
 [MITM]
-hostname = %APPEND% user-api.smzdm.com,app-api.smzdm.com,homepage-api.smzdm.com,haojia-api.smzdm.com,haojia.m.smzdm.com,baike-api.smzdm.com,s-api.smzdm.com,zhiyou.m.smzdm.com
+{{{hostname}}} = %APPEND% user-api.smzdm.com,app-api.smzdm.com,homepage-api.smzdm.com,haojia-api.smzdm.com,haojia.m.smzdm.com,baike-api.smzdm.com,s-api.smzdm.com,zhiyou.m.smzdm.com

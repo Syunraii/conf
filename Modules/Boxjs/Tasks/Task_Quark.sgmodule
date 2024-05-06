@@ -6,8 +6,8 @@
 #!author=Sliverkiss
 #!homepage=https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
 
-#!arguments=enable:1, cronexp:3 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:夸克网盘\n\n2️⃣ 使用方法\n\n1.浏览器访问https://pan.quark.cn/ 并登录, 进入"我的"页面获取Cookie\n2.打开夸克浏览器app，点击右下角三条杠->福利中心，手动完成一次签到，获取相关任务信息。如果签到没有提示，就把红包领了，第二天再重新获取一次。\n3.在福利界面内点击进入低碳空间，手动完成一次签到，获取相关任务信息。\n\n3️⃣ enable\n\n是否启用脚本, 默认启用, 获取cookie后可输入0禁用\n\n4️⃣ cronexp\n\n定时任务, 默认每天10:03:00执行\n注:如需修改请依照cron表达式格式\n\n5️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+#!arguments=enable:1, cronexp:3 10 * * *, timeout:60, hostname:hostname
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:夸克网盘\n\n2️⃣ 使用方法\n\n1.浏览器访问https://pan.quark.cn/ 并登录, 进入"我的"页面获取Cookie\n2.打开夸克浏览器app, 点击右下角三条杠->福利中心,手动完成一次签到, 获取相关任务信息;如果签到没有提示, 就把红包领了, 第二天再重新获取一次\n3.在福利界面内点击进入低碳空间, 手动完成一次签到, 获取相关任务信息\n\n3️⃣ enable\n\n是否启用脚本, 默认启用, 获取cookie后可输入0禁用\n\n4️⃣ cronexp\n\n定时任务, 默认每天10:03:00执行\n注:如需修改请依照cron表达式格式\n\n5️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n6️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
 
 [Script]
 夸克网盘_获取Cookie_1 = type = http-response, requires-body = 1, wake-system = 1, max-size = 0, enbale = {{{enable}}}, pattern = ^https:\/\/drive-pc\.quark\.cn\/1\/clouddrive\/file\/sort, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
@@ -18,4 +18,4 @@
 夸克网盘_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
 
 [MITM]
-hostname = %APPEND% coral2.quark.cn,drive-pc.quark.cn
+{{{hostname}}} = %APPEND% coral2.quark.cn,drive-pc.quark.cn

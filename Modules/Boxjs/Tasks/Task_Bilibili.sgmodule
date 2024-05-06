@@ -6,8 +6,8 @@
 #!author=ClydeTime
 #!homepage=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
 
-#!arguments=enable:1, cronexp:6 10 * * *, timeout:60
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/ClydeTime/BiliBili/main/boxjs/BiliBili.boxjs.json\n\n2️⃣ enable\n\n是否启用, 默认启用, 获取cookie后可输入0禁用\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:06:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+#!arguments=enable:1, cronexp:6 10 * * *, timeout:60, hostname:hostname
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/ClydeTime/BiliBili/main/boxjs/BiliBili.boxjs.json\n\n2️⃣ enable\n\n是否启用, 默认启用, 获取cookie后可输入0禁用\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:06:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n5️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
 
 [Script]
 哔哩哔哩_获取Cookie = type = http-request, requires-body = 1, enable = {{{enable}}}, pattern = ^https:\/\/app\.bilibili\.com\/x\/resource\/domain\?, script-path = https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
@@ -15,4 +15,4 @@
 哔哩哔哩_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
 
 [MITM]
-hostname= %APPEND% app.bilibili.com, m.bilibili.com, ap?.bilibili.com, ap?.biliapi.net
+{{{hostname}}}= %APPEND% app.bilibili.com, m.bilibili.com, ap?.bilibili.com, ap?.biliapi.net
