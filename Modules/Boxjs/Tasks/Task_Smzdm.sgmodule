@@ -6,13 +6,13 @@
 #!author=blackmatrix7
 #!homepage=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
 
-#!arguments=enable:1, cronexp:10 10 * * *, timeout:60, hostname:hostname
-#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/boxjs.json\n\napp:什么值得买\n\n2️⃣ cronexp\n\n定时任务, 默认每天10:10:00执行\n注:如需修改请依照cron表达式格式\n\n3️⃣ enable\n\n是否启用脚本, 默认启用, 获取cookie后可输入0禁用\n\n4️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n5️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
+#!arguments=Get_Cookie:什么值得买_获取Cookie, Run_Checkin:什么值得买_每日签到, cronexp:10 10 * * *, timeout:60, hostname:hostname
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/boxjs.json\n\napp:什么值得买\n\n2️⃣ 使用方法\n\n进入什么值得买app, 点击签到获取cookie\n\n3️⃣ cronexp\n\n定时任务, 默认每天10:10:00执行\n注:如需修改请依照cron表达式格式\n\n4️⃣ Get_Cookie\n\n获取cookie, 获取后输入#禁用避免未知错误\n\n5️⃣ Run_Checkin\n\n执行每日签到, 输入#关闭\n\n6️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n7️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
 
 [Script]
-什么值得买_获取Cookie = type = http-request, requires-body = 1, enable = {{{enable}}}, pattern = ^https?:\/\/user-api\.smzdm\.com\/checkin$, script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
+{{{Get_Cookie}}} = type = http-request, requires-body = 1, max-size = 0, pattern = ^https?:\/\/user-api\.smzdm\.com\/checkin$, script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
 
-什么值得买_每日签到 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
+{{{Run_Checkin}}} = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
 
 什么值得买_开屏去广告 = type = http-response, requires-body = 1, max-size = 0, pattern = ^https?:\/\/app-api\.smzdm\.com\/util\/loading, script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_remove_ads.js
 
