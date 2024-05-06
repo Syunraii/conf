@@ -1,9 +1,23 @@
-﻿#!name=Tiktok
-#!desc=Tiktok 去水印 去广告
+﻿#!name=↹ Modify: Tiktok (🔨)
+#!desc=解锁Tiktok
+#!category=↹ Modify
+
+#!author=Semporia
+#!homepage=https://github.com/Semporia/TikTok-Unlock
+
+#!arguments=enable:1, CountryCode:JP
+#!arguments-desc=1️⃣ 使用方法\n\n降级至tiktok ipa21.1.0, 应用此模块并打开\n\n3️⃣ enable\n\n是否启用脚本, 默认启用, 输入0禁用\n\n3️⃣ CountryCode\n\n地区代码, 默认JP\n可用值TW, JP, US, KR 
 
 [Script]
-TikTok_去水印 = type = http-request, requires-body = 1, max-size = 0, pattern = ^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post), script-path = https://hub.nange.cn/Script/ByteDance/Aweme.js
-TikTok_去广告 = type = http-response, requires-body = 1, max-size = 0, pattern = ^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post), script-path = https://hub.nange.cn/Script/ByteDance/Aweme.js
+TikTok_去水印 = type = http-request, requires-body = 1, max-size = 0, enable = {{{enable}}}, pattern = ^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post), script-path = https://hub.nange.cn/Script/ByteDance/Aweme.js
+
+TikTok_去广告 = type = http-response, requires-body = 1, max-size = 0, enable = {{{enable}}}, pattern = ^https:\/\/.*\.(amemv|musical)\.(com|ly)\/aweme\/v.*\/(feed|post), script-path = https://hub.nange.cn/Script/ByteDance/Aweme.js
+
+[URL Rewrite]
+(?<=_region=)CN(?=&) {{{CountryCode}}} 307
+(?<=&mcc_mnc=)4 2 307
+^(https?:\/\/(tnc|dm)[\w-]+\.\w+\.com\/.+)(\?)(.+) $1$3 302
+(^https?:\/\/*\.\w{4}okv.com\/.+&.+)(\d{2}\.3\.\d)(.+) $118.0$3 302
 
 [MITM]
-hostname = %APPEND% *.snssdk.com, *.amemv.com, *.musical.ly, *.tiktokv.com, *.byteoversea.com, *.tik-tokapi.com
+hostname = %APPEND% *.tiktokv.com, *.byteoversea.com, *.tik-tokapi.com
