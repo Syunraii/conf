@@ -1,0 +1,18 @@
+﻿#!name=⌘ Tasks: Miyoushe(❌)
+#!desc=米游社每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=chavyleung
+#!homepage=https://github.com/chavyleung/scripts/tree/master/mihoyo
+
+#!arguments=Get_Cookie:米游社_获取Cookie, Run_Checkin:米游社_每日签到, cronexp:21 10 * * *, timeout:60, hostname:hostname
+#!arguments-desc=1️⃣ 使用方法\n\n进入米游社app, 获取cookie\n\n2️⃣ Get_Cookie\n\n获取cookie, 获取后输入#禁用避免未知错误\n\n3️⃣ Run_Checkin\n\n执行每日签到, 输入#关闭\n\n4️⃣ cronexp\n\n定时任务, 默认每天10:21:00执行\n注:如需修改请依照cron表达式格式\n\n5️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n6️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
+
+[Script]
+{{{Get_Cookie}}} = type = http-response, requires-body = 1, max-size = 0, pattern = ^https:\/\/api-takumi.mihoyo.com\/apihub\/api\/getGameList, script-path = https://raw.githubusercontent.com/chavyleung/scripts/master/mihoyo/mihoyo.cookie.js
+
+{{{Run_Checkin}}} = type = cron, cronexp = {{{cronexp}}}, wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/chavyleung/scripts/master/mihoyo/mihoyo.js
+
+[MITM]
+{{{hostname}}} = %APPEND% api-takumi.mihoyo.com
