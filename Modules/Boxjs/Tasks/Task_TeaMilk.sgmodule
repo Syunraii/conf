@@ -14,7 +14,7 @@
 
 {{{Get_Cookie2}}} = type = http-request, requires-body = 1, max-size = 0, pattern = ^https:\/\/(webapi|webapi2|qmwebapi)\.qmai\.cn\/web\/(catering\/integral|cmk-center)\/sign\/(signIn|takePartInSign), script-path = https://gist.githubusercontent.com/Sliverkiss/8b4f5487e0f28786c7dec9c7484dcd5e/raw/teaMilk.js
 
-{{{Run_Checkin}}} = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
+{{{Run_Checkin}}} = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/8b4f5487e0f28786c7dec9c7484dcd5e/raw/teaMilk.js
 
 [MITM]
 {{{hostname}}} = %APPEND% webapi2.qmai.cn,webapi.qmai.cn,qmwebapi.qmai.cn
