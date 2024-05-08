@@ -1,0 +1,22 @@
+﻿#!name=⌘ Tasks: TeaMilk(🔨)
+#!desc=奶茶多合一每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=Sliverkiss
+#!homepage=https://gist.githubusercontent.com/Sliverkiss/8b4f5487e0f28786c7dec9c7484dcd5e/raw/teaMilk.js
+
+#!arguments=Get_Cookie1:奶茶多合一_获取Cookie1, Get_Cookie2:奶茶多合一_获取Cookie2, Run_Checkin:奶茶多合一_每日签到, cronexp:21 10 * * *, timeout:60, hostname:hostname
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:奶茶多合一\n\n2️⃣ 使用方法\n\n打开支持的奶茶小程序, 进入"我的"页面获取Cookie\n\n3️⃣ Get_Cookie\n\n获取cookie, 获取后输入#禁用避免未知错误\n\n4️⃣ Run_Checkin\n\n执行每日签到, 输入#关闭\n\n5️⃣ cronexp\n\n定时任务, 默认每天10:21:00执行\n注:如需修改请依照cron表达式格式\n\n6️⃣ timeout\n\n脚本执行超时时间, 默认60秒\n\n7️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
+
+[Script]
+{{{Get_Cookie1}}} = type = http-response, requires-body = 1, max-size = 0, pattern = ^https:\/\/(webapi|webapi2)\.qmai\.cn\/web\/seller\/(oauth\/flash-sale-login|account\/login-minp), script-path = https://gist.githubusercontent.com/Sliverkiss/8b4f5487e0f28786c7dec9c7484dcd5e/raw/teaMilk.js
+
+{{{Get_Cookie2}}} = type = http-request, requires-body = 1, max-size = 0, pattern = ^https:\/\/(webapi|webapi2|qmwebapi)\.qmai\.cn\/web\/(catering\/integral|cmk-center)\/sign\/(signIn|takePartInSign), script-path = https://gist.githubusercontent.com/Sliverkiss/8b4f5487e0f28786c7dec9c7484dcd5e/raw/teaMilk.js
+
+{{{Run_Checkin}}} = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
+
+[MITM]
+{{{hostname}}} = %APPEND% webapi2.qmai.cn,webapi.qmai.cn,qmwebapi.qmai.cn
+
+
