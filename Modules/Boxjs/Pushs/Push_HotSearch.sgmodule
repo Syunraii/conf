@@ -10,4 +10,4 @@
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json\n\napp:热搜聚合\n\n2️⃣ cronexp\n\n定时任务, 默认每天12-20点每隔4小时推送一次\n注:如需修改请依照cron表达式格式\n\n3️⃣ timeout\n\n推送超时时间, 默认60秒\n\n4️⃣ script-update-interval\n\n脚本更新间隔, 默认每天更新
 
 [Script]
-HotSearch_每日推送 = type = cron, cronexp={{{cronexp}}}, wake-system = 1, timeout={{{timeout}}}, script-update-interval = {{{script-update-interval}}}, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/top.js
+HotSearch_每日推送 = type = cron, cronexp = "{{{cronexp}}}", wake-system = 1, timeout={{{timeout}}}, script-update-interval = {{{script-update-interval}}}, script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/top.js

@@ -12,7 +12,7 @@
 [Script]
 Pixiv_每日推送 = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-update-interval = {{{script-update-interval}}}, script-path = https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/PixivShow/Script/PixivShow.js,
 
-Pixiv_广告屏蔽 = type = http-response, requires-body = 1,max-size = 0, pattern = ^https?:\/\/oauth\.secure\.pixiv\.net\/(auth\/token), script-path = https://github.com/ddgksf2013/Scripts/raw/master/pixivAds.js
+Pixiv_广告屏蔽 = type = http-response, requires-body = 1, max-size = 0, pattern = ^https?:\/\/oauth\.secure\.pixiv\.net\/(auth\/token), script-path = https://github.com/ddgksf2013/Scripts/raw/master/pixivAds.js
 
 [MITM]
 hostname = %APPEND% oauth.secure.pixiv.net

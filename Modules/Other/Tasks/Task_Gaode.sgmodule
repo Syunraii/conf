@@ -12,7 +12,7 @@
 [Script]
 {{{Get_Cookie}}} = type = http-response, requires-body = 1, max-size = 0, pattern = ^https:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=), script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
 
-{{{Run_Checkin}}} = type = cron, cronexp = {{{cronexp}}}, wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
+{{{Run_Checkin}}} = type = cron, cronexp = "{{{cronexp}}}", wake-system = 1, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
 
 [MITM]
 {{{hostname}}} = %APPEND% *.amap.com
