@@ -6,7 +6,7 @@
 #!author=NobyDa
 #!homepage=https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutDailyBonus.js
 
-#!arguments=Run_Checkin:巴哈姆特_自动签到, Block_Ads:巴哈姆特_广告屏蔽, cronexp:5 10 * * *, timeout1:120, timeout2:60, hostname:hostname
+#!arguments=Run_Checkin:巴哈姆特_每日签到, Block_Ads:巴哈姆特_广告屏蔽, cronexp:5 10 * * *, timeout1:120, timeout2:60, hostname:hostname
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/NobyDa/Script/master/NobyDa_BoxJs.json\n\napp:巴哈姆特\n\n2️⃣ Run_Checkin\n\n执行每日签到, 输入#关闭\n\n3️⃣ Block_Ads\n\n屏蔽广告, 输入#关闭4️⃣ cronexp\n\n定时任务, 默认每天10:05:00执行\n注:如需修改请依照cron表达式格式\n\n5️⃣ timeout\n\ntimeout1:自动签到脚本超时时间, 默认120秒\ntimeout2:广告屏蔽脚本超时时间, 默认60秒\n\n6️⃣ hostname\n\n主机名, 运行正常后输入#禁用避免不必要的mitm
 
 [Script]
