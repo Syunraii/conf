@@ -1,0 +1,17 @@
+﻿#!name=🔐 Unlock: Abema
+#!desc=解锁AbemaTV地区限制
+#!system=ios
+#!category=🔐 Unlock
+
+#!author=ConnersHua
+#!homepage=https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Module/Unlock/AbeamTV.sgmodule
+
+#!arguments=Block_WaterMark:TikTok_去水印, Block_Ads:TikTok_去广告, CountryCode:JP
+#!arguments-desc=1️⃣ 使用方法\n\n降级至tiktok ipa21.1.0, 应用此模块并打开\n\n2️⃣ Block_WaterMark\n\n去水印脚本, 输入#禁用\n\n3️⃣ Block_Ads\n\n去广告脚本, 输入#禁用\n\n4️⃣ CountryCode\n\n地区代码, 默认JP\n可用值TW, JP, US, KR 
+
+[URL Rewrite]
+# Module: AbemaTV
+^https?:\/\/api\.[\w-]+\.abema-tv\.com\/v\d\/ip\/check - reject
+
+[MITM]
+hostname = %APPEND% api.*.abema-tv.com

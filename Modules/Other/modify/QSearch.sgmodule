@@ -29,7 +29,7 @@ DeepLtoJapanese = type = http-request,pattern=^https:\/\/{{{engine}}}.com\/\?q=d
 
 
 [URL Rewrite]
-
+# Module: QSearch
 #########################################常用#########################################
 # 检索类
 # ddg xxx (还原 DuckDuckGo)
