@@ -7,6 +7,7 @@
 #!homepage = https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Loon/Plugin/Line_remove_ads.plugin
 
 [URL Rewrite]
+# Module: Line Clear
 "^https:\/\/a\.line\.me\/er\/lads\/v\d\/ei\?" - reject
 "^https:\/\/a\.line\.me\/er\/la(ss|dg)\/v\d\/event\/image" - reject
 "^https:\/\/a\.line\.me\/lass\/api\/v\d\/ads$" - reject
