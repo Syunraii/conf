@@ -1,36 +1,38 @@
-# Author:Syunraii
-# UpdateTime: 2023/11/4
-# Desc: search "sub-link"，insert your sub
+# [sub-link]替换为订阅地址
 
+# 通用配置
 port: 7890
 socks-port: 7891
-mixed-port: 7890
-bind-address: '*'
+redir-port: 7892
+tproxy-port: 7893
+# 启动时的默认模式
 mode: Rule
-log-level: warning
-external-controller: 127.0.0.1:9090
-latencyUrl: http://www.aliyun.com/
-latencyTimeout: 5000
-bypass: 
+# 日志等级
+log-level: info
+# 允许ipv6
+ipv6: true
+# 允许共享代理
+allow-lan: true
+# “*”为绑定来自局域网的所有ip地址
+bind-address: "*"
+
+# bypass和dns > fake-ip-filter是从surge复制过来的, 可能需要根据自身情况修改
+# 跳过代理, 更多的可以看 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GeneralClashConfig.yml
+bypass:
   - localhost
   - '*.local'
-  - passenger.t3go.cn
-  - e.crashlytics.com
   - captive.apple.com
-  - seed-sequoia.siri.apple.com
+  - e.crashlytics.com
   - sequoia.apple.com
-  - app.yinxiang.com
-  - injections.adguard.org
-  - local.adguard.org
-  - cable.auth.com
-  - '*.id.ui.direct'
+  - seed-sequoia.siri.apple.com
   - www.baidu.com
+  - passenger.t3go.cn
   - yunbusiness.ccb.com
   - wxh.wo.cn
   - gate.lagou.com
   - www.abchina.com.cn
-  - mbank.psbc.com
-  - ibfp.psbc.com
+  - login-service.mobile-bank.psbc.com
+  - mobile-bank.psbc.com
   - 10.0.0.0/8
   - 100.64.0.0/10
   - 127.0.0.1/32
@@ -40,7 +42,6 @@ bypass:
   - 192.168.122.1/32
   - 193.168.0.1/32
   - 224.0.0.0/4
-  - 240.0.0.0/4
   - 255.255.255.255/32
   - ::1/128
   - fc00::/7
@@ -52,18 +53,44 @@ bypass:
   - 2002::/16
   - ::ffff:0:0:0:0/1
   - ::ffff:128:0:0:0/1
+
+# dns功能
 dns:
+  # 是否启用dns功能
   enable: true
   ipv6: false
-  use-hosts: true
-  listen: '0.0.0.0:53'
-  default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16 
-  fake-ip-fliter: 
+  listen: 0.0.0.0:53
+  # 模式, redir-host或fake-ip
+  enhanced-moode: redir-host
+  nameserver:
+    - 223.5.5.5 # 阿里
+    - 180.76.76.76 # 百度
+    - 119.29.29.29 # 腾讯
+    - 114.114.114.114 # 114
+    - 117.50.11.11 # ONE 拦截版
+    - 117.50.10.10 # ONE 纯净版
+    - https://doh.360.cn/dns-query # 360 DoH
+    - https://dns.alidns.com/dns-query # 阿里 DoH
+  fallback:
+    - 8.8.8.8 # 谷歌
+    - 1.1.1.1 # cloudflare
+    - tls://dns.google:853
+    - tls://1.0.0.1:853
+    - tls://dns.rubyfish.cn:853
+    - https://dns.google/dns-query # 谷歌 DoH
+    - https://cloudflare-dns.com/dns-query # cloudflare DoH
+    - https://dns.rubyfish.cn/dns-query # 红鱼 DoH
+  fallback-filter:
+    geooip: true
+    # 在这个网段内的 IP 地址会被考虑为被污染的 IP
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+  fake-ip-range: 198.18.0.1/16
+  # fake ip白名单(总是以真实ip返回, *开头的需要''包起来)
+  fake-ip-filter:
     - '*.lan'
+    - '*.direct'
     - cable.auth.com
     - '*.msftconnecttest.com'
     - '*.msftncsi.com'
@@ -74,9 +101,14 @@ dns:
     - '*.stun.playstation.net'
     - xbox.*.microsoft.com
     - '*.xboxlive.com'
+    - stun.*
     - global.turn.twilio.com
     - global.stun.twilio.com
+    - app.yinxiang.com
+    - injections.adguard.org
+    - local.adguard.org
     - localhost.*.qq.com
+    - localhost.*.weixin.qq.com
     - '*.logon.battlenet.com.cn'
     - '*.logon.battle.net'
     - '*.blzstatic.cn'
@@ -114,6 +146,7 @@ dns:
     - '*.icitymobile.mobi'
     - '*.pingan.com.cn'
     - '*.cmbchina.com'
+    - '*.10099.com.cn'
     - pool.ntp.org
     - '*.pool.ntp.org'
     - ntp.*.com
@@ -126,41 +159,16 @@ dns:
     - PDC._msDCS.*.*
     - DC._msDCS.*.*
     - GC._msDCS.*.*
-  nameserver:
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
-  fallback:
-    - https://doh.dns.sb/dns-query
-    - https://dns.cloudflare.com/dns-query
-    - https://dns.twnic.tw/dns-query
-    - tls://8.8.4.4:853
-  fallback-filter:  
-    geoip: true 
-    ipcidr: 
-    - 240.0.0.0/4
-    - 0.0.0.0/32
-# hosts:
-#   # 'mtalk.google.com': 108.177.125.188
-#   # '.dev': 127.0.0.1
-# tun:
-#  
 
+
+
+# 节点聚合以及规则分流
 proxy-providers:
   MySub: &MySub
     type: http
     interval: 86400
     url: [sub-link]
     path: ./profiles/MySub.yml
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 86400
-
-  Fallback: &Fallback
-    type: http
-    interval: 86400
-    url: [sub-link]
-    path: ./profiles/Fallback.yml
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
@@ -193,7 +201,7 @@ proxy-providers:
 proxy-groups:
   - name: 🌏 全局选择
     type: select
-    proxies: [🚀 自动选择, 🛩️ 手动选择, 🎯 直接连接, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
+    proxies: [🚀 自动选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
   - name: 🚀 自动选择
     type: url-test
@@ -202,7 +210,7 @@ proxy-groups:
     url: http://www.gstatic.com/generate_204
     proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
-  - name: ⛔ 广告拦截 
+  - name: 🔞 广告拦截 
     type: select
     proxies: [🈲 禁止访问, 🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择] 
 
@@ -210,39 +218,30 @@ proxy-groups:
     type: select
     proxies: [🎯 直接连接, 🌏 全局选择, 🈲 禁止访问, 🛩️ 手动选择]
     
-  - name: 🍀 微信聊天
-    type: select
-    proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
-
   - name: 📵 电报通讯
     type: select
-    proxies: [🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
+    proxies: [🌏 全局选择, 🛩️ 手动选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
   - name: 📹 哔哩哔哩
     type: select
-    proxies: [🎯 直接连接, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点]
+    proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🇭🇰 香港节点, 🇨🇳 台湾节点]
 
   - name: 🐳 开发工具
     type: select
-    proxies: [🌏 全局选择, 🎯 直接连接, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
+    proxies: [🌏 全局选择, 🎯 直接连接, 🛩️ 手动选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
   
   - name: 🍟 整点薯条
     type: select
-    proxies: [🌏 全局选择, 🎯 直接连接, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
+    proxies: [🌏 全局选择, 🎯 直接连接, 🛩️ 手动选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
   - name: 🍔 整点汉堡
     type: select
-    proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🦄 故障转移, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
+    proxies: [🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]
 
   - name: 🛩️ 手动选择 
     type: select
     use:
       - MySub
-
-  - name: 🦄 故障转移
-    type: fallback
-    use:
-      - Fallback
 
   - name: 🇭🇰 香港节点
     type: url-test
@@ -303,41 +302,44 @@ proxy-groups:
       - REJECT
 
 rule-providers:
+  # 直连修正
   RULE-Lan:
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"
     path: ./Rule/Lan.yaml
     interval: 86400
 
   RULE-Direct:
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct_No_Resolve.yaml"
     path: ./Rule/Direct.yaml
     interval: 86400
- 
-  RULE-AdBlock:
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingLite/AdvertisingLite_Classical.yaml"
-    path: ./Rule/AdBlock.yaml
-    interval: 86400
 
+  # 隐私保护、反劫持、广告拦截
   RULE-Privacy:
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Privacy/Privacy_Classical.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Privacy/Privacy_Classical_No_Resolve.yaml"
     path: ./Rule/Privacy.yaml
     interval: 86400
 
   RULE-Hijacking:
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hijacking/Hijacking.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hijacking/Hijacking_No_Resolve.yaml"
     path: ./Rule/Hijacking.yaml
     interval: 86400
 
+  RULE-AdvertisingLite:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingLite/AdvertisingLite_No_Resolve.yaml"
+    path: ./Rule/AdvertisingLite.yaml
+    interval: 86400
+
+  # 地区分流
   RULE-Pixiv:
     type: http
     behavior: classical
@@ -352,18 +354,12 @@ rule-providers:
     path: ./Rule/Bahamut.yaml
     interval: 86400
 
-  RULE-WeChat:
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/WeChat/WeChat.yaml"
-    path: ./Rule/WeChat.yaml
-    interval: 86400
-
-  RULE-Bilibili:
+  # 应用分流
+  RULE-BiliBili:
     type: http
     behavior: classical
     url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml"
-    path: ./Rule/Bilibili.yaml
+    path: ./Rule/BiliBili.yaml
     interval: 86400
 
   RULE-Telegram:
@@ -380,6 +376,14 @@ rule-providers:
     path: ./Rule/Github.yaml
     interval: 86400
 
+  RULE-Developer: 
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Developer/Developer.yaml"
+    path: ./Rule/Developer.yaml
+    interval: 86400
+
+  # 国外兜底
   RULE-Cloudflare:
     type: http
     behavior: classical
@@ -394,13 +398,6 @@ rule-providers:
     path: ./Rule/GlobalMedia.yaml
     interval: 86400
 
-  RULE-Global: 
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Classical.yaml"
-    path: ./Rule/Global.yaml
-    interval: 86400
-
   RULE-Proxy: 
     type: http
     behavior: classical
@@ -408,61 +405,77 @@ rule-providers:
     path: ./Rule/Proxy.yaml
     interval: 86400
 
+  RULE-Global: 
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Classical.yaml"
+    path: ./Rule/Global.yaml
+    interval: 86400
+
+  # 国内兜底
   RULE-Download: 
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download_No_Resolve.yaml"
     path: ./Rule/Download.yaml
+    interval: 86400
+
+  RULE-Cloudflarecn: 
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Cloudflarecn/Cloudflarecn_No_Resolve.yaml"
+    path: ./Rule/Cloudflarecn.yaml
     interval: 86400
     
   RULE-ChinaMedia: 
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia_No_Resolve.yaml"
     path: ./Rule/ChinaMedia.yaml
-    interval: 86400
-    
-  RULE-China: 
-    type: http
-    behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_Classical.yaml"
-    path: ./Rule/China.yaml
     interval: 86400
   
   RULE-ChinaIPs: 
     type: http
     behavior: classical
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPs_Classical.yaml"
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPs_Classical_No_Resolve.yaml"
     path: ./Rule/ChinaIPs.yaml
+    interval: 86400
+    
+  RULE-China: 
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_Classical_No_Resolve.yaml"
+    path: ./Rule/China.yaml
     interval: 86400
 
 rules:
-  ####################################################### 
+  # 直连修正
   - RULE-SET,RULE-Lan,🎯 直接连接
   - RULE-SET,RULE-Direct,🎯 直接连接
-  ####################################################### 
-  - RULE-SET,RULE-AdBlock,⛔ 广告拦截
-  - RULE-SET,RULE-Privacy,⛔ 广告拦截
-  - RULE-SET,RULE-Hijacking,⛔ 广告拦截
-  ####################################################### 
+  # 广告拦截、隐私保护、反劫持
+  - RULE-SET,RULE-Privacy,🔞 广告拦截
+  - RULE-SET,RULE-Hijacking,🔞 广告拦截
+  - RULE-SET,RULE-AdvertisingLite,🔞 广告拦截
+  # 地区分流
   - RULE-SET,RULE-Pixiv,🇯🇵 日本节点
   - RULE-SET,RULE-Bahamut,🇨🇳 台湾节点
-  ####################################################### 
-  - RULE-SET,RULE-WeChat,🍀 微信聊天
+  # 应用分流
   - RULE-SET,RULE-Telegram,📵 电报通讯
   - RULE-SET,RULE-Bilibili,📹 哔哩哔哩
-  ####################################################### 
-  - RULE-SET,RULE-GitHub,🐳 开发工具
-  ####################################################### 
+
+  - RULE-SET,RULE-Github,🐳 开发工具
+  - RULE-SET,RULE-Developer,🐳 开发工具
+  # 国外兜底
   - RULE-SET,RULE-Cloudflare,🍟 整点薯条
   - RULE-SET,RULE-GlobalMedia,🍟 整点薯条
-  - RULE-SET,RULE-Global,🍟 整点薯条
   - RULE-SET,RULE-Proxy,🍟 整点薯条
-  ####################################################### 
+  - RULE-SET,RULE-Global,🍟 整点薯条
+  # 国内兜底
   - RULE-SET,RULE-Download,🍔 整点汉堡
+  - RULE-SET,RULE-Cloudflarecn,🍔 整点汉堡
   - RULE-SET,RULE-ChinaMedia,🍔 整点汉堡
-  - RULE-SET,RULE-China,🍔 整点汉堡
   - RULE-SET,RULE-ChinaIPs,🍔 整点汉堡
-
+  - RULE-SET,RULE-China,🍔 整点汉堡
+  # Final
   - GEOIP,CN,🎯 直接连接
   - MATCH,🚫 最后匹配
