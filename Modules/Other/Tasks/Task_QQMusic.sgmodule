@@ -1,0 +1,20 @@
+﻿#!name=⌘ Tasks: QQMusic(🔨)
+#!desc=QQ音乐每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=ZenmoFeiShi
+#!homepage=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
+
+#!arguments=Get_Cookie1:QQ音乐_获取Cookie1, Get_Cookie2:QQ音乐_获取Cookie2, timeout1:60, Run_Checkin:QQ音乐_每日签到, timeout2:120, cronexp:11 11 * * *
+#!arguments-desc=1️⃣ 使用方法\n\n 进入QQ音乐个人中心获取Cookie, Cookie需要每4天更新, 不要关闭获取Cookie脚本和MITM
+
+[Script]
+{{{Get_Cookie1}}} = type = http-request, timeout = {{{timeout1}}}, pattern = ^http:\/\/u6\.y\.qq\.com\/cgi-bin\/musicu\.fcg, script-path = https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
+
+{{{Get_Cookie2}}} = type = http-request, requires-body=1, max-size = -1, timeout = {{{timeout1}}}, pattern = ^https:\/\/u6\.y\.qq\.com\/cgi-bin\/musics\.fcg\?_webcgikey=EveryDaySignLvzScore&_=\d+&sign=\w+, script-path = https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
+
+{{{Run_Checkin}}} = type = cron, cronexp = "{{{cronexp}}}",  wake-system = 1, timeout = {{{timeout2}}}, script-path = https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
+
+[MITM]
+{{{hostname}}} = %APPEND% u6.y.qq.com
