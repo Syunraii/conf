@@ -1,0 +1,14 @@
+﻿#!name=⌘ Tasks: Miyoushe-Zzz
+#!desc=米游社-绝区零每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=lowking
+#!homepage=https://raw.githubusercontent.com/lowking/Scripts/master/mihoyo/zzz.js
+
+#!arguments=Run_Checkin:米游社-绝区零_每日签到, cronexp:32 10 * * *, timeout:60, hostname:hostname
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/lowking/Scripts/master/lowking.boxjs.json\n\napp:绝区零\n\n2️⃣ 使用方法\n\n进入米游社App, 需要[自行抓包]绝区零签到Cookie, 填入boxjs \n\n3️⃣ Run_Checkin\n\n执行每日签到, 输入#关闭\n\n5️⃣ cronexp\n\n定时任务, 默认每天10:32:00执行\n注:如需修改请依照cron表达式格式\n\n6️⃣ timeout\n\n脚本执行超时时间, 默认60秒
+
+[Script]
+{{{Run_Checkin}}} = type = cron, wake-system = 1, cronexp = "{{{cronexp}}}", timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/lowking/Scripts/master/jump/zzz.js
+
