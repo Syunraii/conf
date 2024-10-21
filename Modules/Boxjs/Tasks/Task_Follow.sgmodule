@@ -1,0 +1,16 @@
+﻿#!name=⌘ Tasks: Follow
+#!desc=Follow每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=chavyleung
+#!homepage=https://raw.githubusercontent.com/chavyleung/scripts/master/follow/follow.js
+
+#!arguments=Run_Checkin:Follow_每日签到, cronexp:47 10 * * *, timeout:120, hostname:hostname
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址: https://raw.githubusercontent.com/chavyleung/scripts/master/box/chavy.boxjs.json\n\napp:follow\n\n2️⃣ 无cookie脚本, 需要手动获取Cookie\n\n在PC/Mac网页登陆, F12\n\n3️⃣ Run_Checkin\n\n执行每日签到, 输入#关闭\n\n4️⃣ cronexp\n\n定时任务, 默认每天10:47:00执行\n注:如需修改请依照cron表达式格式\n\n5️⃣ timeout\n\n脚本执行超时时间, 默认120秒\n\n6️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
+
+[Script]
+{{{Run_Checkin}}} = type = cron, wake-system = 1, cronexp = {{{cronexp}}}, timeout = 120, script-path = https://raw.githubusercontent.com/chavyleung/scripts/master/follow/follow.js
+
+[MITM]
+{{{hostname}}} = %APPEND api.follow.is
