@@ -1,0 +1,18 @@
+﻿#!name=⌘ Tasks: WPS PC
+#!desc=WPS电脑端每日签到
+#!system=ios
+#!category=⌘ Tasks
+
+#!author=wf021325
+#!homepage=https://raw.githubusercontent.com/wf021325/qx/master/task/wps.js
+
+#!arguments=Get_Cookie:WPS_PC_获取Cookie, Run_Checkin:WPS_PC_每日签到, cronexp:46 10 * * *, timeout:120, hostname:hostname
+#!arguments-desc=1️⃣ 使用方法\n\n用手机或者电脑进入https://vip.wps.cn/home登录后(或抓包找到cookie里面的wps_sid)，提示成功后关闭获取Cookie脚本和mitm\n\n2️⃣ Get_Cookie\n\n获取cookie, 获取后输入#禁用避免未知错误\n\n3️⃣ Run_Checkin\n\n执行每日签到, 输入#关闭\n\n4️⃣ cronexp\n\n定时任务, 默认每天10:46:00执行\n注:如需修改请依照cron表达式格式\n\n5️⃣ timeout\n\n脚本执行超时时间, 默认120秒\n\n6️⃣ hostname\n\n主机名, 获取cookie后输入#禁用避免不必要的mitm
+
+[Script]
+{{{Get_Cookie}}} = type = http-request, timeout=60, pattern = ^https:\/\/(vip|account)(userinfo|\.wps\.cn\/p\/auth\/check)$, script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/wps.js
+
+{{{Run_Checkin}}} = type = cron, wake-system = 1, cronexp = {{{cronexp}}}, timeout = 120, script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/wps.js
+
+[MITM]
+{{{hostname}}} = %APPEND% *.wps.cn
