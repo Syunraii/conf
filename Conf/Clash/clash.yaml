@@ -1,219 +1,164 @@
+#
+# 配合sub-store填入sublink, 若不符合则按需调整
+#
 port: 7890
-socks-port: 7891
-redir-port: 7892
-tproxy-port: 7893
+mixed-port: 7893
 
-mode: Rule
+mode: rule
 log-level: info
 ipv6: false
 allow-lan: true
+tcp-concurrent: true
+unified-delay: true
+find-process-mode: strict
+
+geodata-mode: true
+geox-url:
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
+  asn: "https://mirror.ghproxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+
+profile:
+  store-selected: true 
+  store-fake-ip: true 
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+
+tun:
+  enable: false
+  stack: mixed
+  dns-hijack: [any:53]
 
 dns:
   enable: true
   ipv6: false
   listen: 0.0.0.0:53
-  enhanced-moode: redir-host
+  enhanced-mode: fake-ip
   nameserver:
     - 223.5.5.5 # 阿里
-    - 180.76.76.76 # 百度
     - 119.29.29.29 # 腾讯
-    - 114.114.114.114 # 114
-    - 117.50.11.11 # ONE 拦截版
-    - 117.50.10.10 # ONE 纯净版
-    - https://doh.360.cn/dns-query # 360 DoH
-    - https://dns.alidns.com/dns-query # 阿里 DoH
-  fallback:
-    - 8.8.8.8 # 谷歌
-    - 1.1.1.1 # cloudflare
-    - tls://dns.google:853
-    - tls://1.0.0.1:853
-    - tls://dns.rubyfish.cn:853
-    - https://dns.google/dns-query # 谷歌 DoH
-    - https://cloudflare-dns.com/dns-query # cloudflare DoH
-    - https://dns.rubyfish.cn/dns-query # 红鱼 DoH
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    # 在这个网段内的 IP 地址会被考虑为被污染的 IP
-    ipcidr:
-      - 240.0.0.0/4
-      - 0.0.0.0/32
+    - 180.76.76.76 # 百度
+  #   - 114.114.114.114 # 114
+  #   - 117.50.11.11 # ONE 拦截版
+  #   - 117.50.10.10 # ONE 纯净版
+  #   - https://doh.360.cn/dns-query # 360 DoH
+  #   - https://dns.alidns.com/dns-query # 阿里 DoH
+  # fallback:
+  #   - 8.8.8.8 # 谷歌
+  #   - 1.1.1.1 # cloudflare
+  #   - tls://dns.google:853
+  #   - tls://1.0.0.1:853
+  #   - tls://dns.rubyfish.cn:853
+  #   - https://dns.google/dns-query # 谷歌 DoH
+  #   - https://cloudflare-dns.com/dns-query # cloudflare DoH
+  #   - https://dns.rubyfish.cn/dns-query # 红鱼 DoH
+  # fallback-filter:
+  #   geoip: true
+  #   geoip-code: CN
+  #   # 在这个网段内的 IP 地址会被考虑为被污染的 IP
+  #   ipcidr:
+  #     - 240.0.0.0/4
+  #     - 0.0.0.0/32
   fake-ip-range: 198.18.0.1/16
   # fake ip白名单(总是以真实ip返回, *开头的需要''包起来)
   fake-ip-filter:
+    - '*'
     - '*.lan'
     - '*.direct'
-    - cable.auth.com
     - '*.msftconnecttest.com'
     - '*.msftncsi.com'
-    - network-test.debian.org
-    - detectportal.firefox.com
-    - resolver1.opendns.com
     - '*.srv.nintendo.net'
     - '*.stun.playstation.net'
     - xbox.*.microsoft.com
     - '*.xboxlive.com'
-    - stun.*
-    - global.turn.twilio.com
-    - global.stun.twilio.com
-    - app.yinxiang.com
-    - injections.adguard.org
-    - local.adguard.org
-    - localhost.*.qq.com
-    - localhost.*.weixin.qq.com
-    - '*.logon.battlenet.com.cn'
-    - '*.logon.battle.net'
+    - '*.srv.nintendo.net'
+    - '*.stun.playstation.net'
+    - '*.xboxlive.com'
+    - '*.battlenet.com.cn'
+    - '*.battlenet.com'
     - '*.blzstatic.cn'
-    - music.163.com
-    - '*.music.163.com'
-    - '*.126.net'
-    - musicapi.taihe.com
-    - music.taihe.com
-    - songsearch.kugou.com
-    - trackercdn.kugou.com
-    - '*.kuwo.cn'
-    - api-jooxtt.sanook.com
-    - api.joox.com
-    - joox.com
-    - y.qq.com
-    - '*.y.qq.com'
-    - streamoc.music.tc.qq.com
-    - mobileoc.music.tc.qq.com
-    - isure.stream.qqmusic.qq.com
-    - dl.stream.qqmusic.qq.com
-    - aqqmusic.tc.qq.com
-    - amobile.music.tc.qq.com
-    - '*.xiami.com'
-    - '*.music.migu.cn'
-    - music.migu.cn
-    - proxy.golang.org
-    - '*.mcdn.bilivideo.cn'
-    - '*.cmpassport.com'
-    - id6.me
-    - open.e.189.cn
-    - mdn.open.wo.cn
-    - opencloud.wostore.cn
-    - auth.wosms.cn
-    - '*.jegotrip.com.cn'
-    - '*.icitymobile.mobi'
-    - '*.pingan.com.cn'
-    - '*.cmbchina.com'
-    - '*.10099.com.cn'
-    - pool.ntp.org
-    - '*.pool.ntp.org'
-    - ntp.*.com
-    - time.*.com
-    - ntp?.*.com
-    - time?.*.com
-    - time.*.gov
-    - time.*.edu.cn
-    - '*.ntp.org.cn'
-    - PDC._msDCS.*.*
-    - DC._msDCS.*.*
-    - GC._msDCS.*.*
-
+    - '*.battle.net'
 bypass:
-  - localhost
   - '*.local'
-  - captive.apple.com
-  - e.crashlytics.com
-  - sequoia.apple.com
-  - seed-sequoia.siri.apple.com
-  - www.baidu.com
-  - passenger.t3go.cn
-  - yunbusiness.ccb.com
-  - wxh.wo.cn
-  - gate.lagou.com
-  - www.abchina.com.cn
-  - login-service.mobile-bank.psbc.com
-  - mobile-bank.psbc.com
+  - localhost
+  - 192.168.0.0/24
   - 10.0.0.0/8
-  - 100.64.0.0/10
-  - 127.0.0.1/32
-  - 169.254.0.0/16
   - 172.16.0.0/12
-  - 192.168.0.0/16
-  - 192.168.122.1/32
-  - 193.168.0.1/32
-  - 224.0.0.0/4
-  - 255.255.255.255/32
-  - ::1/128
-  - fc00::/7
-  - fd00::/8
-  - fe80::/10
-  - ff00::/8
-  - 2001::/32
-  - 2001:db8::/32
-  - 2002::/16
-  - ::ffff:0:0:0:0/1
-  - ::ffff:128:0:0:0/1
+  - 127.0.0.1
+  - www.abchina.com
+
 
 # 节点提供锚点
+proxies-global-config: &proxies-global-config {type: http, interval: 86400, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800, timeout: 600}}
 proxy-providers:
   MyPub: &MyPub
-    type: http
-    interval: 86400
-    url: [sub link]
-    path: ./custom/subs/MyPub.yml
-    health-check: {enable: true, url: http://connectivitycheck.gstatic.com/generate_204, interval: 1800}
-
+    url: [pub-sublink]
+    <<: *proxies-global-config
   MyPri: &MyPri
-    type: http
-    interval: 86400
-    url: [fallback link]
-    path: ./custom/subs/MyPri.yml
-    health-check: {enable: true, url: http://connectivitycheck.gstatic.com/generate_204, interval: 1800}
-
+    url: [pri-sublink]
+    <<: *proxies-global-config
 
 # 策略组锚点参数
 ## 基本行为
 direct: &direct {type: select, proxies: [DIRECT]}
 reject: &reject {type: select, proxies: [REJECT]}
 ## 高级行为
-url-test: &url-test {type: url-test, url: http://connectivitycheck.gstatic.com/generate_204, tolerance: 200, interval: 180}
-fallback: &fallback {type: fallback, url: http://connectivitycheck.gstatic.com/generate_204, interval: 300}
-load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: http://connectivitycheck.gstatic.com/generate_204, interval: 300}
+url-test: &url-test {type: url-test, url: http://www.gstatic.com/generate_204, tolerance: 200, interval: 180}
+fallback: &fallback {type: fallback, url: http://www.gstatic.com/generate_204, interval: 300}
+load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: http://www.gstatic.com/generate_204, interval: 300}
 ## 基本策略组
-manual-select: &manual-select {type: select, proxies: [✈️ 我的订阅, 🦄 故障转移]}
-global-select: &global-select {type: select, proxies: [🚀 自动选择,  🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
-auto-select: &auto-select {type: url-test, url: http://connectivitycheck.gstatic.com/generate_204, tolerance: 200, interval: 360, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+select-manual: &select-manual {type: select, proxies: [✈️ 我的订阅, 🦄 故障转移]}
+select-global: &select-global {type: select, proxies: [🚀 自动选择,  🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+select-auto: &select-auto {type: url-test, url: http://www.gstatic.com/generate_204, tolerance: 200, interval: 360, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
 ## 自定义策略组顺序
-global-head: &global-head {type: select, proxies: [🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
-direct-head: &direct-head {type: select, proxies: [🎯 直接连接, 🌏 全局选择, 🈲 禁止访问, 🛩️ 手动选择]}
-reject-head: &reject-head {type: select, proxies: [🈲 禁止访问, 🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择]}
-hk-head: &hk-head {type: select, proxies: [🇭🇰 香港节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
-tw-head: &tw-head {type: select, proxies: [🇨🇳 台湾节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
-jp-head: &jp-head {type: select, proxies: [🇯🇵 日本节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
-kr-head: &kr-head {type: select, proxies: [🇰🇷 韩国节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
-us-head: &us-head {type: select, proxies: [🇺🇸 美国节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 狮城节点]}
-sg-head: &sg-head {type: select, proxies: [🇸🇬 狮城节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点]}
+head-global: &head-global {type: select, proxies: [🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+head-direct: &head-direct {type: select, proxies: [🎯 直接连接, 🌏 全局选择, 🈲 禁止访问, 🛩️ 手动选择]}
+head-reject: &head-reject {type: select, proxies: [🈲 禁止访问, 🎯 直接连接, 🌏 全局选择, 🛩️ 手动选择]}
+## 地区优先策略组
+head-hk: &head-hk {type: select, proxies: [🇭🇰 香港节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+head-tw: &head-tw {type: select, proxies: [🇨🇳 台湾节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+head-jp: &head-jp {type: select, proxies: [🇯🇵 日本节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+head-kr: &head-kr {type: select, proxies: [🇰🇷 韩国节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+head-us: &head-us {type: select, proxies: [🇺🇸 美国节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 狮城节点]}
+head-sg: &head-sg {type: select, proxies: [🇸🇬 狮城节点, 🌏 全局选择, 🛩️ 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点]}
+## 地区限定策略组
 ## 哔哩哔哩港台节点选择
-bili-limit: &bili-limit {type: select, proxies: [🎯 直接连接, 🌏 全局选择, 🇭🇰 香港节点, 🇨🇳 台湾节点]}
+limit-bili: &limit-bili {type: select, proxies: [🎯 直接连接, 🌏 全局选择, 🇭🇰 香港节点, 🇨🇳 台湾节点]}
 
 proxy-groups:
   - {name: "✈️ 我的订阅", type: select, use: [MyPub], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
   - {name: "🦄 故障转移", type: select, use: [MyPri], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
 
-  - {name: "🛩️ 手动选择", <<: *manual-select, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
-  - {name: "🌏 全局选择", <<: *global-select, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
-  - {name: "🚀 自动选择", <<: *auto-select, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png}
+  - {name: "🛩️ 手动选择", <<: *select-manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
+  - {name: "🌏 全局选择", <<: *select-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
+  - {name: "🚀 自动选择", <<: *select-auto, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png}
 
-  - {name: "🔞 广告拦截", <<: *reject-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
-  - {name: "🚫 最后匹配", <<: *direct-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
+  - {name: "🔞 广告拦截", <<: *head-reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
+  - {name: "🚫 最后匹配", <<: *head-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
 
-  - {name: "📚 我爱漫画", <<: *sg-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png}
-  - {name: "🎮 游戏平台", <<: *direct-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
-  - {name: "📵 电报通讯", <<: *global-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
-  - {name: "🎦 巴哈姆特", <<: *tw-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
-  - {name: "📹 哔哩哔哩", <<: *bili-limit, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
-  - {name: "🐳 开发工具", <<: *global-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png}
+  - {name: "📱 限定应用", <<: *head-sg, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png}
+  - {name: "🎮 游戏平台", <<: *head-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
+  - {name: "📵 电报通讯", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
+  - {name: "🎦 巴哈姆特", <<: *head-tw, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
+  - {name: "📹 哔哩哔哩", <<: *limit-bili, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
+  - {name: "🐳 开发工具", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png}
 
-  - {name: "🍎 苹果服务", <<: *global-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
-  - {name: "🕊️ 谷歌服务", <<: *global-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
-  - {name: "Ⓜ️ 微软服务", <<: *global-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
+  - {name: "🍎 苹果服务", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
+  - {name: "🕊️ 谷歌服务", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
+  - {name: "Ⓜ️ 微软服务", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
 
-  - {name: "🍟 整点薯条", <<: *global-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png}
-  - {name: "🍔 整点汉堡", <<: *direct-head, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
+  - {name: "🍟 整点薯条", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png}
+  - {name: "🍔 整点汉堡", <<: *head-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
   
   - {name: 🇭🇰 香港节点, <<: *url-test, use: [MyPub], filter: "(?i)🇭🇰|香港|(\b(HK||Hong Kong)\b)", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: 🇨🇳 台湾节点, <<: *url-test, use: [MyPub], filter: "(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
@@ -226,7 +171,6 @@ proxy-groups:
   - {name: 🎯 直接连接, <<: *direct, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: 🈲 禁止访问, <<: *reject, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
 
-
 # 规则锚点参数
 rule-classical: &rule-classical {type: http, behavior: classical, interval: 86400}
 
@@ -238,16 +182,22 @@ rule-providers:
   RULE-Privacy: {<<: *rule-classical, path: ./custom/rules/Privacy.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Privacy/Privacy_Classical_No_Resolve.yaml"}
   RULE-Hijacking: {<<: *rule-classical, path: ./custom/rules/Hijacking.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hijacking/Hijacking_No_Resolve.yaml"}
   RULE-AdvertisingLite: {<<: *rule-classical, path: ./custom/rules/AdvertisingLite.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingLite/AdvertisingLite_No_Resolve.yaml"}
+  # 自定义
   # # 地区限制应用
   RULE-Pixiv: {<<: *rule-classical, path: ./custom/rules/Pixiv.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Pixiv/Pixiv.yaml"}
   RULE-EHGallery: {<<: *rule-classical, path: ./custom/rules/EHGallery.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EHGallery/EHGallery.yaml"}
-  RULE-Bahamut: {<<: *rule-classical, path: ./custom/rules/Bahamut.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml"}
-  # # 应用分流
+  # # 优先
+  RULE-GameDownload: {<<: *rule-classical, path: ./custom/rules/GameDownload.yaml, url: "https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml"}
+  RULE-GameDownloadCN: {<<: *rule-classical, path: ./custom/rules/GameDownloadCN.yaml, url: "https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN_No_Resolve.yaml"}
+  # # 应用 
+  RULE-Nikke: {<<: *rule-classical, path: ./custom/rules/Nikke.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Nikke/Nikke.yaml"}
   RULE-Game: {<<: *rule-classical, path: ./custom/rules/Game.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.yaml"}
   RULE-Telegram: {<<: *rule-classical, path: ./custom/rules/Telegram.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml"}
+  RULE-Bahamut: {<<: *rule-classical, path: ./custom/rules/Bahamut.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml"}
   RULE-BiliBili: {<<: *rule-classical, path: ./custom/rules/BiliBili.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml"}
   # # 服务平台
   RULE-Apple: {<<: *rule-classical, path: ./custom/rules/Apple.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml"}
+  RULE-AppleID: {<<: *rule-classical, path: ./custom/rules/AppleID.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleID/AppleID.yaml"}
   RULE-Google: {<<: *rule-classical, path: ./custom/rules/Google.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml"}
   RULE-Microsoft: {<<: *rule-classical, path: ./custom/rules/Microsoft.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"}
   # # 开发工具
@@ -275,23 +225,28 @@ rules:
   - RULE-SET,RULE-Privacy,🔞 广告拦截
   - RULE-SET,RULE-Hijacking,🔞 广告拦截
   - RULE-SET,RULE-AdvertisingLite,🔞 广告拦截
-  # 地区限制应用
-  - RULE-SET,RULE-Pixiv,🇯🇵 日本节点
   # 自定义
+  ## 地区限制应用
   ## 禁漫天堂
-  - DOMAIN-KEYWORD,18comic,📚 我爱漫画
-  - DOMAIN-KEYWORD,mangafuna,📚 我爱漫画
+  - DOMAIN-KEYWORD,18comic,📱 限定应用
+  - DOMAIN-KEYWORD,mangafuna,📱 限定应用
   ## 拷贝漫画
-  - DOMAIN-KEYWORD,copymanga,📚 我爱漫画
-  - DOMAIN-KEYWORD,mangacopy,📚 我爱漫画
-  - RULE-SET,RULE-EHGallery,📚 我爱漫画
+  - DOMAIN-KEYWORD,copymanga,📱 限定应用
+  - DOMAIN-KEYWORD,mangacopy,📱 限定应用
+  - RULE-SET,RULE-Pixiv,📱 限定应用
+  - RULE-SET,RULE-EHGallery,📱 限定应用
+  ## 优先分流
+  - RULE-SET,RULE-GameDownload,🍔 整点汉堡
+  - RULE-SET,RULE-GameDownload,🍔 整点汉堡
   # 应用分流
+  - RULE-SET,RULE-Nikke,🎮 游戏平台
   - RULE-SET,RULE-Game,🎮 游戏平台
   - RULE-SET,RULE-Telegram,📵 电报通讯
   - RULE-SET,RULE-Bahamut,🎦 巴哈姆特
   - RULE-SET,RULE-BiliBili,📹 哔哩哔哩
   # 服务平台
   - RULE-SET,RULE-Apple,🍎 苹果服务
+  - RULE-SET,RULE-AppleID,🍎 苹果服务
   - RULE-SET,RULE-Google,🕊️ 谷歌服务
   - RULE-SET,RULE-Microsoft,Ⓜ️ 微软服务
   # 开发工具
