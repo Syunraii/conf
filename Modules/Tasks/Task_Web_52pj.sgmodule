@@ -1,0 +1,19 @@
+﻿#!name=⌘ Tasks: 吾爱破解
+#!desc=[任务] 吾爱破解每日签到
+#!system=ios
+#!category=⌘ Tasks: Web
+
+#!author=Yuheng0101
+#!homepage=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/52pojie.js
+
+#!arguments=获取:获取_吾爱破解, 任务:任务_吾爱破解, 签到执行时间:2 10 * * *, 脚本超时时间:60, 主机:hostname
+#!arguments-desc=1️⃣ 使用须知\n\n需要配合boxjs订阅使用: https://raw.githubusercontent.com/lowking/Scripts/master/lowking.boxjs.json\n\nApp:吾爱破解\n\n2️⃣ 使用方法\n\n登录https://www.52pojie.cn/home.php, 提示获取Cookie成功即可, 或在PC的web端F12抓包Cookie后填入boxjs\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后成功后输入#禁用避免不必要的MITM
+
+[Script]
+# Tasks: 吾爱破解
+{{{获取}}} = type = http-request, pattern = ^https:\/\/www\.52pojie\.cn\/home\.php\?, script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/52pojie.js
+
+{{{任务}}} type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/52pojie.js
+
+[MITM]
+{{{主机}}}= %APPEND% www.52pojie.cn

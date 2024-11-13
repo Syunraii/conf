@@ -1,0 +1,14 @@
+﻿#!name=🚫 Block: Pixiv
+#!desc=[拦截] Pixiv \n1.底部广告
+#!system=ios
+#!category=🚫 Block
+
+#!author=ddgksf2013
+#!homepage=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/pixivAds.js
+
+[Script]
+# Block: Pixiv
+拦截_Pixiv_底部广告 = type = http-response, requires-body = 1, max-size = 0, pattern = ^https?:\/\/oauth\.secure\.pixiv\.net\/(auth\/token), script-path = https://github.com/ddgksf2013/Scripts/raw/master/pixivAds.js
+
+[MITM]
+hostname = %APPEND% oauth.secure.pixiv.net

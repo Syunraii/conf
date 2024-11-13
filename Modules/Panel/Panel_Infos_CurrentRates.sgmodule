@@ -1,0 +1,18 @@
+﻿#!name=🖥️ Panel: 当前汇率
+#!desc=[资讯面板] 显示当前货币汇率
+#!system=ios
+#!category=🖥️ Panel: Infos
+
+#!author=deezertidal
+#!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/rates.js
+
+#!arguments=面板更新间隔:43200, 脚本超时时间:20, 图标:yensign.circle, 颜色:#d4af37
+#!arguments-desc=1️⃣ 面板更新间\n\n默认43200秒\n\n2️⃣ 脚本超时时间\n\n超时时间, 默认20秒\n\n3️⃣ 图标\n\n默认yensign.circle\n\n4️⃣ 颜色\n\n默认#d4af37
+
+[Panel]
+# Panel: 当前汇率
+资讯面板_当前汇率 = style = info, title = "当前货币汇率", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Infos_CurrentRates
+
+[Script]
+# Panel: 当前汇率
+Infos_CurrentRates = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/rates.js

@@ -1,0 +1,18 @@
+﻿#!name=🖥️ Panel: 历史上的今天
+#!desc=[资讯面板] 历史上的今天发生的大事
+#!system=ios
+#!category=🖥️ Panel: Infos
+
+#!author=deezertidal
+#!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/histoday.js
+
+#!arguments=面板更新间隔:43200, 脚本超时时间:20, 图标:calendar, 颜色:#bf2f24, 数量:5
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认43200秒\n\n2️⃣ 脚本超时时间\n\n默认20秒\n\n3️⃣ 图标\n\n默认calendar\n\n4️⃣ 颜色\n\n默认#afe59a\n\n5️⃣ 数量\n\n想要显示的条数, 不填默认5条
+
+[Panel]
+# Panel: 历史上的今天
+资讯面板_历史上的今天 = style = info, title = "历史上的今天", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Infos_TodayInHistory
+
+[Script]
+# Panel: 历史上的今天
+Infos_TodayInHistory = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}&count={{{数量}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/histoday.js

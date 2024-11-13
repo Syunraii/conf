@@ -1,0 +1,26 @@
+﻿#!name=🖥️ Panel: 我的订阅
+#!desc=[信息面板] 显示订阅的信息
+#!system=ios
+#!category=🖥️ Panel
+
+#!author=Rabbit-Spec
+#!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+
+#!arguments=面板更新时间:21600, 脚本超时时间:20, 订阅面板1:订阅面板1, 订阅链接1:sublink1, 每月重置时间1:1, 到期时间1:2024-12-31, 订阅名称1:"订阅名称1", 图标1:airplane.circle.fill, 颜色1:#00bc12, 订阅面板2:订阅面板2, 订阅链接2:sublink2, 每月重置时间2:1, 到期时间2:2024-12-31, 订阅名称2:"订阅名称2", 图标2:airplane.circle.fill, 颜色2:#157efb, 订阅面板3:订阅面板3, 订阅链接3:sublink3, 每月重置时间3:1, 到期时间3:2024-12-31, 订阅名称3:"订阅名称3", 图标3:airplane.circle.fill, 颜色3:#fbc915,
+#!arguments-desc=1️⃣ 面板更新时间\n\n默认21600秒\n\n2️⃣ 脚本超时时间\n\n默认20秒\n\n3️⃣ 订阅面板\n\n输入#可以隐藏已无效面板\n\n4️⃣ 订阅链接\n\n需要使用https://www.urlencoder.org进行encode然后再填入
+
+[Panel]
+# Panel: 我的订阅
+{{{订阅面板1}}} = update-interval={{{面板更新时间}}}, script-name = Info_Subscribe1
+
+{{{订阅面板2}}} = update-interval={{{面板更新时间}}}, script-name = Info_Subscribe2
+
+{{{订阅面板3}}} = update-interval={{{面板更新时间}}}, script-name = Info_Subscribe3
+
+[Script]
+# Panel: 我的订阅
+Info_Subscribe1= style = info, title = "订阅信息1", content = "请刷新", timeout = {{{脚本超时时间}}}, argument=url={{{订阅链接1}}}&reset_day={{{每月重置时间1}}}&expire={{{到期时间1}}}&title={{{订阅名称1}}}&icon={{{图标1}}}&color={{{颜色1}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+
+Info_Subscribe2= style = info, title = "订阅信息2", content = "请刷新", timeout = {{{脚本超时时间}}}, argument=url={{{订阅链接2}}}&reset_day={{{每月重置时间2}}}&expire={{{到期时间2}}}&title={{{订阅名称2}}}&icon={{{图标2}}}&color={{{颜色2}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+
+Info_Subscribe3= style = info, title = "订阅信息3", content = "请刷新", timeout = {{{脚本超时时间}}}, argument=url={{{订阅链接3}}}&reset_day={{{每月重置时间3}}}&expire={{{到期时间3}}}&title={{{订阅名称3}}}&icon={{{图标3}}}&color={{{颜色3}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js

@@ -1,0 +1,18 @@
+﻿#!name=🖥️ Panel: 策略组切换
+#!desc=[操作面板] 快速切换策略组
+#!system=ios
+#!category=🖥️ Panel: Operate
+
+#!author=Rabbit-Spec
+#!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js
+
+#!arguments=面板更新间隔:1, 脚本超时时间:10, 图标:network, 颜色:#86abee, 策略组:🌐 全局选择
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认立即刷新\n\n2️⃣ 脚本超时时间\n\n超时时间, 默认10秒\n\n3️⃣ 图标\n\n默认network\n\n4️⃣ 颜色\n\n默认#86abee\n\n6️⃣ 策略组\n\n默认在🌐 全局选择中随机切换
+
+[Panel]
+# Panel: 策略组切换
+操作面板_SwitchGroup = title = "快速切换策略组", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Operate_SwitchGroup
+
+[Script]
+# Panel: 策略组切换
+Operate_SwitchGroup = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}&group={{{策略组}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js

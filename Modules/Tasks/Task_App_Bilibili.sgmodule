@@ -1,0 +1,19 @@
+﻿#!name=⌘ Tasks: 哔哩哔哩
+#!desc=[任务] 哔哩哔哩每日签到
+#!system=ios
+#!category=⌘ Tasks: App
+
+#!author=ClydeTime
+#!homepage=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
+
+#!arguments=获取:获取_哔哩哔哩, 任务:任务_哔哩哔哩, 签到执行时间:43 10 * * *, 脚本超时时间:60, 主机:hostname
+#!arguments-desc=1️⃣ 使用须知\n\n需要配合boxjs订阅使用: https://raw.githubusercontent.com/ClydeTime/BiliBili/main/boxjs/BiliBili.boxjs.json\n\nApp:Bilibili.DailyBonus\n\n2️⃣ 使用方法\n\n登录哔哩哔哩App, 进入"我的"页面, 提示获取Cookie成功即可\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
+
+[Script]
+# Tasks: 哔哩哔哩
+{{{获取}}} = type = http-request, requires-body = 1, max-size = 0, pattern = ^https:\/\/App\.bilibili\.com\/x\/resource\/domain\?, script-path = https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
+
+{{{任务}}} = type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
+
+[MITM]
+{{{主机}}}= %APPEND% App.bilibili.com, m.bilibili.com, ap?.bilibili.com, ap?.biliapi.net

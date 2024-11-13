@@ -1,0 +1,22 @@
+﻿#!name=⌘ Tasks: 夸克网盘(🧰)
+#!desc=[任务] 夸克网盘每日签到
+#!system=ios
+#!category=⌘ Tasks: App
+
+#!author=Sliverkiss
+#!homepage=https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
+
+#!arguments=获取1:获取_夸克网盘_1, 获取2:获取_夸克网盘_2, 获取3:获取_夸克网盘_3, 获取4:获取_夸克网盘_4, 任务:任务_夸克网盘, 签到执行时间:50 10 * * *, 脚本超时时间:60, 主机:hostname
+#!arguments-desc=1️⃣ 使用须知\n\n需要配合boxjs订阅使用: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\nApp:夸克网盘\n\n2️⃣ 使用方法\n\n1.登录https://pan.quark.cn, 进入"我的"页面获取Cookie\n2.登录夸克浏览器App, 点击右下角三条杠->福利中心, 手动完成一次签到, 获取相关任务信息;如果签到没有提示, 就把红包领了, 第二天再重新获取一次\n3.在福利界面内点击进入低碳空间, 手动完成一次签到, 获取相关任务信息\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
+
+[Script]
+# Tasks: 夸克网盘
+{{{获取1}}} = type = http-response, requires-body = 1, timeout = {{{脚本超时时间}}}, pattern = ^https:\/\/drive-pc\.quark\.cn\/1\/clouddrive\/file\/sort, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
+{{{获取2}}} = type = http-response, requires-body = 1, timeout = {{{脚本超时时间}}}, pattern = ^https:\/\/coral2\.quark\.cn\/task\/trigger, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
+{{{获取3}}} = type = http-request, requires-body = 1, timeout = {{{脚本超时时间}}}, pattern = ^https:\/\/coral2\.quark\.cn\/quark\/(carbon|welfare)\/(v1|v2)\/signIn, script-path=https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
+{{{获取4}}} = type = http-request, requires-body = 1, timeout = {{{脚本超时时间}}}, pattern = ^https:\/\/coral2\.quark\.cn\/quark\/welfare\/v2\/sleep\/trigger, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
+
+{{{任务}}}= type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/1589f69e675019b0b685a57a89de9ea5/raw/quarkV2.js
+
+[MITM]
+{{{主机}}} = %APPEND% coral2.quark.cn, drive-pc.quark.cn

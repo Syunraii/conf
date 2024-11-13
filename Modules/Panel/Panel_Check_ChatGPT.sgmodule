@@ -1,0 +1,18 @@
+﻿#!name=🖥️ Panel: ChatGPT
+#!desc=[检测面板] ChatGPT解锁检测
+#!system=ios
+#!category=🖥️ Panel: Check
+
+#!author=deezertidal
+#!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/gpt.js
+
+#!arguments=面板更新间隔:7200, 脚本超时时间:30, 图标:ellipses.bubble.fill, 颜色:#008000
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认7200秒\n\n2️⃣ 脚本超时时间\n\n默认30秒\n\n3️⃣ 图标\n\n默认ellipses.bubble.fill\n\n4️⃣ 颜色\n\n默认#008000
+
+[Panel]
+# Panel: ChatGPT
+检测面板_ChatGPT解锁 = style = info, title = "ChatGPT解锁检测", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Check_ChatGPT
+
+[Script]
+# Panel: ChatGPT
+Check_ChatGPT = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&icon-color={{{颜色}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/gpt.js

@@ -1,0 +1,18 @@
+﻿#!name=🖥️ Panel: IP地址
+#!desc=[信息面板] 显示当前IP地址
+#!system=ios
+#!category=🖥️ Panel: Info
+
+#!author=congcong0806
+#!homepage=https://raw.githubusercontent.com/congcong0806/surge-list/master/Script/ipcheck.js
+
+#!arguments=面板更新间隔:1, 脚本超时时间:30
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认1秒\n\n2️⃣ 脚本超时时间\n\n默认10秒
+
+[Panel]
+# Panel: IP地址
+信息面板_IP地址 = style = info, title = "当前IP地址", content = "请刷新", script-update-interval = {{{面板更新间隔}}}, update-interval = {{{脚本超时时间}}}, script-name = Info_IpAddress
+
+[Script]
+# Panel: IP地址
+Info_IpAddress = type = generic, timeout = {{{timeout}}}, script-path = https://raw.githubusercontent.com/congcong0806/surge-list/master/Script/ipcheck.js

@@ -1,0 +1,14 @@
+﻿#!name=🔔 Pushs: 黑料热搜
+#!desc=[推送] 黑料热搜每日推送
+#!system=ios
+#!category=🔔 Pushs
+
+#!author=Yuheng0101
+#!homepage=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/hlbdy.js
+
+#!arguments=推送执行时间:45 22 * * *, 脚本超时时间:60
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json\n\nApp:最新黑料
+
+[Script]
+# Pushs: 黑料热搜
+推送_黑料热搜 = type = cron, wake-system = 1, cronexp = {{{推送执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/hlbdy.js

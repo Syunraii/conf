@@ -1,0 +1,27 @@
+﻿#!name=🚫 Block: Youtube(🧰)
+#!desc=[拦截] Youtube \n1.瀑布流/首页推荐广告
+#!system=ios
+#!category=🚫 Block
+
+#!author=App2smile
+#!homepage=https://raw.githubusercontent.com/App2smile/rules/refs/heads/master/module/youtube.sgmodule
+
+[Rule]
+# Block: Youtube
+AND,((PROTOCOL,UDP),(DEST-PORT,443),(DOMAIN-SUFFIX,googlevideo.com)),REJECT-NO-DROP
+
+[URL Rewrite]
+# Block: Youtube
+(^https?:\/\/[\w-]+\.googlevideo\.com\/(?!dclk_video_ads).+?)&ctier=L(&.+?),ctier,(.+) $1$2$3 header
+^https?:\/\/[\w-]+\.googlevideo\.com\/(?!(dclk_video_ads|videoplayback\?)).+&oad - reject
+^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v\d\/player\/ad_break - reject
+^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads - reject
+^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) - reject
+^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext - reject
+
+[Script]
+# Block: Youtube
+拦截_Youtube_瀑布流广告 = type = http-response, requires-body = 1, max-size = 2097152, binary-body-mode = 1, pattern = ^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next)\?, script-path = https://raw.githubusercontent.com/App2smile/rules/master/js/youtube.js
+
+[MITM]
+hostname = %APPEND% -redirector*.googlevideo.com, *.googlevideo.com, www.youtube.com, s.youtube.com, youtubei.googleapis.com

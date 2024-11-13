@@ -1,0 +1,14 @@
+﻿#!name=🔔 Pushs: 热搜聚合推送
+#!desc=[推送] 热搜聚合每日推送
+#!system=ios
+#!category=🔔 Pushs
+
+#!author=Yuheng0101
+#!homepage=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/javday.js
+
+#!arguments=推送执行时间:0 0 12-20/4 * * ?, 脚本超时时间:60
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json\n\nApp:热搜聚合
+
+[Script]
+# Pushs: 热搜聚合推送
+推送_热搜聚合 = type = cron, wake-system = 1, cronexp = {{{推送执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/top.js

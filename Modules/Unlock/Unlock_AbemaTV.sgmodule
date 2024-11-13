@@ -1,0 +1,14 @@
+﻿#!name=🔐 Unlock: AbemaTV
+#!desc=[解锁] AbemaTV
+#!system=ios
+#!category=🔐 Unlock
+
+#!author=ConnersHua
+#!homepage=https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Module/Unlock/AbeamTV.sgmodule
+
+[URL Rewrite]
+# Unlock: AbemaTV
+^https?:\/\/api\.[\w-]+\.abema-tv\.com\/v\d\/ip\/check - reject
+
+[MITM]
+hostname = %APPEND% api.*.abema-tv.com

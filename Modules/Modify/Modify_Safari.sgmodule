@@ -1,0 +1,197 @@
+#!name=🔨 Modify: Safari
+#!desc=[修改] Safari \n1.关键字快捷搜索
+#!system=ios
+#!category=🔨 Modify
+
+#!arguments=搜索引擎:duckduckgo
+#!arguments-desc=1️⃣ 搜索引擎\n\n在safari设置默认搜索引擎, 然后在这里修改相应引擎即可, 默认duckduckgo\n\n如修改为百度, 则输入baidu
+
+
+##################################################################################################
+# - Safari 内输入 命令 + 空格 + 关键词 快速指定搜索引擎搜索
+# - 注：请先进入设置更改 Safari 默认搜索为 DuckDuckGO或其他搜索引擎, 将duckduckgo.com替换即可
+# 特别鸣谢：
+# @Coldvvater https://github.com/Coldvvater
+# @zZPiglet https://github.com/zZPiglet
+# @Neurogram-R https://github.com/Neurogram-R
+# @ddgksf2013 https://github.com/ddgksf2013
+##################################################################################################
+
+[Script]
+# Modify: Safari
+# dlc xxx (DeepL 译至中)
+修改_Safari_DToChinese = type = http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dlc(\+|%20)([^&]+).+, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+
+# dle xxx (DeepL 译至英)
+修改_Safari_DToEnglish = type = http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dle(\+|%20)([^&]+).+, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+
+# dlj xxx (DeepL 译至日)
+修改_Safari_DToJapanese = type = http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dlj(\+|%20)([^&]+).+, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+
+
+[URL Rewrite]
+# Modify: Safari
+# 检索类
+# ddg xxx (还原 DuckDuckGo)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ddg(\+|%20)([^&]+).+ https://duckduckgo.com/?ia=about&q=$2 302
+
+# bd xxx (百度)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=bd(\+|%20)([^&]+).+ https://www.baidu.com/s?wd=$2 302
+
+# bi xxx (必应)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=bi\+([^&]+).+ https://cn.bing.com/search?q=$1 302
+
+# wiki xxx (Wikipedia)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=wiki(\+|%20)([^&]+).+ https://wikipedia.org/wiki/$2 302
+
+# wk xxx (Wikipedia 中文)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=wk(\+|%20)([^&]+).+ https://zh.wikipedia.org/wiki/$2 302
+
+
+# 信息类
+# bli xxx (哔哩哔哩)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=bli\+([^&]+).+ https://m.bilibili.com/search?keyword=$1 302
+
+# bv xxx (哔哩哔哩视频)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=bv\+([^&]+).+ https://bilibili.com/video/$1/ 302
+
+# af xxx (Acfun)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=af\+([^&]+).+ https://www.acfun.cn/search?keyword=$1 302
+
+# wb xxx (微博)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=wb(\+|%20)([^&]+).+ https://s.weibo.com/weibo/$2 302
+
+# tt xxx (头条)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tt\+([^&]+).+ https://so.toutiao.com/search?keyword=$1 302
+
+# db xxx (豆瓣)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=db\+([^&]+).+ https://m.douban.com/search/?query=$1 302
+
+# zh xxx (知乎)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=zh(\+|%20)([^&]+).+ https://www.zhihu.com/search?q=$2 302
+
+# wx xxx (微信)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=wx\+([^&]+).+ https://weixin.sogou.com/weixinwap?query=$1 302
+
+# ys xxx (茶杯狐电影)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ys\+([^&]+).+ https://cupfox.App/search?key=$1 302
+
+# rd xxx (Reddit)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=rd(\+|%20)([^&]+).+ https://www.reddit.com/search?q=$2 302
+
+# tw xxx (Twitter)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tw(\+|%20)([^&]+).+ https://twitter.com/search?q=$2 302
+
+# ytb xxx (YouTube)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ytb(\+|%20)([^&]+).+ https://www.youtube.com/results?search_query=$2 302
+
+# ph xxx (PornHub)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ph\+([^&]+).+ https://cn.pornhub.com/video/search?search=$1 302
+
+# av xxx (missav)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=av\+([^&]+).+ https://missav888.com/cn/search/$1 302
+
+
+# 工具类
+# trc xxx (Google 译至中)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=trc(\+|%20)([^&]+).+ https://translate.google.com/#view=home&op=translate&sl=auto&tl=zh-CN&text=$2 302
+
+# tre xxx (Google 译至英)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tre(\+|%20)([^&]+).+ https://translate.google.com/#view=home&op=translate&sl=auto&tl=en&text=$2 302
+
+# trj xxx (Google 译至日)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=trj(\+|%20)([^&]+).+ https://translate.google.com/#view=home&op=translate&sl=auto&tl=ja&text=$2 302
+
+
+# 技术类
+# yh xxx (油猴搜索)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=yh\+([^&]+).+ https://greasyfork.org/zh-CN/scripts?q=$1 302
+
+# gh xxx (GitHub)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=gh(\+|%20)([^&]+).+ https://github.com/search?q=$2 302
+# so xxx (Stack Overflow)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=so(\+|%20)([^&]+).+ https://stackoverflow.com/search?q=$2 302
+
+
+# 资源类
+# gi xxx (Google 图片)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=gi(\+|%20)([^&]+).+ https://www.google.com/search?&tbm=isch&q=$2 302
+
+# tf xxx (Google 搜索 TestFlight)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tf(\+|%20)([^&]+).+ https://www.google.com/search?as_q=$2&as_sitesearch=testflight.Apple.com 302
+
+# gd xxx (Google 搜索 Google Drive 资源)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=gd(\+|%20)([^&]+).+ https://www.google.com/search?q=%22Google+Drive%22+$2 302
+
+# tgd xxx (t.me/gdsharing 搜索 Google Drive 资源)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tgd(\+|%20)([^&]+).+ https://t.me/s/gdsharing?q=$2 302
+
+# tal xxx (t.me/shareAliyun 搜索阿里云盘资源)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tal(\+|%20)([^&]+).+ https://t.me/s/shareAliyun?q=$2 302
+
+# tal2 xxx (t.me/YunPanPan 搜索阿里云盘资源)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tal2(\+|%20)([^&]+).+ https://t.me/s/YunPanPan?q=$2 302
+
+# ios xxx (Apple Store应用搜索)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ios\+([^&]+).+ https://www.qimai.cn/search/index/search/$1 302
+
+# ccn (App Store网页版 临时切换至中国区) 感谢 @mieqq
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ccn&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143465&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=cn&urlDesc= 302
+
+# uus (App Store网页版 临时切换至美国区) 感谢 @mieqq
+^https:\/\/{{{搜索引擎}}}.com\/\?q=uus&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143441&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=us&urlDesc= 302
+
+# hhk (App Store网页版 临时切换至香港区)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=hhk&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143463&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=hk&urlDesc= 302
+
+# ttw (App Store网页版 临时切换至台湾区)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ttw&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143470&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=tw&urlDesc= 302
+
+# jjp (App Store网页版 临时切换至日本区)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=jjp&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143462&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=jp&urlDesc= 302
+
+^https:\/\/{{{搜索引擎}}}.com\/\?q=kkr&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143466&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=kr&urlDesc= 302
+
+# ttr (App Store网页版 临时切换至土耳其区)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ttr&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143480&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=tr&urlDesc= 302
+
+# xxx （无指令默认为 Google）
+^https:\/\/{{{搜索引擎}}}.com\/\?q=(?!dl(c|e|j)(\+|%20))([^&]+).+ https://www.google.com/search?q=$3&num=100 302
+
+#########################################禁用#########################################
+
+# wz xxx (无追搜索)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=wz\+([^&]+).+ https://www.wuzhuiso.com/s?q=$1 302
+
+# mg xxx (Magi)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=mg(\+|%20)([^&]+).+ https://magi.com/search?q=$2 302
+
+# # sspai xxx (少数派站内搜索)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=sspai(\+|%20)([^&]+).+ https://sspai.com/search/post/$2 302
+
+# # ssp xxx (Google 搜索少数派)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=ssp(\+|%20)([^&]+).+ https://www.google.com/search?as_q=$2&as_sitesearch=sspai.com 302
+
+# # se xxx (StackExchange)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=se(\+|%20)([^&]+).+ https://stackexchange.com/search?q=$2 302
+
+# zdm xxx (什么值得买)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=zdm\+([^&]+).+ https://search.m.smzdm.com/?v=b&s=$1 302
+
+# jd xxx (京东)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=jd\+([^&]+).+ https://so.m.jd.com/ware/search.action?keyword=$1 302
+
+# tb xxx (淘宝)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=tb\+([^&]+).+ https://s.m.taobao.com/h5?q=$1 302
+
+# rut xxx (Google 搜索 rutracker 毛子破解站)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=rut(\+|%20)([^&]+).+ https://www.google.com/search?as_q=$2&as_sitesearch=rutracker.org 302
+
+# yd xxx (有道词典)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=yd(\+|%20)([^&]+).+ https://dict.youdao.com/search?q=$2 302
+
+# wa xxx (WolframAlpha)
+# ^https:\/\/{{{搜索引擎}}}.com\/\?q=wa(\+|%20)([^&]+).+ https://www.wolframalpha.com/input/?i=$2 302
+
+[MITM]
+hostname = %APPEND% duckduckgo.com

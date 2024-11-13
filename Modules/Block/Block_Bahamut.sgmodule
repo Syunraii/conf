@@ -1,0 +1,16 @@
+﻿#!name=🚫 Block: 巴哈姆特动画疯
+#!desc=[拦截] 巴哈姆特动画疯 \n1.视频广告(黑屏25s)
+#!system=ios
+#!category=🚫 Block
+
+#!author=NobyDa
+#!homepage=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/Module/BahamutAnimeAds.sgmodule
+
+#!arguments=脚本超时时间:60
+
+[Script]
+# Block: 巴哈姆特动画疯
+拦截_巴哈姆特_视频广告 = type = http-response, requires-body = 1, max-size = 0, timeout = {{{脚本超时时间}}}, pattern=^https:\/\/api\.gamer\.com\.tw\/mobile_App\/anime\/v\d/(token|m3u8).php\?, script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutAnimeAds.js
+
+[MITM]
+hostname = %APPEND% api.gamer.com.tw

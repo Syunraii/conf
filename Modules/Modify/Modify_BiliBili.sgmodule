@@ -1,0 +1,20 @@
+﻿#!name=🔨 Modify: 哔哩哔哩
+#!desc=[修改] 哔哩哔哩 \n1.换肤
+#!system=ios
+#!category=🔨 Modify
+
+#!author=MartinsKing
+#!homepage=https://raw.githubusercontent.com/ClydeTime/BiliBili/refs/heads/main/modules/BiliBili.Modified.sgmodule
+
+#!arguments=
+#!arguments-desc=1️⃣ 使用须知\n\n需要配合boxjs订阅使用: https://raw.githubusercontent.com/ClydeTime/BiliBili/main/boxjs/BiliBili.boxjs.json\n\nApp:📺 Bilibili: 👘 Modified
+
+[Script]
+# Modify: 哔哩哔哩
+BiliBili.Modified.x.resource.show.skin = type = http-response, requires-body = 1, pattern = ^https?:\/\/App\.bilibili\.com\/x\/resource\/show\/skin\?, script-path = https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBili.Modified.response.js, argument=
+BiliBili.Modified.x.v2 = type = http-response, requires-body = 1, pattern = ^https:\/\/App\.bilibili\.com\/x\/v2\/(account\/(myinfo|mine)|space), script-path = https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBili.Modified.response.js, argument=
+BiliBili.Modified.x.vip = type = http-response, requires-body = 1, pattern = ^https:\/\/api\.bilibili\.com\/x\/vip\/(web\/vip_center\/combine|price\/panel\/lexi|top_panel_info), script-path = https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBili.Modified.response.js, argument=
+
+[MITM]
+hostname = %APPEND% App.bilibili.com, api.bilibili.com
+h2 = true

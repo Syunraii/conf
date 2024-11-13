@@ -1,0 +1,19 @@
+﻿#!name=⌘ Tasks: 高德打车
+#!desc=[任务] 高德打车每日签到
+#!system=ios
+#!category=⌘ Tasks: Applet
+
+#!author=wf021325
+#!homepage=https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
+
+#!arguments=获取:获取_高德打车, 任务:任务_高德打车, 签到执行时间:23 10 * * *, 脚本超时时间:60, 主机:hostname
+#!arguments-desc=1️⃣ 使用方法\n\n登录高德地图/微信/支付宝-小程序[高德打车]->进入福利中心, 任意一端获取Cookie成功即可3端签到\n\n2️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n3️⃣任务\n\n执行任务, 输入#关闭\n\n4️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
+
+[Script]
+# Tasks: 高德打车
+{{{获取}}} = type = http-response, requires-body = 1, max-size = 0, pattern = ^https:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=), script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
+
+{{{任务}}} = type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
+
+[MITM]
+{{{主机}}} = %APPEND% *.amap.com

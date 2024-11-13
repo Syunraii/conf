@@ -1,0 +1,18 @@
+﻿#!name=🖥️ Panel: 加密货币
+#!desc=[资讯面板] 显示当前加密货币的汇率
+#!system=ios
+#!category=🖥️ Panel: Infos
+
+#!author=deezertidal
+#!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/crypto.js
+
+#!arguments=面板更新间隔:43200, 脚本超时时间:20
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认43200秒\n\n3️⃣ timeout\n\n超时时间, 默认20秒
+
+[Panel]
+# Panel: 加密货币
+资讯面板_加密货币 = style = info, title = "加密货币汇率", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Infos_CryptoRates
+
+[Script]
+# Panel: 加密货币
+Infos_CryptoRates = type = generic, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/crypto.js

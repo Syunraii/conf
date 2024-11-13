@@ -1,0 +1,18 @@
+﻿#!name=🖥️ Panel: 节点信息(🧰)
+#!desc=[信息面板] 显示当前节点信息
+#!system=ios
+#!category=🖥️ Panel: Info
+
+#!author=I-am-R-E
+#!homepage=https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js
+
+#!arguments=面板更新间隔:21600, 脚本超时时间:30, 图标:network, 颜色:#86abee
+#!arguments-desc=1️⃣ 使用须知\n\n需要在sub-store中配置节点操作脚本:https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Sub-Store/Operator.js\n\n2️⃣ 面板更新间隔\n\n默认每21600秒\n\n3️⃣ 脚本超时时间\n\n默认30秒\n\n4️⃣ 图标\n\n默认network\n\n5️⃣ 颜色\n\n默认#86abee
+
+[Panel]
+# Panel: 节点信息
+信息面板_节点信息 = style = info, title = "代理链路检测", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Info_NodeLink
+
+[Script]
+# Panel: 节点信息
+Info_NodeLink = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}, script-path = https://raw.githubusercontent.com/I-am-R-E/Functional-Store-Hub/Master/NodeLinkCheck/Script/NodeLinkCheck.js

@@ -1,0 +1,14 @@
+﻿#!name=⌘ Tasks: 巴哈姆特
+#!desc=[任务] 巴哈姆特每日签到
+#!system=ios
+#!category=⌘ Tasks: App
+
+#!author=NobyDa
+#!homepage=https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutDailyBonus.js
+
+#!arguments=任务:任务_巴哈姆特, 签到执行时间:42 10 * * *, 脚本超时时间:120, 主机:hostname
+#!arguments-desc=1️⃣ 使用须知\n\n需要配合boxjs订阅使用: https://raw.githubusercontent.com/NobyDa/Script/master/NobyDa_BoxJs.json\n\nApp:巴哈姆特\n\n2️⃣ 使用方法\n\n进入boxjs内App, 填入账号密码, 手动执行成功即可\n\n3️⃣ 任务\n\n执行每日签到, 输入#关闭
+
+[Script]
+# Tasks: 巴哈姆特
+{{{任务}}} = type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutDailyBonus.js

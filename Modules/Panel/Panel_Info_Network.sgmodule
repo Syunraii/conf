@@ -1,0 +1,18 @@
+﻿#!name=🖥️ Panel: 本机网络
+#!desc=[信息面板] 显示当前网络详情
+#!system=ios
+#!category=🖥️ Panel: Info
+
+#!author=Rabbit-Spec
+#!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Network-Info/Moore/Network-Info.js
+
+#!arguments=面板更新间隔:1, 脚本超时时间:30
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认1秒\n\n2️⃣ 脚本超时时间\n\n默认10秒
+
+[Panel]
+# Panel: 本机网络
+信息面板_本机网络 = style = info, title = "当前网络信息", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Info_Network
+
+[Script]
+# Panel: 本机网络
+Info_Network = type = generic, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Network-Info/Moore/Network-Info.js

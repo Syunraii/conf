@@ -1,0 +1,47 @@
+﻿#!name=🔨 Modify: 归属地显示
+#!desc=[修改] 部分App归属地显示
+#!system=ios
+#!category=🔨 Modify
+
+#!author=ConnersHua
+#!homepage=https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Module/GeoLoc.sgmodule
+
+#!arguments=策略组:直接连接
+#!arguments-desc=1️⃣ 策略组\n\n默认直接连接
+
+[Ruleset Custom_GeoLocation]
+# Modify: 归属地显示
+# bilibili
+URL-REGEX,https:\/\/api\.bilibili\.com\/x\/v\d\/reply\/add
+
+# 抖音
+DOMAIN-KEYWORD,-normal-lq.amemv.com
+DOMAIN-KEYWORD,-normal-c-lq.amemv.com
+URL-REGEX,https:\/\/ib\.snssdk\.com\/\d\/data\/v\d\/post_message\/
+# 抖音网页端
+DOMAIN,www.douyin.com
+
+# 酷我
+DOMAIN,ip.i.kuwo.cn
+
+# 小红书
+DOMAIN,edith.xiaohongshu.com
+
+# 微博
+URL-REGEX,https:\/\/api\.weibo\.cn\/\d\/comments\/(create|reply)
+URL-REGEX,https:\/\/weibo\.com\/ajax\/comments\/create
+URL-REGEX,https:\/\/api\.weibo\.cn\/\d\/statuses\/send
+# 微博网页端
+DOMAIN,www.weibo.com
+DOMAIN,s.weibo.com
+
+# 知乎
+URL-REGEX,https:\/\/api\.zhihu\.com\/answers
+URL-REGEX,https:\/\/api\.zhihu\.com\/comment_v\d\/answers\/\d+\/comment
+
+[Rule]
+# Modify: 归属地显示
+RULE-SET,Custom_GeoLocation,{{{策略组}}}
+
+[MITM]
+hostname = %APPEND% tieba.baidu.com, tiebac.baidu.com, api.bilibili.com, ib.snssdk.com, api.weibo.cn, weibo.com

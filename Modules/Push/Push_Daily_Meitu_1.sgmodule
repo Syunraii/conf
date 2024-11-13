@@ -1,0 +1,19 @@
+﻿#!name=🔔 Pushs: 美图鉴赏①
+#!desc=[推送] 美图鉴赏①每日推送
+#!system=ios
+#!category=🔔 Pushs
+
+#!author=Yuheng0101
+#!homepage=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/meitu/meitu.sgmodule
+
+#!arguments=推送执行时间:00 22 * * *, 脚本1超时时间:60, 脚本2超时时间:60
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json\n\nApp:美图鉴赏
+
+[Script]
+# Pushs: 美图鉴赏①
+获取_美图鉴赏1 = type = http-request, requires-body = 1, max-size = -1, timeout = {{{脚本1超时时间}}}, pattern = ^https?:\/\/mei\.tu, script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/meitu/meitu.js
+
+推送_美图鉴赏1 = type = cron, wake-system = 1, cronexp = {{{推送执行时间}}}, timeout = {{{脚本2超时时间}}}, script-path = https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/meitu/meitu.js
+
+[MITM]
+hostname = %APPEND% mei.tu
