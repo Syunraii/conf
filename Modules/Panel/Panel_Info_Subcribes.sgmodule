@@ -1,7 +1,7 @@
 ﻿#!name=🖥️ Panel: 我的订阅
 #!desc=[信息面板] 显示订阅的信息
 #!system=ios
-#!category=🖥️ Panel
+#!category=🖥️ Panel: Info
 
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
