@@ -4,7 +4,7 @@
 #!category=🖥️ Panel: Infos
 
 #!author=deezertidal
-#!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/Appsdoor.js
+#!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/refs/heads/master/files/appsdoor.js
 
 #!arguments=面板更新间隔:43200, 脚本超时时间:20, 图标:Applelogo, 颜色:#b8b8b8, 数量:5
 #!arguments-desc=1️⃣ 面板更新间隔\n\n默认43200秒\n\n2️⃣ 脚本超时时间\n\n默认20秒\n\n3️⃣ 图标\n\n默认Applelogo\n\n4️⃣ 颜色\n\n默认#afe59a\n\n5️⃣ 数量\n\n想要显示的条数, 不填默认5条
@@ -15,4 +15,4 @@
 
 [Script]
 # Panel: AppStore限免
-Infos_AppStoreFreeApp = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}&AppCount={{{数量}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/Appsdoor.js
+Infos_AppStoreFreeApp = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}&AppCount={{{数量}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/refs/heads/master/files/appsdoor.js
