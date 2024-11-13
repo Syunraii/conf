@@ -1,1769 +1,304 @@
-/*
- * origin：https://raw.githubusercontent.com/ProxyStorage/For-Own-Use/5e5f772d67757cc8cbde2de3cb411887c923cfaf/html/rename.js
+/**
+ * origin: https://raw.githubusercontent.com/Keywos/rule/main/rename.js
+ * 用法：Sub-Store 脚本操作添加
+ * rename.js 以下是此脚本支持的参数，必须以 # 为开头多个参数使用"&"连接，参考上述地址为例使用参数。 禁用缓存url#noCache
+ *
+ *** 主要参数
+ * [in=] 自动判断机场节点名类型 优先级 zh(中文) -> flag(国旗) -> quan(英文全称) -> en(英文简写)
+ * 如果不准的情况, 可以加参数指定:
+ *
+ * [nm]    保留没有匹配到的节点
+ * [in=zh] 或in=cn识别中文
+ * [in=en] 或in=us 识别英文缩写
+ * [in=flag] 或in=gq 识别国旗 如果加参数 in=flag 则识别国旗 脚本操作前面不要添加国旗操作 否则移除国旗后面脚本识别不到
+ * [in=quan] 识别英文全称
+
+ *
+ * [out=]   输出节点名可选参数: (cn或zh ，us或en ，gq或flag ，quan) 对应：(中文，英文缩写 ，国旗 ，英文全称) 默认中文 例如 [out=en] 或 out=us 输出英文缩写
+ *** 分隔符参数
+ *
+ * [fgf=]   节点名前缀或国旗分隔符，默认为空格；
+ * [sn=]    设置国家与序号之间的分隔符，默认为空格；
+ * 序号参数
+ * [one]    清理只有一个节点的地区的01
+ * [flag]   给节点前面加国旗
+ *
+ *** 前缀参数
+ *                                        
+ *** 保留参数
+ * [blkey=iplc+gpt+NF+IPLC] 用+号添加多个关键词 保留节点名的自定义字段 需要区分大小写!
+ * 如果需要修改 保留的关键词 替换成别的 可以用 > 分割 例如 [#blkey=GPT>新名字+其他关键词] 这将把【GPT】替换成【新名字】
+ * 例如      https://raw.githubusercontent.com/Keywos/rule/main/rename.js#flag&blkey=GPT>新名字+NF
+ * [blgd]   保留: 家宽 IPLC ˣ² 等
+ * [bl]     正则匹配保留 [0.1x, x0.2, 6x ,3倍]等标识
+ * [nx]     保留1倍率与不显示倍率的
+ * [blnx]   只保留高倍率
+ * [clear]  清理乱名
+ * [blpx]   如果用了上面的bl参数,对保留标识后的名称分组排序,如果没用上面的bl参数单独使用blpx则不起任何作用
+ * [blockquic] blockquic=on 阻止; blockquic=off 不阻止
  */
 
-var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-    return extendStatics(d, b);
+// const inArg = {'blkey':'iplc+GPT>GPTnewName+NF+IPLC', 'flag':true };
+const inArg = $arguments; // console.log(inArg)
+const nx = inArg.nx || false,
+    bl = inArg.bl || false,
+    nf = inArg.nf || false,
+    key = inArg.key || false,
+    blgd = inArg.blgd || false,
+    blpx = inArg.blpx || false,
+    blnx = inArg.blnx || false,
+    numone = inArg.one || false,
+    debug = inArg.debug || false,
+    clear = inArg.clear || false,
+    addflag = inArg.flag || false,
+    nm = inArg.nm || false;
+
+const FGF = inArg.fgf == undefined ? " " : decodeURI(inArg.fgf),
+    XHFGF = inArg.sn == undefined ? " " : decodeURI(inArg.sn),
+    FNAME = inArg.name == undefined ? "" : decodeURI(inArg.name),
+    BLKEY = inArg.blkey == undefined ? "" : decodeURI(inArg.blkey),
+    blockquic = inArg.blockquic == undefined ? "" : decodeURI(inArg.blockquic),
+    nameMap = {
+        cn: "cn",
+        zh: "cn",
+        us: "us",
+        en: "us",
+        quan: "quan",
+        gq: "gq",
+        flag: "gq",
+    },
+    inname = nameMap[inArg.in] || "",
+    outputName = nameMap[inArg.out] || "";
+// prettier-ignore
+const FG = ['🇭🇰', '🇲🇴', '🇹🇼', '🇯🇵', '🇰🇷', '🇸🇬', '🇺🇸', '🇬🇧', '🇫🇷', '🇩🇪', '🇦🇺', '🇦🇪', '🇦🇫', '🇦🇱', '🇩🇿', '🇦🇴', '🇦🇷', '🇦🇲', '🇦🇹', '🇦🇿', '🇧🇭', '🇧🇩', '🇧🇾', '🇧🇪', '🇧🇿', '🇧🇯', '🇧🇹', '🇧🇴', '🇧🇦', '🇧🇼', '🇧🇷', '🇻🇬', '🇧🇳', '🇧🇬', '🇧🇫', '🇧🇮', '🇰🇭', '🇨🇲', '🇨🇦', '🇨🇻', '🇰🇾', '🇨🇫', '🇹🇩', '🇨🇱', '🇨🇴', '🇰🇲', '🇨🇬', '🇨🇩', '🇨🇷', '🇭🇷', '🇨🇾', '🇨🇿', '🇩🇰', '🇩🇯', '🇩🇴', '🇪🇨', '🇪🇬', '🇸🇻', '🇬🇶', '🇪🇷', '🇪🇪', '🇪🇹', '🇫🇯', '🇫🇮', '🇬🇦', '🇬🇲', '🇬🇪', '🇬🇭', '🇬🇷', '🇬🇱', '🇬🇹', '🇬🇳', '🇬🇾', '🇭🇹', '🇭🇳', '🇭🇺', '🇮🇸', '🇮🇳', '🇮🇩', '🇮🇷', '🇮🇶', '🇮🇪', '🇮🇲', '🇮🇱', '🇮🇹', '🇨🇮', '🇯🇲', '🇯🇴', '🇰🇿', '🇰🇪', '🇰🇼', '🇰🇬', '🇱🇦', '🇱🇻', '🇱🇧', '🇱🇸', '🇱🇷', '🇱🇾', '🇱🇹', '🇱🇺', '🇲🇰', '🇲🇬', '🇲🇼', '🇲🇾', '🇲🇻', '🇲🇱', '🇲🇹', '🇲🇷', '🇲🇺', '🇲🇽', '🇲🇩', '🇲🇨', '🇲🇳', '🇲🇪', '🇲🇦', '🇲🇿', '🇲🇲', '🇳🇦', '🇳🇵', '🇳🇱', '🇳🇿', '🇳🇮', '🇳🇪', '🇳🇬', '🇰🇵', '🇳🇴', '🇴🇲', '🇵🇰', '🇵🇦', '🇵🇾', '🇵🇪', '🇵🇭', '🇵🇹', '🇵🇷', '🇶🇦', '🇷🇴', '🇷🇺', '🇷🇼', '🇸🇲', '🇸🇦', '🇸🇳', '🇷🇸', '🇸🇱', '🇸🇰', '🇸🇮', '🇸🇴', '🇿🇦', '🇪🇸', '🇱🇰', '🇸🇩', '🇸🇷', '🇸🇿', '🇸🇪', '🇨🇭', '🇸🇾', '🇹🇯', '🇹🇿', '🇹🇭', '🇹🇬', '🇹🇴', '🇹🇹', '🇹🇳', '🇹🇷', '🇹🇲', '🇻🇮', '🇺🇬', '🇺🇦', '🇺🇾', '🇺🇿', '🇻🇪', '🇻🇳', '🇾🇪', '🇿🇲', '🇿🇼', '🇦🇩', '🇷🇪', '🇵🇱', '🇬🇺', '🇻🇦', '🇱🇮', '🇨🇼', '🇸🇨', '🇦🇶', '🇬🇮', '🇨🇺', '🇫🇴', '🇦🇽', '🇧🇲', '🇹🇱']
+// prettier-ignore
+const EN = ['HK', 'MO', 'TW', 'JP', 'KR', 'SG', 'US', 'GB', 'FR', 'DE', 'AU', 'AE', 'AF', 'AL', 'DZ', 'AO', 'AR', 'AM', 'AT', 'AZ', 'BH', 'BD', 'BY', 'BE', 'BZ', 'BJ', 'BT', 'BO', 'BA', 'BW', 'BR', 'VG', 'BN', 'BG', 'BF', 'BI', 'KH', 'CM', 'CA', 'CV', 'KY', 'CF', 'TD', 'CL', 'CO', 'KM', 'CG', 'CD', 'CR', 'HR', 'CY', 'CZ', 'DK', 'DJ', 'DO', 'EC', 'EG', 'SV', 'GQ', 'ER', 'EE', 'ET', 'FJ', 'FI', 'GA', 'GM', 'GE', 'GH', 'GR', 'GL', 'GT', 'GN', 'GY', 'HT', 'HN', 'HU', 'IS', 'IN', 'ID', 'IR', 'IQ', 'IE', 'IM', 'IL', 'IT', 'CI', 'JM', 'JO', 'KZ', 'KE', 'KW', 'KG', 'LA', 'LV', 'LB', 'LS', 'LR', 'LY', 'LT', 'LU', 'MK', 'MG', 'MW', 'MY', 'MV', 'ML', 'MT', 'MR', 'MU', 'MX', 'MD', 'MC', 'MN', 'ME', 'MA', 'MZ', 'MM', 'NA', 'NP', 'NL', 'NZ', 'NI', 'NE', 'NG', 'KP', 'NO', 'OM', 'PK', 'PA', 'PY', 'PE', 'PH', 'PT', 'PR', 'QA', 'RO', 'RU', 'RW', 'SM', 'SA', 'SN', 'RS', 'SL', 'SK', 'SI', 'SO', 'ZA', 'ES', 'LK', 'SD', 'SR', 'SZ', 'SE', 'CH', 'SY', 'TJ', 'TZ', 'TH', 'TG', 'TO', 'TT', 'TN', 'TR', 'TM', 'VI', 'UG', 'UA', 'UY', 'UZ', 'VE', 'VN', 'YE', 'ZM', 'ZW', 'AD', 'RE', 'PL', 'GU', 'VA', 'LI', 'CW', 'SC', 'AQ', 'GI', 'CU', 'FO', 'AX', 'BM', 'TL'];
+// prettier-ignore
+const ZH = ['香港', '澳门', '台湾', '日本', '韩国', '新加坡', '美国', '英国', '法国', '德国', '澳大利亚', '阿联酋', '阿富汗', '阿尔巴尼亚', '阿尔及利亚', '安哥拉', '阿根廷', '亚美尼亚', '奥地利', '阿塞拜疆', '巴林', '孟加拉国', '白俄罗斯', '比利时', '伯利兹', '贝宁', '不丹', '玻利维亚', '波斯尼亚和黑塞哥维那', '博茨瓦纳', '巴西', '英属维京群岛', '文莱', '保加利亚', '布基纳法索', '布隆迪', '柬埔寨', '喀麦隆', '加拿大', '佛得角', '开曼群岛', '中非共和国', '乍得', '智利', '哥伦比亚', '科摩罗', '刚果(布)', '刚果(金)', '哥斯达黎加', '克罗地亚', '塞浦路斯', '捷克', '丹麦', '吉布提', '多米尼加共和国', '厄瓜多尔', '埃及', '萨尔瓦多', '赤道几内亚', '厄立特里亚', '爱沙尼亚', '埃塞俄比亚', '斐济', '芬兰', '加蓬', '冈比亚', '格鲁吉亚', '加纳', '希腊', '格陵兰', '危地马拉', '几内亚', '圭亚那', '海地', '洪都拉斯', '匈牙利', '冰岛', '印度', '印尼', '伊朗', '伊拉克', '爱尔兰', '马恩岛', '以色列', '意大利', '科特迪瓦', '牙买加', '约旦', '哈萨克斯坦', '肯尼亚', '科威特', '吉尔吉斯斯坦', '老挝', '拉脱维亚', '黎巴嫩', '莱索托', '利比里亚', '利比亚', '立陶宛', '卢森堡', '马其顿', '马达加斯加', '马拉维', '马来', '马尔代夫', '马里', '马耳他', '毛利塔尼亚', '毛里求斯', '墨西哥', '摩尔多瓦', '摩纳哥', '蒙古', '黑山共和国', '摩洛哥', '莫桑比克', '缅甸', '纳米比亚', '尼泊尔', '荷兰', '新西兰', '尼加拉瓜', '尼日尔', '尼日利亚', '朝鲜', '挪威', '阿曼', '巴基斯坦', '巴拿马', '巴拉圭', '秘鲁', '菲律宾', '葡萄牙', '波多黎各', '卡塔尔', '罗马尼亚', '俄罗斯', '卢旺达', '圣马力诺', '沙特阿拉伯', '塞内加尔', '塞尔维亚', '塞拉利昂', '斯洛伐克', '斯洛文尼亚', '索马里', '南非', '西班牙', '斯里兰卡', '苏丹', '苏里南', '斯威士兰', '瑞典', '瑞士', '叙利亚', '塔吉克斯坦', '坦桑尼亚', '泰国', '多哥', '汤加', '特立尼达和多巴哥', '突尼斯', '土耳其', '土库曼斯坦', '美属维尔京群岛', '乌干达', '乌克兰', '乌拉圭', '乌兹别克斯坦', '委内瑞拉', '越南', '也门', '赞比亚', '津巴布韦', '安道尔', '留尼汪', '波兰', '关岛', '梵蒂冈', '列支敦士登', '库拉索', '塞舌尔', '南极', '直布罗陀', '古巴', '法罗群岛', '奥兰群岛', '百慕达', '东帝汶'];
+// prettier-ignore
+const QC = ['Hong Kong', 'Macao', 'Taiwan', 'Japan', 'Korea', 'Singapore', 'United States', 'United Kingdom', 'France', 'Germany', 'Australia', 'Dubai', 'Afghanistan', 'Albania', 'Algeria', 'Angola', 'Argentina', 'Armenia', 'Austria', 'Azerbaijan', 'Bahrain', 'Bangladesh', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Virgin Islands', 'Brunei', 'Bulgaria', 'Burkina-faso', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'CapeVerde', 'CaymanIslands', 'Central African Republic', 'Chad', 'Chile', 'Colombia', 'Comoros', 'Congo-Brazzaville', 'Congo-Kinshasa', 'CostaRica', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominican Republic', 'Ecuador', 'Egypt', 'EISalvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Fiji', 'Finland', 'Gabon', 'Gambia', 'Georgia', 'Ghana', 'Greece', 'Greenland', 'Guatemala', 'Guinea', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Ivory Coast', 'Jamaica', 'Jordan', 'Kazakstan', 'Kenya', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Lithuania', 'Luxembourg', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar(Burma)', 'Namibia', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'NorthKorea', 'Norway', 'Oman', 'Pakistan', 'Panama', 'Paraguay', 'Peru', 'Philippines', 'Portugal', 'PuertoRico', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'SanMarino', 'SaudiArabia', 'Senegal', 'Serbia', 'SierraLeone', 'Slovakia', 'Slovenia', 'Somalia', 'SouthAfrica', 'Spain', 'SriLanka', 'Sudan', 'Suriname', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Tajikstan', 'Tanzania', 'Thailand', 'Togo', 'Tonga', 'TrinidadandTobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'U.S.Virgin Islands', 'Uganda', 'Ukraine', 'Uruguay', 'Uzbekistan', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe', 'Andorra', 'Reunion', 'Poland', 'Guam', 'Vatican', 'Liechtensteins', 'Curacao', 'Seychelles', 'Antarctica', 'Gibraltar', 'Cuba', 'Faroe Islands', 'Ahvenanmaa', 'Bermuda', 'Timor-Leste'];
+const specialRegex = [
+    /(\d\.)?\d+×/,
+    /IPLC|IEPL|Kern|Edge|Pro|Std|Exp|Biz|Fam|Game|Buy|Zx|LB|Game/,
+];
+const nameclear =
+    /(套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|订阅|流量|机场|下次|官址|联系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL)/i;
+// prettier-ignore
+const regexArray = [/ˣ²/, /ˣ³/, /ˣ⁴/, /ˣ⁵/, /ˣ⁶/, /ˣ⁷/, /ˣ⁸/, /ˣ⁹/, /ˣ¹⁰/, /ˣ²⁰/, /ˣ³⁰/, /ˣ⁴⁰/, /ˣ⁵⁰/, /IPLC/i, /IEPL/i, /核心/, /边缘/, /高级/, /标准/, /实验/, /商宽/, /家宽/, /游戏|game/i, /购物/, /专线/, /LB/, /cloudflare/i, /\budp\b/i, /\bgpt\b/i, /udpn\b/];
+// prettier-ignore
+const valueArray = ["2×", "3×", "4×", "5×", "6×", "7×", "8×", "9×", "10×", "20×", "30×", "40×", "50×", "IPLC", "IEPL", "Kern", "Edge", "Pro", "Std", "Exp", "Biz", "Fam", "Game", "Buy", "Zx", "LB", "CF", "UDP", "GPT", "UDPN"];
+const nameblnx = /(高倍|(?!1)2+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
+const namenx = /(高倍|(?!1)(0\.|\d)+(x|倍)|ˣ²|ˣ³|ˣ⁴|ˣ⁵|ˣ¹⁰)/i;
+const keya =
+    /港|Hong|HK|新加坡|SG|Singapore|日本|Japan|JP|美国|United States|US|韩|土耳其|TR|Turkey|Korea|KR|🇸🇬|🇭🇰|🇯🇵|🇺🇸|🇰🇷|🇹🇷/i;
+const keyb =
+    /(((1|2|3|4)\d)|(香港|Hong|HK) 0[5-9]|((新加坡|SG|Singapore|日本|Japan|JP|美国|United States|US|韩|土耳其|TR|Turkey|Korea|KR) 0[3-9]))/i;
+const rurekey = {
+    GB: /UK/g,
+    "B-G-P": /BGP/g,
+    "Russia Moscow": /Moscow/g,
+    "Korea Chuncheon": /Chuncheon|Seoul/g,
+    "Hong Kong": /Hongkong|HONG KONG/gi,
+    "United Kingdom London": /London|Great Britain/g,
+    "Dubai United Arab Emirates": /United Arab Emirates/g,
+    "Taiwan TW 台湾 🇹🇼": /(台|Tai\s?wan|TW).*?🇨🇳|🇨🇳.*?(台|Tai\s?wan|TW)/g,
+    "United States": /USA|Los Angeles|San Jose|Silicon Valley|Michigan/g,
+    澳大利亚: /澳洲|墨尔本|悉尼|土澳|(深|沪|呼|京|广|杭)澳/g,
+    德国: /(深|沪|呼|京|广|杭)德(?!.*(I|线))|法兰克福|滬德/g,
+    香港: /(深|沪|呼|京|广|杭)港(?!.*(I|线))/g,
+    日本: /(深|沪|呼|京|广|杭|中|辽)日(?!.*(I|线))|东京|大坂/g,
+    新加坡: /狮城|(深|沪|呼|京|广|杭)新/g,
+    美国: /(深|沪|呼|京|广|杭)美|波特兰|芝加哥|哥伦布|纽约|硅谷|俄勒冈|西雅图|芝加哥/g,
+    波斯尼亚和黑塞哥维那: /波黑共和国/g,
+    印尼: /印度尼西亚|雅加达/g,
+    印度: /孟买/g,
+    阿联酋: /迪拜|阿拉伯联合酋长国/g,
+    孟加拉国: /孟加拉/g,
+    捷克: /捷克共和国/g,
+    台湾: /新台|新北|台(?!.*线)/g,
+    Taiwan: /Taipei/g,
+    韩国: /春川|韩|首尔/g,
+    Japan: /Tokyo|Osaka/g,
+    英国: /伦敦/g,
+    India: /Mumbai/g,
+    Germany: /Frankfurt/g,
+    Switzerland: /Zurich/g,
+    俄罗斯: /莫斯科/g,
+    土耳其: /伊斯坦布尔/g,
+    泰国: /泰國|曼谷/g,
+    法国: /巴黎/g,
+    G: /\d\s?GB/gi,
+    Esnc: /esnc/gi,
 };
 
-function __extends(d, b) {
-    if (typeof b !== "function" && b !== null)
-        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    extendStatics(d, b);
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+let GetK = false, AMK = []
+function ObjKA(i) {
+    GetK = true
+    AMK = Object.entries(i)
 }
 
-var __assign = function () {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.Apply(this, arguments);
-};
+function operator(pro) {
+    const Allmap = {};
+    const outList = getList(outputName);
+    let inputList,
+        retainKey = "";
+    if (inname !== "") {
+        inputList = [getList(inname)];
+    } else {
+        inputList = [ZH, FG, QC, EN];
+    }
 
-function __rest(s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-}
-
-function __decorate(decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-}
-
-function __param(paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-}
-
-function __metadata(metadataKey, metadataValue) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
-}
-
-function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.Apply(thisArg, _arguments || [])).next());
+    inputList.forEach((arr) => {
+        arr.forEach((value, valueIndex) => {
+            Allmap[value] = outList[valueIndex];
+        });
     });
-}
 
-function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
+    if (clear || nx || blnx || key) {
+        pro = pro.filter((res) => {
+            const resname = res.name;
+            const shouldKeep =
+                !(clear && nameclear.test(resname)) &&
+                !(nx && namenx.test(resname)) &&
+                !(blnx && !nameblnx.test(resname)) &&
+                !(key && !(keya.test(resname) && /2|4|6|7/i.test(resname)));
+            return shouldKeep;
+        });
+    }
+
+    const BLKEYS = BLKEY ? BLKEY.split("+") : "";
+
+    pro.forEach((e) => {
+        let bktf = false, ens = e.name
+        // 预处理 防止预判或遗漏
+        Object.keys(rurekey).forEach((ikey) => {
+            if (rurekey[ikey].test(e.name)) {
+                e.name = e.name.replace(rurekey[ikey], ikey);
+                if (BLKEY) {
+                    bktf = true
+                    let BLKEY_REPLACE = "",
+                        re = false;
+                    BLKEYS.forEach((i) => {
+                        if (i.includes(">") && ens.includes(i.split(">")[0])) {
+                            if (rurekey[ikey].test(i.split(">")[0])) {
+                                e.name += " " + i.split(">")[0]
+                            }
+                            if (i.split(">")[1]) {
+                                BLKEY_REPLACE = i.split(">")[1];
+                                re = true;
+                            }
+                        } else {
+                            if (ens.includes(i)) {
+                                e.name += " " + i
+                            }
+                        }
+                        retainKey = re
+                            ? BLKEY_REPLACE
+                            : BLKEYS.filter((items) => e.name.includes(items));
+                    });
+                }
             }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-}
-
-var __createBinding = Object.create ? (function (o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function () { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function (o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-});
-
-function __exportStar(m, o) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
-}
-
-function __values(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
+        });
+        if (blockquic == "on") {
+            e["block-quic"] = "on";
+        } else if (blockquic == "off") {
+            e["block-quic"] = "off";
+        } else {
+            delete e["block-quic"];
         }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-}
 
-function __read(o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
+        // 自定义
+        if (!bktf && BLKEY) {
+            let BLKEY_REPLACE = "",
+                re = false;
+            BLKEYS.forEach((i) => {
+                if (i.includes(">") && e.name.includes(i.split(">")[0])) {
+                    if (i.split(">")[1]) {
+                        BLKEY_REPLACE = i.split(">")[1];
+                        re = true;
+                    }
+                }
+            });
+            retainKey = re
+                ? BLKEY_REPLACE
+                : BLKEYS.filter((items) => e.name.includes(items));
         }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-}
 
-/** @deprecated */
-function __spread() {
-    for (var ar = [], i = 0; i < arguments.length; i++)
-        ar = ar.concat(__read(arguments[i]));
-    return ar;
-}
-
-/** @deprecated */
-function __spreadArrays() {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-}
-
-function __spreadArray(to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
+        let ikey = "",
+            ikeys = "";
+        // 保留固定格式 倍率
+        if (blgd) {
+            regexArray.forEach((regex, index) => {
+                if (regex.test(e.name)) {
+                    ikeys = valueArray[index];
+                }
+            });
         }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-}
 
-function __await(v) {
-    return this instanceof __await ? (this.v = v, this) : new __await(v);
-}
-
-function __asyncGenerator(thisArg, _arguments, generator) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var g = generator.Apply(thisArg, _arguments || []), i, q = [];
-    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
-    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
-    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
-    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
-    function fulfill(value) { resume("next", value); }
-    function reject(value) { resume("throw", value); }
-    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
-}
-
-function __asyncDelegator(o) {
-    var i, p;
-    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
-}
-
-function __asyncValues(o) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var m = o[Symbol.asyncIterator], i;
-    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function (v) { resolve({ value: v, done: d }); }, reject); }
-}
-
-function __makeTemplateObject(cooked, raw) {
-    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
-    return cooked;
-};
-
-var __setModuleDefault = Object.create ? (function (o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function (o, v) {
-    o["default"] = v;
-};
-
-function __importStar(mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-}
-
-function __importDefault(mod) {
-    return (mod && mod.__esModule) ? mod : { default: mod };
-}
-
-function __classPrivateFieldGet(receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-}
-
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-}
-
-function __classPrivateFieldIn(state, receiver) {
-    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
-    return typeof state === "function" ? receiver === state : state.has(receiver);
-}
-
-function getNum(str) {
-    var reg = /([0-9]\d*\.?\d*)|(0\.\d*[0-9])$/;
-    var result = reg.exec(str);
-    return result ? result[0] : '';
-}
-function reName(str, actionObject) {
-    var returnResult = {
-        origin: str,
-        location: str,
-        modified: '',
-        action: 'rename',
-        flag: ''
-    };
-    var locationList = actionObject.locationList, modifiedList = actionObject.modifiedList, deleteList = actionObject.deleteList;
-    for (var i = 0; i < deleteList.length; i++) {
-        var modifiedReg = new RegExp(deleteList[i].reg, 'gi');
-        if (modifiedReg.test(str)) {
-            returnResult.modified = deleteList[i].enShort;
-            returnResult.action = 'delete';
-            break;
-        }
-    }
-    for (var i = 0; i < locationList.length; i++) {
-        var locationReg = new RegExp(locationList[i].reg, 'gi');
-        if (locationReg.test(str)) {
-            returnResult.location = locationList[i].custom || locationList[i].enFull;
-            returnResult.flag = locationList[i].flag || '';
-            break;
-        }
-    }
-    for (var i = 0; i < modifiedList.length; i++) {
-        var modifiedReg = new RegExp(modifiedList[i].reg, 'gi');
-        if (modifiedReg.test(str)) {
-            returnResult.modified = modifiedList[i].custom || modifiedList[i].enShort;
-            if (returnResult.action !== 'rename') {
-                returnResult.action = modifiedList[i].action;
+        // 正则 匹配倍率
+        if (bl) {
+            const match = e.name.match(
+                /((倍率|X|x|×)\D?((\d{1,3}\.)?\d+)\D?)|((\d{1,3}\.)?\d+)(倍|X|x|×)/
+            );
+            if (match) {
+                const rev = match[0].match(/(\d[\d.]*)/)[0];
+                if (rev !== "1") {
+                    const newValue = rev + "×";
+                    ikey = newValue;
+                }
             }
-            break;
         }
-    }
-    return returnResult;
+
+        !GetK && ObjKA(Allmap)
+        // 匹配 Allkey 地区
+        const findKey = AMK.find(([key]) =>
+            e.name.includes(key)
+        )
+
+        let firstName = "",
+            nNames = "";
+
+        if (nf) {
+            firstName = FNAME;
+        } else {
+            nNames = FNAME;
+        }
+        if (findKey?.[1]) {
+            const findKeyValue = findKey[1];
+            let keyover = [],
+                usflag = "";
+            if (addflag) {
+                const index = outList.indexOf(findKeyValue);
+                if (index !== -1) {
+                    usflag = FG[index];
+                    usflag = usflag === "🇹🇼" ? "🇨🇳" : usflag;
+                }
+            }
+            keyover = keyover
+                .concat(firstName, usflag, nNames, findKeyValue, retainKey, ikey, ikeys)
+                .filter((k) => k !== "");
+            e.name = keyover.join(FGF);
+        } else {
+            if (nm) {
+                e.name = FNAME + FGF + e.name;
+            } else {
+                e.name = null;
+            }
+        }
+    });
+    pro = pro.filter((e) => e.name !== null);
+    jxh(pro);
+    numone && oneP(pro);
+    blpx && (pro = fampx(pro));
+    key && (pro = pro.filter((e) => !keyb.test(e.name)));
+    return pro;
 }
 
-var locationList = [
-    {
-        zh: '懒人节点',
-        enShort: 'lazy',
-        enFull: 'lazy person',
-        reg: '懒人',
-        custom: 'lazy',
-        flag: '🏴‍☠️'
-    },
-    {
-        zh: '香港',
-        enShort: 'HK',
-        enFull: 'Hong Kong',
-        reg: 'HK|Hong Kong|HK|Hongkong|Hong Kong|HongKong|HONG KONG|香港|深港|沪港|呼港|HKT|HKBN|HGC|WTT|CMI|穗港|京港|港|「🇭🇰」',
-        custom: 'HK',
-        flag: '🇭🇰'
-    },
-    {
-        zh: '台湾',
-        enShort: 'TW',
-        enFull: 'Taiwan',
-        reg: 'TW|Taiwan|TW|Taiwan|TAIWAN|台湾|台北|台中|新北|彰化|CHT|台|HINET|Taipei|「🇹🇼」',
-        custom: 'TW',
-        flag: '🇹🇼'
-    },
-    {
-        zh: '日本',
-        enShort: 'JP',
-        enFull: 'Japan',
-        reg: 'JP|Japan|JP|Japan|JAPAN|日本|东京|大阪|埼玉|沪日|穗日|川日|中日|泉日|杭日|深日|辽日|广日|大坂|Osaka|Tokyo|「🇯🇵」',
-        custom: 'JP',
-        flag: '🇯🇵'
-    },
-    {
-        zh: '韩国',
-        enShort: 'KR',
-        enFull: 'Korea',
-        reg: 'KR|Korea|KR|Korea|KOR|韩国|首尔|韩|韓|春川|Chuncheon|Seoul|「🇰🇷」',
-        custom: 'KR',
-        flag: '🇰🇷'
-    },
-    {
-        zh: '新加坡',
-        enShort: 'SG',
-        enFull: 'Singapore',
-        reg: 'SG|Singapore|SG|Singapore|SINGAPORE|新加坡|狮城|沪新|京新|泉新|穗新|深新|杭新|广新|廣新|滬新|「🇸🇬」',
-        custom: 'SG',
-        flag: '🇸🇬'
-    },
-    {
-        zh: '美国',
-        enShort: 'US',
-        enFull: 'United States',
-        reg: 'US|United States|US|USA|America|United States|美国|美|京美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|矽谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|沪美|哥伦布|纽约|Los Angeles|San Jose|Sillicon Valley|Michigan|「🇺🇸」',
-        custom: 'US',
-        flag: '🇺🇸'
-    },
-    {
-        zh: '英国',
-        enShort: 'UK',
-        enFull: 'United Kingdom',
-        reg: 'UK|United Kingdom|England|United Kingdom|英国|伦敦|英|London|「🇬🇧」',
-        custom: 'UK',
-        flag: '🇬🇧'
-    },
-    {
-        zh: '法国',
-        enShort: 'FR',
-        enFull: 'France',
-        reg: 'FR|France|FR|France|法国|法國|巴黎|「🇫🇷」',
-        custom: 'FR',
-        flag: '🇫🇷'
-    },
-    {
-        zh: '德国',
-        enShort: 'DE',
-        enFull: 'Germany',
-        reg: 'DE|Germany|DE|German|GERMAN|德国|德國|法兰克福|京德|滬德|廣德|沪德|广德|Frankfurt|「🇩🇪」',
-        custom: 'DE',
-        flag: '🇩🇪'
-    },
-    {
-        zh: '澳大利亚',
-        enShort: 'AU',
-        enFull: 'Australia',
-        reg: 'AU|Australia|AU|Australia|Sydney|澳大利亚|澳洲|墨尔本|悉尼|土澳|京澳|廣澳|滬澳|沪澳|广澳|「🇦🇺」',
-        custom: 'AU',
-        flag: '🇦🇺'
-    },
-    {
-        zh: '阿富汗',
-        enShort: 'AF',
-        enFull: 'Afghanistan',
-        reg: 'AF|Afghanistan',
-        flag: '🇦🇫'
-    },
-    {
-        zh: '阿尔巴尼亚',
-        enShort: 'AL',
-        enFull: 'Albania',
-        reg: 'AL|Albania|阿爾巴尼亞|阿尔巴尼亚',
-        flag: '🇦🇱'
-    },
-    {
-        zh: '阿尔及利亚',
-        enShort: 'DZ',
-        enFull: 'Algeria',
-        reg: 'DZ|Algeria',
-        flag: '🇩🇿'
-    },
-    {
-        zh: '安哥拉',
-        enShort: 'AO',
-        enFull: 'Angola',
-        reg: 'AO|Angola',
-        flag: '🇦🇴'
-    },
-    {
-        zh: '阿根廷',
-        enShort: 'AR',
-        enFull: 'Argentina',
-        reg: 'AR|Argentina|AR|阿根廷',
-        flag: '🇦🇷'
-    },
-    {
-        zh: '亚美尼亚',
-        enShort: 'AM',
-        enFull: 'Armenia',
-        reg: 'AM|Armenia',
-        flag: '🇦🇲'
-    },
-    {
-        zh: '奥地利',
-        enShort: 'AT',
-        enFull: 'Austria',
-        reg: 'AT|Austria|奥地利|奧地利|Austria|维也纳',
-        flag: '🇦🇹'
-    },
-    {
-        zh: '阿塞拜疆',
-        enShort: 'AZ',
-        enFull: 'Azerbaijan',
-        reg: 'AZ|Azerbaijan|阿塞拜疆',
-        flag: '🇦🇿'
-    },
-    {
-        zh: '巴林',
-        enShort: 'BH',
-        enFull: 'Bahrain',
-        reg: 'BH|Bahrain|BH|巴林',
-        flag: '🇧🇭'
-    },
-    {
-        zh: '比利时',
-        enShort: 'BE',
-        enFull: 'Belgium',
-        reg: 'BE|Belgium|BE|比利時|比利时',
-        flag: '🇧🇪'
-    },
-    {
-        zh: '伯利兹',
-        enShort: 'BZ',
-        enFull: 'Belize',
-        reg: 'BZ|Belize',
-        flag: '🇧🇿'
-    },
-    {
-        zh: '贝宁',
-        enShort: 'BJ',
-        enFull: 'Benin',
-        reg: 'BJ|Benin',
-        flag: '🇧🇯'
-    },
-    {
-        zh: '不丹',
-        enShort: 'BT',
-        enFull: 'Bhutan',
-        reg: 'Bhutan',
-        flag: '🇧🇹'
-    },
-    {
-        zh: '玻利维亚',
-        enShort: 'BO',
-        enFull: 'Bolivia',
-        reg: 'BO|Bolivia',
-        flag: '🇧🇴'
-    },
-    {
-        zh: '波黑',
-        enShort: 'BA',
-        enFull: 'Bosnia and Herzegovina',
-        reg: 'BA|Bosnia and Herzegovina|波黑共和国|波黑',
-        flag: '🇧🇦'
-    },
-    {
-        zh: '博茨瓦纳',
-        enShort: 'BW',
-        enFull: 'Botswana',
-        reg: 'BW|Botswana',
-        flag: '🇧🇼'
-    },
-    {
-        zh: '巴西',
-        enShort: 'BR',
-        enFull: 'Brazil',
-        reg: 'BR|Brazil|BR|Brazil|巴西|圣保罗',
-        flag: '🇧🇷'
-    },
-    {
-        zh: '英属维京群岛',
-        enShort: 'VG',
-        enFull: 'British Virgin Islands',
-        reg: 'VG|British Virgin Islands',
-        flag: '🇻🇬'
-    },
-    {
-        zh: '文莱',
-        enShort: 'BN',
-        enFull: 'Brunei',
-        reg: 'BN|Brunei',
-        flag: '🇧🇳'
-    },
-    {
-        zh: '保加利亚',
-        enShort: 'BG',
-        enFull: 'Bulgaria',
-        reg: 'BG|Bulgaria|保加利亚|保加利亞|Bulgaria',
-        flag: '🇧🇬'
-    },
-    {
-        zh: '布基纳法索',
-        enShort: 'BF',
-        enFull: 'Burkina-faso',
-        reg: 'BF|Burkina-faso',
-        flag: '🇧🇫'
-    },
-    {
-        zh: '布隆迪',
-        enShort: 'BI',
-        enFull: 'Burundi',
-        reg: 'BI|Burundi',
-        flag: '🇧🇮'
-    },
-    {
-        zh: '柬埔寨',
-        enShort: 'KH',
-        enFull: 'Cambodia',
-        reg: 'KH|Cambodia|柬埔寨',
-        flag: '🇰🇭'
-    },
-    {
-        zh: '喀麦隆',
-        enShort: 'CM',
-        enFull: 'Cameroon',
-        reg: 'CM|Cameroon',
-        flag: '🇨🇲'
-    },
-    {
-        zh: '加拿大',
-        enShort: 'CA',
-        enFull: 'Canada',
-        reg: 'CA|Canada|Canada|CANADA|CAN|Waterloo|加拿大|蒙特利尔|温哥华|楓葉|枫叶|滑铁卢|多伦多|CA|「🇨🇦」',
-        flag: '🇨🇦'
-    },
-    {
-        zh: '佛得角',
-        enShort: 'CV',
-        enFull: 'Cape Verde',
-        reg: 'CV|Cape Verde',
-        flag: '🇨🇻'
-    },
-    {
-        zh: '开曼群岛',
-        enShort: 'KY',
-        enFull: 'Cayman Islands',
-        reg: 'KY|Cayman Islands',
-        flag: '🇰🇾'
-    },
-    {
-        zh: '中非共和国',
-        enShort: 'CF',
-        enFull: 'Central African Republic',
-        reg: 'CF|Central African Republic',
-        flag: '🇨🇫'
-    },
-    {
-        zh: '乍得',
-        enShort: 'TD',
-        enFull: 'Chad',
-        reg: 'TD|Chad',
-        flag: '🇹🇩'
-    },
-    {
-        zh: '智利',
-        enShort: 'CL',
-        enFull: 'Chile',
-        reg: 'CL|Chile|智利',
-        flag: '🇨🇱'
-    },
-    {
-        zh: '中国',
-        enShort: 'CN',
-        enFull: 'China',
-        reg: 'CN|China|CN|China|回国|中国|中國|江苏|北京|上海|广州|深圳|杭州|徐州|青岛|宁波|镇江|back|「🇨🇳」',
-        custom: 'CN',
-        flag: '🇨🇳'
-    },
-    {
-        zh: '哥伦比亚',
-        enShort: 'CO',
-        enFull: 'Colombia',
-        reg: 'CO|Colombia|哥伦比亚|「🇨🇴」',
-        flag: '🇨🇴'
-    },
-    {
-        zh: '科摩罗',
-        enShort: 'KM',
-        enFull: 'Comoros',
-        reg: 'KM|Comoros',
-        flag: '🇰🇲'
-    },
-    {
-        zh: '刚果(布)',
-        enShort: 'CG',
-        enFull: 'Congo - Brazzaville',
-        reg: 'CG|Congo - Brazzaville',
-        flag: '🇨🇬'
-    },
-    {
-        zh: '刚果(金)',
-        enShort: 'CD',
-        enFull: 'Congo - Kinshasa',
-        reg: 'CD|Congo - Kinshasa',
-        flag: '🇨🇩'
-    },
-    {
-        zh: '哥斯达黎加',
-        enShort: 'CR',
-        enFull: 'Costa Rica',
-        reg: 'CR|Costa Rica|CR|哥斯达黎加|「🇨🇷」',
-        flag: '🇨🇷'
-    },
-    {
-        zh: '克罗地亚',
-        enShort: 'HR',
-        enFull: 'Croatia',
-        reg: 'HR|Croatia|克罗地亚|HR|克羅地亞|「🇭🇷」',
-        flag: '🇭🇷'
-    },
-    {
-        zh: '塞浦路斯',
-        enShort: 'CY',
-        enFull: 'Cyprus',
-        reg: 'CY|Cyprus|CY|塞浦路斯|「🇨🇾」',
-        flag: '🇨🇾'
-    },
-    {
-        zh: '捷克共和国',
-        enShort: 'CZ',
-        enFull: 'Czech Republic',
-        reg: 'CZ|Czech Republic|Czechia|捷克|「🇨🇿」',
-        flag: '🇨🇿'
-    },
-    {
-        zh: '丹麦',
-        enShort: 'DK',
-        enFull: 'Denmark',
-        reg: 'DK|Denmark|DK|DNK|丹麦|丹麥|「🇩🇰」',
-        flag: '🇩🇰'
-    },
-    {
-        zh: '吉布提',
-        enShort: 'DJ',
-        enFull: 'Djibouti',
-        reg: 'DJ|Djibouti',
-        flag: '🇩🇯'
-    },
-    {
-        zh: '多米尼加共和国',
-        enShort: 'DO',
-        enFull: 'Dominican Republic',
-        reg: 'DO|Dominican Republic|「🇩🇴」',
-        flag: '🇩🇴'
-    },
-    {
-        zh: '厄瓜多尔',
-        enShort: 'EC',
-        enFull: 'Ecuador',
-        reg: 'EC|Ecuador|厄瓜多尔|「🇪🇨」',
-        flag: '🇪🇨'
-    },
-    {
-        zh: '埃及',
-        enShort: 'EG',
-        enFull: 'Egypt',
-        reg: 'EG|Egypt|埃及|「🇪🇬」',
-        flag: '🇪🇬'
-    },
-    {
-        zh: '萨尔瓦多',
-        enShort: 'SV',
-        enFull: 'EI Salvador',
-        reg: 'SV|EI Salvador',
-        flag: '🇸🇻'
-    },
-    {
-        zh: '赤道几内亚',
-        enShort: 'GQ',
-        enFull: 'Equatorial Guinea',
-        reg: 'GQ|Equatorial Guinea',
-        flag: '🇬🇶'
-    },
-    {
-        zh: '厄立特里亚',
-        enShort: 'ER',
-        enFull: 'Eritrea',
-        reg: 'ER|Eritrea',
-        flag: '🇪🇷'
-    },
-    {
-        zh: '爱沙尼亚',
-        enShort: 'EE',
-        enFull: 'Estonia',
-        reg: 'EE|Estonia|爱沙尼亚|「🇪🇪」',
-        flag: '🇪🇪'
-    },
-    {
-        zh: '埃塞俄比亚',
-        enShort: 'ET',
-        enFull: 'Ethiopia',
-        reg: 'ET|Ethiopia',
-        flag: '🇪🇹'
-    },
-    {
-        zh: '斐济',
-        enShort: 'FJ',
-        enFull: 'Fiji',
-        reg: 'FJ|Fiji',
-        flag: '🇫🇯'
-    },
-    {
-        zh: '芬兰',
-        enShort: 'FI',
-        enFull: 'Finland',
-        reg: 'FI|Finland|Finland|芬兰|芬蘭|赫尔辛基|「🇫🇮」',
-        flag: '🇫🇮'
-    },
-    {
-        zh: '加蓬',
-        enShort: 'GA',
-        enFull: 'Gabon',
-        reg: 'GA|Gabon',
-        flag: '🇬🇦'
-    },
-    {
-        zh: '冈比亚',
-        enShort: 'GM',
-        enFull: 'Gambia',
-        reg: 'GM|Gambia',
-        flag: '🇬🇲'
-    },
-    {
-        zh: '格鲁吉亚',
-        enShort: 'GE',
-        enFull: 'Georgia',
-        reg: 'Georgia|格魯吉亞|格鲁吉亚|「🇬🇪」',
-        flag: '🇬🇪'
-    },
-    {
-        zh: '加纳',
-        enShort: 'GH',
-        enFull: 'Ghana',
-        reg: 'GH|Ghana',
-        flag: '🇬🇭'
-    },
-    {
-        zh: '希腊',
-        enShort: 'GR',
-        enFull: 'Greece',
-        reg: 'GR|Greece|希腊|希臘|「🇬🇷」',
-        flag: '🇬🇷'
-    },
-    {
-        zh: '格陵兰',
-        enShort: 'GL',
-        enFull: 'Greenland',
-        reg: 'GL|Greenland',
-        flag: '🇬🇱'
-    },
-    {
-        zh: '危地马拉',
-        enShort: 'GT',
-        enFull: 'Guatemala',
-        reg: 'GT|Guatemala',
-        flag: '🇬🇹'
-    },
-    {
-        zh: '几内亚',
-        enShort: 'GN',
-        enFull: 'Guinea',
-        reg: 'GN|Guinea',
-        flag: '🇬🇳'
-    },
-    {
-        zh: '圭亚那',
-        enShort: 'GY',
-        enFull: 'Guyana',
-        reg: 'GY|Guyana',
-        flag: '🇬🇾'
-    },
-    {
-        zh: '海地',
-        enShort: 'HT',
-        enFull: 'Haiti',
-        reg: 'HT|Haiti',
-        flag: '🇭🇹'
-    },
-    {
-        zh: '洪都拉斯',
-        enShort: 'HN',
-        enFull: 'Honduras',
-        reg: 'HN|Honduras',
-        flag: '🇭🇳'
-    },
-    {
-        zh: '匈牙利',
-        enShort: 'HU',
-        enFull: 'Hungary',
-        reg: 'HU|Hungary|匈牙利|Hungary|「🇭🇺」',
-        flag: '🇭🇺'
-    },
-    {
-        zh: '冰岛',
-        enShort: 'IS',
-        enFull: 'Iceland',
-        reg: 'IS|Iceland|IS|ISL|冰岛|冰島|「🇮🇸」',
-        flag: '🇮🇸'
-    },
-    {
-        zh: '印度',
-        enShort: 'IN',
-        enFull: 'IN',
-        reg: 'IN|India|India|IND|INDIA|印度|孟买|Mumbai|「🇮🇳」',
-        flag: '🇮🇳'
-    },
-    {
-        zh: '印度尼西亚',
-        enShort: 'ID',
-        enFull: 'Indonesia',
-        reg: 'ID|Indonesia|Indonesia|印尼|印度尼西亚|雅加达|「🇮🇩」',
-        flag: '🇮🇩'
-    },
-    {
-        zh: '伊朗',
-        enShort: 'IR',
-        enFull: 'Iran',
-        reg: 'IR|Iran|IR|伊朗',
-        flag: '🇮🇷'
-    },
-    {
-        zh: '伊拉克',
-        enShort: 'IQ',
-        enFull: 'Iraq',
-        reg: 'IQ|Iraq'
-    },
-    {
-        zh: '爱尔兰',
-        enShort: 'IE',
-        enFull: 'Ireland',
-        reg: 'Ireland|Ireland|IRELAND|爱尔兰|愛爾蘭|都柏林|「🇮🇪」',
-        flag: '🇮🇪'
-    },
-    {
-        zh: '马恩岛',
-        enShort: 'IM',
-        enFull: 'Isle of Man',
-        reg: 'IM|Isle of Man|马恩岛|馬恩島',
-        flag: '🇮🇲'
-    },
-    {
-        zh: '以色列',
-        enShort: 'IL',
-        enFull: 'Israel',
-        reg: 'IL|Israel|Israel|以色列|「🇮🇱」',
-        flag: '🇮🇱'
-    },
-    {
-        zh: '意大利',
-        enShort: 'IT',
-        enFull: 'Italy',
-        reg: 'IT|Italy|Italy|IT|Nachash|意大利|米兰|義大利|「🇮🇹」',
-        flag: '🇮🇹'
-    },
-    {
-        zh: '科特迪瓦',
-        enShort: 'CI',
-        enFull: 'Ivory Coast',
-        reg: 'CI|Ivory Coast',
-        flag: '🇨🇮'
-    },
-    {
-        zh: '牙买加',
-        enShort: 'JM',
-        enFull: 'Jamaica',
-        reg: 'JM|Jamaica',
-        flag: '🇯🇲'
-    },
-    {
-        zh: '约旦',
-        enShort: 'JO',
-        enFull: 'Jordan',
-        reg: 'JO|Jordan|JO|约旦',
-        flag: '🇯🇴'
-    },
-    {
-        zh: '哈萨克斯坦',
-        enShort: 'KZ',
-        enFull: 'Kazakstan',
-        reg: 'KZ|Kazakstan|哈萨克斯坦|哈萨克',
-        flag: '🇰🇿'
-    },
-    {
-        zh: '肯尼亚',
-        enShort: 'KE',
-        enFull: 'Kenya',
-        reg: 'KE|Kenya|KE|肯尼亚',
-        flag: '🇰🇪'
-    },
-    {
-        zh: '科威特',
-        enShort: 'KW',
-        enFull: 'Kuwait',
-        reg: 'KW|Kuwait',
-        flag: '🇰🇼'
-    },
-    {
-        zh: '吉尔吉斯斯坦',
-        enShort: 'KG',
-        enFull: 'Kyrgyzstan',
-        reg: 'KG|Kyrgyzstan',
-        flag: '🇰🇬'
-    },
-    {
-        zh: '老挝',
-        enShort: 'LA',
-        enFull: 'Laos',
-        reg: 'LA|Laos',
-        flag: '🇱🇦'
-    },
-    {
-        zh: '拉脱维亚',
-        enShort: 'LV',
-        enFull: 'Latvia',
-        reg: 'LV|Latvia|Latvia|Latvija|拉脱维亚',
-        flag: '🇱🇻'
-    },
-    {
-        zh: '黎巴嫩',
-        enShort: 'LB',
-        enFull: 'Lebanon',
-        reg: 'LB|Lebanon',
-        flag: '🇱🇧'
-    },
-    {
-        zh: '莱索托',
-        enShort: 'LS',
-        enFull: 'Lesotho',
-        reg: 'Lesotho',
-        flag: '🇱🇸'
-    },
-    {
-        zh: '利比里亚',
-        enShort: 'LR',
-        enFull: 'Liberia',
-        reg: 'LR|Liberia',
-        flag: '🇱🇷'
-    },
-    {
-        zh: '利比亚',
-        enShort: 'LY',
-        enFull: 'Libya',
-        reg: 'LY|Libya',
-        flag: '🇱🇾'
-    },
-    {
-        zh: '立陶宛',
-        enShort: 'LT',
-        enFull: 'Lithuania',
-        reg: 'LT|Lithuania|LT|立陶宛|「🇱🇹」',
-        flag: '🇱🇹'
-    },
-    {
-        zh: '卢森堡',
-        enShort: 'LU',
-        enFull: 'Luxembourg',
-        reg: 'LU|Luxembourg|卢森堡|「🇱🇺」',
-        flag: '🇱🇺'
-    },
-    {
-        zh: '马其顿',
-        enShort: 'MK',
-        enFull: 'Macedonia',
-        reg: 'MK|Macedonia|马其顿|馬其頓',
-        flag: '🇲🇰'
-    },
-    {
-        zh: '马达加斯加',
-        enShort: 'MG',
-        enFull: 'Madagascar',
-        reg: 'MG|Madagascar',
-        flag: '🇲🇬'
-    },
-    {
-        zh: '马拉维',
-        enShort: 'MW',
-        enFull: 'Malawi',
-        reg: 'MW|Malawi',
-        flag: '🇲🇼'
-    },
-    {
-        zh: '马来西亚',
-        enShort: 'MY',
-        enFull: 'Malaysia',
-        reg: 'MY|Malaysia|马来西亚|「马来西亚人」',
-        flag: '🇲🇾'
-    },
-    {
-        zh: '马尔代夫',
-        enShort: 'MV',
-        enFull: 'Maldives',
-        reg: 'MV|Maldives',
-        flag: '🇲🇻'
-    },
-    {
-        zh: '马里',
-        enShort: 'ML',
-        enFull: 'Mali',
-        reg: 'ML|Mali',
-        flag: '🇲🇱'
-    },
-    {
-        zh: '马耳他',
-        enShort: 'MT',
-        enFull: 'Malta',
-        reg: 'MT|Malta|马耳他',
-        flag: '🇲🇹'
-    },
-    {
-        zh: '毛利塔尼亚',
-        enShort: 'MR',
-        enFull: 'Mauritania',
-        reg: 'MR|Mauritania',
-        flag: '🇲🇷'
-    },
-    {
-        zh: '毛里求斯',
-        enShort: 'MU',
-        enFull: 'Mauritius',
-        reg: 'MU|Mauritius',
-        flag: '🇲🇺'
-    },
-    {
-        zh: '墨西哥',
-        enShort: 'MX',
-        enFull: 'Mexico',
-        reg: 'MX|Mexico|MEX|MX|墨西哥',
-        flag: '🇲🇽'
-    },
-    {
-        zh: '摩尔多瓦',
-        enShort: 'MD',
-        enFull: 'Moldova',
-        reg: 'MD|Moldova|摩爾多瓦|MD|摩尔多瓦',
-        flag: '🇲🇩'
-    },
-    {
-        zh: '摩纳哥',
-        enShort: 'MC',
-        enFull: 'Monaco',
-        reg: 'MC|Monaco',
-        flag: '🇲🇨'
-    },
-    {
-        zh: '蒙古',
-        enShort: 'MN',
-        enFull: 'Mongolia',
-        reg: 'MN|Mongolia|蒙古',
-        flag: '🇲🇳'
-    },
-    {
-        zh: '摩洛哥',
-        enShort: 'MA',
-        enFull: 'Morocco',
-        reg: 'MA|Morocco|MA|摩洛哥',
-        flag: '🇲🇦'
-    },
-    {
-        zh: '莫桑比克',
-        enShort: 'MZ',
-        enFull: 'Mozambique',
-        reg: 'MZ|Mozambique',
-        flag: '🇲🇿'
-    },
-    {
-        zh: '缅甸',
-        enShort: 'MM',
-        enFull: 'Myanmar(Burma)',
-        reg: 'MM|Myanmar(Burma)',
-        flag: '🇲🇲'
-    },
-    {
-        zh: '纳米比亚',
-        enShort: 'NA',
-        enFull: 'Namibia',
-        reg: 'NA|Namibia',
-        flag: '🇳🇦'
-    },
-    {
-        zh: '尼泊尔',
-        enShort: 'NP',
-        enFull: 'Nepal',
-        reg: 'NP|Nepal|尼泊尔',
-        flag: '🇳🇵'
-    },
-    {
-        zh: '荷兰',
-        enShort: 'NL',
-        enFull: 'Netherlands',
-        reg: 'NL|Netherlands|荷兰|荷蘭|尼德蘭|阿姆斯特丹|「🇳🇱」',
-        flag: '🇳🇱'
-    },
-    {
-        zh: '新西兰',
-        enShort: 'NZ',
-        enFull: 'New Zealand',
-        reg: 'NZ|New Zealand|新西蘭|新西兰|「🇳🇿」',
-        flag: '🇳🇿'
-    },
-    {
-        zh: '尼加拉瓜',
-        enShort: 'NI',
-        enFull: 'Nicaragua',
-        reg: 'NI|Nicaragua',
-        flag: '🇳🇮'
-    },
-    {
-        zh: '尼日尔',
-        enShort: 'NE',
-        enFull: 'Niger',
-        reg: 'NE|Niger',
-        flag: '🇳🇪'
-    },
-    {
-        zh: '尼日利亚',
-        enShort: 'NG',
-        enFull: 'Nigeria',
-        reg: 'NG|Nigeria|尼日利亚|NG|尼日利亞',
-        flag: '🇳🇬'
-    },
-    {
-        zh: '朝鲜',
-        enShort: 'KP',
-        enFull: 'North Korea',
-        reg: 'KP|North Korea|KP|朝鲜',
-        flag: '🇰🇵'
-    },
-    {
-        zh: '挪威',
-        enShort: 'NO',
-        enFull: 'Norway',
-        reg: 'NO|Norway|Norway|挪威|NO|「🇳🇴」',
-        flag: '🇳🇴'
-    },
-    {
-        zh: '阿曼',
-        enShort: 'OM',
-        enFull: 'Oman',
-        reg: 'OM|Oman',
-        flag: '🇴🇲'
-    },
-    {
-        zh: '巴基斯坦',
-        enShort: 'PK',
-        enFull: 'Pakistan',
-        reg: 'PK|Pakistan|巴基斯坦|「🇵🇰」',
-        flag: '🇵🇰'
-    },
-    {
-        zh: '巴拿马',
-        enShort: 'PA',
-        enFull: 'Panama',
-        reg: 'PA|Panama|PA|巴拿马',
-        flag: '🇵🇦'
-    },
-    {
-        zh: '巴拉圭',
-        enShort: 'PY',
-        enFull: 'Paraguay',
-        reg: 'PY|Paraguay',
-        flag: '🇵🇾'
-    },
-    {
-        zh: '秘鲁',
-        enShort: 'PE',
-        enFull: 'Peru',
-        reg: 'PE|Peru|秘鲁|祕魯',
-        flag: '🇵🇪'
-    },
-    {
-        zh: '菲律宾',
-        enShort: 'PH',
-        enFull: 'Philippines',
-        reg: 'PH|Philippines|PH|Philippines|菲律宾|菲律賓|「🇵🇭」',
-        flag: '🇵🇭'
-    },
-    {
-        zh: '波兰',
-        enShort: 'PL',
-        enFull: 'Poland',
-        reg: 'Poland|POL|波兰|波蘭|「🇵🇱」',
-        flag: '🇵🇱'
-    },
-    {
-        zh: '葡萄牙',
-        enShort: 'PT',
-        enFull: 'Portugal',
-        reg: 'PT|Portugal|葡萄牙|「🇵🇹」',
-        flag: '🇵🇹'
-    },
-    {
-        zh: '波多黎各',
-        enShort: 'PR',
-        enFull: 'Puerto Rico',
-        reg: 'PR|Puerto Rico|PR|波多黎各',
-        flag: '🇵🇷'
-    },
-    {
-        zh: '卡塔尔',
-        enShort: 'QA',
-        enFull: 'Qatar',
-        reg: 'QA|Qatar',
-        flag: '🇶🇦'
-    },
-    {
-        zh: '留尼旺',
-        enShort: 'RE',
-        enFull: 'Reunion',
-        reg: 'RE|Reunion',
-        flag: '🇷🇪'
-    },
-    {
-        zh: '罗马尼亚',
-        enShort: 'RO',
-        enFull: 'Romania',
-        reg: 'RO|Romania|RO|罗马尼亚',
-        flag: '🇷🇴'
-    },
-    {
-        zh: '白俄罗斯',
-        enShort: 'BY',
-        enFull: 'Belarus',
-        reg: 'BY|Belarus|BY|白俄|白俄罗斯',
-        flag: '🇧🇾'
-    },
-    {
-        zh: '俄罗斯',
-        enShort: 'RU',
-        enFull: 'Russia',
-        reg: 'RU|Russia|RU|Russia|俄罗斯|俄国|俄羅斯|伯力|莫斯科|圣彼得堡|西伯利亚|新西伯利亚|京俄|杭俄|廣俄|滬俄|广俄|沪俄|Moscow|「🇷🇺」',
-        flag: '🇷🇺'
-    },
-    {
-        zh: '卢旺达',
-        enShort: 'RW',
-        enFull: 'Rwanda',
-        reg: 'RW|Rwanda',
-        flag: '🇷🇼'
-    },
-    {
-        zh: '圣马力诺',
-        enShort: 'SM',
-        enFull: 'San Marino',
-        reg: 'SM|San Marino',
-        flag: '🇸🇲'
-    },
-    {
-        zh: '沙特阿拉伯',
-        enShort: 'SA',
-        enFull: 'Saudi Arabia',
-        reg: 'SA|Saudi Arabia',
-        flag: '🇸🇦'
-    },
-    {
-        zh: '塞内加尔',
-        enShort: 'SN',
-        enFull: 'Senegal',
-        reg: 'SN|Senegal',
-        flag: '🇸🇳'
-    },
-    {
-        zh: '塞尔维亚',
-        enShort: 'RS',
-        enFull: 'Serbia',
-        reg: 'RS|Serbia|RS|塞尔维亚',
-        flag: '🇷🇸'
-    },
-    {
-        zh: '塞拉利昂',
-        enShort: 'SL',
-        enFull: 'Sierra Leone',
-        reg: 'SL|Sierra Leone',
-        flag: '🇸🇱'
-    },
-    {
-        zh: '斯洛伐克',
-        enShort: 'SK',
-        enFull: 'Slovakia',
-        reg: 'SK|Slovakia|斯洛伐克|SK',
-        flag: '🇸🇰'
-    },
-    {
-        zh: '斯洛文尼亚',
-        enShort: 'SI',
-        enFull: 'Slovenia',
-        reg: 'SI|Slovenia|SI|斯洛文尼亚',
-        flag: '🇸🇮'
-    },
-    {
-        zh: '索马里',
-        enShort: 'SO',
-        enFull: 'Somalia',
-        reg: 'SO|Somalia',
-        flag: '🇸🇴'
-    },
-    {
-        zh: '南非',
-        enShort: 'ZA',
-        enFull: 'South Africa',
-        reg: 'ZA|South Africa|South Africa|南非',
-        flag: '🇿🇦'
-    },
-    {
-        zh: '西班牙',
-        enShort: 'ES',
-        enFull: 'Spain',
-        reg: 'ES|Spain|ES|西班牙|Spain|「🇪🇸」',
-        flag: '🇪🇸'
-    },
-    {
-        zh: '斯里兰卡',
-        enShort: 'LK',
-        enFull: 'Sri Lanka',
-        reg: 'LK|Sri Lanka',
-        flag: '🇱🇰'
-    },
-    {
-        zh: '苏丹',
-        enShort: 'SD',
-        enFull: 'Sudan',
-        reg: 'SD|Sudan',
-        flag: '🇸🇩'
-    },
-    {
-        zh: '苏里南',
-        enShort: 'SR',
-        enFull: 'Suriname',
-        reg: 'SR|Suriname',
-        flag: '🇸🇷'
-    },
-    {
-        zh: '斯威士兰',
-        enShort: 'SZ',
-        enFull: 'Swaziland',
-        reg: 'SZ|Swaziland',
-        flag: '🇸🇿'
-    },
-    {
-        zh: '瑞典',
-        enShort: 'SE',
-        enFull: 'Sweden',
-        reg: 'SE|Sweden|SE|Sweden|瑞典|「🇸🇪」',
-        flag: '🇸🇪'
-    },
-    {
-        zh: '瑞士',
-        enShort: 'CH',
-        enFull: 'Switzerland',
-        reg: 'CH|Switzerland|瑞士|苏黎世|Switzerland|Zurich|「🇨🇭」',
-        flag: '🇨🇭'
-    },
-    {
-        zh: '叙利亚',
-        enShort: 'SY',
-        enFull: 'Syria',
-        reg: 'SY|Syria',
-        flag: '🇸🇾'
-    },
-    {
-        zh: '塔吉克斯坦',
-        enShort: 'TJ',
-        enFull: 'Tajikistan',
-        reg: 'TJ|Tajikistan',
-        flag: '🇹🇯'
-    },
-    {
-        zh: '坦桑尼亚',
-        enShort: 'TZ',
-        enFull: 'Tanzania',
-        reg: 'TZ|Tanzania',
-        flag: '🇹🇿'
-    },
-    {
-        zh: '泰国',
-        enShort: 'TH',
-        enFull: 'Thailand',
-        reg: 'TH|Thailand|TH|Thailand|泰国|泰國|曼谷|「🇹🇭」',
-        flag: '🇹🇭'
-    },
-    {
-        zh: '多哥',
-        enShort: 'TG',
-        enFull: 'Togo',
-        reg: 'TG|Togo',
-        flag: '🇹🇬'
-    },
-    {
-        zh: '汤加',
-        enShort: 'TO',
-        enFull: 'Tonga',
-        reg: 'TO|Tonga',
-        flag: '🇹🇴'
-    },
-    {
-        zh: '特立尼达和多巴哥',
-        enShort: 'TT',
-        enFull: 'Trinidad and Tobago',
-        reg: 'TT|Trinidad and Tobago',
-        flag: '🇹🇹'
-    },
-    {
-        zh: '突尼斯',
-        enShort: 'TN',
-        enFull: 'Tunisia',
-        reg: 'TN|Tunisia|TN|突尼斯',
-        flag: '🇹🇳'
-    },
-    {
-        zh: '土耳其',
-        enShort: 'TR',
-        enFull: 'Turkey',
-        reg: 'TR|Turkey|TR|Turkey|土耳其|伊斯坦布尔|「🇹🇷」',
-        flag: '🇹🇷'
-    },
-    {
-        zh: '土库曼斯坦',
-        enShort: 'TM',
-        enFull: 'Turkmenistan',
-        reg: 'TM|Turkmenistan',
-        flag: '🇹🇲'
-    },
-    {
-        zh: '美属维尔京群岛',
-        enShort: 'VI',
-        enFull: 'U.S. Virgin Islands',
-        reg: 'VI|U.S. Virgin Islands',
-        flag: '🇻🇮'
-    },
-    {
-        zh: '乌干达',
-        enShort: 'UG',
-        enFull: 'Uganda',
-        reg: 'UG|Uganda',
-        flag: '🇺🇬'
-    },
-    {
-        zh: '乌克兰',
-        enShort: 'UA',
-        enFull: 'Ukraine',
-        reg: 'UA|Ukraine|烏克蘭|乌克兰|「🇺🇦」',
-        flag: '🇺🇦'
-    },
-    {
-        zh: '阿联酋',
-        enShort: 'AE',
-        enFull: 'United Arab Emirates',
-        reg: 'AE|United Arab Emirates|United Arab Emirates|阿联酋|迪拜|阿联酉|阿拉伯联合酋长国|「🇦🇪」',
-        flag: '🇦🇪'
-    },
-    {
-        zh: '乌拉圭',
-        enShort: 'UY',
-        enFull: 'Uruguay',
-        reg: 'UY|Uruguay|UY|乌拉圭',
-        flag: '🇺🇾'
-    },
-    {
-        zh: '乌兹别克斯坦',
-        enShort: 'UZ',
-        enFull: 'Uzbekistan',
-        reg: 'UZ|Uzbekistan',
-        flag: '🇺🇿'
-    },
-    {
-        zh: '梵蒂冈城',
-        enShort: 'VA',
-        enFull: 'Vatican City',
-        reg: 'VA|Vatican City',
-        flag: '🇻🇦'
-    },
-    {
-        zh: '委内瑞拉',
-        enShort: 'VE',
-        enFull: 'Venezuela',
-        reg: 'VE|Venezuela|VE|委内瑞拉',
-        flag: '🇻🇪'
-    },
-    {
-        zh: '越南',
-        enShort: 'VN',
-        enFull: 'Vietnam',
-        reg: 'VN|Vietnam|VN|越南|胡志明市|「🇻🇳」',
-        flag: '🇻🇳'
-    },
-    {
-        zh: '也门',
-        enShort: 'YE',
-        enFull: 'Yemen',
-        reg: 'YE|Yemen',
-        flag: '🇾🇪'
-    },
-    {
-        zh: '南斯拉夫',
-        enShort: 'YU',
-        enFull: 'Yugoslavia',
-        reg: 'YU|Yugoslavia',
-        flag: '🇷🇸'
-    },
-    {
-        zh: '扎伊尔',
-        enShort: 'ZR',
-        enFull: 'Zaire',
-        reg: 'ZR|Zaire',
-        flag: '🇨🇩'
-    },
-    {
-        zh: '赞比亚',
-        enShort: 'ZM',
-        enFull: 'Zambia',
-        reg: 'ZM|Zambia',
-        flag: '🇿🇲'
-    },
-    {
-        zh: '津巴布韦',
-        enShort: 'ZW',
-        enFull: 'Zimbabwe',
-        reg: 'ZW|Zimbabwe',
-        flag: '🇿🇼'
-    },
-    {
-        zh: '孟加拉国',
-        enShort: 'BD',
-        enFull: 'Bangladesh',
-        reg: 'BD|Bangladesh|BD|孟加拉',
-        flag: '🇧🇩'
-    }
-];
-var modifiedList = [
-    {
-        zh: '实验',
-        enShort: 'EXP',
-        enFull: 'EXP',
-        custom: 'EXP',
-        reg: '实验',
-        action: 'rename'
-    },
-    {
-        zh: '标准',
-        enShort: 'STD',
-        enFull: 'STD',
-        custom: 'STD',
-        reg: '标准',
-        action: 'rename'
-    },
-    {
-        zh: '高级',
-        enShort: 'PRO',
-        enFull: 'PRO',
-        custom: 'PRO',
-        reg: '高级',
-        action: 'rename'
-    },
-    {
-        zh: '购物',
-        enShort: 'Shop',
-        enFull: 'Shoping',
-        custom: 'Shop',
-        reg: '购物',
-        action: 'rename'
-    },
-    {
-        zh: 'Premium',
-        enShort: 'Pre',
-        enFull: 'Premium',
-        custom: 'Premium',
-        reg: 'Premium',
-        action: 'rename'
-    },
-    {
-        zh: '直连',
-        enShort: 'Direct',
-        enFull: 'Direct',
-        custom: 'Direct',
-        reg: '直连',
-        action: 'rename'
-    },
-    {
-        zh: '沪日',
-        enShort: 'SH',
-        enFull: 'SH-Japan',
-        custom: 'Shanghai',
-        reg: '沪日',
-        action: 'rename'
-    },
-    {
-        zh: '沪韩',
-        enShort: 'SH',
-        enFull: 'SH-Korea',
-        custom: 'Shanghai',
-        reg: '沪韩',
-        action: 'rename'
-    },
-    {
-        zh: '沪美',
-        enShort: 'SH',
-        enFull: 'SH-United States',
-        custom: 'Shanghai',
-        reg: '沪美',
-        action: 'rename'
-    },
-    {
-        zh: '广港',
-        enShort: 'GZ',
-        enFull: 'GZ-Hong Kong',
-        custom: 'Guang',
-        reg: '广港',
-        action: 'rename'
-    },
-    {
-        zh: '广新',
-        enShort: 'GZ',
-        enFull: 'GZ-Singapore',
-        custom: 'Guang',
-        reg: '广新',
-        action: 'rename'
-    },
-    {
-        zh: '深港',
-        enShort: 'SZ',
-        enFull: 'SZ-Hong Kong',
-        custom: 'Shen',
-        reg: '深港',
-        action: 'rename'
-    },
-    {
-        zh: '莞港',
-        enShort: 'DG',
-        enFull: 'DG-Hong Kong',
-        custom: 'Wan',
-        reg: '莞港',
-        action: 'rename'
-    },
-    {
-        zh: '负载均衡',
-        enShort: 'LB',
-        enFull: 'Load Balanced',
-        custom: 'LB',
-        reg: 'Load Balanced|LB',
-        action: 'rename'
-    },
-    {
-        zh: '专线',
-        enShort: 'Spec',
-        enFull: 'Spec',
-        custom: 'Spec',
-        reg: '专线|IPLC',
-        action: 'rename'
-    },
-    {
-        zh: '核心',
-        enShort: 'Kern',
-        enFull: 'Kern',
-        custom: 'Kern',
-        reg: '核心',
-        action: 'rename'
-    },
-    {
-        zh: '边缘',
-        enShort: 'Edge',
-        enFull: 'Edge',
-        custom: 'Edge',
-        reg: '边缘',
-        action: 'rename'
-    },
-    {
-        zh: '商宽',
-        enShort: 'BIZ',
-        enFull: 'BIZ',
-        custom: 'BIZ',
-        reg: '商宽',
-        action: 'rename'
-    },
-    {
-        zh: '家宽',
-        enShort: 'FAM',
-        enFull: 'FAM',
-        custom: 'FAM',
-        reg: '家宽',
-        action: 'rename'
-    },
-    {
-        zh: '流媒体',
-        enShort: 'Stream',
-        enFull: 'Stream',
-        custom: 'Stream',
-        reg: 'stream|懒人',
-        action: 'rename'
-    }
-];
-var deleteList = [
-    {
-        zh: '无用节点',
-        enFull: '',
-        enShort: '',
-        reg: '失联|网址|加入|会员|欢迎|套餐|过期|到期|流量|时间|应急|expire|traffic|测速|官网|http|电报|流媒体|重置|距离|剩余'
-    }
-];
-var actionObject = {
-    locationList: locationList,
-    modifiedList: modifiedList,
-    deleteList: deleteList
-};
-
-function operator(proxies) {
-    var counter = {};
-    var nameMap = {};
-    var airport = '';
-    var test = false;
-    if ($arguments) {
-        airport = $arguments['airport'];
-        test = $arguments['test'];
-    }
-    var testResultList = [];
-    var resultList = [];
-    for (var i = 0; i < proxies.length; i++) {
-        var proxy = proxies[i];
-        var number = getNum(proxy.name);
-        var reResult = reName(proxy.name, actionObject);
-        if (reResult.action === 'delete') {
-            testResultList.push(reResult);
-            continue;
-        }
-        if (!number) {
-            if (counter[reResult.location]) {
-                counter[reResult.location] += 1;
-            }
-            else {
-                counter[reResult.location] = 1;
-            }
-            number = counter[reResult.location];
-        }
-        var proxyName = "".concat(reResult.flag).concat(airport ? '「' + airport + '」' : '', " ").concat(reResult.location, " ").concat(reResult.modified, " ").concat(reResult.origin === reResult.location ? '' : number);
-        if (nameMap[proxyName]) {
-            nameMap[proxyName] += 1;
-            proxy.name = proxyName + '_' + nameMap[proxyName];
-        }
-        else {
-            nameMap[proxyName] = 1;
-            proxy.name = proxyName;
-        }
-        resultList.push(proxy);
-        testResultList.push(__assign(__assign({}, reResult), { name: proxy.name }));
-    }
-    if (test) {
-        return testResultList;
-    }
-    else {
-        return resultList;
-    }
-}
+// prettier-ignore
+function getList(arg) { switch (arg) { case 'us': return EN; case 'gq': return FG; case 'quan': return QC; default: return ZH; } }
+// prettier-ignore
+function jxh(e) { const n = e.reduce((e, n) => { const t = e.find((e) => e.name === n.name); if (t) { t.count++; t.items.push({ ...n, name: `${n.name}${XHFGF}${t.count.toString().padStart(2, "0")}`, }); } else { e.push({ name: n.name, count: 1, items: [{ ...n, name: `${n.name}${XHFGF}01` }], }); } return e; }, []); const t = (typeof Array.prototype.flatMap === 'function' ? n.flatMap((e) => e.items) : n.reduce((acc, e) => acc.concat(e.items), [])); e.splice(0, e.length, ...t); return e; }
+// prettier-ignore
+function oneP(e) { const t = e.reduce((e, t) => { const n = t.name.replace(/[^A-Za-z0-9\u00C0-\u017F\u4E00-\u9FFF]+\d+$/, ""); if (!e[n]) { e[n] = []; } e[n].push(t); return e; }, {}); for (const e in t) { if (t[e].length === 1 && t[e][0].name.endsWith("01")) {/* const n = t[e][0]; n.name = e;*/ t[e][0].name = t[e][0].name.replace(/[^.]01/, "") } } return e; }
+// prettier-ignore
+function fampx(pro) { const wis = []; const wnout = []; for (const proxy of pro) { const fan = specialRegex.some((regex) => regex.test(proxy.name)); if (fan) { wis.push(proxy); } else { wnout.push(proxy); } } const sps = wis.map((proxy) => specialRegex.findIndex((regex) => regex.test(proxy.name))); wis.sort((a, b) => sps[wis.indexOf(a)] - sps[wis.indexOf(b)] || a.name.localeCompare(b.name)); wnout.sort((a, b) => pro.indexOf(a) - pro.indexOf(b)); return wnout.concat(wis); }
