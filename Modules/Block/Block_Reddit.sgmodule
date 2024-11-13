@@ -1,0 +1,14 @@
+﻿#!name=🚫 Block: Reddit
+#!desc=[拦截] Reddit \n1.过滤应用内推广\n2.阻止NSFW提示
+#!system=ios
+#!category=🚫 Block
+
+#!author=luestr
+#!homepage=https://kelee.one/Tool/Loon/Plugin/Reddit_remove_ads.plugin
+
+[Script]
+# Block: Reddit
+拦截_Reddit_部分广告 = type = http-response, requires-body = 1, pattern = ^https?:\/\/gql(-fed)?\.reddit\.com, script-path = https://kelee.one/Resource/Script/Reddit/Reddit_remove_ads.js
+
+[MITM]
+hostname = %APPEND% gql.reddit.com, gql-fed.reddit.com
