@@ -1,108 +1,86 @@
-#!name=🔨 Modify: 微博(🧰)
-#!desc=[修改] 微博 \n1.净化\n2.自定义个人信息面板
+﻿#!name=🔨 Modify: 微博(🧰)
+#!desc=[修改] 微博 \n1.国内版净化\n2.国际版净化
 #!system=ios
 #!category=🔨 Modify
 
-#!author=xOS
-#!homepage=https://github.com/xOS/Config
+#!author=luestr
+#!homepage=https://github.com/luestr/ProxyResource: https://kelee.one/Tool/Loon/Plugin/Weibo_remove_ads.plugin / https://kelee.one/Tool/Loon/Plugin/Weibo_intl_remove_ads.plugin
 
 [Rule]
-# Modify: Weibo
-# > 微博
-URL-REGEX,^https?:\/\/.+\/wbts\.png$,REJECT
-URL-REGEX,^https?:\/\/.+\/licai\.png$,REJECT
-URL-REGEX,^https?:\/\/.+\/3fc\.png$,REJECT
-URL-REGEX,^https?:\/\/.+\/pull-flv-(.*)\.douyincdn\.com\/stage\/.+\.flv,REJECT
-URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/upload\/.+\/NavigationBar_Video_Icon_Live_Normal\.png$,REJECT
-URL-REGEX,^https?:\/\/.+\.sinaimg\.cn\/.+\/(.*)?(fish|redicon|redpacket)(.*)?\.(png|jpg|jpeg|gif)$,REJECT
-URL-REGEX,^https?:\/\/.+\.sinaimg\.cn\/.+\/lipin_dongtu\.gif$,REJECT
-# URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/upload\/1071\/1468\/.+\/.+\.gif$,REJECT
-URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/m\/taskcenter,REJECT
-URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/m\/taskcenter\/js\/vendor\.+\.js$,REJECT
-URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/m\/taskcenter\/js\/App\.+\.js$,REJECT
-URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/m\/taskcenter\/js\/0\.+\.js$,REJECT
-URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/m\/taskcenter\/js\/index\.lazy\.+\.js$,REJECT
-URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/m\/taskcenter\/js\/App\.+\.js$,REJECT
-URL-REGEX,^https?:\/\/h5\.sinaimg\.cn\/m\/taskcenter\/js\/vendor\.+\.js$,REJECT
-URL-REGEX,^https?:\/\/captcha\.weibo\.com\/static\/js\/jigsawLock\.min\.js$,REJECT
-URL-REGEX,^https?:\/\/wx[0-9]\.sinaimg\.cn\/large\/.+\.gif$,REJECT
+#  Modify: 微博>1
+# 请求放行
+DOMAIN,wbapp.uve.weibo.com,DIRECT
+# 微博开屏广告
+DOMAIN-SUFFIX,biz.weibo.com,REJECT
+# 拦截HTTPDNS
+DOMAIN,dns.weibo.cn,REJECT
+IP-CIDR,39.97.130.51/32,REJECT,no-resolve
+IP-CIDR,39.97.128.148/32,REJECT,no-resolve
+URL-REGEX,^http:\/\/api\.weibo\.cn\/2\/httpdns\/config,REJECT
+URL-REGEX,^http:\/\/api\.weibo\.cn\/httpdns\/config,REJECT
 
 [Map Local]
-# Modify: Weibo
-# > 微博
-^https?:\/\/h5\.sinaimg\.cn\/upload\/.+\/fhy_dongtu\.gif$ data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Weibo/hy_dongtu.gif"
-^https?:\/\/h5\.sinaimg\.cn\/upload\/.+\/bianjijiantou\.png$ data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Weibo/jiantougaocheng.png"
-^https?:\/\/h5\.sinaimg\.cn\/upload\/.+\/Vip\.png$ data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Weibo/avatar_vip_golden.png"
-^https?:\/\/h5\.sinaimg\.cn\/upload\/.+\/vip[0-9]_default\.png$ data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Weibo/feed_icon_100vip_7_default.png"
+# Modify: 微博>1
+# 首页 - 签到、发布按钮、侧边栏、右上角红包、顶部标签页、侧边栏提醒、超话标签页悬浮、顶部直播
+^https:\/\/api\.weibo\.cn\/2\/(?:ug\/checkin\/list|push\/daily) data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/!\/live\/media_homelist\? data-type=text data="{}" status-code=200
+# 详情页 - 超话、评论区、看图界面、个人主页、我的页面、信息流、商品橱窗、视频流、视频号、视频调查、话题卡片
+^https:\/\/api\.weibo\.cn\/2\/comments\/bullet_screens\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/photo\/info\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/statuses\/(?:container_positive|push_info) data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/vote\/get_vote_detail\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/!\/chaohua\/discovery\/home_bottom\/switch\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/!\/huati\/(?:discovery_home_bottom_getdotinfo|mobile_discovery_searchchange) data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/!\/wbox\/\w+\/(?:home_bottom_modal|interest_category) data-type=text data="{}" status-code=200
+# 发现页 - 热门微博信息流、搜索列表、热搜提醒、猜你想搜、视频流红包
+^https:\/\/api\.weibo\.cn\/2\/search\/container_discover\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/hot\/hours_spotlight\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/2\/video\/redpacket\? data-type=text data="{}" status-code=200
+^https:\/\/api\.weibo\.cn\/!\/sug\/list\/finderchange\? data-type=text data="{}" status-code=200
+# 开屏广告 //*.uve.weibo.com
+^https:\/\/bootrealtime\.uve\.weibo\.com\/v[23]\/ad\/realtime data-type=text data="{}" status-code=200
+^https:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/(?:get-lbs-cell-info\.php|sdkconfig\.php) data-type=text data="{}" status-code=200
+# 微博长文章推广
+^https:\/\/card\.weibo\.com\/article\/m\/aj\/(?:reward|uvead) data-type=text data="{}" status-code=200
+^https:\/\/weibo\.com\/ttarticle\/x\/m\/aj\/(?:reward|uvead) data-type=text data="{}" status-code=200
 
-# > 微博积分弹窗
-^https?:\/\/luck\.sc\.weibo\.com\/aj\/Action\/indexInfo$ data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-
-# > 会员中心弹窗
-^https?:\/\/new\.vip\.weibo\.c(n|om)\/aj\/vipcenter\/popalert data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/new\.vip\.weibo\.c(n|om)\/aj\/vipcenter\/userdata data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-
-# > 微博推荐
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/statuses\/unread_hot_timeline\?gsid= data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-
-# > 获取设备型号
-^https?:\/\/m?api\.weibo\.c(n|om)\/device\/get data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Weibo/getDevice.json"
-
-# > 微博发现
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/search\/container_discover\?gsid= data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-
-# > 微博话题按钮红点
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/!\/huati\/discovery_home_bottom_getdotinfo data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-
-# > 微博超话看帖
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/!\/huati\/discovery_home_bottom_channel_list data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/statuses\/unread_topic_timeline data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/statuses\/container_timeline_topic data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-
-# > 微博网络检测
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/carrier\/get\/info data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Weibo/carrier.json"
-
-# > 微博订单
-^https?:\/\/shop\.sc\.weibo\.com\/aj\/h5\/order\/prolist data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-
-# > 微博视频推荐
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/video\/redpacket data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/video\/community_tab data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/!\/multimedia\/playback\/batch_get data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/!\/multimedia\/video\/comments\/get_comments_order_by_hot data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/video\/tiny_stream_channel_list data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/video\/tiny_stream_video_list data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-
-# > 微博其它
-^https?:\/\/letsgo\.e\.weibo\.com\/stracker\/fe\/report data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/!\/multimedia\/video\/red_package\/grow_follower\/active_uids data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/client\/tabbar data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/push\/daily data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/page\/get_fragment data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/push\/active data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m\.weibo\.cn\/c\/checkin data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/video\/machine data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/fastimage\.uve\.weibo\.com\/interface\/sdk\/getad\.php$ data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Weibo/fastimage.json"
-^https?:\/\/sdkApp\.uve\.weibo\.com\/interface\/sdk\/actionpro\.php data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/sdkclick\.uve\.weibo\.com\/interface\/sdk\/sdkclick\.php data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/sdkApp\.uve\.weibo\.com\/interface\/sdk\/sdkconfig\.php data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
-^https?:\/\/m?api\.weibo\.c(n|om)\/2\/hot\/repost_daily data="https://raw.githubusercontent.com/xOS/Config/Her//Mock/Blank/Blank_Dict.json"
+# Modify: 微博>2
+# 热门视频、热推荐
+^https?:\/\/api\.weibo\.cn\/\d\/(cardlist\?v_f=\d|ad\/weibointl\?) data-type=text data="{}" status-code=200
+^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=hot_search_users data-type=text data="{}" status-code=200
 
 [Script]
-# Modify: Weibo
-# > 微博个人信息
-# 可自定义start
-主页 = type = http-response,requires-body = 1, max-size = 0, pattern = ^https?:\/\/api\.weibo\.cn\/2\/profile\?gsid=, script-path = https://raw.githubusercontent.com/Syunraii/conf/refs/heads/master/assert/Module_Modify_Weibo/Profile.js
-个人信息 = type = http-response,requires-body = 1, max-size = 0, pattern = ^https?:\/\/api\.weibo\.cn\/2\/users\/(show|relation), script-path = https://raw.githubusercontent.com/Syunraii/conf/refs/heads/master/assert/Module_Modify_Weibo/UserShow.js
-去广告 = type = http-response,requires-body = 1, max-size = 0, pattern = ^https?://m?api\.weibo\.c(n|om)/2/(profile/(me|statuses)|searchall|statuses/(unread_hot_timeline|extend|video_mixtimeline)|video/(community_tab|remind_info|tiny_stream_video_list)|checkin/show|container/get_item), script-path = https://raw.githubusercontent.com/Syunraii/conf/refs/heads/master/assert/Module_Modify_Weibo/Weibo.js
-# 可自定义end
-开屏 type = http-response, requires-body = 1, pattern = ^https?:\/\/(sdk|wb)App\.uve\.weibo\.com(/interface/sdk/sdkad.php|/wbApplua/wbpullad.lua), script-path = https://raw.githubusercontent.com/xOS/Config/Her//Script/Weibo/Launch.js
-微博信息流 = type = http-response, requires-body = 1, max-size = -1 , pattern = ^https?:\/\/m?api\.weibo\.c(n|om)/2/(statuses/(unread|extend|positives/get|(friends|video)(/|_)(mix)?timeline)|stories/(video_stream|home_list)|(groups|fangle)/timeline|profile/statuses|comments/build_comments|photo/recommend_list|service/picfeed|cardlist|page|!/(photos/pic_recommend_status|live/media_homelist|wbox\/.+\/createrIndex|st_videos\/tiny\/effect\/shoot_display_config)|video/tiny_stream_video_list|photo/info|remind/unread_count|search/finder|search/container_timeline|!\/huati\/discovery_home_bottom_channel_list|statuses\/unread_topic_timeline), script-path = https://raw.githubusercontent.com/xOS/Config/Her//Script/Weibo/Timeline.js
+# Modify: 微博>1
+# 首页 - 签到、发布按钮、侧边栏、右上角红包、顶部标签页、侧边栏提醒、超话标签页悬浮、顶部直播
+移除首页签到弹窗 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/(?:checkin\/show|client\/publisher_list|push\/active), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除首页顶部标签 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/groups\/allgroups\/v2\?, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+# 详情页 - 超话、评论区、看图界面、个人主页、我的页面、信息流、商品橱窗、视频流、视频号、视频调查、话题卡片
+移除详情页广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/(?:cardlist|page), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除评论区广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/comments\/build_comments\?, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除详情页广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/(?:container\/asyn|flowlist|flowpage), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除关注、取消关注弹窗 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/friendships\/(?:create|destroy), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除个人主页广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/profile\/(?:container_timeline|dealatt|me|statuses\/tab|userinfo), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除超话搜索页广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/shproxy\/chaohua\/discovery\/searchactive\?, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除信息流广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/statuses\/(?:container_timeline(?:_hot|_topic|_topicpage|_unread)?|repost_timeline|unread_hot_timeline), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除微博详情页广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/statuses\/(?:extend|show), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除视频流广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/video\/tiny_stream_video_list\?, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除超话顶部标签 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/!\/huati\/discovery_home_bottom_channels\?, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+# 消息页
+移除消息页广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/direct_messages\/user_list\?, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除消息页广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/messageflow\/notice\?, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+# 发现页 - 热门微博信息流、搜索列表、热搜提醒、猜你想搜、视频流红包
+移除发现页信息流广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/search\/(?:container_timeline|finder), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除发现页搜索结果广告 = type=http-response,requires-body=1, pattern=^https:\/\/api\.weibo\.cn\/2\/searchall\?, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+# 开屏广告 //*.uve.weibo.com
+移除开屏广告 = type=http-response, requires-body=1, pattern=^https:\/\/bootpreload\.uve\.weibo\.com\/v[12]\/ad\/preload, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除开屏广告 = type=http-response, requires-body=1, pattern=^https:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkad\.php, script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
+移除开屏广告 = type=http-response, requires-body=1, pattern=^https:\/\/wbapp\.uve\.weibo\.com\/(?:preload\/get_ad|wbapplua\/wbpullad\.lua), script-path=https://kelee.one/Resource/Script/Weibo/Weibo_remove_ads.js
 
-/*
- *微博钱包订单 = type = http-response, requires-body = 1, max-size = 0, pattern = (^https?:\/\/js\.t\.sinajs\.cn\/c2p\/sam\/frontend\/assets\/walletcache\.json|^https?:\/\/pay\.sc\.weibo\.com\/api\/client\/sdk\/* * App\/indexnew\/(index|person)|^https?:\/\/shop\.sc\.weibo\.com\/aj\/h5\/order\/center), script-path = https://raw.githubusercontent.com/xOS/Config/Her//Script/Weibo/Wallet.js
- *微博去广告配置注入 = type = cron, debug = 1, cronexp = "0 0 1 ? * MON", script-path = https://raw.githubusercontent.com/xOS/Config/Her/Script/Weibo/Config.js
- */
+# Modify: 微博>2
+# 趋势页、开屏广告、用户中心、热搜置顶、我的页面、尊享专属、信息流
+微博轻享版去广告 = type=http-response, requires-body=1, pattern=^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?(ct=(feed&a=trends|user&a=get_searching_info)|a=(get_coopen_ads|user_center|search_topic|open_app&auth|icon_center)), script-path=https://kelee.one/Resource/Script/Weibo_intl/Weibo_intl_remove_ads.js
+微博轻享版去广告 = type=http-response, requires-body=1, pattern=^https?:\/\/api\.weibo\.cn\/\d\/statuses\/.*timeline, script-path=https://kelee.one/Resource/Script/Weibo_intl/Weibo_intl_remove_ads.js
+微博轻享版去广告 = type=http-response, requires-body=1, pattern=^https?:\/\/sdkapp\.uve\.weibo\.com\/interface\/sdk\/sdkad\.php, script-path=https://kelee.one/Resource/Script/Weibo_intl/Weibo_intl_remove_ads.js
 
 [MITM]
-hostname = %APPEND% *.uve.weibo.com, *api.weibo.cn, *api.weibo.com, h5.sinaimg.cn, new.vip.weibo.cn, *.sc.weibo.com, captcha.weibo.com, wx*.sinaimg.cn, js.t.sinajs.cn, *.e.weibo.com
+hostname = %APPEND% *.weibo.cn, *.weibo.com, weibo.com, *api.weibo.cn, sdkapp.uve.weibo.com
