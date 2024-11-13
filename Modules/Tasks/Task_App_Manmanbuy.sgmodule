@@ -16,4 +16,4 @@
 {{{任务}}} = type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/manmanbuy/manmanbuy_checkin.js
 
 [MITM]
-{{{hostname}}} = %APPEND% Apph5.manmanbuy.com
+{{{主机}}} = %APPEND% Apph5.manmanbuy.com

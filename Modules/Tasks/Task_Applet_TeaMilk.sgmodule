@@ -18,4 +18,4 @@
 {{{任务}}} = type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/8b4f5487e0f28786c7dec9c7484dcd5e/raw/teaMilk.js
 
 [MITM]
-{{{主机}}} = %APPEND% webapi2.qmai.cn,webapi.qmai.cn,qmwebapi.qmai.cn
+{{{主机}}} = %APPEND% webapi2.qmai.cn, webapi.qmai.cn, qmwebapi.qmai.cn
