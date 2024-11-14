@@ -10,9 +10,9 @@
 #!arguments-desc=1️⃣ 脚本超时时间\n\n默认60秒\n\n2️⃣ 脚本参数[return]\n\n表示策略组返回默认策略时间,单位可以定义 ms s min h 表示 毫秒 秒 分钟 小时, 默认10min\n\n3️⃣ 脚本参数[group]\n\n策略组, 默认"苹果服务"\n\n4️⃣ 脚本参数[policy]\n\n策略, 默认"直接连接", 可以是其他策略, 后面填你要跳转的策略, 多个用逗号隔开\n\n5️⃣ 脚本参数[monitorTime]\n\n表示要监控的时间, 单位为秒, 默认15\n\n6️⃣ 脚本参数[minSpeed]\n\n表示低于这个速度就会触发跳转策略, 单位MB/s, 默认5
 
 [Rule]
-# Modify: appStore
+# Modify: AppStore
 AND,((DOMAIN,iosapps.itunes.apple.com),(SCRIPT,修改_AppStore_下载选优)),{{{group}}}
 
 [Script]
-# Modify: appStore
+# Modify: AppStore
 修改_AppStore_下载选优 = type =rule,timeout={{脚本超时时间}}},argument="Return={{{return}}},Group={{{group}}}&policy={{{policy}}},Support&time={{{monitorTime}}}&minSpeed={{{minSpeed}}}",script-path=https://raw.githubusercontent.com/githubdulong/Script/master/speedLimit.js
