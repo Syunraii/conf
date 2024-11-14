@@ -7,7 +7,7 @@
 #!homepage=https://raw.githubusercontent.com/githubdulong/Script/master/WPS_checkin.js
 
 #!arguments=获取:获取_WPS_Phone, 任务:任务_WPS_Phone, 签到执行时间:52 10 * * *, 脚本超时时间:120, 主机:hostname, AK:null, SK:null, MAX_RETRIES:5, DAY:1
-#!arguments-desc=1️⃣ 使用方法\n\n登录WPS app, 进入"我的"页面, 提示获取Cookie成功即可\n\n2️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n3️⃣ 任务\n\n执行任务, 输入#关闭\n\n4️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM5️⃣ 脚本参数[AK]\n\n申请的API KEY\n\n6️⃣ 脚本参数[SK]\n\n申请的配对Screct_Key\n\n7️⃣ 脚本参数[MAX_RETRIES]\n\n最大重试次数\n\n8️⃣ 脚本参数[DAY]\n\n兑换天数\n\n
+#!arguments-desc=1️⃣ 使用方法\n\n登录WPS App, 进入"我的"页面, 提示获取Cookie成功即可\n\n2️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n3️⃣ 任务\n\n执行任务, 输入#关闭\n\n4️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM5️⃣ 脚本参数[AK]\n\n申请的API KEY\n\n6️⃣ 脚本参数[SK]\n\n申请的配对Screct_Key\n\n7️⃣ 脚本参数[MAX_RETRIES]\n\n最大重试次数\n\n8️⃣ 脚本参数[DAY]\n\n兑换天数\n\n
 
 [Script]
 # Tasks: WPS Phone
