@@ -11,16 +11,16 @@
 
 [Panel]
 # Panel: 我的订阅
-{{{订阅面板1}}} = update-interval={{{面板更新时间}}}, script-name = Info_Subscribe1
+{{{订阅面板1}}}=update-interval={{{面板更新时间}}},script-name=Panel_Info_Subscribe1
 
-{{{订阅面板2}}} = update-interval={{{面板更新时间}}}, script-name = Info_Subscribe2
+{{{订阅面板2}}}=update-interval={{{面板更新时间}}},script-name=Panel_Info_Subscribe2
 
-{{{订阅面板3}}} = update-interval={{{面板更新时间}}}, script-name = Info_Subscribe3
+{{{订阅面板3}}}=update-interval={{{面板更新时间}}},script-name=Panel_Info_Subscribe3
 
 [Script]
 # Panel: 我的订阅
-Info_Subscribe1= style = info, title = "订阅信息1", content = "请刷新", timeout = {{{脚本超时时间}}}, argument=url={{{订阅链接1}}}&reset_day={{{每月重置时间1}}}&expire={{{到期时间1}}}&title={{{订阅名称1}}}&icon={{{图标1}}}&color={{{颜色1}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Panel_Info_Subscribe1= style =info,title="订阅信息1",content="请刷新",timeout={{{脚本超时时间}}},argument=url={{{订阅链接1}}}&reset_day={{{每月重置时间1}}}&expire={{{到期时间1}}}&title={{{订阅名称1}}}&icon={{{图标1}}}&color={{{颜色1}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
 
-Info_Subscribe2= style = info, title = "订阅信息2", content = "请刷新", timeout = {{{脚本超时时间}}}, argument=url={{{订阅链接2}}}&reset_day={{{每月重置时间2}}}&expire={{{到期时间2}}}&title={{{订阅名称2}}}&icon={{{图标2}}}&color={{{颜色2}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Panel_Info_Subscribe2= style =info,title="订阅信息2",content="请刷新",timeout={{{脚本超时时间}}},argument=url={{{订阅链接2}}}&reset_day={{{每月重置时间2}}}&expire={{{到期时间2}}}&title={{{订阅名称2}}}&icon={{{图标2}}}&color={{{颜色2}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
 
-Info_Subscribe3= style = info, title = "订阅信息3", content = "请刷新", timeout = {{{脚本超时时间}}}, argument=url={{{订阅链接3}}}&reset_day={{{每月重置时间3}}}&expire={{{到期时间3}}}&title={{{订阅名称3}}}&icon={{{图标3}}}&color={{{颜色3}}}, script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Panel_Info_Subscribe3= style =info,title="订阅信息3",content="请刷新",timeout={{{脚本超时时间}}},argument=url={{{订阅链接3}}}&reset_day={{{每月重置时间3}}}&expire={{{到期时间3}}}&title={{{订阅名称3}}}&icon={{{图标3}}}&color={{{颜色3}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js

@@ -11,8 +11,8 @@
 
 [Panel]
 # Panel: 加密货币
-资讯面板_加密货币 = style = info, title = "加密货币汇率", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Infos_CryptoRates
+资讯面板_加密货币 = style =info,title="加密货币汇率",content="请刷新",update-interval={{{面板更新间隔}}},script-name=Panel_Infos_CryptoRates
 
 [Script]
 # Panel: 加密货币
-Infos_CryptoRates = type = generic, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/crypto.js
+Panel_Infos_CryptoRates = type =generic,timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/crypto.js

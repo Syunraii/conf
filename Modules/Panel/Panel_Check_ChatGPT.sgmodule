@@ -11,8 +11,8 @@
 
 [Panel]
 # Panel: ChatGPT
-检测面板_ChatGPT解锁 = style = info, title = "ChatGPT解锁检测", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Check_ChatGPT
+检测面板_ChatGPT解锁 = style =info,title="ChatGPT解锁检测",content="请刷新",update-interval={{{面板更新间隔}}},script-name=Panel_Check_ChatGPT
 
 [Script]
 # Panel: ChatGPT
-Check_ChatGPT = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&icon-color={{{颜色}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/gpt.js
+Panel_Check_ChatGPT = type =generic,timeout={{{脚本超时时间}}},argument=icon={{{图标}}}&icon-color={{{颜色}}},script-path=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/gpt.js

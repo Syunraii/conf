@@ -1,5 +1,5 @@
-﻿#!name=🖥️ Panel: AppStore限免
-#!desc=[资讯面板] 显示AppStore每日限免App
+﻿#!name=🖥️ Panel: appStore限免
+#!desc=[资讯面板] 显示appStore每日限免app
 #!system=ios
 #!category=🖥️ Panel: Infos
 
@@ -7,12 +7,12 @@
 #!homepage=https://raw.githubusercontent.com/deezertidal/Surge_Module/refs/heads/master/files/appsdoor.js
 
 #!arguments=面板更新间隔:43200, 脚本超时时间:20, 图标:applelogo, 颜色:#b8b8b8, 数量:5
-#!arguments-desc=1️⃣ 面板更新间隔\n\n默认43200秒\n\n2️⃣ 脚本超时时间\n\n默认20秒\n\n3️⃣ 图标\n\n默认Applelogo\n\n4️⃣ 颜色\n\n默认#afe59a\n\n5️⃣ 数量\n\n想要显示的条数, 默认5条
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认43200秒\n\n2️⃣ 脚本超时时间\n\n默认20秒\n\n3️⃣ 图标\n\n默认applelogo\n\n4️⃣ 颜色\n\n默认#afe59a\n\n5️⃣ 数量\n\n想要显示的条数, 默认5条
 
 [Panel]
-# Panel: AppStore限免
-资讯面板_AppStore限免App = style = info, title = "AppStore限免App", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Infos_AppStoreFreeApp
+# Panel: appStore限免
+资讯面板_appStore限免app = style =info,title="appStore限免app",content="请刷新",update-interval={{{面板更新间隔}}},script-name=Panel_Infos_AppStoreFreeApp
 
 [Script]
-# Panel: AppStore限免
-Infos_AppStoreFreeApp = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}&AppCount={{{数量}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/refs/heads/master/files/appsdoor.js
+# Panel: appStore限免
+Panel_Infos_AppStoreFreeApp = type =generic,timeout={{{脚本超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}}&appCount={{{数量}}},script-path=https://raw.githubusercontent.com/deezertidal/Surge_Module/refs/heads/master/files/appsdoor.js

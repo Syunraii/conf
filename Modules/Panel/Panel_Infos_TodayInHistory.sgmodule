@@ -11,8 +11,8 @@
 
 [Panel]
 # Panel: 历史上的今天
-资讯面板_历史上的今天 = style = info, title = "历史上的今天", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Infos_TodayInHistory
+资讯面板_历史上的今天 = style =info,title="历史上的今天",content="请刷新",update-interval={{{面板更新间隔}}},script-name=Panel_Infos_TodayInHistory
 
 [Script]
 # Panel: 历史上的今天
-Infos_TodayInHistory = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}&count={{{数量}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/histoday.js
+Panel_Infos_TodayInHistory = type =generic,timeout={{{脚本超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}}&count={{{数量}}},script-path=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/histoday.js

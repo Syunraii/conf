@@ -3,8 +3,8 @@
 #!system=ios
 #!category=🚫 Block
 
-#!author=App2smile、luestr
-#!homepage=https://raw.githubusercontent.com/App2smile/rules/refs/heads/master/module/youtube.sgmodule / https://kelee.one/Tool/Loon/Plugin/YouTube_remove_ads.plugin
+#!author=app2smile、luestr
+#!homepage=https://raw.githubusercontent.com/app2smile/rules/refs/heads/master/module/youtube.sgmodule / https://kelee.one/Tool/Loon/Plugin/YouTube_remove_ads.plugin
 
 [Rule]
 # Block: Youtube
@@ -30,9 +30,9 @@ AND,((DOMAIN-SUFFIX,youtubei.googleapis.com), (PROTOCOL,QUIC)),REJECT
 
 [Script]
 # Block: Youtube
-拦截_Youtube_瀑布流广告 = type = http-response, requires-body = 1, max-size = 2097152, binary-body-mode = 1, pattern = ^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next)\?, script-path = https://raw.githubusercontent.com/App2smile/rules/master/js/youtube.js
-拦截_Youtube_请求 = type = http-request, requires-body = 1, binary-body-mode = 1, pattern = ^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch), script-path=https://kelee.one/Resource/Script/YouTube/YouTube_remove_ads/YouTube_remove_ads_request.js
-拦截_Youtube_响应 = type = http-response, requires-body = 1, binary-body-mode = 1, pattern = ^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch), script-path=https://kelee.one/Resource/Script/YouTube/YouTube_remove_ads/YouTube_remove_ads_response.js, argument="[{blockUpload},{blockImmersive},{captionLang},{lyricLang},{debug}]"
+拦截_Youtube_瀑布流广告 = type =http-response,requires-body=1,max-size=2097152,binary-body-mode=1,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next)\?,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/youtube.js
+拦截_Youtube_请求 = type =http-request,requires-body=1,binary-body-mode=1,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),script-path=https://kelee.one/Resource/Script/YouTube/YouTube_remove_ads/YouTube_remove_ads_request.js
+拦截_Youtube_响应 = type =http-response,requires-body=1,binary-body-mode=1,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),script-path=https://kelee.one/Resource/Script/YouTube/YouTube_remove_ads/YouTube_remove_ads_response.js, argument="[{blockUpload},{blockImmersive},{captionLang},{lyricLang},{debug}]"
 
 [MITM]
 hostname = %APPEND% -redirector*.googlevideo.com, *.googlevideo.com, www.youtube.com, s.youtube.com, youtubei.googleapis.com

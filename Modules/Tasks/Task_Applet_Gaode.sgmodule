@@ -11,9 +11,9 @@
 
 [Script]
 # Tasks: 高德打车
-{{{获取}}} = type = http-response, requires-body = 1, max-size = 0, pattern = ^https:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=), script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
+{{{获取}}} = type =http-response,requires-body=1,max-size=0,pattern=^https:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=),script-path=https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
 
-{{{任务}}} = type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
+{{{任务}}} = type =cron,wake-system=1,cronexp={{{签到执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
 
 [MITM]
 {{{主机}}} = %APPEND% *.amap.com

@@ -7,14 +7,14 @@
 #!homepage=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
 
 #!arguments=获取1:获取_QQ音乐_1, 获取2:获取_QQ音乐_2, 脚本超时时间:60, 任务:任务_QQ音乐, 签到执行时间:49 10 * * *, 主机:hostname
-#!arguments-desc=1️⃣ 使用须知\n\nCookie需要每4天更新(打开App后静默更新), 不要关闭获取Cookie脚本和MITM\n\n2️⃣ 使用方法\n\n 登录QQ音乐App, 进入"我的"页面, 手动会员签到,  提示获取Cookie成功即可
+#!arguments-desc=1️⃣ 使用须知\n\nCookie需要每4天更新(打开app后静默更新), 不要关闭获取Cookie脚本和MITM\n\n2️⃣ 使用方法\n\n 登录QQ音乐app, 进入"我的"页面, 手动会员签到,  提示获取Cookie成功即可
 
 [Script]
 # Tasks: QQ音乐
-{{{获取1}}} = type = http-request, timeout = {{{脚本超时时间}}}, pattern = ^http:\/\/u6\.y\.qq\.com\/cgi-bin\/musicu\.fcg, script-path = https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
-{{{获取2}}} = type = http-request, requires-body = 1, max-size = -1, timeout = {{{脚本超时时间}}}, pattern = ^https:\/\/u6\.y\.qq\.com\/cgi-bin\/musics\.fcg\?_webcgikey=EveryDaySignLvzScore&_=\d+&sign=\w+, script-path = https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
+{{{获取1}}} = type =http-request,timeout={{{脚本超时时间}}},pattern=^http:\/\/u6\.y\.qq\.com\/cgi-bin\/musicu\.fcg,script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
+{{{获取2}}} = type =http-request,requires-body=1,max-size=-1,timeout={{{脚本超时时间}}},pattern=^https:\/\/u6\.y\.qq\.com\/cgi-bin\/musics\.fcg\?_webcgikey=EveryDaySignLvzScore&_=\d+&sign=\w+,script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
 
-{{{任务}}} = type = cron, wake-system = 1, cronexp = {{{cronexp}}}, timeout = {{{timeout2}}}, script-path = https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
+{{{任务}}} = type =cron,wake-system=1,cronexp={{{cronexp}}},timeout={{{timeout2}}},script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/QQMusic.js
 
 [MITM]
 {{{主机}}} = %APPEND% u6.y.qq.com

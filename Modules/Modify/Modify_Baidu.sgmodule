@@ -1,14 +1,14 @@
 #!name=🔨 Modify: 百度
-#!desc=[修改] 百度 \n1.防止跳转AppStore
+#!desc=[修改] 百度 \n1.防止跳转appStore
 #!system=ios
 #!category=🔨 Modify
 
-#!author=App2smile
-#!homepage=https://raw.githubusercontent.com/App2smile/rules/refs/heads/master/module/baidu-no-redirect.sgmodule
+#!author=app2smile
+#!homepage=https://raw.githubusercontent.com/app2smile/rules/refs/heads/master/module/baidu-no-redirect.sgmodule
 
 [Script]
 # Modify: Baidu
-修改_百度_防跳转AppStore = type = http-response, pattern = ^https:\/\/boxer\.baidu\.com\/scheme\?scheme, script-path = https://raw.githubusercontent.com/App2smile/rules/master/js/baidu-no-redirect.js
+修改_百度_防跳转appStore = type =http-response,pattern=^https:\/\/boxer\.baidu\.com\/scheme\?scheme,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/baidu-no-redirect.js
 
 [MITM]
 hostname = %APPEND% boxer.baidu.com

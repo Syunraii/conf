@@ -20,13 +20,13 @@
 [Script]
 # Modify: Safari
 # dlc xxx (DeepL 译至中)
-修改_Safari_DToChinese = type = http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dlc(\+|%20)([^&]+).+, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+修改_Safari_DToChinese = type =http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dlc(\+|%20)([^&]+).+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
 
 # dle xxx (DeepL 译至英)
-修改_Safari_DToEnglish = type = http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dle(\+|%20)([^&]+).+, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+修改_Safari_DToEnglish = type =http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dle(\+|%20)([^&]+).+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
 
 # dlj xxx (DeepL 译至日)
-修改_Safari_DToJapanese = type = http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dlj(\+|%20)([^&]+).+, script-path = https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
+修改_Safari_DToJapanese = type =http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dlj(\+|%20)([^&]+).+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
 
 
 [URL Rewrite]
@@ -74,7 +74,7 @@
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=wx\+([^&]+).+ https://weixin.sogou.com/weixinwap?query=$1 302
 
 # ys xxx (茶杯狐电影)
-^https:\/\/{{{搜索引擎}}}.com\/\?q=ys\+([^&]+).+ https://cupfox.App/search?key=$1 302
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ys\+([^&]+).+ https://cupfox.app/search?key=$1 302
 
 # rd xxx (Reddit)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=rd(\+|%20)([^&]+).+ https://www.reddit.com/search?q=$2 302
@@ -118,7 +118,7 @@
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=gi(\+|%20)([^&]+).+ https://www.google.com/search?&tbm=isch&q=$2 302
 
 # tf xxx (Google 搜索 TestFlight)
-^https:\/\/{{{搜索引擎}}}.com\/\?q=tf(\+|%20)([^&]+).+ https://www.google.com/search?as_q=$2&as_sitesearch=testflight.Apple.com 302
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tf(\+|%20)([^&]+).+ https://www.google.com/search?as_q=$2&as_sitesearch=testflight.apple.com 302
 
 # gd xxx (Google 搜索 Google Drive 资源)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=gd(\+|%20)([^&]+).+ https://www.google.com/search?q=%22Google+Drive%22+$2 302
@@ -132,28 +132,28 @@
 # tal2 xxx (t.me/YunPanPan 搜索阿里云盘资源)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=tal2(\+|%20)([^&]+).+ https://t.me/s/YunPanPan?q=$2 302
 
-# ios xxx (Apple Store应用搜索)
+# ios xxx (apple Store应用搜索)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=ios\+([^&]+).+ https://www.qimai.cn/search/index/search/$1 302
 
-# ccn (App Store网页版 临时切换至中国区) 感谢 @mieqq
-^https:\/\/{{{搜索引擎}}}.com\/\?q=ccn&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143465&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=cn&urlDesc= 302
+# ccn (app Store网页版 临时切换至中国区) 感谢 @mieqq
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ccn&.+ https://itunes.apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143465&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=cn&urlDesc= 302
 
-# uus (App Store网页版 临时切换至美国区) 感谢 @mieqq
-^https:\/\/{{{搜索引擎}}}.com\/\?q=uus&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143441&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=us&urlDesc= 302
+# uus (app Store网页版 临时切换至美国区) 感谢 @mieqq
+^https:\/\/{{{搜索引擎}}}.com\/\?q=uus&.+ https://itunes.apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143441&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=us&urlDesc= 302
 
-# hhk (App Store网页版 临时切换至香港区)
-^https:\/\/{{{搜索引擎}}}.com\/\?q=hhk&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143463&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=hk&urlDesc= 302
+# hhk (app Store网页版 临时切换至香港区)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=hhk&.+ https://itunes.apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143463&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=hk&urlDesc= 302
 
-# ttw (App Store网页版 临时切换至台湾区)
-^https:\/\/{{{搜索引擎}}}.com\/\?q=ttw&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143470&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=tw&urlDesc= 302
+# ttw (app Store网页版 临时切换至台湾区)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ttw&.+ https://itunes.apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143470&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=tw&urlDesc= 302
 
-# jjp (App Store网页版 临时切换至日本区)
-^https:\/\/{{{搜索引擎}}}.com\/\?q=jjp&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143462&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=jp&urlDesc= 302
+# jjp (app Store网页版 临时切换至日本区)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=jjp&.+ https://itunes.apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143462&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=jp&urlDesc= 302
 
-^https:\/\/{{{搜索引擎}}}.com\/\?q=kkr&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143466&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=kr&urlDesc= 302
+^https:\/\/{{{搜索引擎}}}.com\/\?q=kkr&.+ https://itunes.apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143466&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=kr&urlDesc= 302
 
-# ttr (App Store网页版 临时切换至土耳其区)
-^https:\/\/{{{搜索引擎}}}.com\/\?q=ttr&.+ https://itunes.Apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143480&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=tr&urlDesc= 302
+# ttr (app Store网页版 临时切换至土耳其区)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=ttr&.+ https://itunes.apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143480&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=tr&urlDesc= 302
 
 # xxx （无指令默认为 Google）
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=(?!dl(c|e|j)(\+|%20))([^&]+).+ https://www.google.com/search?q=$3&num=100 302

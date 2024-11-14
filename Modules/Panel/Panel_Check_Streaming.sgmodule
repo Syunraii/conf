@@ -11,8 +11,8 @@
 
 [Panel]
 # Panel: 流媒体
-检测面板_流媒体解锁 = style = info, title = "流媒体解锁检测", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Check_StreamingMedia
+检测面板_流媒体解锁 = style =info,title="流媒体解锁检测",content="请刷新",update-interval={{{面板更新间隔}}},script-name=Panel_Check_StreamingMedia
 
 [Script]
 # Panel: 流媒体
-Check_StreamingMedia = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}, script-path = https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Stream-All-Lite/Moore/Stream-All-Lite.js
+Panel_Check_StreamingMedia = type =generic,timeout={{{脚本超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Stream-All-Lite/Moore/Stream-All-Lite.js

@@ -1,5 +1,5 @@
 ﻿#!name=🔨 Modify: 哔哩哔哩漫画
-#!desc=[修改] 哔哩哔哩漫画 \n1.净化\n2.去部分广告
+#!desc=[修改] 哔哩哔哩漫画 \n1.净化\n2.去除部分广告
 #!system=ios
 #!category=🔨 Modify
 
@@ -29,14 +29,14 @@ URL-REGEX,"^http:\/\/119\.29\.29\.29\/d",REJECT,extended-matching
 # 小说 - 详情 - 更多推荐
 ^https:\/\/manga\.bilibili\.com\/twirp\/novel\.v\d\.Novel\/MoreRecommend data-type=text data="{}" status-code=200
 # 首页 - 弹窗
-^https:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/AppInit data-type=text data="{}" status-code=200
+^https:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/appInit data-type=text data="{}" status-code=200
 # 开屏广告
 ^https:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/ListFlash data-type=text data="{}" status-code=200
 
 [Script]
 # Modify: 哔哩哔哩漫画
-修改_哔哩哔哩漫画_移除顶部标签 = type = http-response, requires-body = 1, pattern=^https:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/GetClassPageAllTabs, script-path=https://kelee.one/Resource/Script/BiliComic/BiliComic_remove_ads.js
-修改_哔哩哔哩漫画_净化我的页面 = type = http-response, requires-body = 1, pattern=^https:\/\/manga\.bilibili\.com\/twirp\/user\.v\d\.User\/UCenterConf, script-path=https://kelee.one/Resource/Script/BiliComic/BiliComic_remove_ads.js
+修改_哔哩哔哩漫画_移除顶部标签 = type =http-response,requires-body=1,pattern=^https:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/GetClassPageAllTabs,script-path=https://kelee.one/Resource/Script/BiliComic/BiliComic_remove_ads.js
+修改_哔哩哔哩漫画_净化我的页面 = type =http-response,requires-body=1,pattern=^https:\/\/manga\.bilibili\.com\/twirp\/user\.v\d\.User\/UCenterConf,script-path=https://kelee.one/Resource/Script/BiliComic/BiliComic_remove_ads.js
 
 [MITM]
 hostname = %APPEND% manga.bilibili.com

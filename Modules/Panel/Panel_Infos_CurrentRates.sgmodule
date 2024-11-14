@@ -11,8 +11,8 @@
 
 [Panel]
 # Panel: 当前汇率
-资讯面板_当前汇率 = style = info, title = "当前货币汇率", content = "请刷新", update-interval = {{{面板更新间隔}}}, script-name = Infos_CurrentRates
+资讯面板_当前汇率 = style =info,title="当前货币汇率",content="请刷新",update-interval={{{面板更新间隔}}},script-name=Panel_Infos_CurrentRates
 
 [Script]
 # Panel: 当前汇率
-Infos_CurrentRates = type = generic, timeout = {{{脚本超时时间}}}, argument=icon={{{图标}}}&color={{{颜色}}}, script-path = https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/rates.js
+Panel_Infos_CurrentRates = type =generic,timeout={{{脚本超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}},script-path=https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/rates.js

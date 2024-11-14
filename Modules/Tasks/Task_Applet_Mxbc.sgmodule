@@ -7,13 +7,13 @@
 #!homepage=https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
 
 #!arguments=获取:获取_蜜雪冰城, 任务:任务_蜜雪冰城, 签到执行时间:24 10 * * *, 脚本超时时间:60, 主机:hostname
-#!arguments-desc=1️⃣ 使用须知\n\n需要配合boxjs订阅使用: https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\nApp:蜜雪冰城\n\n2️⃣ 使用方法\n\n登录蜜雪冰城小程序, 进入"我的"页面, 提示获取Cookie成功即可\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:蜜雪冰城\n\n2️⃣ 使用方法\n\n登录蜜雪冰城小程序, 进入"我的"页面, 提示获取Cookie成功即可\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
 
 [Script]
 # Tasks: 蜜雪冰城
-{{{获取}}} = type = http-response, requires-body = 1, max-size = 0, pattern = ^https:\/\/mxsa\.mxbc\.net\/api\/v1\/customer\/info, script-path = https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
+{{{获取}}} = type =http-response,requires-body=1,max-size=0,pattern=^https:\/\/mxsa\.mxbc\.net\/api\/v1\/customer\/info,script-path=https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
 
-{{{任务}}} = type = cron, wake-system = 1, cronexp = {{{签到执行时间}}}, timeout = {{{脚本超时时间}}}, script-path = https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
+{{{任务}}} = type =cron,wake-system=1,cronexp={{{签到执行时间}}},timeout={{{脚本超时时间}}},script-path=https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js
 
 [MITM]
 {{{主机}}} = %APPEND% mxsa.mxbc.net

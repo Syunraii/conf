@@ -14,7 +14,7 @@
 [Script]
 # Block: 小黑盒
 # 移除热点板块信息流广告
-拦截_小黑盒_热点板块信息流广告 = type = http-response,  requires-body = 1, pattern = ^https:\/\/api\.xiaoheihe\.cn\/bbs\/app\/feeds\/news, script-path = https://kelee.one/Resource/Script/XiaoHeiHe/XiaoHeiHe_remove_ads.js
+拦截_小黑盒_热点板块信息流广告 = type =http-response,requires-body=1,pattern=^https:\/\/api\.xiaoheihe\.cn\/bbs\/app\/feeds\/news,script-path=https://kelee.one/Resource/Script/XiaoHeiHe/XiaoHeiHe_remove_ads.js
 
 [MITM]
 hostname = %APPEND% api.xiaoheihe.cn
