@@ -6,9 +6,6 @@
 #!author=luestr
 #!homepage=https://kelee.one/Tool/Loon/Plugin/TikTok_redirect.plugin
 
-[Rule]
-AND,((GEOIP,CN),(DOMAIN,pitaya.bytedance.com,extended-matching)),DIRECT
-
 [URL Rewrite]
 # Modify: TikTok
 # 去广告
