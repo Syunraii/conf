@@ -1,4 +1,4 @@
-﻿#!name=🔨 Modify: appStore(🧰)
+﻿#!name=🔨 Modify: AppStore(🧰)
 #!desc=[修改] appStore \n1.下载选优
 #!system=ios
 #!category=🔨 Modify
@@ -11,8 +11,8 @@
 
 [Rule]
 # Modify: appStore
-AND,((DOMAIN,iosapps.itunes.apple.com),(SCRIPT,修改_appStore_下载选优)),{{{group}}}
+AND,((DOMAIN,iosapps.itunes.apple.com),(SCRIPT,修改_AppStore_下载选优)),{{{group}}}
 
 [Script]
 # Modify: appStore
-修改_appStore_下载选优 = type =rule,timeout={{脚本超时时间}}},argument="Return={{{return}}},Group={{{group}}}&policy={{{policy}}},Support&time={{{monitorTime}}}&minSpeed={{{minSpeed}}}",script-path=https://raw.githubusercontent.com/githubdulong/Script/master/speedLimit.js
+修改_AppStore_下载选优 = type =rule,timeout={{脚本超时时间}}},argument="Return={{{return}}},Group={{{group}}}&policy={{{policy}}},Support&time={{{monitorTime}}}&minSpeed={{{minSpeed}}}",script-path=https://raw.githubusercontent.com/githubdulong/Script/master/speedLimit.js
