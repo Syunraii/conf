@@ -11,7 +11,7 @@
 
 [Rule]
 # Modify: appStore
-AND,((DOMAIN,iosapps.itunes.apple.com),(SCRIPT,修改_appStoreDL)),{{{group}}}
+AND,((DOMAIN,iosapps.itunes.apple.com),(SCRIPT,修改_appStore_下载选优)),{{{group}}}
 
 [Script]
 # Modify: appStore
