@@ -3,17 +3,21 @@
 #!system=ios
 #!category=🛎️ Tasks: Web
 
-#!author=anyehttp
-#!homepage=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex-surge.sgmodule
+#!author=1:anyehttp,2:chavyleung
+#!homepage=1:https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex-surge.sgmodule,2:https://github.com/chavyleung/scripts/tree/master/v2ex
 
 #!arguments=获取:获取_v2ex, 任务:任务_v2ex, 签到执行时间:6 10 * * *, 脚本超时时间:60, 主机:hostname
-#!arguments-desc=1️⃣ 使用方法\n\n登录https://v2ex.com, 提示获取Cookie成功即可\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n4️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
+#!arguments-desc=1️⃣ 使用方法\n\n登录https://v2ex.com, 提示获取Cookie成功即可(方法2可以配合boxjs订阅使用:https://raw.githubusercontent.com/chavyleung/scripts/master/box/chavy.boxjs.json)\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n4️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
 
 [Script]
 # Tasks: v2ex
 {{{获取}}} = type =http-request,requires-body=1,max-size=0,pattern=^https:\/\/www\.v2ex\.com\/b\/i\/,script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex.js
 
 {{{任务}}} = type =cron,wake-system=1,cronexp={{{签到执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex.js
+
+{{{获取2}}} = type =http-request,requires-body=1,max-size=0,pattern=^https:\/\/www\.v2ex\.com\/mission\/daily,script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/v2ex/v2ex.cookie.js
+
+{{{任务2}}} = type =cron,wake-system=1,cronexp={{{签到执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/v2ex/v2ex.js
 
 [MITM]
 {{{主机}}} = %APPEND% www.v2ex.com
