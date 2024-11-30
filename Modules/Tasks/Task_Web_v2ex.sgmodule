@@ -20,4 +20,4 @@
 {{{任务2}}} = type =cron,wake-system=1,cronexp={{{签到执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/v2ex/v2ex.js
 
 [MITM]
-{{{主机}}} = %APPEND% www.v2ex.com
+{{{主机}}} = %APPEND% *.v2ex.com
