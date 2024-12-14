@@ -1,0 +1,15 @@
+﻿#!name=🔨 Modify: SRSS
+#!desc=[修改] SRSS \n将X用户/列表转换成RSS订阅
+#!system=ios
+#!category=🔨 Modify
+
+#!author=Maasea
+#!homepage=https://raw.githubusercontent.com/Maasea/sgmodule/refs/heads/master/SRSS.sgmodule
+
+[Script]
+# Modify: SRSS
+修改_SRSS_帐号 = type=http-request,requires-body=0,pattern=^https?:\/\/api\.x\.com\/1\.1\/account\/settings\.json,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/SRSS/dist/srss.js
+修改_SRSS_转换 = type=http-request,requires-body=0,pattern=^http:\/\/s.rss\/x\/.*,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/SRSS/dist/srss.js
+
+[MITM]
+hostname = %APPEND% api.x.com
