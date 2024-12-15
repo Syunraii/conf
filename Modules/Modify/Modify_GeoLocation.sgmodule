@@ -6,8 +6,8 @@
 #!author=ConnersHua
 #!homepage=https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Module/GeoLoc.sgmodule
 
-#!arguments=策略组:直接连接
-#!arguments-desc=1️⃣ 策略组\n\n默认直接连接
+#!arguments=策略组:🎯 直接连接
+#!arguments-desc=1️⃣ 策略组\n\n默认🎯 直接连接
 
 [Ruleset Custom_GeoLocation]
 # Modify: 归属地显示
