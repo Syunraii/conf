@@ -1,0 +1,11 @@
+﻿#!name=# Modify: Turrit
+#!desc=[修改] Turrit \n1.默认打开TG外链
+#!system=ios
+#!category=🔨 Modify
+
+[URL Rewrite]
+# Modify: Turrit
+(https:\/\/)?t.me\/(.+) turrit://resolve?domain=$2 302
+
+[MITM]
+hostname = %APPEND% t.me
