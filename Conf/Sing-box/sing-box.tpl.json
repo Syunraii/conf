@@ -1,0 +1,182 @@
+﻿{
+  "log": {
+    "disabled": false,
+    "level": "info",
+    "timestamp": false
+  },
+
+  "experimental": {
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "My sing-box",
+      "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_detour": "🌐 全局选择",
+      "default_mode": "rule"
+    },
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true
+    }
+  },
+  
+  "dns": {
+    "servers": [
+      { "tag": "dns_RESOLVER", "address": "119.29.29.29", "detour": "🎯 直接连接"},
+      { "tag": "dns_DIRECT", "address": "https://223.5.5.5/dns-query", "address_resolver": "dns_RESOLVER", "strategy": "ipv4_only", "detour": "🎯 直接连接"},
+      { "tag": "dns_PROXY", "address": "https://1.1.1.1/dns-query", "address_resolver": "dns_RESOLVER", "strategy": "ipv4_only", "detour": "🌐 全局选择"},
+      { "tag": "dns_BLOCK", "address": "rcode://refused"},
+      { "tag": "dns_FAKEIP", "address": "fakeip"}
+    ],
+    "rules": [
+      { "outbound": "any", "server": "dns_RESOLVER", "disable_cache": false},
+      { "clash_mode": "direct", "server": "dns_DIRECT", "disable_cache": false},
+      { "clash_mode": "global", "server": "dns_PROXY", "disable_cache": false},
+      { "query_type": ["A", "AAAA"], "server": "dns_FAKEIP"},
+      { "rule_set": "RULE_SET-ChinaIPs", "action": "route", "server": "dns_DIRECT"},
+      { "rule_set": "RULE_SET-China", "action": "route", "server": "dns_DIRECT"},
+      { "rule_set": "RULE_SET-Proxy", "server": "dns_PROXY"},
+      { "rule_set": "RULE_SET-Global", "server": "dns_PROXY"}
+    ],
+    "fakeip": { "enabled": true, "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"},
+    "strategy": "ipv4_only",
+    "final": "dns_DIRECT"
+  },
+
+  "inbounds": [
+    { 
+      "tag": "in-mixed",
+      "type": "mixed",
+      "listen": "127.0.0.1",
+      "listen_port": 7890,
+      "set_system_proxy": true
+    },
+    {
+      "tag": "in-tun",
+      "type": "tun",
+      "interface_name": "tun0",
+      "address": [
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "sniff": true,
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "system",
+      "udp_timeout": "5m",
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890,
+          "bypass_domain": [],
+          "match_domain": []
+        }
+      }
+    }
+  ],
+
+  "outbounds": [
+    {"tag": "🌐 全局选择", "type": "selector", "outbounds": ["🚀 自动选择", "🔰 手动选择", "🎯 直接连接"]},
+    {"tag": "🚀 自动选择", "type": "urltest", "outbounds": ["🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
+    {"tag": "🔰 手动选择", "type": "selector", "outbounds": ["🛫 常规订阅", "🦄 故障转移"]},
+    {"tag": "🛰️ 所有订阅", "type": "selector", "outbounds": []},
+    {"tag": "🛫 常规订阅", "type": "selector", "outbounds": []},
+    {"tag": "🦄 故障转移", "type": "selector", "outbounds": []},
+    {"tag": "🚫 广告拦截", "type": "selector", "outbounds": ["🈲 禁止连接", "🎯 直接连接", "🌐 全局选择"]},
+    {"tag": "⛔ 让我访问", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🈲 禁止连接"]},
+    {"tag": "📵 限定应用", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "📚 我爱漫画", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "📱 电报通讯", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🎥 国外媒体", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🌟 抖音视频", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🍻 哔哩哔哩", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "📹 巴哈姆特", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🎮 游戏平台", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🐳 开发工具", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🕊️ 谷歌服务", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "Ⓜ️ 微软服务", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🍏 苹果账号", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🍎 苹果服务", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🍟 整点薯条", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🍔 整点汉堡", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🇭🇰 香港节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
+    {"tag": "🇨🇳 台湾节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
+    {"tag": "🇯🇵 日本节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
+    {"tag": "🇰🇷 韩国节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
+    {"tag": "🇺🇸 美国节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
+    {"tag": "🇸🇬 狮城节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
+    {"tag": "🌍 其他节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
+    {"tag": "🎯 直接连接", "type": "direct"},
+    {"tag": "🈲 禁止连接", "type": "block"}
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "rules": [
+      { "inbound": "in-mixed", "action": "resolve", "strategy": "prefer_ipv4"},
+      { "inbound": "in-mixed", "action": "sniff", "timeout": "1s"},
+
+      {"protocol": "dns", "action": "hijack-dns"},
+
+      { "domain_keyword": ["picacomic", "18comic", "copymanga", "mangacopy",  "mangafuna", "relamanhua"], "outbound": "📚 我爱漫画"},
+      { "domain_suffix": ["agedm.org"], "outbound": "📵 限定应用"},
+
+      { "rule_set": ["RULE_SET-Lan", "RULE_SET-Download"], "outbound": "🎯 直接连接"},
+      { "rule_set": ["RULE_SET-Hijacking", "RULE_SET-EasyPrivacy", "RULE_SET-Privacy", "RULE_SET-AdvertisingLite"], "outbound": "🚫 广告拦截"},
+      { "rule_set": ["RULE_SET-Pixiv", "RULE_SET-EHGallery"], "outbound":"📵 限定应用"},
+      { "rule_set": ["RULE_SET-Telegram"], "outbound":"📱 电报通讯"},
+      { "rule_set": ["RULE_SET-Emby", "RULE_SET-Disney", "RULE_SET-Netflix", "RULE_SET-YouTube"], "outbound":"🎥 国外媒体"},
+      { "rule_set": ["RULE_SET-TikTok"], "outbound":"🌟 抖音视频"},
+      { "rule_set": ["RULE_SET-BiliBili"], "outbound":"🍻 哔哩哔哩"},
+      { "rule_set": ["RULE_SET-Bahamut"], "outbound":"📹 巴哈姆特"},
+      { "rule_set": ["RULE_SET-Majsoul", "RULE_SET-Game"], "outbound":"🎮 游戏平台"},
+      { "rule_set": ["RULE_SET-GitHub", "RULE_SET-OpenAI", "RULE_SET-BardAI", "RULE_SET-Gemini", "RULE_SET-Claude", "RULE_SET-Copilot", "RULE_SET-Developer"], "outbound":"🐳 开发工具"},
+      { "rule_set": ["RULE_SET-Google"], "outbound":"🕊️ 谷歌服务"},
+      { "rule_set": ["RULE_SET-Microsoft"], "outbound":"Ⓜ️ 微软服务"},
+      { "rule_set": ["RULE_SET-AppleID"], "outbound":"🍏 苹果账号"},
+      { "rule_set": ["RULE_SET-SystemOTA", "RULE_SET-Apple"], "outbound":"🍎 苹果服务"},
+      { "rule_set": ["RULE_SET-Cloudflare", "RULE_SET-GlobalMedia", "RULE_SET-Proxy", "RULE_SET-Global"], "outbound":"🍟 整点薯条"},
+      { "rule_set": ["RULE_SET-Cloudflarecn", "RULE_SET-ChinaMedia", "RULE_SET-ChinaIPs", "RULE_SET-China"], "outbound":"🍔 整点汉堡"}
+    ],
+    "rule_set": [
+      { "tag": "RULE_SET-Lan","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Lan/Lan.srs"},
+      { "tag": "RULE_SET-Download","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Download/Download.srs"},
+      { "tag": "RULE_SET-Hijacking","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Hijacking/Hijacking.srs"},
+      { "tag": "RULE_SET-EasyPrivacy","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/EasyPrivacy/EasyPrivacy.srs"},
+      { "tag": "RULE_SET-Privacy","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Privacy/Privacy.srs"},
+      { "tag": "RULE_SET-AdvertisingLite","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/AdvertisingLite/AdvertisingLite.srs"},
+      { "tag": "RULE_SET-Pixiv","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Pixiv/Pixiv.srs"},
+      { "tag": "RULE_SET-EHGallery","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/EHGallery/EHGallery.srs"},
+      { "tag": "RULE_SET-Telegram","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Telegram/Telegram.srs"},
+      { "tag": "RULE_SET-TikTok","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/TikTok/TikTok.srs"},
+      { "tag": "RULE_SET-BiliBili","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/BiliBili/BiliBili.srs"},
+      { "tag": "RULE_SET-Bahamut","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Bahamut/Bahamut.srs"},
+      { "tag": "RULE_SET-Emby","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Emby/Emby.srs"},
+      { "tag": "RULE_SET-Disney","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Disney/Disney.srs"},
+      { "tag": "RULE_SET-Netflix","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Netflix/Netflix.srs"},
+      { "tag": "RULE_SET-YouTube","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/YouTube/YouTube.srs"},
+      { "tag": "RULE_SET-Majsoul","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Majsoul/Majsoul.srs"},
+      { "tag": "RULE_SET-Game","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Game/Game.srs"},
+      { "tag": "RULE_SET-GitHub","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/GitHub/GitHub.srs"},
+      { "tag": "RULE_SET-OpenAI","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/OpenAI/OpenAI.srs"},
+      { "tag": "RULE_SET-BardAI","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/BardAI/BardAI.srs"},
+      { "tag": "RULE_SET-Gemini","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Gemini/Gemini.srs"},
+      { "tag": "RULE_SET-Claude","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Claude/Claude.srs"},
+      { "tag": "RULE_SET-Copilot","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Copilot/Copilot.srs"},
+      { "tag": "RULE_SET-Developer","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Developer/Developer.srs"},
+      { "tag": "RULE_SET-Google","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Google/Google.srs"},
+      { "tag": "RULE_SET-Microsoft","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Microsoft/Microsoft.srs"},
+      { "tag": "RULE_SET-AppleID","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/AppleID/AppleID.srs"},
+      { "tag": "RULE_SET-SystemOTA","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/SystemOTA/SystemOTA.srs"},
+      { "tag": "RULE_SET-Apple","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Apple/Apple.srs"},
+      { "tag": "RULE_SET-Cloudflare","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Cloudflare/Cloudflare.srs"},
+      { "tag": "RULE_SET-GlobalMedia","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/GlobalMedia/GlobalMedia.srs"},
+      { "tag": "RULE_SET-Proxy","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Proxy/Proxy.srs"},
+      { "tag": "RULE_SET-Global","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Global/Global.srs"},
+      { "tag": "RULE_SET-Cloudflarecn","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Cloudflarecn/Cloudflarecn.srs"},
+      { "tag": "RULE_SET-ChinaMedia","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/ChinaMedia/ChinaMedia.srs"},
+      { "tag": "RULE_SET-ChinaIPs","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/ChinaIPs/ChinaIPs.srs"},
+      { "tag": "RULE_SET-China","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🌐 全局选择", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/China/China.srs"}
+    ],
+    "final": "⛔ 让我访问"
+  }
+}
