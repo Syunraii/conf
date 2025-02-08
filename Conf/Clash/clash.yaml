@@ -192,12 +192,7 @@ rules:
   - RULE-SET,RULE-EasyPrivacy,🚫 广告拦截
   - RULE-SET,RULE-Privacy,🚫 广告拦截
   - GEOSITE,category-ads,🚫 广告拦截
-  # 机场和订阅
-  - DOMAIN-SUFFIX,91unicorn.cloud,🌐 全局选择
-  - DOMAIN-SUFFIX,uni-corn.cloud,🌐 全局选择
-  - DOMAIN-SUFFIX,du9so.com,🌐 全局选择
-  - DOMAIN-SUFFIX,degyax.one,🌐 全局选择
-  - DOMAIN-SUFFIX,jsjc.cfd,🌐 全局选择
+  # 机场链接和订阅管理
   - DOMAIN-SUFFIX,sub.store,🌐 全局选择
   - DOMAIN-SUFFIX,boxjs,🌐 全局选择
   # 限定应用:📵 限定应用
