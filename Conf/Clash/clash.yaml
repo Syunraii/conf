@@ -199,11 +199,11 @@ rules:
   # # age动漫
   - DOMAIN-KEYWORD,agedm.org,📵 限定应用
   - DOMAIN-KEYWORD,akamaized.net,📵 限定应用
-  - GEOSITE,line,📚 我爱漫画
-  - GEOSITE,pixiv,📚 我爱漫画
-  - GEOSITE,abema,📚 我爱漫画
-  - GEOSITE,niconico,📚 我爱漫画
-  - GEOSITE,paypal,📚 我爱漫画
+  - GEOSITE,line,📵 限定应用
+  - GEOSITE,pixiv,📵 限定应用
+  - GEOSITE,abema,📵 限定应用
+  - GEOSITE,niconico,📵 限定应用
+  - GEOSITE,paypal,📵 限定应用
   # 我爱漫画:📚 我爱漫画
   # # 拷贝漫画
   - DOMAIN-KEYWORD,copymanga,📚 我爱漫画
