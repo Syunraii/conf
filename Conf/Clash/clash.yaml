@@ -1,20 +1,22 @@
 port: 7890
-mixed-port: 7893
+mixed-port: 7890
 
 mode: rule
 log-level: info
-ipv6: false
+ipv6: true
 allow-lan: true
 tcp-concurrent: true
 unified-delay: true
 find-process-mode: strict
+external-controller: :9090
+keep-alive-interval: 1800
+global-client-fingerprint: random
 
 geodata-mode: true
 geox-url:
-  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
   geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
-  asn: "https://mirror.ghproxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
 
 profile:
   store-selected: true 
@@ -23,54 +25,35 @@ profile:
 sniffer:
   enable: true
   sniff:
-    HTTP:
-      ports: [80, 8080-8880]
-      override-destination: true
     TLS:
       ports: [443, 8443]
     QUIC:
       ports: [443, 8443]
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
 
 tun:
   enable: false
-  stack: mixed
-  dns-hijack: [any:53]
+  stack: system
+  dns-hijack: 
+  - any:53
+  - "tcp://any:53"
+  auto-route: true
+  auto-detect-interface: true
 
 dns:
   enable: true
   ipv6: false
   listen: 0.0.0.0:53
+  # 路由器redir-host
+  # 其他设备fake-ip
   enhanced-mode: fake-ip
-  nameserver:
-    - 223.5.5.5 # 阿里
-    - 119.29.29.29 # 腾讯
-    - 180.76.76.76 # 百度
-  #   - 114.114.114.114 # 114
-  #   - 117.50.11.11 # ONE 拦截版
-  #   - 117.50.10.10 # ONE 纯净版
-  #   - https://doh.360.cn/dns-query # 360 DoH
-  #   - https://dns.alidns.com/dns-query # 阿里 DoH
-  # fallback:
-  #   - 8.8.8.8 # 谷歌
-  #   - 1.1.1.1 # cloudflare
-  #   - tls://dns.google:853
-  #   - tls://1.0.0.1:853
-  #   - tls://dns.rubyfish.cn:853
-  #   - https://dns.google/dns-query # 谷歌 DoH
-  #   - https://cloudflare-dns.com/dns-query # cloudflare DoH
-  #   - https://dns.rubyfish.cn/dns-query # 红鱼 DoH
-  # fallback-filter:
-  #   geoip: true
-  #   geoip-code: CN
-  #   # 在这个网段内的 IP 地址会被考虑为被污染的 IP
-  #   ipcidr:
-  #     - 240.0.0.0/4
-  #     - 0.0.0.0/32
   fake-ip-range: 198.18.0.1/16
-  # fake ip白名单(总是以真实ip返回, *开头的需要''包起来)
   fake-ip-filter:
     - '*'
     - '*.lan'
+    - '*.local'
     - '*.direct'
     - '*.msftconnecttest.com'
     - '*.msftncsi.com'
@@ -85,26 +68,39 @@ dns:
     - '*.battlenet.com'
     - '*.blzstatic.cn'
     - '*.battle.net'
-bypass:
-  - '*.local'
-  - localhost
-  - 192.168.0.0/24
-  - 10.0.0.0/8
-  - 172.16.0.0/12
-  - 127.0.0.1
-
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+    - 180.76.76.76
+    - 114.114.114.114
+    - '[2402:4e00::]'
+    - '[2400:3200::1]'
+  nameserver:
+    - 'tls://8.8.4.4#dns'
+    - 'tls://1.0.0.1#dns'
+    - 'tls://[2001:4860:4860::8844]#dns'
+    - 'tls://[2606:4700:4700::1001]#dns'
+  proxy-server-nameserver:
+    - https://doh.pub/dns-query
+  nameserver-policy:
+    "geosite:cn,private":
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+    "geosite:!cn,!private": 
+      - "tls://dns.google"
+      - "tls://dns.cloudflare.com"
+    "RULE-Hijacking":
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
 
 # 节点提供锚点
-proxies-global-config: &proxies-global-config {type: http, interval: 86400, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800, timeout: 600}}
+proxies-global-config: &proxies-global-config {type: http, interval: 86400, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800, timeout: 300}}
 proxy-providers:
   MyPub: &MyPub
     url: [sublink1]
     <<: *proxies-global-config
   MyPri: &MyPri
     url: [sublink2]
-    <<: *proxies-global-config
-  MyTmp: &MyTmp
-    url: [sublink3]
     <<: *proxies-global-config
 
 # 策略组锚点参数
@@ -116,7 +112,7 @@ url-test: &url-test {type: url-test, url: http://www.gstatic.com/generate_204, t
 fallback: &fallback {type: fallback, url: http://www.gstatic.com/generate_204, interval: 300}
 load-balance: &load-balance {type: load-balance, strategy: consistent-hashing, url: http://www.gstatic.com/generate_204, interval: 300}
 ## 基本策略组
-select-manual: &select-manual {type: select, proxies: [🛫 常规订阅, 🦄 故障转移, 🪂 临时订阅]}
+select-manual: &select-manual {type: select, proxies: [🛫 常规订阅, 🦄 故障转移]}
 select-global: &select-global {type: select, proxies: [🚀 自动选择,  🔰 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
 select-auto: &select-auto {type: url-test, url: http://www.gstatic.com/generate_204, tolerance: 200, interval: 360, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
 ## 自定义策略组顺序
@@ -136,156 +132,119 @@ limit-bili: &limit-bili {type: select, proxies: [🎯 直接连接, 🌐 全局�
 proxy-groups:
   - {name: "🛫 常规订阅", type: select, use: [MyPub], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
   - {name: "🦄 故障转移", type: select, use: [MyPri], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
-  - {name: "🪂 临时订阅", type: select, use: [MyTmp], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
-
   - {name: "🔰 手动选择", <<: *select-manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
   - {name: "🌐 全局选择", <<: *select-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
   - {name: "🚀 自动选择", <<: *select-auto, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png}
-
   - {name: "🚫 广告拦截", <<: *head-reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: "⛔ 让我访问", <<: *head-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
-
-  - {name: "📵 限定应用", <<: *head-sg, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png}  
-  - {name: "📱 电报通讯", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
+  - {name: "📵 限定应用", <<: *head-sg, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png}
   - {name: "📚 我爱漫画", <<: *head-sg, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png}
-  - {name: "🌟 抖音视频", <<: *limit-bili, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
+  - {name: "📱 电报通讯", <<: *head-sg, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
+  - {name: "🌟 抖音视频", <<: *head-jp, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
   - {name: "🍻 哔哩哔哩", <<: *limit-bili, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
   - {name: "📹 巴哈姆特", <<: *head-tw, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
   - {name: "🎥 国外媒体", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png}
-  - {name: "🎮 游戏平台", <<: *head-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
+  - {name: "🎮 游戏平台", <<: *head-hk, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
   - {name: "🐳 开发工具", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png}
   - {name: "🕊️ 谷歌服务", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
   - {name: "Ⓜ️ 微软服务", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
-  - {name: "🍏 苹果账号", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
   - {name: "🍎 苹果服务", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png}
-
   - {name: "🍟 整点薯条", <<: *head-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png}
   - {name: "🍔 整点汉堡", <<: *head-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
-  
   - {name: 🇭🇰 香港节点, <<: *url-test, use: [MyPub], filter: "(?i)🇭🇰|香港|(\b(HK||Hong Kong)\b)", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: 🇨🇳 台湾节点, <<: *url-test, use: [MyPub], filter: "(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
   - {name: 🇯🇵 日本节点, <<: *url-test, use: [MyPub], filter: "(?i)🇯🇵|日本(\b(JP|Japan)\b)", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
   - {name: 🇺🇸 美国节点, <<: *url-test, use: [MyPub], filter: "(?i)🇺🇸|美国(\b(US|United States)\b)", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
   - {name: 🇸🇬 狮城节点, <<: *url-test, use: [MyPub], filter: "(?i)🇸🇬|新加坡|(\b(SG|Singapore)\b)", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-
-  # 把直连和拒绝组成单独的策略组
   - {name: 🎯 直接连接, <<: *direct, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: 🈲 禁止访问, <<: *reject, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
 
-# 规则锚点参数
+# 适用于classical的锚点参数
 rule-classical: &rule-classical {type: http, behavior: classical, interval: 86400}
 
 rule-providers:
-  # 局域网
-  RULE-Lan: {<<: *rule-classical, path: ./custom/rules/Lan.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml"}
-  RULE-Direct: {<<: *rule-classical, path: ./custom/rules/Direct.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct_No_Resolve.yaml"}
+  # 其他不在GEOIP、GEOSITE数据库内的规则
   # 下载 
   RULE-Download: {<<: *rule-classical, path: ./custom/rules/Download.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download_No_Resolve.yaml"}
   RULE-GameDownload: {<<: *rule-classical, path: ./custom/rules/GameDownload.yaml, url: "https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml"}
   RULE-GameDownloadCN: {<<: *rule-classical, path: ./custom/rules/GameDownloadCN.yaml, url: "https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN_No_Resolve.yaml"}
   # 隐私保护、反劫持、广告拦截
+  RULE-EasyPrivacy: {<<: *rule-classical, path: ./custom/rules/EasyPrivacy.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Privacy/EasyPrivacy.yaml"}
   RULE-Privacy: {<<: *rule-classical, path: ./custom/rules/Privacy.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Privacy/Privacy_Classical_No_Resolve.yaml"}
   RULE-Hijacking: {<<: *rule-classical, path: ./custom/rules/Hijacking.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hijacking/Hijacking_No_Resolve.yaml"}
-  RULE-AdvertisingLite: {<<: *rule-classical, path: ./custom/rules/AdvertisingLite.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingLite/AdvertisingLite_No_Resolve.yaml"}
-  # 限定应用
-  RULE-Line: {<<: *rule-classical, path: ./custom/rules/Line.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Line/Line.yaml"}
-  RULE-Pixiv: {<<: *rule-classical, path: ./custom/rules/Pixiv.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Pixiv/Pixiv.yaml"}
-  RULE-AbemaTV: {<<: *rule-classical, path: ./custom/rules/AbemaTV.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AbemaTV/AbemaTV.yaml"}
-  RULE-Niconico: {<<: *rule-classical, path: ./custom/rules/Niconico.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Niconico/Niconico.yaml"}
-  RULE-PayPal: {<<: *rule-classical, path: ./custom/rules/PayPal.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PayPal/PayPal.yaml"}
-  # 应用分流
-  RULE-EHGallery: {<<: *rule-classical, path: ./custom/rules/EHGallery.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EHGallery/EHGallery.yaml"}
-  RULE-Telegram: {<<: *rule-classical, path: ./custom/rules/Telegram.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml"}
-  RULE-TikTok: {<<: *rule-classical, path: ./custom/rules/TikTok.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml"}
-  RULE-BiliBili: {<<: *rule-classical, path: ./custom/rules/BiliBili.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml"}
-  RULE-Bahamut: {<<: *rule-classical, path: ./custom/rules/Bahamut.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml"}
-  # 媒体平台
-  RULE-Emby: {<<: *rule-classical, path: ./custom/rules/Emby.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby.yaml"}
-  RULE-Disney: {<<: *rule-classical, path: ./custom/rules/Disney.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.yaml"}
-  RULE-Youtube: {<<: *rule-classical, path: ./custom/rules/Youtube.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml"}
-  RULE-Netflix: {<<: *rule-classical, path: ./custom/rules/Netflix.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml"}
-  # 游戏平台
-  RULE-Game: {<<: *rule-classical, path: ./custom/rules/Game.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.yaml"}
-  # 开发工具
-  RULE-GitHub: {<<: *rule-classical, path: ./custom/rules/GitHub.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml"}
-  RULE-OpenAI: {<<: *rule-classical, path: ./custom/rules/OpenAI.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml"}
-  RULE-BardAI: {<<: *rule-classical, path: ./custom/rules/BardAI.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BardAI/BardAI.yaml"}
-  RULE-Gemini: {<<: *rule-classical, path: ./custom/rules/Gemini.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini.yaml"}
-  RULE-Claude: {<<: *rule-classical, path: ./custom/rules/Claude.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Claude/Claude.yaml"}
-  RULE-Copilot: {<<: *rule-classical, path: ./custom/rules/Copilot.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml"}
-  RULE-Developer: {<<: *rule-classical, path: ./custom/rules/Developer.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Developer/Developer.yaml"}
-  # 服务平台
-  RULE-Google: {<<: *rule-classical, path: ./custom/rules/Google.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml"}
-  RULE-Microsoft: {<<: *rule-classical, path: ./custom/rules/Microsoft.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml"}
-  RULE-AppleID: {<<: *rule-classical, path: ./custom/rules/AppleID.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleID/AppleID.yaml"}
-  RULE-SystemOTA: {<<: *rule-classical, path: ./custom/rules/SystemOTA.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SystemOTA/SystemOTA.yaml"}
-  RULE-Apple: {<<: *rule-classical, path: ./custom/rules/Apple.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml"}
-  # 国外兜底
-  RULE-Cloudflare: {<<: *rule-classical, path: ./custom/rules/Cloudflare.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Cloudflare/Cloudflare.yaml"}
-  RULE-GlobalMedia: {<<: *rule-classical, path: ./custom/rules/GlobalMedia.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml"}
-  RULE-Proxy: {<<: *rule-classical, path: ./custom/rules/Proxy.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy_Classical.yaml"}
-  RULE-Global: {<<: *rule-classical, path: ./custom/rules/Global.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Classical.yaml"}
-  # 国内兜底
-  RULE-Cloudflarecn: {<<: *rule-classical, path: ./custom/rules/Cloudflarecn.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Cloudflarecn/Cloudflarecn_No_Resolve.yaml"}
-  RULE-ChinaMedia: {<<: *rule-classical, path: ./custom/rules/ChinaMedia.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia_No_Resolve.yaml"}  
-  RULE-ChinaIPs: {<<: *rule-classical, path: ./custom/rules/ChinaIPs.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPs_Classical_No_Resolve.yaml"}    
-  RULE-China: {<<: *rule-classical, path: ./custom/rules/China.yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_Classical_No_Resolve.yaml"}
 
 rules:
+  # 绕过局域网
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - IP-CIDR,172.16.0.0/12,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
+  - IP-CIDR,100.64.0.0/10,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT
   # 局域网
-  - RULE-SET,RULE-Lan,🎯 直接连接
-  - RULE-SET,RULE-Direct,🎯 直接连接
+  - GEOIP,private,🎯 直接连接
+  - GEOSITE,private,🎯 直接连接
   # 下载
   - RULE-SET,RULE-Download,🎯 直接连接
   - RULE-SET,RULE-GameDownload,🎯 直接连接
   - RULE-SET,RULE-GameDownload,🎯 直接连接
+  - GEOSITE,steam@cn,🎯 直接连接
   # 隐私保护、反劫持、广告拦截
+  - RULE-SET,RULE-EasyPrivacy,🚫 广告拦截
   - RULE-SET,RULE-Privacy,🚫 广告拦截
-  - RULE-SET,RULE-Hijacking,🚫 广告拦截
-  - RULE-SET,RULE-AdvertisingLite,🚫 广告拦截
-
-  # 限定应用
-  - RULE-SET,RULE-Pixiv,📵 限定应用
-  - RULE-SET,RULE-Line,📵 限定应用
-  - RULE-SET,RULE-AbemaTV,📵 限定应用
-  - RULE-SET,RULE-Niconico,📵 限定应用
-  - RULE-SET,RULE-PayPal,📵 限定应用
-  # 应用分流
-  - RULE-SET,RULE-Telegram,📱 电报通讯
-  - RULE-SET,RULE-EHGallery,📚 我爱漫画
-  - RULE-SET,RULE-TikTok,🌟 抖音视频
-  - RULE-SET,RULE-BiliBili,🍻 哔哩哔哩
-  - RULE-SET,RULE-Bahamut,📹 巴哈姆特
-  # 媒体平台
-  - RULE-SET,RULE-Disney,🎥 国外媒体
-  - RULE-SET,RULE-Youtube,🎥 国外媒体
-  - RULE-SET,RULE-Netflix,🎥 国外媒体
-  # 游戏平台
-  - RULE-SET,RULE-Game,🎮 游戏平台
-  # 开发工具
-  - RULE-SET,RULE-GitHub,🐳 开发工具
-  - RULE-SET,RULE-OpenAI,🐳 开发工具
-  - RULE-SET,RULE-BardAI,🐳 开发工具
-  - RULE-SET,RULE-Gemini,🐳 开发工具
-  - RULE-SET,RULE-Claude,🐳 开发工具
-  - RULE-SET,RULE-Copilot,🐳 开发工具
-  - RULE-SET,RULE-Developer,🐳 开发工具
-  # 服务平台
-  - RULE-SET,RULE-Google,🕊️ 谷歌服务
-  - RULE-SET,RULE-Microsoft,Ⓜ️ 微软服务
-  - RULE-SET,RULE-AppleID,🍏 苹果账号
-  - RULE-SET,RULE-SystemOTA,🍎 苹果服务
-  - RULE-SET,RULE-Apple,🍎 苹果服务
-  # 国外兜底
-  - RULE-SET,RULE-Cloudflare,🍟 整点薯条
-  - RULE-SET,RULE-GlobalMedia,🍟 整点薯条
-  - RULE-SET,RULE-Proxy,🍟 整点薯条
-  - RULE-SET,RULE-Global,🍟 整点薯条
-  # 国内兜底
-  - RULE-SET,RULE-Cloudflarecn,🍔 整点汉堡
-  # - RULE-SET,RULE-ChinaMedia,🍔 整点汉堡
-  # - RULE-SET,RULE-ChinaIPs,🍔 整点汉堡
-  # - RULE-SET,RULE-China,🍔 整点汉堡
+  - GEOSITE,category-ads,🚫 广告拦截
+  # 机场和订阅
+  - DOMAIN-SUFFIX,91unicorn.cloud,🌐 全局选择
+  - DOMAIN-SUFFIX,uni-corn.cloud,🌐 全局选择
+  - DOMAIN-SUFFIX,du9so.com,🌐 全局选择
+  - DOMAIN-SUFFIX,degyax.one,🌐 全局选择
+  - DOMAIN-SUFFIX,jsjc.cfd,🌐 全局选择
+  - DOMAIN-SUFFIX,sub.store,🌐 全局选择
+  - DOMAIN-SUFFIX,boxjs,🌐 全局选择
+  # 限定应用:📵 限定应用
+  # # age动漫
+  - DOMAIN-KEYWORD,agedm.org,📵 限定应用
+  - DOMAIN-KEYWORD,akamaized.net,📵 限定应用
+  - GEOSITE,line,📚 我爱漫画
+  - GEOSITE,pixiv,📚 我爱漫画
+  - GEOSITE,abema,📚 我爱漫画
+  - GEOSITE,niconico,📚 我爱漫画
+  - GEOSITE,paypal,📚 我爱漫画
+  # 我爱漫画:📚 我爱漫画
+  # # 拷贝漫画
+  - DOMAIN-KEYWORD,copymanga,📚 我爱漫画
+  - DOMAIN-KEYWORD,mangacopy,📚 我爱漫画
+  - DOMAIN-KEYWORD,mangafuna,📚 我爱漫画
+  # # 热辣漫画
+  - DOMAIN-KEYWORD,relamanhua,📚 我爱漫画
+  - GEOSITE,picacg,📚 我爱漫画
+  - GEOSITE,18comic,📚 我爱漫画
+  - GEOSITE,picacg,📚 我爱漫画
+  # 应用分流:📱 电报通讯, 🌟 抖音视频, 🍻 哔哩哔哩, 📹 巴哈姆特
+  - GEOIP,telegram,📱 电报通讯
+  - GEOSITE,telegram,📱 电报通讯
+  - GEOSITE,tiktok,🌟 抖音视频
+  - GEOSITE,bilibili,🍻 哔哩哔哩
+  - GEOSITE,bahamut,📹 巴哈姆特
+  # 国外媒体:🎥 国外媒体
+  - GEOSITE,youtube,🎥 国外媒体
+  # 游戏平台:🎮 游戏平台
+  - GEOSITE,category-games,🎮 游戏平台
+  # 开发平台:🐳 开发工具
+  - GEOSITE,category-ai-chat-!cn,🐳 开发工具
+  - GEOSITE,category-dev,🐳 开发工具
+  # 服务平台:🕊️ 谷歌服务, Ⓜ️ 微软服务, 🍎 苹果服务
+  - GEOIP,google,🕊️ 谷歌服务
+  - GEOSITE,google,🕊️ 谷歌服务
+  - GEOSITE,google-cn,🕊️ 谷歌服务
+  - GEOSITE,microsoft,Ⓜ️ 微软服务
+  - GEOSITE,apple,🍎 苹果服务
+  # 国外兜底:🍟 整点薯条
+  - GEOIP,cloudflare,🍟 整点薯条
+  - GEOSITE,cloudflare,🍟 整点薯条
+  - GEOSITE,geolocation-!cn,🍟 整点薯条
+  # 国内兜底:🍔 整点汉堡
+  - GEOSITE,cloudflare-cn,🍔 整点汉堡
+  - GEOSITE,CN,🍔 整点汉堡
   - GEOIP,CN,🍔 整点汉堡
   # 最后匹配
   - MATCH,⛔ 让我访问

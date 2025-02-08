@@ -5,21 +5,18 @@
 // "故障转移":稳定高速的订阅
 
 let config = JSON.parse($files[0])
-
 let all_subs = await produceArtifact({
   name: "AllSub",
   type: 'collection',
   platform: 'sing-box',
   produceType: 'internal',
 })
-
 let pub_subs = await produceArtifact({
   name: "PubSub",
   type: 'collection',
   platform: 'sing-box',
   produceType: 'internal',
 })
-
 let pri_subs = await produceArtifact({
   name: "PriSub",
   type: 'collection',
@@ -73,6 +70,7 @@ config.outbounds.map(i => {
 // 写入配置文件
 $content = JSON.stringify(config, null, 2)
 
+// getTags函数
 function getTags(proxies, regex) {
   return (regex ? proxies.filter(p => regex.test(p.tag)) : proxies).map(p => p.tag)
 }
