@@ -116,7 +116,7 @@
 
       {"protocol": "dns", "action": "hijack-dns"},
       { "rule_set": ["geoip-private", "geosite-private", "RULE_SET-Download"], "outbound": "🎯 直接连接"},
-      { "rule_set": ["geosite-category-ads", "RULE_SET-EasyPrivacy", "RULE_SET-Privacy"], "outbound": "🚫 广告拦截"},
+      { "rule_set": ["geosite-category-ads", "RULE_SET-Privacy"], "outbound": "🚫 广告拦截"},
 
       { "domain_suffix": ["agedm.org"], "outbound": "📵 限定应用"},
       { "rule_set": ["geosite-pixiv", "geosite-line", "geosite-abema", "geosite-niconico", "geosite-paypal"], "outbound":"📵 限定应用"},
@@ -143,7 +143,6 @@
       { "tag": "RULE_SET-Download","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Download/Download.srs"},
       { "tag": "RULE_SET-Hijacking","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Hijacking/Hijacking.srs"},
 
-      { "tag": "RULE_SET-EasyPrivacy","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/EasyPrivacy/EasyPrivacy.srs"},
       { "tag": "RULE_SET-Privacy","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Privacy/Privacy.srs"},
       { "tag": "geosite-category-ads","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ads.srs"},
       
