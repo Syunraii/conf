@@ -7,11 +7,11 @@
 
   "experimental": {
     "clash_api": {
-      "default_mode": "rule",
+      "default_mode": "规则模式",
       "external_controller": "127.0.0.1:9090",
       "external_ui": "My sing-box",
       "external_ui_download_url": "https: //git.repcz.link/github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
-      "external_ui_download_detour": "🌐 全局选择"
+      "external_ui_download_detour": "🦄 故障转移"
     },
     "cache_file": {
       "enabled": true,
@@ -21,26 +21,25 @@
   
   "dns": {
     "servers": [
-      { "tag": "dns_RESOLVER", "address": "119.29.29.29", "detour": "🎯 直接连接"},
-      { "tag": "dns_DIRECT", "address": "https://223.5.5.5/dns-query", "address_resolver": "dns_RESOLVER", "strategy": "ipv4_only", "detour": "🎯 直接连接"},
-      { "tag": "dns_PROXY", "address": "https://1.1.1.1/dns-query", "address_resolver": "dns_RESOLVER", "strategy": "ipv4_only", "detour": "🌐 全局选择"},
+      { "tag": "dns_DIRECT", "address": "223.5.5.5", "detour": "🎯 直接连接"},
+      { "tag": "dns_PROXY", "address": "https://1.1.1.1/dns-query", "detour": "🌐 全局选择"},
       { "tag": "dns_BLOCK", "address": "rcode://refused"},
       { "tag": "dns_FAKEIP", "address": "fakeip"}
     ],
     "rules": [
-      { "outbound": "any", "server": "dns_RESOLVER"},
-      { "clash_mode": "direct", "action":"route", "server": "dns_DIRECT"},
-      { "clash_mode": "global", "action": "route", "server": "dns_FAKEIP"},
-      { "query_type": ["A", "AAAA"], "action":"route", "server": "dns_FAKEIP", "rewrite_ttl":1},
+      { "outbound": "any", "server": "dns_DIRECT"},
+      { "clash_mode": "直接连接", "action":"route", "server": "dns_DIRECT"},
+      { "clash_mode": "全局代理", "action": "route", "server": "dns_FAKEIP"},
+
+      { "query_type": ["A", "AAAA"], "action":"route", "server": "dns_FAKEIP", "rewrite_ttl": 1},
       
       { "rule_set": "RULE_SET-Hijacking", "action": "route", "server":"dns_DIRECT"},
-      { "rule_set": "geolocation-!cn", "action": "route", "server": "dns_PROXY"},
       { "rule_set": "geolocation-cn", "action": "route", "server": "dns_DIRECT"}
     ],
     "fakeip": { "enabled": true, "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"},
     "strategy": "ipv4_only",
     "independent_cache": true,
-    "final": "dns_DIRECT"
+    "final": "dns_PROXY"
   },
 
   "inbounds": [
@@ -135,6 +134,7 @@
       { "tag": "geosite-category-dev","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-dev.srs"},
       { "tag": "geoip-google", "type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/google.srs"},
       { "tag": "geosite-google","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/google.srs"},
+      { "tag": "geosite-google-cn","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/google-cn.srs"},
       { "tag": "geosite-microsoft","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/microsoft.srs"},
       { "tag": "geosite-apple","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/apple.srs"},
       { "tag": "geoip-cloudflare","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/cloudflare.srs"},
@@ -144,14 +144,13 @@
       { "tag": "geolocation-cn","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/geolocation-cn.srs"}
     ],
     "rules": [
-      { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "1000ms"},
+      { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "500ms"},
       { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
 
-      { "clash_mode": "direct", "action":"route", "outbound":"direct"},
-      { "clash_mode": "global", "action":"route", "outbound":"🔰 手动选择"},
+      { "clash_mode": "直接连接", "action":"route", "outbound":"🎯 直接连接"},
+      { "clash_mode": "全局代理", "action":"route", "outbound":"🌐 全局选择"},
       
       { "rule_set": ["geoip-private", "geosite-private", "RULE_SET-Download"], "outbound": "🎯 直接连接"},
-      { "ip_is_private": true, "outbound": "🎯 直接连接"},
       
       { "rule_set": ["geosite-category-ads", "RULE_SET-Privacy"], "outbound": "🚫 广告拦截"},
       
@@ -168,11 +167,12 @@
       { "rule_set": ["geosite-bahamut"], "outbound":"📹 巴哈姆特"},
       { "rule_set": ["geosite-category-games"], "outbound":"🎮 游戏平台"},
       { "rule_set": ["geosite-ategory-ai-chat-!cn", "geosite-category-dev"], "outbound":"🐳 开发工具"},
-      { "rule_set": ["geoip-google", "geosite-google"], "outbound":"🕊️ 谷歌服务"},
+      { "rule_set": ["geoip-google", "geosite-google", "geosite-google"], "outbound":"🕊️ 谷歌服务"},
       { "rule_set": ["geosite-microsoft"], "outbound":"Ⓜ️ 微软服务"},
       { "rule_set": ["geosite-apple"], "outbound":"🍎 苹果服务"},
       { "rule_set": ["geoip-cloudflare", "geosite-cloudflare", "geolocation-!cn"], "outbound":"🍟 整点薯条"},
       { "rule_set": ["geosite-cloudflare-cn", "geolocation-cn"], "outbound":"🍔 整点汉堡"}
+      { "ip_is_private": true, "outbound": "🎯 直接连接"}
     ],
     "find_process": false,
     "auto_detect_interface": true,
