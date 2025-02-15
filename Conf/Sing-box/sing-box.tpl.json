@@ -171,7 +171,7 @@
       { "rule_set": ["geosite-microsoft"], "outbound":"Ⓜ️ 微软服务"},
       { "rule_set": ["geosite-apple"], "outbound":"🍎 苹果服务"},
       { "rule_set": ["geoip-cloudflare", "geosite-cloudflare", "geolocation-!cn"], "outbound":"🍟 整点薯条"},
-      { "rule_set": ["geosite-cloudflare-cn", "geolocation-cn"], "outbound":"🍔 整点汉堡"}
+      { "rule_set": ["geosite-cloudflare-cn", "geolocation-cn"], "outbound":"🍔 整点汉堡"},
       { "ip_is_private": true, "outbound": "🎯 直接连接"}
     ],
     "find_process": false,
