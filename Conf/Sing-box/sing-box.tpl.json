@@ -2,16 +2,16 @@
   "log": {
     "disabled": false,
     "level": "info",
-    "timestamp": false
+    "timestamp": true
   },
 
   "experimental": {
     "clash_api": {
+      "default_mode": "rule",
       "external_controller": "127.0.0.1:9090",
       "external_ui": "My sing-box",
-      "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
-      "external_ui_download_detour": "🌐 全局选择",
-      "default_mode": "rule"
+      "external_ui_download_url": "https: //git.repcz.link/github.com/Zephyruso/zashboard/releases/latest/download/dist.zip",
+      "external_ui_download_detour": "🌐 全局选择"
     },
     "cache_file": {
       "enabled": true,
@@ -28,17 +28,18 @@
       { "tag": "dns_FAKEIP", "address": "fakeip"}
     ],
     "rules": [
-      { "outbound": "any", "server": "dns_RESOLVER", "disable_cache": true},
-      { "clash_mode": "direct", "server": "dns_DIRECT", "disable_cache": true},
-      { "clash_mode": "global", "server": "dns_PROXY", "disable_cache": true},
-      { "query_type": ["A", "AAAA"], "server": "dns_FAKEIP"},
+      { "outbound": "any", "server": "dns_RESOLVER"},
+      { "clash_mode": "direct", "action":"route", "server": "dns_DIRECT"},
+      { "clash_mode": "global", "action": "route", "server": "dns_FAKEIP"},
+      { "query_type": ["A", "AAAA"], "action":"route", "server": "dns_FAKEIP", "rewrite_ttl":1},
       
-      { "rule_set": "RULE_SET-Hijacking", "server":"dns_PROXY"},
-      { "rule_set": "geolocation-!cn", "server": "dns_PROXY"},
-      { "rule_set": "geolocation-cn", "server": "dns_DIRECT"}
+      { "rule_set": "RULE_SET-Hijacking", "action": "route", "server":"dns_DIRECT"},
+      { "rule_set": "geolocation-!cn", "action": "route", "server": "dns_PROXY"},
+      { "rule_set": "geolocation-cn", "action": "route", "server": "dns_DIRECT"}
     ],
     "fakeip": { "enabled": true, "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18"},
     "strategy": "ipv4_only",
+    "independent_cache": true,
     "final": "dns_DIRECT"
   },
 
@@ -47,57 +48,51 @@
       "tag": "in-mixed",
       "type": "mixed",
       "listen": "127.0.0.1",
-      "listen_port": 7890,
-      "set_system_proxy": true
+      "listen_port": 7090,
+      "set_system_proxy": false
     },
     {
       "tag": "in-tun",
       "type": "tun",
-      "interface_name": "tun0",
+      "stack": "mixed",
+      "auto_route": true,
       "address": [
         "172.18.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
-      "sniff": true,
-      "auto_route": true,
-      "strict_route": true,
-      "stack": "system",
-      "udp_timeout": "5m",
       "platform": {
         "http_proxy": {
           "enabled": true,
           "server": "127.0.0.1",
-          "server_port": 7890,
-          "bypass_domain": [],
-          "match_domain": []
+          "server_port": 7080
         }
       }
     }
   ],
 
   "outbounds": [
-    {"tag": "🌐 全局选择", "type": "selector", "outbounds": ["🚀 自动选择", "🔰 手动选择", "🎯 直接连接"]},
+    {"tag": "🌐 全局选择", "type": "selector", "outbounds": ["🚀 自动选择", "🔰 手动选择", "🎯 直接连接"], "interrupt_exist_connections": true},
     {"tag": "🚀 自动选择", "type": "urltest", "outbounds": ["🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
-    {"tag": "🔰 手动选择", "type": "selector", "outbounds": ["🛫 常规订阅", "🦄 故障转移"]},
+    {"tag": "🔰 手动选择", "type": "selector", "outbounds": ["🛫 常规订阅", "🦄 故障转移"], "interrupt_exist_connections": true},
     {"tag": "🛰️ 所有订阅", "type": "selector", "outbounds": []},
     {"tag": "🛫 常规订阅", "type": "selector", "outbounds": []},
     {"tag": "🦄 故障转移", "type": "selector", "outbounds": []},
-    {"tag": "🚫 广告拦截", "type": "selector", "outbounds": ["🈲 禁止连接", "🎯 直接连接", "🌐 全局选择"]},
-    {"tag": "⛔ 让我访问", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🈲 禁止连接"]},
-    {"tag": "📵 限定应用", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "📚 我爱漫画", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "📱 电报通讯", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🎥 国外媒体", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🌟 抖音视频", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🍻 哔哩哔哩", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "📹 巴哈姆特", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🎮 游戏平台", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🐳 开发工具", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🕊️ 谷歌服务", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "Ⓜ️ 微软服务", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🍎 苹果服务", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🍟 整点薯条", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
-    {"tag": "🍔 整点汉堡", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"]},
+    {"tag": "🚫 广告拦截", "type": "selector", "outbounds": ["🈲 禁止连接", "🎯 直接连接", "🌐 全局选择"], "interrupt_exist_connections": true},
+    {"tag": "⛔ 让我访问", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🈲 禁止连接"], "interrupt_exist_connections": true},
+    {"tag": "📵 限定应用", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "📚 我爱漫画", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "📱 电报通讯", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🎥 国外媒体", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🌟 抖音视频", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🍻 哔哩哔哩", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "📹 巴哈姆特", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🎮 游戏平台", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🐳 开发工具", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🕊️ 谷歌服务", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "Ⓜ️ 微软服务", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🍎 苹果服务", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🍟 整点薯条", "type": "selector", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
+    {"tag": "🍔 整点汉堡", "type": "selector", "outbounds": ["🎯 直接连接", "🌐 全局选择", "🚀 自动选择", "🔰 手动选择", "🇭🇰 香港节点", "🇨🇳 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇸 美国节点", "🇸🇬 狮城节点"], "interrupt_exist_connections": true},
     {"tag": "🇭🇰 香港节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
     {"tag": "🇨🇳 台湾节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
     {"tag": "🇯🇵 日本节点", "type": "urltest", "outbounds": [], "interval": "5m", "tolerance": 100, "interrupt_exist_connections": false, "url": "https://www.gstatic.com/generate_204"},
@@ -109,40 +104,12 @@
     {"tag": "🈲 禁止连接", "type": "block"}
   ],
   "route": {
-    "auto_detect_interface": true,
-    "rules": [
-      { "inbound": "in-mixed", "action": "resolve", "strategy": "prefer_ipv4"},
-      { "inbound": "in-mixed", "action": "sniff", "timeout": "1s"},
-
-      {"protocol": "dns", "action": "hijack-dns"},
-      { "rule_set": ["geoip-private", "geosite-private", "RULE_SET-Download"], "outbound": "🎯 直接连接"},
-      { "rule_set": ["geosite-category-ads", "RULE_SET-Privacy"], "outbound": "🚫 广告拦截"},
-
-      { "domain_suffix": ["agedm.org"], "outbound": "📵 限定应用"},
-      { "rule_set": ["geosite-pixiv", "geosite-line", "geosite-abema", "geosite-niconico", "geosite-paypal"], "outbound":"📵 限定应用"},
-
-      { "domain_keyword": ["copymanga", "mangacopy", "mangafuna", "relamanhua"], "outbound": "📚 我爱漫画"},
-      { "rule_set": ["geosite-picacg", "geosite-18comic", "geosite-ehentai"], "outbound":"📚 我爱漫画"},
-
-      { "rule_set": ["geoip-telegram", "geosite-telegram"], "outbound":"📱 电报通讯"},
-      { "rule_set": ["geosite-disney", "geosite-youtube", "geoip-netflix", "geosite-netflix"], "outbound":"🎥 国外媒体"},
-      { "rule_set": ["geosite-tiktok"], "outbound":"🌟 抖音视频"},
-      { "rule_set": ["geosite-bilibili"], "outbound":"🍻 哔哩哔哩"},
-      { "rule_set": ["geosite-bahamut"], "outbound":"📹 巴哈姆特"},
-      { "rule_set": ["geosite-category-games"], "outbound":"🎮 游戏平台"},
-      { "rule_set": ["geosite-ategory-ai-chat-!cn", "geosite-category-dev"], "outbound":"🐳 开发工具"},
-      { "rule_set": ["geoip-google", "geosite-google"], "outbound":"🕊️ 谷歌服务"},
-      { "rule_set": ["geosite-microsoft"], "outbound":"Ⓜ️ 微软服务"},
-      { "rule_set": ["geosite-apple"], "outbound":"🍎 苹果服务"},
-      { "rule_set": ["geoip-cloudflare", "geosite-cloudflare", "geolocation-!cn"], "outbound":"🍟 整点薯条"},
-      { "rule_set": ["geosite-cloudflare-cn", "geolocation-cn"], "outbound":"🍔 整点汉堡"}
-    ],
     "rule_set": [
       { "tag": "geoip-private","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geoip/private.srs"},
       { "tag": "geosite-private","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/private.srs"},
       { "tag": "RULE_SET-Download","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Download/Download.srs"},
       { "tag": "RULE_SET-Hijacking","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Hijacking/Hijacking.srs"},
-
+      
       { "tag": "RULE_SET-Privacy","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://raw.githubusercontent.com/senshinya/singbox_ruleset/main/rule/Privacy/Privacy.srs"},
       { "tag": "geosite-category-ads","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/category-ads.srs"},
       
@@ -176,6 +143,39 @@
       { "tag": "geosite-cloudflare-cn","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/cloudflare-cn.srs"},
       { "tag": "geolocation-cn","type": "remote", "format": "binary", "update_interval": "24h", "download_detour": "🦄 故障转移", "url":"https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/sing/geo/geosite/geolocation-cn.srs"}
     ],
+    "rules": [
+      { "action": "sniff", "sniffer": ["http", "tls", "quic", "dns"], "timeout": "1000ms"},
+      { "type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
+
+      { "clash_mode": "direct", "action":"route", "outbound":"direct"},
+      { "clash_mode": "global", "action":"route", "outbound":"🔰 手动选择"},
+      
+      { "rule_set": ["geoip-private", "geosite-private", "RULE_SET-Download"], "outbound": "🎯 直接连接"},
+      { "ip_is_private": true, "outbound": "🎯 直接连接"},
+      
+      { "rule_set": ["geosite-category-ads", "RULE_SET-Privacy"], "outbound": "🚫 广告拦截"},
+      
+      { "domain_suffix": ["agedm.org"], "outbound": "📵 限定应用"},
+      { "rule_set": ["geosite-pixiv", "geosite-line", "geosite-abema", "geosite-niconico", "geosite-paypal"], "outbound":"📵 限定应用"},
+      
+      { "domain_keyword": ["copymanga", "mangacopy", "mangafuna", "relamanhua"], "outbound": "📚 我爱漫画"},
+      { "rule_set": ["geosite-picacg", "geosite-18comic", "geosite-ehentai"], "outbound":"📚 我爱漫画"},
+      
+      { "rule_set": ["geoip-telegram", "geosite-telegram"], "outbound":"📱 电报通讯"},
+      { "rule_set": ["geosite-disney", "geosite-youtube", "geoip-netflix", "geosite-netflix"], "outbound":"🎥 国外媒体"},
+      { "rule_set": ["geosite-tiktok"], "outbound":"🌟 抖音视频"},
+      { "rule_set": ["geosite-bilibili"], "outbound":"🍻 哔哩哔哩"},
+      { "rule_set": ["geosite-bahamut"], "outbound":"📹 巴哈姆特"},
+      { "rule_set": ["geosite-category-games"], "outbound":"🎮 游戏平台"},
+      { "rule_set": ["geosite-ategory-ai-chat-!cn", "geosite-category-dev"], "outbound":"🐳 开发工具"},
+      { "rule_set": ["geoip-google", "geosite-google"], "outbound":"🕊️ 谷歌服务"},
+      { "rule_set": ["geosite-microsoft"], "outbound":"Ⓜ️ 微软服务"},
+      { "rule_set": ["geosite-apple"], "outbound":"🍎 苹果服务"},
+      { "rule_set": ["geoip-cloudflare", "geosite-cloudflare", "geolocation-!cn"], "outbound":"🍟 整点薯条"},
+      { "rule_set": ["geosite-cloudflare-cn", "geolocation-cn"], "outbound":"🍔 整点汉堡"}
+    ],
+    "find_process": false,
+    "auto_detect_interface": true,
     "final": "⛔ 让我访问"
   }
 }
