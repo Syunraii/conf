@@ -6,7 +6,7 @@
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
 
-#!arguments=面板更新时间:21600, 脚本超时时间:20, 订阅面板1:订阅面板1, 订阅链接1:sublink1, 每月重置时间1:1, 到期时间1:2025-12-31, 订阅名称1:"订阅名称1", 图标1:airplane.circle.fill, 颜色1:#00bc12, 订阅面板2:订阅面板2, 订阅链接2:sublink2, 每月重置时间2:1, 到期时间2:2025-12-31, 订阅名称2:"订阅名称2", 图标2:airplane.circle.fill, 颜色2:#157efb, 订阅面板3:订阅面板3, 订阅链接3:sublink3, 每月重置时间3:1, 到期时间3:2025-12-31, 订阅名称3:"订阅名称3", 图标3:airplane.circle.fill, 颜色3:#fbc915, 订阅面板4:订阅面板4, 订阅链接4:sublink4, 每月重置时间4:1, 到期时间4:2025-12-31, 订阅名称4:"订阅名称4", 图标4:airplane.circle.fill, 颜色4:#fbc915,
+#!arguments=面板更新时间:21600, 脚本超时时间:20, 订阅面板1:订阅面板1, 订阅链接1:sublink1, 每月重置时间1:1, 到期时间1:2025-12-31, 订阅名称1:"订阅名称1", 图标1:airplane.circle.fill, 颜色1:#00bc12, 订阅面板2:订阅面板2, 订阅链接2:sublink2, 每月重置时间2:1, 到期时间2:2025-12-31, 订阅名称2:"订阅名称2", 图标2:airplane.circle.fill, 颜色2:#157efb, 订阅面板3:订阅面板3, 订阅链接3:sublink3, 每月重置时间3:1, 到期时间3:2025-12-31, 订阅名称3:"订阅名称3", 图标3:airplane.circle.fill, 颜色3:#fbc915, 订阅面板4:订阅面板4, 订阅链接4:sublink4, 每月重置时间4:1, 到期时间4:2025-12-31, 订阅名称4:"订阅名称4", 图标4:airplane.circle.fill, 颜色4:#f715fb
 #!arguments-desc=1️⃣ 面板更新时间\n\n默认21600秒\n\n2️⃣ 脚本超时时间\n\n默认20秒\n\n3️⃣ 订阅面板\n\n输入#可以隐藏已无效面板\n\n4️⃣ 订阅链接\n\n需要使用https://www.urlencoder.org进行encode然后再填入
 
 [Panel]
