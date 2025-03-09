@@ -27,4 +27,4 @@ Panel_Info_Subscribe2= style =info,title="订阅信息2",content="请刷新",tim
 
 Panel_Info_Subscribe3= style =info,title="订阅信息3",content="请刷新",timeout={{{脚本超时时间}}},argument=url={{{订阅链接3}}}&reset_day={{{每月重置时间3}}}&expire={{{到期时间3}}}&title={{{订阅名称3}}}&icon={{{图标3}}}&color={{{颜色3}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
 
-Panel_Info_Subscribe4= style =info,title="订阅信息4",content="请刷新",timeout={{{脚本超时时间}}},argument=url={{{订阅链接3}}}&reset_day={{{每月重置时间4}}}&expire={{{到期时间4}}}&title={{{订阅名称4}}}&icon={{{图标4}}}&color={{{颜色4}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
+Panel_Info_Subscribe4= style =info,title="订阅信息4",content="请刷新",timeout={{{脚本超时时间}}},argument=url={{{订阅链接4}}}&reset_day={{{每月重置时间4}}}&expire={{{到期时间4}}}&title={{{订阅名称4}}}&icon={{{图标4}}}&color={{{颜色4}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Sub-info/Moore/Sub-info.js
