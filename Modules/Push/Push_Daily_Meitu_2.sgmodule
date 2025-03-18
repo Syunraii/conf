@@ -7,8 +7,9 @@
 #!homepage=https://raw.githubusercontent.com/xream/scripts/refs/heads/main/surge/modules/meizitu/meizitu.sgmodule
 
 #!arguments=推送执行时间:00 22 * * *, 脚本超时时间:60, engine:auto, MODE:0, TIMEOUT:5, RETRIES:1, RETRY_DELAY:1, 
-#!arguments-desc=1️⃣ 使用须知\n\n图片超过 4MB 无法在通知显示, 但是可以点击查看\n\n2️⃣ engine\n\n默认为自动使用webview引擎, 可设为指定jsc\n\n3️⃣ 脚本参数MODE\n\n支持多个分类, 例: 1,2,5\n例:\n0: 随机\n1: 微博\n2: Instagram\n3: Cosplay\n5: MTCos\n7: 美腿\n8: Coser\n9: 兔玩映画\n\n4️⃣ 脚本参数TIMEOUT\n\n超时时间, 默认5秒\n\n5️⃣ 脚本参数RETRIES\n\n请求重试次数, 默认1次\n\n6️⃣脚本参数RETRY_DELAY\n\n请求重试等待时间, 默认1秒
+#!arguments-desc=1️⃣ 使用须知\n\n图片超过 4MB 无法在通知显示, 但是可以点击查看\n\n2️⃣ engine\n\n默认为自动使用webview引擎, 可设为指定jsc\n\n3️⃣ 脚本参数PROXY\n\n如遇到图片防盗提示可尝试设置此参数，默认不加（以下代理到国内可能会更慢）\npimg, ru, wp, bd, sg
+4️⃣ 脚本参数MODE\n\n支持多个分类, 例: 1,2,5\n例:\n0: 随机\n1: 微博\n2: Instagram\n3: Cosplay\n5: MTCos\n7: 美腿\n8: Coser\n9: 兔玩映画\n\n5️⃣ 脚本参数TIMEOUT\n\n超时时间, 默认5秒\n\n6️⃣ 脚本参数RETRIES\n\n请求重试次数, 默认1次\n\n6️⃣ 脚本参数RETRY_DELAY\n\n请求重试等待时间, 默认1秒
 
 [Script]
 # Pushs: 美图鉴赏②
-推送_美图鉴赏2 = type =cron,wake-system=1,cronexp={{{推送执行时间}}},timeout={{{脚本超时时间}}},engine={{{engine}}},script-path=https://raw.githubusercontent.com/xream/scripts/main/surge/modules/meizitu/meizitu.js,argument="MODE={{{MODE}}}&TIMEOUT={{{TIMEOUT}}}&RETRIES={{{RETRIES}}}&RETRY_DELAY={{{RETRY_DELAY}}}"
+推送_美图鉴赏2 = type =cron,wake-system=1,cronexp={{{推送执行时间}}},timeout={{{脚本超时时间}}},engine={{{engine}}},script-path=https://raw.githubusercontent.com/xream/scripts/main/surge/modules/meizitu/meizitu.js,argument="PROXY={{{PROXY}}}&MODE={{{MODE}}}&TIMEOUT={{{TIMEOUT}}}&RETRIES={{{RETRIES}}}&RETRY_DELAY={{{RETRY_DELAY}}}"
