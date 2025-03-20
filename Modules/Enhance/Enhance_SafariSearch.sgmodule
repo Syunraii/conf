@@ -1,7 +1,7 @@
-#!name=🔨 Modify: Safari
+#!name=🆙 Enhance: Safari Search
 #!desc=[修改] Safari \n1.关键字快捷搜索
 #!system=ios
-#!category=🔨 Modify
+#!category=🆙 Enhance
 
 #!arguments=搜索引擎:duckduckgo
 #!arguments-desc=1️⃣ 搜索引擎\n\n在safari设置默认搜索引擎, 然后在这里修改相应引擎即可, 默认duckduckgo\n\n如修改为百度, 则输入baidu
@@ -18,7 +18,7 @@
 ##################################################################################################
 
 [Script]
-# Modify: Safari
+# Enhance: Safari Search
 # dlc xxx (DeepL 译至中)
 修改_Safari_DToChinese = type =http-request,pattern=^https:\/\/{{{搜索引擎}}}.com\/\?q=dlc(\+|%20)([^&]+).+,script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/DeepLQ-search.js
 
@@ -30,7 +30,7 @@
 
 
 [URL Rewrite]
-# Modify: Safari
+# Enhance: Safari Search
 # 检索类
 # ddg xxx (还原 DuckDuckGo)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=ddg(\+|%20)([^&]+).+ https://duckduckgo.com/?ia=about&q=$2 302
@@ -131,9 +131,6 @@
 
 # tal2 xxx (t.me/YunPanPan 搜索阿里云盘资源)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=tal2(\+|%20)([^&]+).+ https://t.me/s/YunPanPan?q=$2 302
-
-# ios xxx (apple Store应用搜索)
-^https:\/\/{{{搜索引擎}}}.com\/\?q=ios\+([^&]+).+ https://www.qimai.cn/search/index/search/$1 302
 
 # ccn (App Store网页版 临时切换至中国区) 感谢 @mieqq
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=ccn&.+ https://itunes.apple.com/WebObjects/MZStore.woa/wa/resetAndRedirect?dsf=143465&mt=8&url=/WebObjects/MZStore.woa/wa/viewSoftware?mt=8&id=1108187390&cc=cn&urlDesc= 302
