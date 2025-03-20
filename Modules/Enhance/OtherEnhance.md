@@ -18,3 +18,7 @@
 > 微信增强
 
     https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Official/微信专项优化.official.sgmodule
+
+> 微信外链解锁
+
+    https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/微信外部链接解锁.sgmodule
