@@ -1,0 +1,11 @@
+﻿#!name=🔨 Modify: Tg2Swiftgram
+#!desc=[修改] Swiftgram \n1.默认打开TG外链
+#!system=ios
+#!category=🔨 Modify
+
+[URL Rewrite]
+# Modify: Tg2Swiftgrams
+(https:\/\/)?t.me\/(.+) Sg://resolve?domain=$2 302
+
+[MITM]
+hostname = %APPEND% t.me
