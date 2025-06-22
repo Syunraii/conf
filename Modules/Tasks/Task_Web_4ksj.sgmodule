@@ -6,9 +6,9 @@
 #!author=Yuheng0101
 #!homepage=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/4ksj.js
 
-#!arguments=任务:任务_4K世界, 签到执行时间:1 10 * * *, 脚本超时时间:60
+#!arguments=任务:任务_4K世界, 执行时间:1 10 * * *, 脚本超时时间:60
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json\n\napp:4k世界\n\n2️⃣ 使用方法\n\n登录https://www.4ksj.com, 提示获取Cookie成功即可\n\n3️⃣ 任务\n\n执行任务, 输入#关闭
 
 [Script]
 # Tasks: 4K世界
-{{{任务}}} = type =cron,wake-system=1,cronexp={{{签到执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/4ksj.js
+{{{任务}}} = type =cron,wake-system=1,cronexp={{{执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/4ksj.js

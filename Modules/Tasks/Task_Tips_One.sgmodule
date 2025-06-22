@@ -1,0 +1,13 @@
+﻿#!name=🛎️ Tasks: One
+#!desc=[任务] 每日戒色
+#!system=ios
+#!category=🛎️ Tasks: Tips
+
+#!author=Yu9191
+#!homepage=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/one_daily_task.js
+
+#!arguments=任务:提醒_One, 任务执行时间:4 10 * * *, 脚本超时时间:120
+
+[Script]
+# Tasks: One
+{{{任务}}} = type=cron, cronexp={{{任务执行时间}}}, wake-system=1, timeout={{{脚本超时时间}}}, script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/one_daily_task.js
