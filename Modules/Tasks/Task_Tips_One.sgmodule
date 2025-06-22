@@ -6,7 +6,7 @@
 #!author=Yu9191
 #!homepage=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/one_daily_task.js
 
-#!arguments=任务:提醒_One, 任务执行时间:4 10 * * *, 脚本超时时间:120
+#!arguments=任务:提醒_One, 任务执行时间:0 21 * * *, 脚本超时时间:120
 
 [Script]
 # Tasks: One
