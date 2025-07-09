@@ -1,0 +1,28 @@
+﻿#!name=🛎️ Tasks: 霸王餐
+#!desc=[任务] 霸王餐签到:\n1.小蚕惠生活\n2.晓晓优选\n3.歪麦霸王餐
+#!system=ios
+#!category=🛎️ Tasks: App
+
+#!author=Sliverkiss
+#!homepage=https://gist.githubusercontent.com/Sliverkiss/250a02315f0a2c99f42da3b3573375c8/raw/xcbwc.js or xxyx.js or  wmbwc.js
+
+#!arguments=获取1:获取_小蚕惠生活, 获取2:获取_晓晓优选, 获取3:获取_歪麦霸王餐, 任务1:任务_小蚕惠生活, 任务2:任务_晓晓优选, 任务3:任务_歪麦霸王餐, 系统通知:1, 执行时间:45 10 * * *, 超时时间:60, 主机:hostname
+#!arguments-desc=1️⃣ 使用方法\n\n进入app, 提示获取Cookie成功即可\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
+
+
+[Script]
+# Tasks: 霸王餐
+{{{获取1}}}= type=http-response, requires-body=true, max-size=-1, timeout=60, pattern=^https:\/\/gw\.xiaocantech\.com\/rpc, script-path=https://gist.githubusercontent.com/Sliverkiss/250a02315f0a2c99f42da3b3573375c8/raw/xcbwc.js
+
+{{{任务1}}}= type=cron,wake-system={{{系统通知}}},cronexp={{{执行时间}}},timeout={{{超时时间}}},script-path=https://gist.githubusercontent.com/Sliverkiss/250a02315f0a2c99f42da3b3573375c8/raw/xcbwc.js
+
+{{{获取2}}} = type=http-response, requires-body=true, max-size=-1, timeout=60, pattern=^https:\/\/xxyx-client-api\.xiaoxiaoyouxuan\.com\/my, script-path=https://gist.githubusercontent.com/Sliverkiss/991a81be1fc8cf2a1937432be68f5521/raw/xxyx.js
+
+{{{任务2}}}= type=cron,wake-system={{{系统通知}}},cronexp={{{执行时间}}},timeout={{{超时时间}}},script-path=https://gist.githubusercontent.com/Sliverkiss/991a81be1fc8cf2a1937432be68f5521/raw/xxyx.js
+
+{{{获取3}}} = type=http-request, requires-body=true, max-size=-1, timeout=60, pattern=^https:\/\/wmapp-api\.waimaimingtang\.com\/api\/api\/v2\/user\/api_user_info_one, script-path=https://gist.githubusercontent.com/Sliverkiss/49a9ffb2169a2becc33bf4fdbf6eb99a/raw/wmbwc.js
+
+{{{任务3}}}= type=cron,wake-system={{{系统通知}}},cronexp={{{执行时间}}},timeout={{{超时时间}}},script-path=https://gist.githubusercontent.com/Sliverkiss/49a9ffb2169a2becc33bf4fdbf6eb99a/raw/wmbwc.js
+
+[MITM]
+{{{主机}}} = %APPEND% gw.xiaocantech.com, xxyx-client-api.xiaoxiaoyouxuan.com, wmapp-api.waimaimingtang.com

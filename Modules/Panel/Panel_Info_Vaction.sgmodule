@@ -6,7 +6,7 @@
 #!author=smartmimi
 #!homepage=https://raw.githubusercontent.com/smartmimi/conf/master/surge/timecard.js
 
-#!arguments=面板更新间隔:43200, 脚本超时时间:20
+#!arguments=面板更新间隔:43200, 超时时间:20
 #!arguments-desc=1️⃣ 面板更新间隔\n\n默认43200秒\n\n3️⃣ timeout\n\n超时时间, 默认20秒
 
 [Panel]
@@ -15,4 +15,4 @@
 
 [Script]
 # Panel: 假期时间
-Panel_Info_Vacation = type =generic,timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/smartmimi/conf/master/surge/timecard.js
+Panel_Info_Vacation = type =generic,timeout={{{超时时间}}},script-path=https://raw.githubusercontent.com/smartmimi/conf/master/surge/timecard.js

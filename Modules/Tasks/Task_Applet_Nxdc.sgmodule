@@ -6,14 +6,14 @@
 #!author=Sliverkiss
 #!homepage=https://gist.githubusercontent.com/Sliverkiss/4d0e9572b99530b7cb0e7298622aa2a9/raw/naixue.js
 
-#!arguments=获取:获取_奈雪的茶, 任务:任务_奈雪的茶, 执行时间:25 10 * * *, 脚本超时时间:60, 主机:hostname
+#!arguments=获取:获取_奈雪的茶, 任务:任务_奈雪的茶, 系统通知:1, 执行时间:25 10 * * *, 超时时间:60, 主机:hostname
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://gist.githubusercontent.com/Sliverkiss/18bd01be356360a8065a21ea71685ad3/raw/sliverkiss.boxjs.json\n\napp:奈雪的茶\n\n2️⃣ 使用方法\n\n登录奈雪的茶小程序, 进入"我的"页面, 提示获取Cookie成功即可\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
 
 [Script]
 # Tasks: 奈雪的茶
 {{{获取}}} = type =http-request,requires-body=1,max-size=0,pattern=^https:\/\/tm-web\.pin-dao\.cn\/user\/base-userinfo,script-path=https://gist.githubusercontent.com/Sliverkiss/4d0e9572b99530b7cb0e7298622aa2a9/raw/naixue.js
 
-{{{任务}}} = type =cron,wake-system=1,cronexp={{{执行时间}}},timeout={{{脚本超时时间}}},script-path=https://gist.githubusercontent.com/Sliverkiss/4d0e9572b99530b7cb0e7298622aa2a9/raw/naixue.js
+{{{任务}}} = type =cron,wake-system={{{系统通知}}},cronexp={{{执行时间}}},timeout={{{超时时间}}},script-path=https://gist.githubusercontent.com/Sliverkiss/4d0e9572b99530b7cb0e7298622aa2a9/raw/naixue.js
 
 [MITM]
 {{{主机}}} = %APPEND% tm-web.pin-dao.cn

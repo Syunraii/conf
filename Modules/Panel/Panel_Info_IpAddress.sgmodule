@@ -6,12 +6,12 @@
 #!author=congcong0806
 #!homepage=https://raw.githubusercontent.com/congcong0806/surge-list/master/Script/ipcheck.js
 
-#!arguments=面板更新间隔:1, 脚本超时时间:30
-#!arguments-desc=1️⃣ 面板更新间隔\n\n默认1秒\n\n2️⃣ 脚本超时时间\n\n默认10秒
+#!arguments=面板更新间隔:1, 超时时间:30
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认1秒\n\n2️⃣ 超时时间\n\n默认10秒
 
 [Panel]
 # Panel: IP地址
-信息面板_IP地址 = style =info,title="当前IP地址",content="请刷新",script-update-interval={{{面板更新间隔}}},update-interval={{{脚本超时时间}}},script-name=Panel_Info_IpAddress
+信息面板_IP地址 = style =info,title="当前IP地址",content="请刷新",script-update-interval={{{面板更新间隔}}},update-interval={{{超时时间}}},script-name=Panel_Info_IpAddress
 
 [Script]
 # Panel: IP地址

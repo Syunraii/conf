@@ -6,14 +6,14 @@
 #!author=chavyleung
 #!homepage=https://raw.githubusercontent.com/chavyleung/scripts/refs/heads/master/mihoyo/mihoyo.js
 
-#!arguments=获取:获取_米游社, 任务:任务_米游社, 执行时间:48 10 * * *, 脚本超时时间:60, 主机:hostname
+#!arguments=获取:获取_米游社, 任务:任务_米游社, 系统通知:1, 执行时间:49 10 * * *, 超时时间:60, 主机:hostname
 #!arguments-desc=1️⃣ 使用方法\n\n登录米游社app, 进入"我的"页面, 提示获取Cookie成功即可\n\n2️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n3️⃣ 任务\n\n执行任务, 输入#关闭\n\n4️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
 
 [Script]
 # Tasks: 米游社
 {{{获取}}} = type =http-response,requires-body=1,max-size=0,pattern=^https:\/\/api-takumi.mihoyo.com\/apihub\/api\/getGameList,script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/mihoyo/mihoyo.cookie.js
 
-{{{任务}}} = type =cron,wake-system=1,cronexp={{{执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/mihoyo/mihoyo.js
+{{{任务}}} = type =cron,wake-system={{{系统通知}}},cronexp={{{执行时间}}},timeout={{{超时时间}}},script-path=https://raw.githubusercontent.com/chavyleung/scripts/master/mihoyo/mihoyo.js
 
 [MITM]
 {{{主机}}} = %APPEND% api-takumi.mihoyo.com

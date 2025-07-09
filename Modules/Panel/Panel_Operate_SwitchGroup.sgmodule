@@ -6,8 +6,8 @@
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js
 
-#!arguments=面板更新间隔:1, 脚本超时时间:10, 图标:network, 颜色:#86abee, 策略组:自动选择
-#!arguments-desc=1️⃣ 面板更新间隔\n\n默认立即刷新\n\n2️⃣ 脚本超时时间\n\n超时时间, 默认10秒\n\n3️⃣ 图标\n\n默认network\n\n4️⃣ 颜色\n\n默认#86abee\n\n6️⃣ 策略组\n\n默认在"自动选择"中随机切换
+#!arguments=面板更新间隔:1, 超时时间:10, 图标:network, 颜色:#86abee, 策略组:自动选择
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认立即刷新\n\n2️⃣ 超时时间\n\n超时时间, 默认10秒\n\n3️⃣ 图标\n\n默认network\n\n4️⃣ 颜色\n\n默认#86abee\n\n6️⃣ 策略组\n\n默认在"自动选择"中随机切换
 
 [Panel]
 # Panel: 策略组切换
@@ -15,4 +15,4 @@
 
 [Script]
 # Panel: 策略组切换
-Panel_Operate_SwitchGroup = type =generic,timeout={{{脚本超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}}&group={{{策略组}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js
+Panel_Operate_SwitchGroup = type =generic,timeout={{{超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}}&group={{{策略组}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Group-Panel/Moore/Group-Panel.js

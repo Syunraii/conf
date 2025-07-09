@@ -6,8 +6,8 @@
 #!author=Rabbit-Spec
 #!homepage=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Network-Info/Moore/Network-Info.js
 
-#!arguments=面板更新间隔:1, 脚本超时时间:30
-#!arguments-desc=1️⃣ 面板更新间隔\n\n默认1秒\n\n2️⃣ 脚本超时时间\n\n默认10秒
+#!arguments=面板更新间隔:1, 超时时间:30
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认1秒\n\n2️⃣ 超时时间\n\n默认10秒
 
 [Panel]
 # Panel: 本机网络
@@ -15,4 +15,4 @@
 
 [Script]
 # Panel: 本机网络
-Panel_Info_Network = type =generic,timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Network-Info/Moore/Network-Info.js
+Panel_Info_Network = type =generic,timeout={{{超时时间}}},script-path=https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Network-Info/Moore/Network-Info.js

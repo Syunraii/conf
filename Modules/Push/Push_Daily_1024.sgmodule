@@ -6,9 +6,9 @@
 #!author=Yuheng0101
 #!homepage=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/1024.js
 
-#!arguments=推送执行时间:30 22 * * *, 脚本超时时间:60
+#!arguments=系统通知:1, 执行时间:30 22 * * *, 超时时间:60
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/boxjs.json\n\napp:某榴最新技术推送
 
 [Script]
 # Pushs: 草榴1024
-推送_草榴1024 = type =cron,wake-system=1,cronexp={{{推送执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/1024.js
+推送_草榴1024 = type =cron,wake-system={{{系统通知}}},cronexp={{{执行时间}}},timeout={{{超时时间}}},script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/1024.js

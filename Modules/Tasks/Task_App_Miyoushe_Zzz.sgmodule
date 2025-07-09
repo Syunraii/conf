@@ -6,9 +6,9 @@
 #!author=lowking
 #!homepage=https://raw.githubusercontent.com/lowking/Scripts/master/mihoyo/zzz.js
 
-#!arguments=任务:任务_米游社_绝区零, 执行时间:47 10 * * *, 脚本超时时间:60, 主机:hostname
+#!arguments=任务:任务_米游社_绝区零, 系统通知:1, 执行时间:48 10 * * *, 超时时间:60, 主机:hostname
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/lowking/Scripts/master/lowking.boxjs.json\n\napp:绝区零\n\n2️⃣ 使用方法\n\n登录米游社app, [自行抓包]绝区零板块的签到Cookie, 填入boxjs, 手动执行成功即可\n\n3️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
 
 [Script]
 # Tasks: 米游社_绝区零
-{{{任务}}} = type =cron,wake-system=1,cronexp={{{执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/lowking/Scripts/master/mihoyo/zzz.js
+{{{任务}}} = type =cron,wake-system={{{系统通知}}},cronexp={{{执行时间}}},timeout={{{超时时间}}},script-path=https://raw.githubusercontent.com/lowking/Scripts/master/mihoyo/zzz.js

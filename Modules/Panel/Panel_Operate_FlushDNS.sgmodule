@@ -6,8 +6,8 @@
 #!author=zZPiglet
 #!homepage=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js
 
-#!arguments=面板更新间隔:1, 脚本超时时间:10, 图标:cube, 颜色:#afe59a
-#!arguments-desc=1️⃣ 面板更新间隔\n\n默认立即刷新\n\n2️⃣ 脚本超时时间\n\n超时时间, 默认10秒\n\n3️⃣ 图标\n\n默认cube\n\n4️⃣ 颜色\n\n默认#afe59a
+#!arguments=面板更新间隔:1, 超时时间:10, 图标:cube, 颜色:#afe59a
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认立即刷新\n\n2️⃣ 超时时间\n\n超时时间, 默认10秒\n\n3️⃣ 图标\n\n默认cube\n\n4️⃣ 颜色\n\n默认#afe59a
 
 [Panel]
 # Panel: DNS刷新
@@ -15,4 +15,4 @@
 
 [Script]
 # Panel: DNS刷新
-Panel_Operate_FlushDNS = type =generic,timeout={{{脚本超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}},script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js
+Panel_Operate_FlushDNS = type =generic,timeout={{{超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}},script-path=https://raw.githubusercontent.com/zZPiglet/Task/master/asset/flushDNS.js

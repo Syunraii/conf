@@ -6,8 +6,8 @@
 #!author=fishingworld
 #!homepage=https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js
 
-#!arguments=面板更新间隔:1, 脚本超时时间:10, 图标:paperplane.circle, 颜色:#f6c970
-#!arguments-desc=1️⃣ 面板更新间隔\n\n默认1秒\n\n2️⃣ 脚本超时时间\n\n默认10秒\n\n3️⃣ 图标\n\n默认paperplane.circle\n\n4️⃣ 颜色\n\n默认#f6c970
+#!arguments=面板更新间隔:1, 超时时间:10, 图标:paperplane.circle, 颜色:#f6c970
+#!arguments-desc=1️⃣ 面板更新间隔\n\n默认1秒\n\n2️⃣ 超时时间\n\n默认10秒\n\n3️⃣ 图标\n\n默认paperplane.circle\n\n4️⃣ 颜色\n\n默认#f6c970
 
 [Panel]
 # Panel: 运行时长
@@ -15,4 +15,4 @@
 
 [Script]
 # Panel: 运行时长
-Panel_Info_ActTime = type =generic,timeout={{{脚本超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}},script-path=https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js
+Panel_Info_ActTime = type =generic,timeout={{{超时时间}}},argument=icon={{{图标}}}&color={{{颜色}}},script-path=https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js

@@ -6,13 +6,13 @@
 #!author=blackmatrix7
 #!homepage=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/script/smzdm/smzdm_daily.sgmodule
 
-#!arguments=获取:获取_什么值得买, 任务:任务_什么值得买, 执行时间:51 10 * * *, 脚本超时时间:60, 主机:hostname
+#!arguments=获取:获取_什么值得买, 任务:任务_什么值得买, 系统通知:1, 执行时间:52 10 * * *, 超时时间:60, 主机:hostname
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/boxjs.json\n\napp:什么值得买\n\n2️⃣ 使用方法\n\n登录什么值得买app, 进入"我的"页面, 手动签到一次, 提示获取Cookie成功即可\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
 
 [Script]
 {{{获取}}} = type =http-request,requires-body=1,max-size=0,pattern=^https?:\/\/user-api\.smzdm\.com\/checkin$,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
 
-{{{任务}}} = type =cron,wake-system=1,cronexp={{{执行时间}}},timeout={{{脚本超时时间}}},script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
+{{{任务}}} = type =cron,wake-system={{{系统通知}}},cronexp={{{执行时间}}},timeout={{{超时时间}}},script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_daily.js
 
 [MITM]
 {{{主机}}} = %APPEND% user-api.smzdm.com
