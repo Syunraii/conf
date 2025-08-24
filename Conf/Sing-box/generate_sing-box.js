@@ -23,6 +23,12 @@ let pri_subs = await produceArtifact({
   platform: 'sing-box',
   produceType: 'internal',
 })
+let tmp_subs = await produceArtifact({
+  name: "TmpSub",
+  type: 'collection',
+  platform: 'sing-box',
+  produceType: 'internal',
+})
 // 添加所有节点到outbounds锚点
 config.outbounds.push(...all_subs)
 
@@ -37,6 +43,10 @@ config.outbounds.map(i => {
 
   if (['🦄 故障转移'].includes(i.tag)) {
     i.outbounds.push(...getTags(pri_subs))
+  }
+
+  if (['🪂 临时选择'].includes(i.tag)) {
+    i.outbounds.push(...getTags(tmp_subs))
   }
 
   if (['🇭🇰 香港节点'].includes(i.tag)) {
