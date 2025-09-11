@@ -60,9 +60,6 @@ dns:
     - '*.stun.playstation.net'
     - xbox.*.microsoft.com
     - '*.xboxlive.com'
-    - '*.srv.nintendo.net'
-    - '*.stun.playstation.net'
-    - '*.xboxlive.com'
     - '*.battlenet.com.cn'
     - '*.battlenet.com'
     - '*.blzstatic.cn'
@@ -81,10 +78,10 @@ dns:
 proxies-global-config: &proxies-global-config {type: http, interval: 86400, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800, timeout: 300}}
 proxy-providers:
   MyPub: &MyPub
-    url: [sublink1]
+    url: [sub-link-Pub]
     <<: *proxies-global-config
   MyPri: &MyPri
-    url: [sublink2]
+    url: [sub-link-Pri]
     <<: *proxies-global-config
 
 # 策略组锚点参数
