@@ -32,6 +32,9 @@
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=wiki(\+|%20)([^&]+).+ https://wikipedia.org/wiki/$2 302
 
 # 信息类
+# yd  xxx (有道词典)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=yd\+([^&]+).+ http://dict.youdao.com/search?q=$1 302
+
 # bli xxx (哔哩哔哩)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=bli\+([^&]+).+ https://m.bilibili.com/search?keyword=$1 302
 
@@ -41,8 +44,14 @@
 # wb xxx (微博)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=wb(\+|%20)([^&]+).+ https://s.weibo.com/weibo/$2 302
 
+# x  xxx (X)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=x\+([^&]+).+ https://twitter.com/search?q=$1 302
+
 # av xxx (missav)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=av\+([^&]+).+ https://missav.ai/cn/search/$1 302
+
+# tmdb  xxx (tmdb)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=tmdb\+([^&]+).+ https://www.themoviedb.org/search?query=$1 302
 
 # 技术类
 # gh xxx (GitHub)
@@ -51,6 +60,8 @@
 # so xxx (Stack Overflow)
 ^https:\/\/{{{搜索引擎}}}.com\/\?q=so(\+|%20)([^&]+).+ https://stackoverflow.com/search?q=$2 302
 
+# gf  xxx (油叉搜索)
+^https:\/\/{{{搜索引擎}}}.com\/\?q=gf\+([^&]+).+ https://greasyfork.org/zh-CN/scripts?q=$1 302
 
 [MITM]
 hostname = %APPEND% duckduckgo.com
