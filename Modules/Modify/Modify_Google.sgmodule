@@ -1,6 +1,5 @@
 #!name=🔨 Modify: Google
 #!desc=[修改] Google防止自动换区
-#!system=ios
 #!category=🔨 Modify
 
 [URL Rewrite]
