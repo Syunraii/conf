@@ -6,7 +6,7 @@
 #!author=ClydeTime
 #!homepage=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js
 
-#!arguments=获取1:获取_哔哩哔哩_扫码, 获取2:获取_哔哩哔哩_APP, 任务1:任务_哔哩哔哩_每日, 任务2:任务_哔哩哔哩_积分, 系统通知:1, 执行时间1:43 10 * * *, 执行时间2:43 10 * * *, 超时时间1:15, 超时时间2:30, 主机:hostname
+#!arguments=获取1:获取_哔哩哔哩_扫码, 获取2:获取_哔哩哔哩_APP, 任务1:任务_哔哩哔哩_每日, 任务2:任务_哔哩哔哩_积分, 系统通知:1, 执行时间1:43 10 * * *, 执行时间2:45 10 * * *, 超时时间1:15, 超时时间2:30, 主机:hostname
 #!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/ClydeTime/BiliBili/main/boxjs/BiliBili.boxjs.json\n\napp:Bilibili.DailyBonus\n\n2️⃣ 使用方法\n\n登录/扫码登录哔哩哔哩app, 进入"我的"页面, 提示获取Cookie成功即可\n\n3️⃣ 获取\n\n获取Cookie成功后输入#禁用避免未知错误\n\n4️⃣ 任务\n\n执行任务, 输入#关闭\n\n5️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
 
 [Script]
