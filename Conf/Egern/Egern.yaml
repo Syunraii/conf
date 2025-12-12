@@ -1,8 +1,4 @@
-﻿#
-# by syunraii
-# 配合sub-store填入sub-link, 若不符合则按需调整
-#
-ipv6: false
+﻿ipv6: false
 vif_only: false
 hide_vpn_icon: false
 
