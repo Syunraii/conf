@@ -1,0 +1,407 @@
+##############################################
+# 订阅锚点
+proxies-global-config: &pgc {type: http, interval: 86400, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 300, timeout: 10}}
+proxy-providers:
+  MyAll: &MyAll
+    <<: *pgc
+    url: 所有订阅
+  MyPub: &MyPub
+    <<: *pgc
+    url: 常规订阅
+  MyPri: &MyPri
+    <<: *pgc
+    url: 故障订阅
+  MyTmp: &MyTmp
+    <<: *pgc
+    url: 临时订阅
+  MyEmby: &MyEmby
+    <<: *pgc
+    url: 大流量订阅
+##############################################
+
+##############################################
+port: 7890
+socks-port: 7891
+mode: rule
+log-level: info
+ipv6: false
+allow-lan: true
+unified-delay: true
+tcp-concurrent: true
+
+keep-alive-idle: 600
+keep-alive-interval: 30
+find-process-mode: strict
+
+global-ua: clash.meta
+global-client-fingerprint: chrome
+
+external-controller: 0.0.0.0:9090
+secret: "2333"
+external-ui: ui
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+# external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+geodata-mode: true
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 48
+geox-url:
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  asn: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb"
+
+profile:
+  store-selected: true 
+  store-fake-ip: false
+
+sniffer:
+  enable: true
+  sniff:
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+  force-domain:
+    - '*.v2ex.com'
+  skip-domain:
+    - '*.push.apple.com'
+    - '*.apple.com'
+    - '*.wechat.com'
+    - '*.qpic.cn'
+    - '*.qq.com'
+    - '*.wechatapp.com'
+    - '*.vivox.com'
+    # 向日葵远程
+    - '*.oray.com'
+    - '*.sunlogin.net'
+
+tun:
+  enable: true
+  # mixed/gvisor
+  stack: mixed
+  dns-hijack: 
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+dns:
+  enable: true
+  ipv6: false
+  prefer-h3: false
+  cache-algorithm: arc
+  respect-rules: false
+  use-hosts: true
+  use-system-hosts: true
+  listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - '*.lan'
+    - '*.local'
+    - '*.direct'
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time-ios.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - "*.pool.ntp.org"
+    - "+.services.googleapis.cn"
+    - '*.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - '*.srv.nintendo.net'
+    - '*.stun.playstation.net'
+    - xbox.*.microsoft.com
+    - '*.xboxlive.com'
+    - '*.srv.nintendo.net'
+    - '*.stun.playstation.net'
+    - '*.xboxlive.com'
+    - '*.battlenet.com.cn'
+    - '*.battlenet.com'
+    - '*.blzstatic.cn'
+    - '*.battle.net'
+    - "+.push.apple.com"
+    - "geosite:cn"
+    - "geosite:private"
+    - "geosite:category-games@cn"
+  default-nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+    - 114.114.114.114
+  nameserver:
+    - system
+    - quic://223.5.5.5
+    - tls://dot.pub:853
+    - tls://dns.alidns.com
+  fallback:
+    - tls://1.1.1.1:853
+    - tls://dns.google
+    - https://dns.google/dns-query
+##############################################
+
+# 策略组锚点参数
+## 我的订阅
+Proxies-Pub: &myPub {type: select , use: [MyPub]}
+Proxies-Pri: &myPri {type: select , use: [MyPri]}
+Proxies-Tmp: &myTmp {type: select , use: [MyTmp]}
+Proxies-Emby: &myEmby {type: select , use: [MyEmby]}
+
+FilterHK: &filterHK '(?i)🇭🇰|香港|(\b(HK|Hong Kong)\b)'
+FilterTW: &filterTW '(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)'
+FilterJP: &filterJP '(?i)🇯🇵|日本(\b(JP|Japan)\b)'
+FilterKR: &filterKR '(?i)🇰🇷|韩国|(\b(KR|South Korea)\b)'
+FilterUS: &filterUS '(?i)🇺🇸|美国(\b(US|United States)\b)'
+FilterSG: &filterSG '(?i)🇸🇬|新加坡|(\b(SG|Singapore)\b)'
+FilterOther: &filterOther '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$'
+
+## 基本行为
+DIRECT: &direct {type: select, proxies: [DIRECT]}
+REJECT: &reject {type: select, proxies: [REJECT]}
+DROP: &drop {type: select, proxies: [REJECT-DROP]}
+
+## 高级行为
+URL-TEST: &ut {type: url-test, tolerance: 200, interval: 180}
+FALLBACK: &fb {type: fallback, interval: 300}
+LOAD-BALANCE: &lb {type: load-balance, strategy: consistent-hashing, interval: 300}
+
+## 基本策略组
+SELECT-Global: &select-global {type: select, proxies: [🚀 自动选择, 🔰 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+SELECT-Auto: &select-auto {type: url-test,  proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+SELECT-manual: &select-manual {type: select, proxies: [🛫 常规订阅, 🦄 故障转移]}
+
+## 自定义策略组 顺序
+HEAD-global: &h-global {type: select, proxies: [🌐 全局选择, 🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
+HEAD-direct: &h-direct {type: select, proxies: [🎯 直接连接, 🈲 禁止访问, ⚪ 丢弃请求, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
+HEAD-reject: &h-reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
+
+## 自定义策略组 需求:Emby
+Emby-Global: &emby-global {type: select, proxies: [🎬 Emby订阅, 🎯 直接连接, 🎬 Emby💠, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Direct: &emby-direct {type: select, proxies: [🎯 直接连接, 🎬 Emby订阅, 🎬 Emby💠, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Select: &emby-select {type: select, proxies: [🎯 直接连接, 🎬 Emby订阅, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+
+
+proxy-groups:
+  - {name: "🌐 全局选择", <<: *select-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
+  - {name: "🚀 自动选择", <<: *select-auto, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png}
+  - {name: "🔰 手动选择", <<: *select-manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
+
+  - {name: "🛫 常规订阅", <<: *myPub, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
+  - {name: "🦄 故障转移", <<: *myPri, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
+  - {name: "🪂 临时订阅", <<: *myTmp, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
+  - {name: "🎬 Emby订阅", <<: *myEmby, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+
+  - {name: "🚫 广告拦截", <<: *h-reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
+  - {name: "⛔ 让我访问", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
+
+  - {name: "🎬 Emby🌐", <<: *emby-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  - {name: "🎬 Emby🎯", <<: *emby-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  - {name: "🎬 Emby💠", <<: *emby-select, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  
+  - {name: "📵 限定应用", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png}
+  - {name: "📚 我爱漫画", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png}
+  - {name: "📱 电报通讯", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
+  - {name: "🌟 抖音视频", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
+  - {name: "📹 巴哈姆特", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
+  - {name: "🍻 哔哩哔哩", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
+  - {name: "🎥 国外媒体", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png}
+  - {name: "🎮 游戏平台", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
+  - {name: "🐳 开发工具", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png}
+  - {name: "🕊️ 谷歌服务", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
+  - {name: "Ⓜ️ 微软服务", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
+  - {name: "🍎 苹果服务", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png}
+  - {name: "☁️ 云服务商", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png}
+  - {name: "🍟 整点薯条", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png}
+  - {name: "🍔 整点汉堡", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
+  
+  - {name: 🇭🇰 香港节点, <<: *fb, use: [MyPub, MyPri], filter: *filterHK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾节点, <<: *fb, use: [MyPub, MyPri], filter: *filterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本节点, <<: *fb, use: [MyPub, MyPri], filter: *filterJP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国节点, <<: *fb, use: [MyPub, MyPri], filter: *filterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国节点, <<: *fb, use: [MyPub, MyPri], filter: *filterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城节点, <<: *fb, use: [MyPub, MyPri], filter: *filterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他节点, <<: *fb, use: [MyPub, MyPri], filter: *filterOther, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+
+  - {name: 🎯 直接连接, <<: *direct, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
+  - {name: 🈲 禁止访问, <<: *reject, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
+  - {name: ⚪ 丢弃请求, <<: *drop, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
+
+# 规则锚点参数
+rule-anchor:
+  IP_Msr: &ip_msr {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  IP_Text: &ip_text {type: http, interval: 86400, behavior: ipcidr, format: text}
+  IP_Yaml: &ip_yaml {type: http, interval: 86400, behavior: ipcidr, format: yaml}
+
+  Domain_Msr: &d_msr {type: http, interval: 86400, behavior: domain, format: mrs}
+  Domain_Text: &d_text {type: http, interval: 86400, behavior: domain, format: text}
+  Domain_Yaml: &d_yaml {type: http, interval: 86400, behavior: domain, format: yaml}
+
+  Class_Text: &c_text {type: http, interval: 86400, behavior: classical, format: text}
+  Class_Yaml: &c_yaml {type: http, interval: 86400, behavior: classical, format: yaml}
+
+# 规则提供者
+rule-providers:
+  # 其他不在GEOIP、GEOSITE数据库内的规则
+  RULE-CYaml-Lan: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Lan.yaml"}
+  RULE-CYaml-Direct: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Direct.yaml"}
+  # 下载 
+  RULE-CYaml-Download: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Download.yaml"}
+  RULE-CYaml-GameDownload: {<<: *c_yaml, url: "https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml"}
+  RULE-CYaml-GameDownloadCN: {<<: *c_yaml, url: "https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN_No_Resolve.yaml"}
+  # 隐私保护、反劫持、广告拦截
+  RULE-CYaml-Privacy: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Privacy.yaml"}
+  RULE-CYaml-Hijacking: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Hijacking.yaml"}
+  RULE-CYaml-AdvertisingLite: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/AdvertisingLite.yaml"}
+  # 📵 限定应用
+  RULE-CYaml-Line: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Line.yaml"}
+  RULE-CYaml-Pixiv: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Pixiv.yaml"}
+  RULE-CYaml-Abema: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Abema.yaml"}
+  RULE-CYaml-AbemaTV: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/AbemaTV.yaml"}
+  RULE-CYaml-Niconico: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Niconico.yaml"}
+  RULE-CYaml-PayPal: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/PayPal.yaml"}
+  # 📚 我爱漫画
+  RULE-CYaml-Picacg: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Picacg.yaml"}
+  RULE-CYaml-EHGallery: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/EHGallery.yaml"}
+  # 📱 电报通讯, 🌟 抖音视频, 🍻 哔哩哔哩, 📹 巴哈姆特
+  RULE-CYaml-Telegram: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Telegram.yaml"}
+  RULE-CYaml-TikTok: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/TikTok.yaml"}
+  RULE-CYaml-Bahamut: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Bahamut.yaml"}
+  RULE-CYaml-BiliBili: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/BiliBili.yaml"}
+  # 🎥 国外媒体
+  RULE-CYaml-YouTube: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/YouTube.yaml"}
+  # 🎮 游戏平台
+  RULE-CYaml-Game: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Game.yaml"}
+  # 🐳 开发工具
+  RULE-CText-AI: {<<: *c_text, url: "https://raw.githubusercontent.com/Repcz/Tool/refs/heads/X/mihomo/Rules/AI.list"}
+  RULE-CYaml-GitHub: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/GitHub.yaml"}
+  RULE-CYaml-Developer: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Developer.yaml"}
+  # 🕊️ 谷歌服务, Ⓜ️ 微软服务, 🍎 苹果服务
+  RULE-CYaml-Google: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Google.yaml"}
+  RULE-CYaml-Microsoft: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Microsoft.yaml"}
+  RULE-CYaml-Apple: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Apple.yaml"}
+  # ☁️ 云服务商
+  RULE-CYaml-Cloudflare: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Cloudflare.yaml"}
+  RULE-CYaml-Akamai: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Akamai.yaml"}
+  # 🍟 整点薯条
+  RULE-CYaml-SpeedTest: {<<: *c_yaml, url: "https://kelee.one/Tool/Clash/Rule/SpeedtestInternational.yaml"}
+  RULE-CYaml-IPTVOther: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/IPTVOther.yaml"}
+  RULE-CYaml-GlobalMedia: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/GlobalMedia.yaml"}
+  RULE-CYaml-Proxy: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Proxy.yaml"}
+  RULE-CYaml-Global: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Global.yaml"}
+  # 🍔 整点汉堡
+  RULE-CYaml-SpeedTestCN: {<<: *c_yaml, url: "https://kelee.one/Tool/Clash/Rule/SpeedtestChina.yaml"}
+  RULE-CYaml-Cloudflarecn: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Cloudflarecn.yaml"}
+  RULE-CYaml-IPTVMainland: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/IPTVMainland.yaml"}
+  RULE-CYaml-ChinaMax: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/ChinaMax.yaml"}
+
+rules:
+  # 绕过局域网
+  - IP-CIDR,10.0.0.0/8,🎯 直接连接
+  - IP-CIDR,172.16.0.0/12,🎯 直接连接
+  - IP-CIDR,192.168.0.0/16,🎯 直接连接
+  - IP-CIDR,100.64.0.0/10,🎯 直接连接
+  - IP-CIDR,127.0.0.0/8,🎯 直接连接
+  # 局域网
+  - RULE-SET,RULE-CYaml-Lan,🎯 直接连接
+  - GEOIP,private,🎯 直接连接
+  - GEOSITE,private,🎯 直接连接
+  - RULE-SET,RULE-CYaml-Direct,🎯 直接连接
+  # 下载
+  - DOMAIN-SUFFIX,115cdn.net,🍔 整点汉堡
+  - DOMAIN-SUFFIX,steamserver.net,🍔 整点汉堡
+  - RULE-SET,RULE-CYaml-Download,🍔 整点汉堡
+  - RULE-SET,RULE-CYaml-GameDownload,🍔 整点汉堡
+  - RULE-SET,RULE-CYaml-GameDownloadCN,🍔 整点汉堡
+  - GEOSITE,steam@cn,🍔 整点汉堡
+  # 隐私保护、反劫持、广告拦截
+  - GEOSITE,category-ads-all,🚫 广告拦截
+  - RULE-SET,RULE-CYaml-Privacy,🚫 广告拦截
+  - RULE-SET,RULE-CYaml-Hijacking,🚫 广告拦截
+  - RULE-SET,RULE-CYaml-AdvertisingLite,🚫 广告拦截
+
+
+  # ####自定义分流 Start####
+  # 限定应用:📵 限定应用, 📚 我爱漫画
+  # # 萌娘百科
+  - DOMAIN-SUFFIX,mooegirl.org.cn,🍔 整点汉堡
+  - DOMAIN-KEYWORD,mooegirl,📵 限定应用
+  # # bangumi
+  - GEOSITE,bangumi,📵 限定应用
+
+  # # 其他应用
+  - RULE-SET,RULE-CYaml-Line,📵 限定应用
+  - RULE-SET,RULE-CYaml-Pixiv,📵 限定应用
+  - RULE-SET,RULE-CYaml-Abema,📵 限定应用
+  - RULE-SET,RULE-CYaml-AbemaTV,📵 限定应用
+  - RULE-SET,RULE-CYaml-Niconico,📵 限定应用
+  - RULE-SET,RULE-CYaml-PayPal,📵 限定应用
+  # 我爱漫画:📚 我爱漫画
+  # # 哔咔漫画
+  - RULE-SET,RULE-CYaml-Picacg,📚 我爱漫画
+  - RULE-SET,RULE-CYaml-EHGallery,📚 我爱漫画
+  # # 禁漫天堂
+  - GEOSITE,18comic,📚 我爱漫画
+
+  # 其他优先软件
+  # # 工具
+  - DOMAIN-SUFFIX,kelee.one,🍟 整点薯条
+  - DOMAIN-SUFFIX,lily.lat,🍟 整点薯条
+  - DOMAIN-SUFFIX,mjj.today,🍟 整点薯条
+  # ####自定义分流 End####
+
+
+  # 应用分流:📱 电报通讯, 🌟 抖音视频, 🍻 哔哩哔哩, 📹 巴哈姆特
+  - RULE-SET,RULE-CYaml-Telegram,📱 电报通讯
+  - RULE-SET,RULE-CYaml-TikTok,🌟 抖音视频
+  - RULE-SET,RULE-CYaml-Bahamut,📹 巴哈姆特
+  - RULE-SET,RULE-CYaml-BiliBili,🍻 哔哩哔哩
+  # 国外媒体:🎥 国外媒体
+  - RULE-SET,RULE-CYaml-YouTube,🎥 国外媒体
+  # 游戏平台:🎮 游戏平台
+  - RULE-SET,RULE-CYaml-Game,🎮 游戏平台
+  # 开发平台:🐳 开发工具
+  - RULE-SET,RULE-CText-AI,🐳 开发工具
+  - RULE-SET,RULE-CYaml-GitHub,🐳 开发工具
+  - RULE-SET,RULE-CYaml-Developer,🐳 开发工具
+  # 服务平台:🕊️ 谷歌服务, Ⓜ️ 微软服务, 🍎 苹果服务
+  - RULE-SET,RULE-CYaml-Google,🕊️ 谷歌服务
+  - RULE-SET,RULE-CYaml-Microsoft,Ⓜ️ 微软服务
+  - RULE-SET,RULE-CYaml-Apple,☁️ 云服务商
+  # 云服务商:☁️ 云服务商
+  - RULE-SET,RULE-CYaml-Cloudflare,☁️ 云服务商
+  - RULE-SET,RULE-CYaml-Akamai,☁️ 云服务商
+  # 国外兜底:🍟 整点薯条
+  - RULE-SET,RULE-CYaml-SpeedTest,🍟 整点薯条
+  - RULE-SET,RULE-CYaml-GlobalMedia,🍟 整点薯条
+  - RULE-SET,RULE-CYaml-Proxy,🍟 整点薯条
+  - RULE-SET,RULE-CYaml-Global,🍟 整点薯条
+  # 国内兜底:🍔 整点汉堡
+  - RULE-SET,RULE-CYaml-SpeedTestCN,🍔 整点汉堡
+  - RULE-SET,RULE-CYaml-Cloudflarecn,🍔 整点汉堡
+  - RULE-SET,RULE-CYaml-IPTVMainland,🍔 整点汉堡
+  - RULE-SET,RULE-CYaml-ChinaMax,🍔 整点汉堡
+  # 最后匹配
+  - MATCH,⛔ 让我访问
