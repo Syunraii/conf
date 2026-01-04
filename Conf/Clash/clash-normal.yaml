@@ -1,23 +1,22 @@
 ##############################################
-# 推荐使用Sub-Store进行订阅管理
 # 订阅锚点
 proxies-global-config: &pgc {type: http, interval: 86400, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 300, timeout: 10}}
 proxy-providers:
   MyAll: &MyAll
     <<: *pgc
-    url: 所有订阅
+    url: sublink/Clash-All
   MyPub: &MyPub
     <<: *pgc
-    url: 常规订阅
+    url: sublink/Clash-Pub
   MyPri: &MyPri
     <<: *pgc
-    url: 故障订阅
+    url: sublink/Clash-Pri
   MyTmp: &MyTmp
     <<: *pgc
-    url: 临时订阅
+    url: sublink/Clash-Tmp
   MyEmby: &MyEmby
     <<: *pgc
-    url: 大流量订阅
+    url: sublink/Clash-Emby
 ##############################################
 
 ##############################################
@@ -179,10 +178,15 @@ FilterUS: &filterUS '(?i)🇺🇸|美国(\b(US|United States)\b)'
 FilterSG: &filterSG '(?i)🇸🇬|新加坡|(\b(SG|Singapore)\b)'
 FilterOther: &filterOther '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$'
 
+#Filter_Emby_Normal: &filter_Emby_Normal '(?i)(?!.*×)(🇭🇰|香港|🇨🇳|🇹🇼|台湾|🇰🇷|韩国|🇺🇸|美国|🇸🇬|新加坡|狮城|\b(HK|HongKong|Hong Kong|TW|Taiwan|KR|Korea|South Korea|US|USA|United States|SG|Singapore)\b)' 
+Filter_Emby_Normal: &filter_Emby_Normal '^(?!.*(?i)(3×|🇯🇵|日本|(\b(JP|Japan)\b))).*$' 
+#Filter_Emby_Low: &filter_Emby_Low '(?i)(?=.*0\.1×).*(🇭🇰|香港|🇨🇳|🇹🇼|台湾|🇰🇷|韩国|🇺🇸|美国|🇸🇬|新加坡|狮城|\b(HK|HongKong|Hong Kong|TW|Taiwan|KR|Korea|South Korea|US|USA|United States|SG|Singapore)\b)'
+Filter_Emby_Low: &filter_Emby_Low '(?i)^(?=.*0\.1×)(?!.*(🇯🇵|日本|\b(JP|Japan\b))).*$'
+
 ## 基本行为
-DIRECT: &direct {type: select, proxies: [DIRECT]}
-REJECT: &reject {type: select, proxies: [REJECT]}
-DROP: &drop {type: select, proxies: [REJECT-DROP]}
+DIRECT: &direct {type: select, proxies: [DIRECT], hidden: true}
+REJECT: &reject {type: select, proxies: [REJECT], hidden: true}
+DROP: &drop {type: select, proxies: [REJECT-DROP], hidden: true}
 
 ## 高级行为
 URL-TEST: &ut {type: url-test, tolerance: 200, interval: 180}
@@ -200,9 +204,9 @@ HEAD-direct: &h-direct {type: select, proxies: [🎯 直接连接, 🈲 禁止�
 HEAD-reject: &h-reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
 
 ## 自定义策略组 需求:Emby
-Emby-Global: &emby-global {type: select, proxies: [🎬 Emby订阅, 🎯 直接连接, 🎬 Emby💠, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
-Emby-Direct: &emby-direct {type: select, proxies: [🎯 直接连接, 🎬 Emby订阅, 🎬 Emby💠, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
-Emby-Select: &emby-select {type: select, proxies: [🎯 直接连接, 🎬 Emby订阅, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Global: &emby-global {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎯 直接连接, 🎬 Emby💠, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Direct: &emby-direct {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby💠, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Select: &emby-select {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
 
 
 proxy-groups:
@@ -213,14 +217,16 @@ proxy-groups:
   - {name: "🛫 常规订阅", <<: *myPub, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
   - {name: "🦄 故障转移", <<: *myPri, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
   - {name: "🪂 临时订阅", <<: *myTmp, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
-  - {name: "🎬 Emby订阅", <<: *myEmby, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
 
   - {name: "🚫 广告拦截", <<: *h-reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: "⛔ 让我访问", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
 
+  - {name: "🎬 Emby🪜", <<: *s-sg, use: [MyEmby], filter: *filter_Emby_Normal, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  - {name: "🎬 Emby♿️", <<: *s-sg, use: [MyEmby], filter: *filter_Emby_Low, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  
   - {name: "🎬 Emby🌐", <<: *emby-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: "🎬 Emby🎯", <<: *emby-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
   - {name: "🎬 Emby💠", <<: *emby-select, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  - {name: "🎬 Emby🎯", <<: *emby-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
   
   - {name: "📵 限定应用", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png}
   - {name: "📚 我爱漫画", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png}
@@ -246,9 +252,9 @@ proxy-groups:
   - {name: 🇸🇬 狮城节点, <<: *fb, use: [MyPub, MyPri], filter: *filterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
   - {name: 🌍 其他节点, <<: *fb, use: [MyPub, MyPri], filter: *filterOther, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
-  - {name: 🎯 直接连接, <<: *direct, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
-  - {name: 🈲 禁止访问, <<: *reject, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
-  - {name: ⚪ 丢弃请求, <<: *drop, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
+  - {name: 🎯 直接连接, <<: *direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
+  - {name: 🈲 禁止访问, <<: *reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
+  - {name: ⚪ 丢弃请求, <<: *drop, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
 
 # 规则锚点参数
 rule-anchor:
@@ -276,7 +282,7 @@ rule-providers:
   RULE-CYaml-Privacy: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Privacy.yaml"}
   RULE-CYaml-Hijacking: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Hijacking.yaml"}
   RULE-CYaml-AdvertisingLite: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/AdvertisingLite.yaml"}
-  # 📵 限定应用
+
   RULE-CYaml-Line: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Line.yaml"}
   RULE-CYaml-Pixiv: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Pixiv.yaml"}
   RULE-CYaml-Abema: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Abema.yaml"}
@@ -343,6 +349,9 @@ rules:
   - RULE-SET,RULE-CYaml-Hijacking,🚫 广告拦截
   - RULE-SET,RULE-CYaml-AdvertisingLite,🚫 广告拦截
 
+  # ####我的Emby,Start#####
+  # ####我的Emby,End#####
+
 
   # ####自定义分流 Start####
   # 限定应用:📵 限定应用, 📚 我爱漫画
@@ -351,6 +360,24 @@ rules:
   - DOMAIN-KEYWORD,mooegirl,📵 限定应用
   # # bangumi
   - GEOSITE,bangumi,📵 限定应用
+  # # pixiv转发
+  - DOMAIN-SUFFIX,pixiv.re,📵 限定应用
+  # # age动漫
+  - DOMAIN-SUFFIX,agedm.org,📵 限定应用
+  # # Follow
+  - DOMAIN-SUFFIX,follow.is,📵 限定应用
+  # # javlib
+  - DOMAIN-SUFFIX,javlibrary.com,📵 限定应用
+  # # jable
+  - DOMAIN-SUFFIX,jable.tv,📵 限定应用
+  # # javday
+  - DOMAIN-SUFFIX,javday.app,📵 限定应用
+  # # MissAV
+  - DOMAIN-SUFFIX,missav.ai,📵 限定应用
+  - DOMAIN-SUFFIX,missav.ws,📵 限定应用
+  - DOMAIN-SUFFIX,surrit.com,🍔 整点汉堡
+  # # iwara
+  - DOMAIN-SUFFIX,iwara.tv,📵 限定应用
 
   # # 其他应用
   - RULE-SET,RULE-CYaml-Line,📵 限定应用
@@ -360,6 +387,30 @@ rules:
   - RULE-SET,RULE-CYaml-Niconico,📵 限定应用
   - RULE-SET,RULE-CYaml-PayPal,📵 限定应用
   # 我爱漫画:📚 我爱漫画
+  # # Yealico规则
+  - DOMAIN,wwc3818290.home.blog,📚 我爱漫画
+  - DOMAIN-SUFFIX,yealico.site,📚 我爱漫画
+  # # 拷贝漫画
+  - DOMAIN-KEYWORD,copy20,📚 我爱漫画
+  - DOMAIN-KEYWORD,copymanga,📚 我爱漫画
+  - DOMAIN-KEYWORD,copy-manga,📚 我爱漫画
+  - DOMAIN-KEYWORD,mangacopy,📚 我爱漫画
+  - DOMAIN-KEYWORD,mangafuna,📚 我爱漫画
+  # # 热辣漫画
+  - DOMAIN-KEYWORD,relamanhua,📚 我爱漫画
+  # # 漫画巴士
+  - DOMAIN-KEYWORD,mangabz,📚 我爱漫画
+  - DOMAIN-KEYWORD,comicbz,📚 我爱漫画
+  # # 漫画柜
+  - DOMAIN-KEYWORD,manhuagui,📚 我爱漫画
+  # # moe
+  - DOMAIN-SUFFIX,kox.moe,📚 我爱漫画
+  # # mangadex
+  - DOMAIN-SUFFIX,mangadex.org,📚 我爱漫画
+  # # cola漫画
+  - DOMAIN-KEYWORD,colamanga,📚 我爱漫画
+  # # 漫画db
+  - DOMAIN-SUFFIX,manhuadb.com,📚 我爱漫画
   # # 哔咔漫画
   - RULE-SET,RULE-CYaml-Picacg,📚 我爱漫画
   - RULE-SET,RULE-CYaml-EHGallery,📚 我爱漫画
@@ -367,12 +418,20 @@ rules:
   - GEOSITE,18comic,📚 我爱漫画
 
   # 其他优先软件
+  # # 弹幕api
+  - DOMAIN-SUFFIX,dandanplay.net,🍔 整点汉堡
+  - DOMAIN-SUFFIX,mikufans.netlib.re,🍔 整点汉堡
+  - DOMAIN-SUFFIX,mikufans.netlify.app,🍔 整点汉堡
+  - DOMAIN-SUFFIX,mikufans-danmu.vercel.app,🍟 整点薯条
+  # # 软件
+  - DOMAIN-SUFFIX,vvebo.vip,🍔 整点汉堡
+  - DOMAIN-KEYWORD,anyviewer,🍔 整点汉堡
+  - DOMAIN-KEYWORD,aomeisoftware,🍔 整点汉堡
   # # 工具
   - DOMAIN-SUFFIX,kelee.one,🍟 整点薯条
   - DOMAIN-SUFFIX,lily.lat,🍟 整点薯条
   - DOMAIN-SUFFIX,mjj.today,🍟 整点薯条
   # ####自定义分流 End####
-
 
   # 应用分流:📱 电报通讯, 🌟 抖音视频, 🍻 哔哩哔哩, 📹 巴哈姆特
   - RULE-SET,RULE-CYaml-Telegram,📱 电报通讯
