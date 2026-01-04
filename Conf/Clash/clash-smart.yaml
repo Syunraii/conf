@@ -213,9 +213,9 @@ HEAD-direct: &h-direct {type: select, proxies: [🎯 直接连接, 🈲 禁止�
 HEAD-reject: &h-reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择]}
 
 ## 自定义策略组 需求:Emby
-Emby-Global: &emby-global {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎯 直接连接, 🎬 Emby💠, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
-Emby-Direct: &emby-direct {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby💠, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
-Emby-Select: &emby-select {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Global: &emby-global {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Select: &emby-select {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Direct: &emby-direct {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
 
 
 proxy-groups:
