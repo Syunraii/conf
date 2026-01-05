@@ -242,8 +242,8 @@ proxy-groups:
   - {name: "📚 我爱漫画", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png}
   - {name: "📱 电报通讯", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
   - {name: "🌟 抖音视频", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
-  - {name: "📹 巴哈姆特", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
   - {name: "🍻 哔哩哔哩", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
+  - {name: "📹 巴哈姆特", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
   - {name: "🎥 国外媒体", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png}
   - {name: "🎮 游戏平台", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
   - {name: "🐳 开发工具", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png}
@@ -305,6 +305,7 @@ rule-providers:
   RULE-CYaml-GameDownload: {<<: *c_yaml, url: "https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml"}
   RULE-CYaml-GameDownloadCN: {<<: *c_yaml, url: "https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN_No_Resolve.yaml"}
   # 隐私保护、反劫持、广告拦截
+  RULE-CText-Reject: {<<: *c_text, url: "https://raw.githubusercontent.com/Repcz/Tool/refs/heads/X/mihomo/Rules/Reject.list"}
   RULE-CYaml-Privacy: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Privacy.yaml"}
   RULE-CYaml-Hijacking: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Hijacking.yaml"}
   RULE-CYaml-AdvertisingLite: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/AdvertisingLite.yaml"}
@@ -371,6 +372,7 @@ rules:
   - GEOSITE,steam@cn,🍔 整点汉堡
   # 隐私保护、反劫持、广告拦截
   - GEOSITE,category-ads-all,🚫 广告拦截
+  - RULE-SET,RULE-CText-Reject,🚫 广告拦截
   - RULE-SET,RULE-CYaml-Privacy,🚫 广告拦截
   - RULE-SET,RULE-CYaml-Hijacking,🚫 广告拦截
   - RULE-SET,RULE-CYaml-AdvertisingLite,🚫 广告拦截
@@ -444,11 +446,6 @@ rules:
   - GEOSITE,18comic,📚 我爱漫画
 
   # 其他优先软件
-  # # 弹幕api
-  - DOMAIN-SUFFIX,dandanplay.net,🍔 整点汉堡
-  - DOMAIN-SUFFIX,mikufans.netlib.re,🍔 整点汉堡
-  - DOMAIN-SUFFIX,mikufans.netlify.app,🍔 整点汉堡
-  - DOMAIN-SUFFIX,mikufans-danmu.vercel.app,🍟 整点薯条
   # # 软件
   - DOMAIN-SUFFIX,vvebo.vip,🍔 整点汉堡
   - DOMAIN-KEYWORD,anyviewer,🍔 整点汉堡
