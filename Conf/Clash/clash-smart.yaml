@@ -278,9 +278,9 @@ proxy-groups:
   - {name: 🇸🇬 狮城节点s, <<: *s, use: [MyPub, MyPri], filter: *filterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
   - {name: 🌍 其他节点s, <<: *s, use: [MyPub, MyPri], filter: *filterOther, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
-  - {name: 🎯 直接连接, <<: *direct, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
-  - {name: 🈲 禁止访问, <<: *reject, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
-  - {name: ⚪ 丢弃请求, <<: *drop, hidden: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
+  - {name: 🎯 直接连接, <<: *direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
+  - {name: 🈲 禁止访问, <<: *reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
+  - {name: ⚪ 丢弃请求, <<: *drop, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
 
 # 规则锚点参数
 rule-anchor:
@@ -322,8 +322,8 @@ rule-providers:
   # 📱 电报通讯, 🌟 抖音视频, 🍻 哔哩哔哩, 📹 巴哈姆特
   RULE-CYaml-Telegram: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Telegram.yaml"}
   RULE-CYaml-TikTok: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/TikTok.yaml"}
-  RULE-CYaml-Bahamut: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Bahamut.yaml"}
   RULE-CYaml-BiliBili: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/BiliBili.yaml"}
+  RULE-CYaml-Bahamut: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Bahamut.yaml"}
   # 🎥 国外媒体
   RULE-CYaml-YouTube: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/YouTube.yaml"}
   # 🎮 游戏平台
@@ -447,9 +447,12 @@ rules:
 
   # 其他优先软件
   # # 软件
-  - DOMAIN-SUFFIX,vvebo.vip,🍔 整点汉堡
+  # ## AnyViewer
   - DOMAIN-KEYWORD,anyviewer,🍔 整点汉堡
   - DOMAIN-KEYWORD,aomeisoftware,🍔 整点汉堡
+  # ## Forward
+  - DOMAIN-SUFFIX,vvebo.vip,🍔 整点汉堡
+  - DOMAIN-SUFFIX,letterboxd.com,🍔 整点汉堡
   # # 工具
   - DOMAIN-SUFFIX,kelee.one,🍟 整点薯条
   - DOMAIN-SUFFIX,lily.lat,🍟 整点薯条

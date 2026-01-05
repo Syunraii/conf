@@ -189,9 +189,9 @@ REJECT: &reject {type: select, proxies: [REJECT], hidden: true}
 DROP: &drop {type: select, proxies: [REJECT-DROP], hidden: true}
 
 ## 高级行为
-URL-TEST: &ut {type: url-test, tolerance: 200, interval: 180}
-FALLBACK: &fb {type: fallback, interval: 300}
-LOAD-BALANCE: &lb {type: load-balance, strategy: consistent-hashing, interval: 300}
+URL-TEST: &ut {type: url-test, tolerance: 200, interval: 180, hidden: false}
+FALLBACK: &fb {type: fallback, interval: 300, hidden: true}
+LOAD-BALANCE: &lb {type: load-balance, strategy: consistent-hashing, interval: 300, hidden: true}
 
 ## 基本策略组
 SELECT-Global: &select-global {type: select, proxies: [🚀 自动选择, 🔰 手动选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
@@ -296,8 +296,8 @@ rule-providers:
   # 📱 电报通讯, 🌟 抖音视频, 🍻 哔哩哔哩, 📹 巴哈姆特
   RULE-CYaml-Telegram: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Telegram.yaml"}
   RULE-CYaml-TikTok: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/TikTok.yaml"}
-  RULE-CYaml-Bahamut: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Bahamut.yaml"}
   RULE-CYaml-BiliBili: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/BiliBili.yaml"}
+  RULE-CYaml-Bahamut: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/Bahamut.yaml"}
   # 🎥 国外媒体
   RULE-CYaml-YouTube: {<<: *c_yaml, url: "https://rule.kelee.one/Clash/YouTube.yaml"}
   # 🎮 游戏平台
@@ -421,9 +421,12 @@ rules:
 
   # 其他优先软件
   # # 软件
-  - DOMAIN-SUFFIX,vvebo.vip,🍔 整点汉堡
+  # ## AnyViewer
   - DOMAIN-KEYWORD,anyviewer,🍔 整点汉堡
   - DOMAIN-KEYWORD,aomeisoftware,🍔 整点汉堡
+  # ## Forward
+  - DOMAIN-SUFFIX,vvebo.vip,🍔 整点汉堡
+  - DOMAIN-SUFFIX,letterboxd.com,🍔 整点汉堡
   # # 工具
   - DOMAIN-SUFFIX,kelee.one,🍟 整点薯条
   - DOMAIN-SUFFIX,lily.lat,🍟 整点薯条

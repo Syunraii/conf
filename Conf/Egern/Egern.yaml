@@ -1,692 +1,823 @@
-﻿ipv6: false
-vif_only: false
-hide_vpn_icon: false
-
-http_port: 3080
-socks_port: 3090
-allow_external_connections: false
-
-compat_route: false
-include_apns: false
-include_all_networks: false
-include_local_networks: false
-include_cellular_services: false
-
+﻿vif_only: true
+hijack_dns:
+- '*:53'
+direct_latency_test_url: http://www.baidu.com/generate_204
 proxy_latency_test_url: http://connectivitycheck.gstatic.com/generate_204
-direct_latency_test_url: http://www.baidu.com
 geoip_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb
 asn_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
-
-# vif_included_routes:
-# - 192.168.0.1/32
-# vif_excluded_routes:
-# - 192.168.0.1/32
-
-# bypass_tunnel_proxy:
-#  - *.example.com
-
-hijack_dns:
-  - "*:53"
 dns:
-  # DNS 引导器：用于解析上游DNS(DoT、DoH、DoQ)，默认 system
   bootstrap:
-    - system
+  - system
   upstreams:
     Domestic-DNS:
-      - 119.29.29.29
-      - 223.5.5.5
+    - 119.29.29.29
+    - 223.5.5.5
     DNS_Cloudflare:
-      - https://1.1.1.1
-      - https://1.0.0.1
+    - https://1.1.1.1
+    - https://1.0.0.1
     DNS_Google:
-      - https://8.8.8.8
-      - https://8.8.4.4
+    - https://8.8.8.8
+    - https://8.8.4.4
   forward:
-    - regex:
-        match: ^ad\..*|^ads\..*
-        value: quic://dns.adguard-dns.com
-    - wildcard:
-        match: "*"
-        value: Domestic-DNS
+  - wildcard:
+      match: '*.cn'
+      value: system
+  - wildcard:
+      match: '*'
+      value: Domestic-DNS
   hosts:
-    localhost: 127.0.0.1
-    # App Store下载请求解析到
-    #iosapps.itunes.apple.com: iosapps.itunes.apple.com.download.ks-cdn.com
-  # 查询公共IP地址的URL，用于获取本机的公网IP地址。
-  public_ip_lookup_url: https://ifconfig.me/ip
-
+   localhost: 127.0.0.1
+public_ip_lookup_url: https://ifconfig.me/ip
+real_ip_domains:
+- '*.lan'
+- '*.direct'
+- '*.msftconnecttest.com'
+- '*.msftncsi.com'
+- '*.srv.nintendo.net'
+- '*.stun.playstation.net '
+- xbox.*.microsoft.com
+- '*.xboxlive.com'
+- '*.battlenet.com.cn'
+- '*.battlenet.com'
+- '*.blzstatic.cn'
+- '*.battle.net'
+- '*.cmpassport.com'
+- id6.me
+- open.e.189.cn
+- mdn.open.wo.cn
+- opencloud.wostore.cn
+- auth.wosms.cn
+- '*.10099.com.cn'
 policy_groups:
-  - external:
-      name: 🛰️ 所有订阅
-      type: select
-      hidden: true
-      flatten: false
-      interval: 86400
-      update_interval: 86400
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Catnet.png
-      urls:
-        - [sub-link-All]
-
-  - external:
-      name: 🛫 常规订阅
-      type: select
-      hidden: false
-      flatten: true
-      interval: 86400
-      update_interval: 86400
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png
-      urls:
-        - [sub-link-Pub]
-
-  - external:
-      name: 🦄 故障转移
-      type: select
-      hidden: false
-      flatten: true
-      interval: 86400
-      update_interval: 86400
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png
-      urls:
-        - [sub-link-Pri]
-
-  - select:
-      name: 🎯 直接连接
-      hidden: true
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
-      policies:
-        - DIRECT
-
-  - select:
-      name: 🈲 禁止访问
-      hidden: true
-      flatten: false
-      policies:
-        - REJECT
-
-  - select:
-      name: 🗑️ 丢弃请求
-      hidden: true
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
-      policies:
-        - REJECT-DROP
-
-  - select:
-      name: 🌐 全局选择
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
-      policies:
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🎯 直接连接
-
-  - auto_test:
-      name: 🚀 自动选择
-      hidden: false
-      flatten: false
-      interval: 300
-      tolerance: 100
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
-      policies:
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-
-  - select:
-      name: 🔰 手动选择
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png
-      policies:
-        - 🛫 常规订阅
-        - 🦄 故障转移
-
-  - select:
-      name: 🚫 隐私拦截
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png
-      policies:
-        - 🈲 禁止访问
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🔰 手动选择
-
-  - select:
-      name: ⛔ 让我访问
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🈲 禁止访问
-        - 🔰 手动选择
-
-  - select:
-      name: 📵 限定应用
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 📚 我爱漫画
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 📱 电报通讯
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🌟 抖音视频
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🍻 哔哩哔哩
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png
-      policies:
-        - 🎯 直接连接
-        - 🌐 全局选择
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 📹 巴哈姆特
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
-      policies:
-        - 🇨🇳 台湾节点
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🎥 国外媒体
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🎮 游戏平台
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png
-      policies:
-        - 🎯 直接连接
-        - 🌐 全局选择
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🐳 开发工具
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🕊️ 谷歌服务
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: Ⓜ️ 微软服务
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🍎 苹果服务
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
-      policies:
-        - 🎯 直接连接
-        - 🌐 全局选择
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: ☁️ 云服务商
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🍟 整点薯条
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png
-      policies:
-        - 🌐 全局选择
-        - 🎯 直接连接
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - select:
-      name: 🍔 整点汉堡
-      hidden: false
-      flatten: false
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
-      policies:
-        - 🎯 直接连接
-        - 🌐 全局选择
-        - 🚀 自动选择
-        - 🔰 手动选择
-        - 🦄 故障转移
-        - 🇭🇰 香港节点
-        - 🇨🇳 台湾节点
-        - 🇯🇵 日本节点
-        - 🇰🇷 韩国节点
-        - 🇺🇸 美国节点
-        - 🇸🇬 狮城节点
-        - 🌍 其他节点
-
-  - auto_test:
-      name: 🇭🇰 香港节点
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
-      filter: (?i)🇭🇰|香港|(\b(HK|Hong)\b)
-      flatten: true
-      tolerance: 100
-      policies:
-        - 🛫 常规订阅
-
-  - auto_test:
-      name: 🇨🇳 台湾节点
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
-      filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)
-      flatten: true
-      tolerance: 100
-      policies:
-        - 🛫 常规订阅
-
-  - auto_test:
-      name: 🇯🇵 日本节点
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-      filter: (?i)🇯🇵|日本|(\b(JP|Japan)\b)
-      flatten: true
-      tolerance: 100
-      policies:
-        - 🛫 常规订阅
-
-  - auto_test:
-      name: 🇰🇷 韩国节点
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
-      filter: (?i)🇰🇷|韩国|(\b(KR|South Korea)\b)
-      flatten: true
-      tolerance: 100
-      policies:
-        - 🛫 常规订阅
-
-  - auto_test:
-      name: 🇺🇸 美国节点
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
-      filter: (?i)🇺🇸|美国|洛杉矶|圣何塞|(\b(US|United States)\b)
-      flatten: true
-      tolerance: 100
-      policies:
-        - 🛫 常规订阅
-
-  - auto_test:
-      name: 🇸🇬 狮城节点
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
-      filter: (?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)
-      flatten: true
-      tolerance: 100
-      policies:
-        - 🛫 常规订阅
-
-  - auto_test:
-      name: 🌍 其他节点
-      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png
-      filter: ^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$
-      flatten: true
-      tolerance: 100
-      policies:
-        - 🛫 常规订阅
-
+- external:
+    name: 🛰️ 所有订阅
+    type: select
+    urls:
+    - sublink/Egern-All
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Catnet.png
+    hidden: false
+- external:
+    name: 🛫 常规订阅
+    type: select
+    urls:
+    - sublink/Egern-Pub
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png
+    hidden: false
+- external:
+    name: 🦄 故障转移
+    type: select
+    urls:
+    - sublink/Egern-Pri
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png
+    hidden: false
+- external:
+    name: 🪂 临时订阅
+    type: select
+    urls:
+    - sublink/Egern-Tmp
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+    hidden: false
+- external:
+    name: 🎬 Emby订阅
+    type: select
+    urls:
+    - sublink/Egern-Emby
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+    hidden: false
+- select:
+    name: 🎯 直接连接
+    policies:
+    - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+    hidden: true
+- select:
+    name: 🈲 禁止访问
+    policies:
+    - REJECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+    hidden: true
+- select:
+    name: 🗑️ 丢弃请求
+    policies:
+    - REJECT-DROP
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
+    hidden: true
+- select:
+    name: 🌐 全局选择
+    policies:
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🎯 直接连接
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
+    hidden: false
+- auto_test:
+    name: 🚀 自动选择
+    policies:
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
+    hidden: false
+- select:
+    name: 🔰 手动选择
+    policies:
+    - 🛫 常规订阅
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png
+    hidden: false
+- select:
+    name: 🚫 隐私拦截
+    policies:
+    - 🈲 禁止访问
+    - 🗑️ 丢弃请求
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png
+    hidden: false
+- select:
+    name: 📵 系统升级
+    policies:
+    - 🈲 禁止访问
+    - 🗑️ 丢弃请求
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_Update.png
+    hidden: false
+- select:
+    name: ⛔ 让我访问
+    policies:
+    - 🎯 直接连接
+    - 🌐 全局选择
+    - 🈲 禁止访问
+    - 🗑️ 丢弃请求
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png
+    hidden: false
+- select:
+    name: 🎬 Emby🪜
+    policies:
+    - 🎬 Emby订阅
+    flatten: true
+    filter: ^(?!.*(?i)(3×|🇯🇵|日本|(\b(JP|Japan)\b))).*$
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+    hidden: false
+- select:
+    name: 🎬 Emby♿️
+    policies:
+    - 🎬 Emby订阅
+    flatten: true
+    filter: (?i)^(?=.*0\.1×)(?!.*(🇯🇵|日本|\b(JP|Japan\b))).*$
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+    hidden: false
+- select:
+    name: 🎬 Emby🌐
+    policies:
+    - 🎬 Emby🪜
+    - 🎬 Emby♿️
+    - 🎯 直接连接
+    - 🌐 全局选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+    hidden: false
+- select:
+    name: 🎬 Emby🎯
+    policies:
+    - 🎯 直接连接
+    - 🎬 Emby🪜
+    - 🎬 Emby♿️
+    - 🌐 全局选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+    hidden: false
+- select:
+    name: 🎬 Emby💠
+    policies:
+    - 🎬 Emby🪜
+    - 🎬 Emby♿️
+    - 🎯 直接连接
+    - 🌐 全局选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+    hidden: false
+- select:
+    name: 📵 限定应用
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png
+    hidden: false
+- select:
+    name: 📚 我爱漫画
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png
+    hidden: false
+- select:
+    name: 📱 电报通讯
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+    hidden: false
+- select:
+    name: 🌟 抖音视频
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+    hidden: false
+- select:
+    name: 🍻 哔哩哔哩
+    policies:
+    - 🎯 直接连接
+    - 🌐 全局选择
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png
+    hidden: false
+- select:
+    name: 📹 巴哈姆特
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
+    hidden: false
+- select:
+    name: 🎥 国外媒体
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png
+    hidden: false
+- select:
+    name: 🎮 游戏平台
+    policies:
+    - 🎯 直接连接
+    - 🌐 全局选择
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png
+    hidden: false
+- select:
+    name: 🐳 开发工具
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png
+    hidden: false
+- select:
+    name: 🕊️ 谷歌服务
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+    hidden: false
+- select:
+    name: Ⓜ️ 微软服务
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+    hidden: false
+- select:
+    name: 🍏 苹果账号
+    policies:
+    - 🎯 直接连接
+    - 🌐 全局选择
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png
+    hidden: false
+- select:
+    name: 🍎 苹果服务
+    policies:
+    - 🎯 直接连接
+    - 🌐 全局选择
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+    hidden: false
+- select:
+    name: ☁️ 云服务商
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
+    hidden: false
+- select:
+    name: 🍟 整点薯条
+    policies:
+    - 🌐 全局选择
+    - 🎯 直接连接
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png
+    hidden: false
+- select:
+    name: 🍔 整点汉堡
+    policies:
+    - 🎯 直接连接
+    - 🌐 全局选择
+    - 🚀 自动选择
+    - 🔰 手动选择
+    - 🦄 故障转移
+    - 🪂 临时订阅
+    - 🇭🇰 香港节点
+    - 🇨🇳 台湾节点
+    - 🇯🇵 日本节点
+    - 🇰🇷 韩国节点
+    - 🇺🇸 美国节点
+    - 🇸🇬 狮城节点
+    - 🌍 其他节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+    hidden: false
+- fallback:
+    name: 🇭🇰 香港节点
+    policies:
+    - 🛫 常规订阅
+    flatten: true
+    filter: (?i)🇭🇰|香港|(\b(HK|Hong)\b)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+- fallback:
+    name: 🇨🇳 台湾节点
+    policies:
+    - 🛫 常规订阅
+    flatten: true
+    filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+- fallback:
+    name: 🇯🇵 日本节点
+    policies:
+    - 🛫 常规订阅
+    flatten: true
+    filter: (?i)🇯🇵|日本|(\b(JP|Japan)\b)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+- fallback:
+    name: 🇰🇷 韩国节点
+    policies:
+    - 🛫 常规订阅
+    flatten: true
+    filter: (?i)🇰🇷|韩国|(\b(KR|South Korea)\b)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+- fallback:
+    name: 🇺🇸 美国节点
+    policies:
+    - 🛫 常规订阅
+    flatten: true
+    filter: (?i)🇺🇸|美国|洛杉矶|圣何塞|(\b(US|United States)\b)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+- fallback:
+    name: 🇸🇬 狮城节点
+    policies:
+    - 🛫 常规订阅
+    flatten: true
+    filter: (?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+- fallback:
+    name: 🌍 其他节点
+    policies:
+    - 🛫 常规订阅
+    flatten: true
+    filter: ^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png
 rules:
-  # ip匹配
-  - ip_cidr:
-      match: 0.0.0.0/32
-      policy: REJECT
-  # - ip_cidr6:
-  #     match: "ipv6/32"
-  #     policy: 🍔 整点汉堡
-  # 域名匹配
-  - domain:
-      match: msmp.abchina.com.cn
-      policy: REJECT
-  - domain_keyword:
-      match: 18comic
-      policy: 📵 限定应用
-  - domain:
-      match: steamserver.net
-      policy: 🍔 整点汉堡
-  - domain_suffix:
-      match: vvebo.vip
-      policy: 🍔 整点汉堡
+- ip_cidr:
+    match: 0.0.0.0/32
+    policy: REJECT
+- domain:
+    match: msmp.abchina.com.cn
+    policy: REJECT
+- domain_suffix:
+    match: steamserver.net
+    policy: 🍔 整点汉堡
+- domain_suffix:
+    match: 115cdn.net
+    policy: 🍔 整点汉堡
+- domain_suffix:
+    match: moegirl.org.cn
+    policy: 🍔 整点汉堡
+- domain_keyword:
+    match: moegirl
+    policy: 📵 限定应用
+- domain_suffix:
+    match: bgm.tv
+    policy: 📵 限定应用
+- domain_suffix:
+    match: chii.in
+    policy: 📵 限定应用
+- domain_suffix:
+    match: bangumi.tv
+    policy: 📵 限定应用
+- domain_suffix:
+    match: pixiv.re
+    policy: 📵 限定应用
+- domain_suffix:
+    match: follow.is
+    policy: 📵 限定应用
+- domain_suffix:
+    match: javlibrary.com
+    policy: 📵 限定应用
+- domain_suffix:
+    match: jable.tv
+    policy: 📵 限定应用
+- domain_suffix:
+    match: javday.app
+    policy: 📵 限定应用
+- domain_suffix:
+    match: missav.ai
+    policy: 📵 限定应用
+- domain_suffix:
+    match: missav.ws
+    policy: 📵 限定应用
+- domain_suffix:
+    match: surrit.com
+    policy: 🍔 整点汉堡
+- domain_suffix:
+    match: iwara.tv
+    policy: 📵 限定应用
+- domain:
+    match: wc3818290.home.blog
+    policy: 📚 我爱漫画
+- domain_suffix:
+    match: yealico.site
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: 18comic
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: copy20
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: copy-manga
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: copymanga
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: mangacopy
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: mangafuna
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: relamanhua
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: mangabz
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: mangabz
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: manhuagui
+    policy: 📚 我爱漫画
+- domain_suffix:
+    match: kox.moe
+    policy: 📚 我爱漫画
+- domain_suffix:
+    match: mangadex.org
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: colamanga
+    policy: 📚 我爱漫画
+- domain_suffix:
+    match: manhuadb.com
+    policy: 📚 我爱漫画
+- domain_keyword:
+    match: anyviewer
+    policy: 🍔 整点汉堡
+- domain_keyword:
+    match: aomeisoftware
+    policy: 🍔 整点汉堡
+- domain_suffix:
+    match: vvebo.vip
+    policy: 🍔 整点汉堡
+- domain_suffix:
+    match: letterboxd.com
+    policy: 🍔 整点汉堡
+- domain_suffix:
+    match: kelee.one
+    policy: 🍟 整点薯条
+- domain_suffix:
+    match: kelee.one
+    policy: 🍟 整点薯条
+- domain_suffix:
+    match: mjj.today
+    policy: 🍟 整点薯条
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list
+    policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Hijacking/Hijacking.list
+    policy: 🚫 隐私拦截
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Privacy/Privacy_All_No_Resolve.list
+    policy: 🚫 隐私拦截
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/refs/heads/X/Surge/Rules/Prevent_DNS_Leaks.list
+    policy: 🚫 隐私拦截
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/refs/heads/X/Surge/Rules/Reject.list
+    policy: 🚫 隐私拦截
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/AdvertisingLite/AdvertisingLite_All_No_Resolve.list
+    policy: 🚫 隐私拦截
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Game/GameDownloadCN/GameDownloadCN.list
+    policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/DownloadCDN_CN.list
+    policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Game/GameDownload/GameDownload.list
+    policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/DownloadCDN_Global.list
+    policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Download/Download.list
+    policy: 🍔 整点汉堡
 
-  # 规则集
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Lan/Lan.yaml
-      policy: 🍔 整点汉堡
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/Lan.yaml
-      policy: 🍔 整点汉堡
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Direct/Direct.yaml
-      policy: 🍔 整点汉堡
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/Direct.yaml
-      policy: 🍔 整点汉堡
-
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/Reject.yaml
-      policy: 🚫 隐私拦截
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Hijacking/Hijacking.yaml
-      policy: 🚫 隐私拦截
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Privacy/Privacy.yaml
-      policy: 🚫 隐私拦截
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AdvertisingLite/AdvertisingLite.yaml
-      policy: 🚫 隐私拦截
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Line/Line.yaml
-      policy: 📵 限定应用
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Pixiv/Pixiv.yaml
-      policy: 📵 限定应用
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AbemaTV/AbemaTV.yaml
-      policy: 📵 限定应用
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Niconico/Niconico.yaml
-      policy: 📵 限定应用
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/PayPal/PayPal.yaml
-      policy: 📵 限定应用
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/EHGallery/EHGallery.yaml
-      policy: 📚 我爱漫画
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Telegram/Telegram.yaml
-      policy: 📱 电报通讯
-
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/Telegram.yaml
-      policy: 📱 电报通讯
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/TikTok/TikTok.yaml
-      policy: 🌟 抖音视频
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Bilibili/Bilibili.yaml
-      policy: 🍻 哔哩哔哩
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Bahamut/Bahamut.yaml
-      policy: 📹 巴哈姆特
-
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/Emby.yaml
-      policy: 🎥 国外媒体
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Emby/Emby.yaml
-      policy: 🎥 国外媒体
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/YouTube/YouTube.yaml
-      policy: 🎥 国外媒体
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Game/Game.yaml
-      policy: 🎮 游戏平台
-
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/AI.yaml
-      policy: 🐳 开发工具
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GitHub/GitHub.yaml
-      policy: 🐳 开发工具
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Developer/Developer.yaml
-      policy: 🐳 开发工具
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Google/Google.yaml
-      policy: 🕊️ 谷歌服务
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Microsoft/Microsoft.yaml
-      policy: Ⓜ️ 微软服务
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Apple/Apple.yaml
-      policy: 🍎 苹果服务
-
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Cloudflare/Cloudflare.yaml
-      policy: ☁️ 云服务商
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Akamai/Akamai.yaml
-      policy: ☁️ 云服务商
-  # 国外兜底
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/IPTVOther/IPTVOther.yaml
-      policy: 🍟 整点薯条
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GlobalMedia/GlobalMedia.yaml
-      policy: 🍟 整点薯条
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Proxy/Proxy.yaml
-      policy: 🍟 整点薯条
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Global/Global.yaml
-      policy: 🍟 整点薯条
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/Proxy.yaml
-      policy: 🍟 整点薯条
-  # 下载
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN.yaml
-      policy: 🍔 整点汉堡
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/DownloadCDN_CN.yaml
-      policy: 🍔 整点汉堡
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Game/GameDownload/GameDownload.yaml
-      policy: 🍔 整点汉堡
-  - rule_set:
-      match: https://github.com/Repcz/Tool/raw/X/Egern/Rules/DownloadCDN_Global.yaml
-      policy: 🍔 整点汉堡
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Download/Download.yaml
-      policy: 🍔 整点汉堡
-  # 国内兜底
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Cloudflarecn/Cloudflarecn.yaml
-      policy: 🍔 整点汉堡
-  - rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/IPTVMainland/IPTVMainland.yaml
-      policy: 🍔 整点汉堡
-
-  - geoip:
-      match: CN
-      policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Line/Line.list
+    policy: 📵 限定应用
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Pixiv/Pixiv.list
+    policy: 📵 限定应用
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/AbemaTV/AbemaTV.list
+    policy: 📵 限定应用
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Niconico/Niconico.list
+    policy: 📵 限定应用
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/PayPal/PayPal.list
+    policy: 📵 限定应用
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Picacg/Picacg.list
+    policy: 📚 我爱漫画
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/EHGallery/EHGallery.list
+    policy: 📚 我爱漫画
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/Telegram.list
+    policy: 📱 电报通讯
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Telegram/Telegram.list
+    policy: 📱 电报通讯
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/TikTok/TikTok.list
+    policy: 🌟 抖音视频
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/BiliBili/BiliBili.list
+    policy: 🍻 哔哩哔哩
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Bahamut/Bahamut.list
+    policy: 📹 巴哈姆特
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/Emby.list
+    policy: 🎥 国外媒体
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Emby/Emby.list
+    policy: 🎥 国外媒体
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/YouTube/YouTube.list
+    policy: 🎥 国外媒体
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Game/Game.list
+    policy: 🎮 游戏平台
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/AI.list
+    policy: 🐳 开发工具
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GitHub/GitHub.list
+    policy: 🐳 开发工具
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Developer/Developer.list
+    policy: 🐳 开发工具
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Google/Google.list
+    policy: 🕊️ 谷歌服务
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Microsoft/Microsoft.list
+    policy: Ⓜ️ 微软服务
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/SystemOTA/SystemOTA.list
+    policy: 📵 系统升级
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/AppleID/AppleID.list
+    policy: 🍏 苹果账号
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Apple/Apple_All.list
+    policy: 🍎 苹果服务
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Cloudflare/Cloudflare.list
+    policy: ☁️ 云服务商
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Akamai/Akamai.list
+    policy: ☁️ 云服务商
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/IPTVOther/IPTVOther_All_No_Resolve.list
+    policy: 🍟 整点薯条
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia_All_No_Resolve.list
+    policy: 🍟 整点薯条
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Proxy/Proxy_All_No_Resolve.list
+    policy: 🍟 整点薯条
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_All_No_Resolve.list
+    policy: 🍟 整点薯条
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Direct/Direct.list
+    policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Cloudflarecn/Cloudflarecn.list
+    policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/IPTVMainland/IPTVMainland.list
+    policy: 🍔 整点汉堡
+- rule_set:
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax_All.list
+    policy: 🍔 整点汉堡
+- geoip:
+    match: CN
+    policy: 🍔 整点汉堡
+- default:
+    policy: ⛔ 让我访问
+mitm:
+  enabled: true
