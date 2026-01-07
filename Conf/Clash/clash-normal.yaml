@@ -179,9 +179,10 @@ FilterSG: &filterSG '(?i)🇸🇬|新加坡|(\b(SG|Singapore)\b)'
 FilterOther: &filterOther '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$'
 
 #Filter_Emby_Normal: &filter_Emby_Normal '(?i)(?!.*×)(🇭🇰|香港|🇨🇳|🇹🇼|台湾|🇰🇷|韩国|🇺🇸|美国|🇸🇬|新加坡|狮城|\b(HK|HongKong|Hong Kong|TW|Taiwan|KR|Korea|South Korea|US|USA|United States|SG|Singapore)\b)' 
-Filter_Emby_Normal: &filter_Emby_Normal '^(?!.*(?i)(3×|🇯🇵|日本|(\b(JP|Japan)\b))).*$' 
 #Filter_Emby_Low: &filter_Emby_Low '(?i)(?=.*0\.1×).*(🇭🇰|香港|🇨🇳|🇹🇼|台湾|🇰🇷|韩国|🇺🇸|美国|🇸🇬|新加坡|狮城|\b(HK|HongKong|Hong Kong|TW|Taiwan|KR|Korea|South Korea|US|USA|United States|SG|Singapore)\b)'
+Filter_Emby_Normal: &filter_Emby_Normal '^(?!.*(?i)(3×|🇯🇵|日本|(\b(JP|Japan)\b))).*$' 
 Filter_Emby_Low: &filter_Emby_Low '(?i)^(?=.*0\.1×)(?!.*(🇯🇵|日本|\b(JP|Japan\b))).*$'
+Filter_Emby_Low: &filter_Emby_Specify '^(?!.*(?i)(×|🇭🇰|香港| 🇯🇵|日本|🇺🇸 |美国|(\b(JP|Japan)\b))).*$'
 
 ## 基本行为
 DIRECT: &direct {type: select, proxies: [DIRECT], hidden: true}
@@ -204,9 +205,9 @@ HEAD-direct: &h-direct {type: select, proxies: [🎯 直接连接, 🈲 禁止�
 HEAD-reject: &h-reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
 
 ## 自定义策略组 需求:Emby
-Emby-Global: &emby-global {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
-Emby-Select: &emby-select {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
-Emby-Direct: &emby-direct {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Global: &emby-global {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Select: &emby-select {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
+Emby-Direct: &emby-direct {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🌐 全局选择, 🔰 手动选择, 🦄 故障转移, 🪂 临时订阅]}
 
 
 proxy-groups:
@@ -223,6 +224,7 @@ proxy-groups:
 
   - {name: "🎬 Emby🪜", type: select, use: [MyEmby], filter: *filter_Emby_Normal, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
   - {name: "🎬 Emby♿️", type: select, use: [MyEmby], filter: *filter_Emby_Low, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  - {name: "🎬 Emby🈯️", type: select, use: [MyEmby], filter: *filter_Emby_Specify, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
   
   - {name: "🎬 Emby🌐", <<: *emby-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
   - {name: "🎬 Emby💠", <<: *emby-select, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
