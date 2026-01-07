@@ -182,7 +182,7 @@ FilterOther: &filterOther '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)
 #Filter_Emby_Low: &filter_Emby_Low '(?i)(?=.*0\.1×).*(🇭🇰|香港|🇨🇳|🇹🇼|台湾|🇰🇷|韩国|🇺🇸|美国|🇸🇬|新加坡|狮城|\b(HK|HongKong|Hong Kong|TW|Taiwan|KR|Korea|South Korea|US|USA|United States|SG|Singapore)\b)'
 Filter_Emby_Normal: &filter_Emby_Normal '^(?!.*(?i)(3×|🇯🇵|日本|(\b(JP|Japan)\b))).*$' 
 Filter_Emby_Low: &filter_Emby_Low '(?i)^(?=.*0\.1×)(?!.*(🇯🇵|日本|\b(JP|Japan\b))).*$'
-Filter_Emby_Low: &filter_Emby_Specify '^(?!.*(?i)(×|🇭🇰|香港| 🇯🇵|日本|🇺🇸 |美国|(\b(JP|Japan)\b))).*$'
+filter_Emby_Specify: &filter_Emby_Specify '^(?!.*(?i)(×|🇭🇰|香港| 🇯🇵|日本|🇺🇸 |美国|(\b(JP|Japan)\b))).*$'
 
 ## 基本行为
 DIRECT: &direct {type: select, proxies: [DIRECT], hidden: true}
