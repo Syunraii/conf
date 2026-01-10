@@ -94,7 +94,7 @@ policy_groups:
     name: 🈲 禁止访问
     policies:
     - REJECT
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png
     hidden: true
 - select:
     name: 🗑️ 丢弃请求

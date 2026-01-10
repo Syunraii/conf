@@ -282,7 +282,7 @@ proxy-groups:
 
   - {name: 🎯 直接连接, <<: *direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: 🈲 禁止访问, <<: *reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
-  - {name: ⚪ 丢弃请求, <<: *drop, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
+  - {name: ⚪ 丢弃请求, <<: *drop, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png}
 
 # 规则锚点参数
 rule-anchor:
