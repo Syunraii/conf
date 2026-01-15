@@ -172,17 +172,17 @@ Proxies-Pri: &myPri {type: select , use: [MyPri]}
 Proxies-Tmp: &myTmp {type: select , use: [MyTmp]}
 Proxies-Emby: &myEmby {type: select , use: [MyEmby]}
 
-FilterHK: &filterHK '(?i)🇭🇰|香港|(\b(HK|Hong Kong)\b)'
-FilterTW: &filterTW '(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)'
-FilterJP: &filterJP '(?i)🇯🇵|日本(\b(JP|Japan)\b)'
-FilterKR: &filterKR '(?i)🇰🇷|韩国|(\b(KR|South Korea)\b)'
-FilterUS: &filterUS '(?i)🇺🇸|美国(\b(US|United States)\b)'
-FilterSG: &filterSG '(?i)🇸🇬|新加坡|(\b(SG|Singapore)\b)'
+FilterHK: &filterHK '^(?!.*×)(?i).*?(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b).*$'
+FilterTW: &filterTW '^(?!.*×)(?i).*?(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b).*$'
+FilterJP: &filterJP '^(?!.*×)(?i).*(🇯🇵|日本|\b(JP|Japan)\b).*$'
+FilterKR: &filterKR '^(?!.*×)(?i).*(🇰🇷|韩国|\b(KR|South Korea)\b).*$ '
+FilterUS: &filterUS '^(?!.*×)(?i).*?(🇺🇸|美国|\b(US|USA|United States)\b).*$'
+FilterSG: &filterSG '^(?!.*×)(?i).*?(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b).*$'
 FilterOther: &filterOther '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$'
 
 #Filter_Emby_Normal: &filter_Emby_Normal '(?i)(?!.*×)(🇭🇰|香港|🇨🇳|🇹🇼|台湾|🇰🇷|韩国|🇺🇸|美国|🇸🇬|新加坡|狮城|\b(HK|HongKong|Hong Kong|TW|Taiwan|KR|Korea|South Korea|US|USA|United States|SG|Singapore)\b)' 
 #Filter_Emby_Low: &filter_Emby_Low '(?i)(?=.*0\.1×).*(🇭🇰|香港|🇨🇳|🇹🇼|台湾|🇰🇷|韩国|🇺🇸|美国|🇸🇬|新加坡|狮城|\b(HK|HongKong|Hong Kong|TW|Taiwan|KR|Korea|South Korea|US|USA|United States|SG|Singapore)\b)'
-Filter_Emby_Normal: &filter_Emby_Normal '^(?!.*(?i)(3×|🇯🇵|日本|(\b(JP|Japan)\b))).*$'
+Filter_Emby_Normal: &filter_Emby_Normal '^(?!.*(?i)(×|🇯🇵|日本|(\b(JP|Japan)\b))).*$'
 Filter_Emby_Low: &filter_Emby_Low '(?i)^(?=.*0\.1×)(?!.*(🇯🇵|日本|\b(JP|Japan\b))).*$'
 filter_Emby_Specify: &filter_Emby_Specify '^(?!.*(?i)(×|🇭🇰|香港| 🇯🇵|日本|🇺🇸 |美国|(\b(JP|Japan)\b))).*$'
 
