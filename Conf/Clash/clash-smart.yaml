@@ -175,7 +175,7 @@ Proxies-Emby: &myEmby {type: select , use: [MyEmby]}
 FilterHK: &filterHK '^(?!.*×)(?i).*?(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b).*$'
 FilterTW: &filterTW '^(?!.*×)(?i).*?(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b).*$'
 FilterJP: &filterJP '^(?!.*×)(?i).*(🇯🇵|日本|\b(JP|Japan)\b).*$'
-FilterKR: &filterKR '^(?!.*×)(?i).*(🇰🇷|韩国|\b(KR|South Korea)\b).*$ '
+FilterKR: &filterKR '^(?!.*×)(?i).*(🇰🇷|韩国|\b(KR|South Korea)\b).*$'
 FilterUS: &filterUS '^(?!.*×)(?i).*?(🇺🇸|美国|\b(US|USA|United States)\b).*$'
 FilterSG: &filterSG '^(?!.*×)(?i).*?(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b).*$'
 FilterOther: &filterOther '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$'
