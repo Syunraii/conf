@@ -1,27 +1,6 @@
 ##############################################
-# 当前为手动配置, 适用substore管理订阅
-# 请自行填入"订阅地址", 不可直接远程获取和覆写
-##############################################
-# 订阅锚点
-proxies-global-config: &pgc {type: http, interval: 86400, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 300, timeout: 10}}
-proxy-providers:
-  MyAll: &MyAll
-    <<: *pgc
-    url: 订阅地址
-  MyPub: &MyPub
-    <<: *pgc
-    url: 订阅地址
-  MyPri: &MyPri
-    <<: *pgc
-    url: 订阅地址
-  MyTmp: &MyTmp
-    <<: *pgc
-    url: 订阅地址
-  MyEmby: &MyEmby
-    <<: *pgc
-    url: 订阅地址
-##############################################
-
+# 当前为override配置
+# 可直接远程获取并覆写订阅配置
 ##############################################
 port: 7890
 socks-port: 7891
@@ -61,7 +40,7 @@ profile:
 
 sniffer:
   enable: true
-  parse-pure-ip: true  
+  parse-pure-ip: true
   force-dns-mapping: true
   override-destination: true
   sniff:
@@ -164,22 +143,13 @@ dns:
     - tls://dns.google
     - https://dns.google/dns-query
 ##############################################
-
-##############################################
-# 策略组锚点参数
-## 我的订阅
-Proxies-Pub: &myPub {type: select , use: [MyPub]}
-Proxies-Pri: &myPri {type: select , use: [MyPri]}
-Proxies-Tmp: &myTmp {type: select , use: [MyTmp]}
-Proxies-Emby: &myEmby {type: select , use: [MyEmby]}
-##############################################
 ## 基本过滤
-FilterHK: &filterHK '^(?!.*[×x])(?i).*?(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b).*$'
-FilterTW: &filterTW '^(?!.*[×x])(?i).*?(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b).*$'
-FilterJP: &filterJP '^(?!.*[×x])(?i).*(🇯🇵|日本|\b(JP|Japan)\b).*$'
-FilterKR: &filterKR '^(?!.*[×x])(?i).*(🇰🇷|韩国|\b(KR|South Korea)\b).*$'
-FilterUS: &filterUS '^(?!.*[×x])(?i).*?(🇺🇸|美国|\b(US|USA|United States)\b).*$'
-FilterSG: &filterSG '^(?!.*[×x])(?i).*?(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b).*$'
+FilterHK: &filterHK '(?!.*[×x])(?i).*?(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b).*$'
+FilterTW: &filterTW '(?!.*[×x])(?i).*?(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b).*$'
+FilterJP: &filterJP '(?!.*[×x])(?i).*(🇯🇵|日本|\b(JP|Japan)\b).*$'
+FilterKR: &filterKR '(?!.*[×x])(?i).*(🇰🇷|韩国|\b(KR|South Korea)\b).*$'
+FilterUS: &filterUS '(?!.*[×x])(?i).*?(🇺🇸|美国|\b(US|USA|United States)\b).*$'
+FilterSG: &filterSG '(?!.*[×x])(?i).*?(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b).*$'
 FilterOther: &filterOther '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$'
 ## 高级过滤
 Filter_Emby_Normal: &filter_Emby_Normal '^(?!.*(?i)([×x]|🇯🇵|日本|(\b(JP|Japan)\b))).*$'
@@ -191,22 +161,18 @@ DIRECT: &direct {type: select, proxies: [DIRECT], hidden: true}
 REJECT: &reject {type: select, proxies: [REJECT], hidden: true}
 DROP: &drop {type: select, proxies: [REJECT-DROP], hidden: true}
 
-SELECT: &select {type: select, hidden: false}
-URL-TEST: &auto {type: url-test, tolerance: 200, interval: 180, hidden: false}
-FALLBACK: &fallback {type: fallback, interval: 300, hidden: true}
+SELECT: &select {type: select, hidden: false, include-all: true}
+URL-TEST: &auto {type: url-test, tolerance: 200, interval: 180, hidden: true, include-all: true}
+FALLBACK: &fallback {type: fallback, interval: 300, hidden: true, include-all: true}
 ##############################################
 ## 基本策略组
-SELECT-Global: &select-global {type: select, proxies: [🚀 自动选择, 🎯 直接连接, 🔰 手动选择, 🦄 故障选择, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
-SELECT-Auto: &select-auto {type: url-test,  proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
-SELECT-manual: &select-manual {type: select, proxies: [🛫 常规订阅, 🦄 故障选择]}
+SELECT-Global: &select-global {type: select, proxies: [🚀 自动选择, 🔰 手动选择, 🦄 故障选择, 🎯 直接连接, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+SELECT-Auto: &select-auto {type: url-test, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
+SELECT-manual: &select-manual {type: select, include-all: true}
 ## 自定义策略组 顺序
-HEAD-global: &h-global {type: select, proxies: [🌐 全局选择, 🎯 直接连接, 🔰 手动选择, 🦄 故障选择, 🪂 临时订阅, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
-HEAD-direct: &h-direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障选择, 🪂 临时订阅, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
+HEAD-global: &h-global {type: select, proxies: [🌐 全局选择, 🎯 直接连接, 🔰 手动选择, 🦄 故障选择, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
+HEAD-direct: &h-direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障选择, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🌍 其他节点]}
 HEAD-reject: &h-reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择]}
-## 自定义策略组 需求:Emby
-Emby-Global: &emby-global {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障选择, 🪂 临时订阅]}
-Emby-Select: &emby-select {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🎯 直接连接, 🌐 全局选择, 🔰 手动选择, 🦄 故障选择, 🪂 临时订阅]}
-Emby-Direct: &emby-direct {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🌐 全局选择, 🔰 手动选择, 🦄 故障选择, 🪂 临时订阅]}
 ##############################################
 
 ##############################################
@@ -214,22 +180,10 @@ proxy-groups:
   - {name: "🌐 全局选择", <<: *select-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
   - {name: "🚀 自动选择", <<: *select-auto, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png}
   - {name: "🔰 手动选择", <<: *select-manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
-
-  - {name: "🛫 常规订阅", <<: *myPub, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
-  - {name: "🦄 故障选择", <<: *myPri, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
-  - {name: "🪂 临时订阅", <<: *myTmp, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
-
+  - {name: "🦄 故障选择", <<: *select-manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
   - {name: "🚫 广告拦截", <<: *h-reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: "⛔ 让我访问", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
 
-  - {name: "🎬 Emby🪜", <<: *select, use: [MyEmby], filter: *filter_Emby_Normal, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: "🎬 Emby♿️", <<: *select, use: [MyEmby], filter: *filter_Emby_Low, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: "🎬 Emby🈯️", <<: *select, use: [MyEmby], filter: *filter_Emby_Specify, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  
-  - {name: "🎬 Emby🌐", <<: *emby-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: "🎬 Emby💠", <<: *emby-select, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: "🎬 Emby🎯", <<: *emby-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  
   - {name: "📵 限定应用", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png}
   - {name: "📚 我爱漫画", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ox.png}
   - {name: "📱 电报通讯", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
@@ -246,17 +200,18 @@ proxy-groups:
   - {name: "🍟 整点薯条", <<: *h-global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png}
   - {name: "🍔 整点汉堡", <<: *h-direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
   
-  - {name: 🇭🇰 香港节点, <<: *fallback, use: [MyPub, MyPri], filter: *filterHK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
-  - {name: 🇨🇳 台湾节点, <<: *fallback, use: [MyPub, MyPri], filter: *filterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
-  - {name: 🇯🇵 日本节点, <<: *fallback, use: [MyPub, MyPri], filter: *filterJP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
-  - {name: 🇰🇷 韩国节点, <<: *fallback, use: [MyPub, MyPri], filter: *filterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
-  - {name: 🇺🇸 美国节点, <<: *fallback, use: [MyPub, MyPri], filter: *filterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: 🇸🇬 狮城节点, <<: *fallback, use: [MyPub, MyPri], filter: *filterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: 🌍 其他节点, <<: *fallback, use: [MyPub, MyPri], filter: *filterOther, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+  # fallback可改成auto
+  - {name: 🇭🇰 香港节点, <<: *fallback, filter: *filterHK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾节点, <<: *fallback, filter: *filterTW, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本节点, <<: *fallback, filter: *filterJP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国节点, <<: *fallback, filter: *filterKR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国节点, <<: *fallback, filter: *filterUS, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城节点, <<: *fallback, filter: *filterSG, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他节点, <<: *fallback, filter: *filterOther, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
   - {name: 🎯 直接连接, <<: *direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: 🈲 禁止访问, <<: *reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
-  - {name: ⚪ 丢弃请求, <<: *drop, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png}
+  - {name: ⚪ 丢弃请求, <<: *drop, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse_2.png}
 ##############################################
 
 ##############################################
@@ -358,9 +313,7 @@ rules:
   - RULE-SET,RULE-CYaml-AdvertisingLite,🚫 广告拦截
 
   # ####我的Emby,Start#####
-  # DOMAIN-SUFFIX,emby1.xyz,🎬 Emby🌐
-  # DOMAIN-SUFFIX,emby2.xyz,🎬 Emby💠
-  # DOMAIN-SUFFIX,emby3.xyz,🎬 Emby🎯
+  # 自定义
   # ####我的Emby,End#####
 
 
