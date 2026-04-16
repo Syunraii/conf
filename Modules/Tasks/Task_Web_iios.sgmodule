@@ -1,0 +1,14 @@
+#!name=🛎️ Tasks: iios
+#!desc=[任务] iios每日签到
+#!system=ios
+#!category=🛎️ Tasks: Web
+
+#!author=ZenmoFeiShi
+#!homepage=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/iios_checkin.js
+
+#!arguments=任务:任务_iios, 系统通知:1, 执行时间:45 10 * * *, 超时时间:60
+#!arguments-desc=1️⃣ 需要配合boxjs订阅使用\n\n订阅地址:https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Qx.boxjs.conf\n\napp:iios.fun登录签到\n\n2️⃣ 使用方法\n\n首先注册登录iios.fun, 后进入boxjs对应App页面, 输入帐号密码并测试成功即可\n\n3️⃣ 任务\n\n执行任务, 输入#关闭
+
+[Script]
+# Tasks: iios
+{{{任务}}} = type = cron, wake-system={{{系统通知}}}, cronexp={{{执行时间}}}, timeout={{{超时时间}}}, script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/iios_checkin.js
