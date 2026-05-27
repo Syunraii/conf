@@ -4,10 +4,10 @@
 # ## 注意: 如果没有多个订阅, 请删除对应行以及用到该锚点的地方, 推荐使用substore管理订阅
 BaseProxyProvider: &base_PP {type: http, interval: 86400, health-check: {enable: true, lazy: true, interval: 300, url: http://www.gstatic.com/generate_204}}
 proxy-providers:
-  优质订阅: &myPri {<<: *base_PP, override: {additional-prefix: "[优]"}, url: https://gist.githubusercontent.com/Syunraii/acaad63da29a7ad36d53c944d6fa2c2e/raw/Clash-Pri}
-  常规订阅: &myPub {<<: *base_PP, override: {additional-prefix: "[常]"}, url: https://gist.githubusercontent.com/Syunraii/acaad63da29a7ad36d53c944d6fa2c2e/raw/Clash-Pub}
-  备用订阅: &myBak {<<: *base_PP, override: {additional-prefix: "[备]"}, url: https://gist.githubusercontent.com/Syunraii/acaad63da29a7ad36d53c944d6fa2c2e/raw/Clash-Bak}
-  临时订阅: &myTmp {<<: *base_PP, override: {additional-prefix: "[临]"}, url: https://gist.githubusercontent.com/Syunraii/acaad63da29a7ad36d53c944d6fa2c2e/raw/Clash-Tmp}
+  优质订阅: &myPri {<<: *base_PP, override: {additional-prefix: "[优]"}, url: }
+  常规订阅: &myPub {<<: *base_PP, override: {additional-prefix: "[常]"}, url: }
+  备用订阅: &myBak {<<: *base_PP, override: {additional-prefix: "[备]"}, url: }
+  临时订阅: &myTmp {<<: *base_PP, override: {additional-prefix: "[临]"}, url: }
 
 # # 基本策略组
 # ## 基础类型
