@@ -82,7 +82,7 @@ SmartUS: &s_us {<<: *pg_sm_h, policy-priority: '🇭🇰:2;🇨🇳:3;🇯🇵:4
 SmartSG: &s_sg {<<: *pg_sm_h, policy-priority: '🇭🇰:1;🇨🇳:2;🇯🇵:3;🇰🇷:4;🇺🇸:5;🇸🇬:6'}
 
 # ## 自定义默认初始选择
-HeadGlobal: &head_global {type: select, proxies: [🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🪂 临时选择, 🦄 故障转移, 🇭🇰 香港节点, 🇭🇰 香港智能, 🇨🇳 台湾节点, 🇨🇳 台湾智能, 🇯🇵 日本节点, 🇯🇵 日本智能, 🇰🇷 韩国节点, 🇰🇷 韩国智能, 🇺🇸 美国节点, 🇺🇸 美国智能, 🇸🇬 狮城节点, 🇸🇬 狮城智能, 🌍 其他节点, 🌍 其他智能]}
+HeadGlobal: &head_global {type: select, proxies: [🌐 全局选择, 🎯 直接连接, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🪂 临时选择, 🦄 故障转移, 🇭🇰 香港节点, 🇭🇰 香港智能, 🇨🇳 台湾节点, 🇨🇳 台湾智能, 🇯🇵 日本节点, 🇯🇵 日本智能, 🇰🇷 韩国节点, 🇰🇷 韩国智能, 🇺🇸 美国节点, 🇺🇸 美国智能, 🇸🇬 狮城节点, 🇸🇬 狮城智能, 🌍 其他节点, 🌍 其他智能]}
 HeadDirect: &head_direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🪂 临时选择, 🦄 故障转移, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港节点, 🇭🇰 香港智能, 🇨🇳 台湾节点, 🇨🇳 台湾智能, 🇯🇵 日本节点, 🇯🇵 日本智能, 🇰🇷 韩国节点, 🇰🇷 韩国智能, 🇺🇸 美国节点, 🇺🇸 美国智能, 🇸🇬 狮城节点, 🇸🇬 狮城智能, 🌍 其他节点, 🌍 其他智能]}
 HeadReject: &head_reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择]}
 
@@ -217,9 +217,9 @@ dns:
 
 # ========================= 代理策略 =========================
 proxy-groups:
-  - {name: "🛫 常规订阅", <<: *pg_se, use: [常规订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
-  - {name: "🦄 故障转移", <<: *pg_se, use: [优质订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
-  - {name: "🪂 临时选择", <<: *pg_se, use: [临时订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
+  - {name: 🛫 常规订阅, <<: *pg_se, use: [常规订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
+  - {name: 🦄 故障转移, <<: *pg_se, use: [优质订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
+  - {name: 🪂 临时选择, <<: *pg_se, use: [临时订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
 
   - {name: 🌐 全局选择, <<: *gpg_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
   - {name: 🚀 自动选择, <<: *gpg_auto, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png}
@@ -465,7 +465,7 @@ rules:
   - RULE-SET,IMrs-Private,🎯 直接连接
   - GEOSITE,private,🎯 直接连接
   - GEOIP,private,🎯 直接连接
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT
 
   - RULE-SET,CYaml-Download,🍔 整点汉堡
   - RULE-SET,CYaml-GameDownload,🍔 整点汉堡
