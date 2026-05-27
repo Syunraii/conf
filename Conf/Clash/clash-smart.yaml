@@ -4,10 +4,10 @@
 # ## 注意: 如果没有多个订阅, 请删除对应行以及用到该锚点的地方, 推荐使用substore管理订阅
 BaseProxyProvider: &base_PP {type: http, interval: 86400, health-check: {enable: true, lazy: true, interval: 300, url: http://www.gstatic.com/generate_204}}
 proxy-providers:
-  优质订阅: &myPri {<<: *base_PP, override: {additional-prefix: "[优]"}, url: 优质订阅地址}
-  常规订阅: &myPub {<<: *base_PP, override: {additional-prefix: "[常]"}, url: 常规订阅地址}
-  备用订阅: &myBak {<<: *base_PP, override: {additional-prefix: "[备]"}, url: 备用订阅地址}
-  临时订阅: &myTmp {<<: *base_PP, override: {additional-prefix: "[临]"}, url: 临时订阅地址}
+  优质订阅: &myPri {<<: *base_PP, override: {additional-prefix: "[优]"}, url: 填入优质订阅地址}
+  常规订阅: &myPub {<<: *base_PP, override: {additional-prefix: "[常]"}, url: 填入常规订阅地址}
+  备用订阅: &myBak {<<: *base_PP, override: {additional-prefix: "[备]"}, url: 填入备用订阅地址}
+  临时订阅: &myTmp {<<: *base_PP, override: {additional-prefix: "[临]"}, url: 填入临时订阅地址}
 
 # # 基本策略组
 # ## 基础类型
@@ -68,7 +68,7 @@ FilterForEmbyLR: &filter_EmbyLR '^(?=.*(0\.1[×]|0\.01[×]|0\.1\b|0\.0[0-9]))(?!
 FilterForEmbySpecify: &filter_EmbySpecify '^(?!.*(?i)([×]|🇭🇰|香港|🇯🇵|日本|🇺🇸|美国|(\b(JP|Japan|HK|HongKong|Hong Kong|US|USA)\b))).*$'
 
 # # 全局策略组
-GlobalPG_GLOBAL: &gpg_global {type: select, proxies: [🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🪂 临时选择, 🦄 故障转移, 🎯 直接连接]}
+GlobalPG_GLOBAL: &gpg_global {type: select, proxies: [🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🦄 故障转移, 🪂 临时选择, 🎯 直接连接]}
 GlobalPG_AUTO: &gpg_auto {<<: *pg_ut, proxies: [🇭🇰 香港节点, 🇨🇳 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇺🇸 美国节点, 🇸🇬 狮城节点]}
 GlobalPG_SMART: &gpg_smart {<<: *pg_sm, proxies: [🇭🇰 香港智能, 🇨🇳 台湾智能, 🇯🇵 日本智能, 🇰🇷 韩国智能, 🇺🇸 美国智能, 🇸🇬 狮城智能]}
 GlobalPG_MANUAL: &gpg_manual {type: select, proxies: [🛫 常规订阅, 🦄 故障转移, 🪂 临时选择]}
@@ -82,13 +82,13 @@ SmartUS: &s_us {<<: *pg_sm_h, policy-priority: '🇭🇰:2;🇨🇳:3;🇯🇵:4
 SmartSG: &s_sg {<<: *pg_sm_h, policy-priority: '🇭🇰:1;🇨🇳:2;🇯🇵:3;🇰🇷:4;🇺🇸:5;🇸🇬:6'}
 
 # ## 自定义默认初始选择
-HeadGlobal: &head_global {type: select, proxies: [🌐 全局选择, 🎯 直接连接, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🪂 临时选择, 🦄 故障转移, 🇭🇰 香港节点, 🇭🇰 香港智能, 🇨🇳 台湾节点, 🇨🇳 台湾智能, 🇯🇵 日本节点, 🇯🇵 日本智能, 🇰🇷 韩国节点, 🇰🇷 韩国智能, 🇺🇸 美国节点, 🇺🇸 美国智能, 🇸🇬 狮城节点, 🇸🇬 狮城智能, 🌍 其他节点, 🌍 其他智能]}
-HeadDirect: &head_direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🪂 临时选择, 🦄 故障转移, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港节点, 🇭🇰 香港智能, 🇨🇳 台湾节点, 🇨🇳 台湾智能, 🇯🇵 日本节点, 🇯🇵 日本智能, 🇰🇷 韩国节点, 🇰🇷 韩国智能, 🇺🇸 美国节点, 🇺🇸 美国智能, 🇸🇬 狮城节点, 🇸🇬 狮城智能, 🌍 其他节点, 🌍 其他智能]}
+HeadGlobal: &head_global {type: select, proxies: [🌐 全局选择, 🎯 直接连接, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🦄 故障转移, 🪂 临时选择, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港节点, 🇭🇰 香港智能, 🇨🇳 台湾节点, 🇨🇳 台湾智能, 🇯🇵 日本节点, 🇯🇵 日本智能, 🇰🇷 韩国节点, 🇰🇷 韩国智能, 🇺🇸 美国节点, 🇺🇸 美国智能, 🇸🇬 狮城节点, 🇸🇬 狮城智能, 🌍 其他节点, 🌍 其他智能]}
+HeadDirect: &head_direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🦄 故障转移, 🪂 临时选择, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港节点, 🇭🇰 香港智能, 🇨🇳 台湾节点, 🇨🇳 台湾智能, 🇯🇵 日本节点, 🇯🇵 日本智能, 🇰🇷 韩国节点, 🇰🇷 韩国智能, 🇺🇸 美国节点, 🇺🇸 美国智能, 🇸🇬 狮城节点, 🇸🇬 狮城智能, 🌍 其他节点, 🌍 其他智能]}
 HeadReject: &head_reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择]}
 
 # ## 自定义Emby初始选择
-HeadGlobalEmby: &head_global_emby {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🪂 临时选择, 🦄 故障转移]}
-HeadDirectEmby: &head_direct_emby {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🪂 临时选择, 🦄 故障转移]}
+HeadGlobalEmby: &head_global_emby {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🦄 故障转移, 🪂 临时选择]}
+HeadDirectEmby: &head_direct_emby {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🦄 故障转移, 🪂 临时选择]}
 # ========================= 核心配置 =========================
 mode: rule
 port: 7890
@@ -222,9 +222,9 @@ proxy-groups:
   - {name: 🪂 临时选择, <<: *pg_se, use: [临时订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
 
   - {name: 🌐 全局选择, <<: *gpg_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
+  - {name: 👋 手动选择, <<: *gpg_manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
   - {name: 🚀 自动选择, <<: *gpg_auto, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png}
   - {name: ♻️ 智能选择, <<: *gpg_smart , icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
-  - {name: 👋 手动选择, <<: *gpg_manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
 
   - {name: 🚫 隐私拦截, <<: *head_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: 📵 软件升级, <<: *head_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_Update.png}
@@ -465,7 +465,7 @@ rules:
   - RULE-SET,IMrs-Private,🎯 直接连接
   - GEOSITE,private,🎯 直接连接
   - GEOIP,private,🎯 直接连接
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
 
   - RULE-SET,CYaml-Download,🍔 整点汉堡
   - RULE-SET,CYaml-GameDownload,🍔 整点汉堡
@@ -487,6 +487,7 @@ rules:
   - RULE-SET,DMrs-SystemOTA,📵 软件升级
 
   # ####我的Emby Start#####
+
   # ########其他需要的########
   # ## 一些推流地址
   - DOMAIN-SUFFIX,ctyunxs.cn,🎬 Emby🎯

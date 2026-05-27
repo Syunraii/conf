@@ -3,7 +3,7 @@
 # ## 注意: 填入[订阅地址]
 BaseProxyProvider: &base_PP {type: http, interval: 86400, health-check: {enable: true, lazy: true, interval: 300, url: http://www.gstatic.com/generate_204}}
 proxy-providers:
-  我的订阅: &myPri {<<: *base_PP, url: 订阅地址}
+  我的订阅: &mySub {<<: *base_PP, url: 填入订阅地址}
 
 # # 基本策略组
 # ## 基础类型
@@ -26,6 +26,8 @@ ProxyGroupSM_Hide: &pg_sm_h {<<: *base_PG, type: smart, hidden: true, uselightgb
 
 ProxyGroupLB_RR: &pg_lb_rr {<<: *base_PG, type: load-balance, strategy: round-robin, url: http://www.gstatic.com/generate_204}
 ProxyGroupLB_CH: &pg_lb_ch {<<: *base_PG, type: load-balance, strategy: consistent-hashing, url: http://www.gstatic.com/generate_204}
+ProxyGroupLB_RR_Hide: &pg_lb_rr_h {<<: *base_PG, type: load-balance, strategy: round-robin, hidden: true, url: http://www.gstatic.com/generate_204}
+ProxyGroupLB_CH_Hide: &pg_lb_ch_h {<<: *base_PG, type: load-balance, strategy: consistent-hashing, hidden: true, url: http://www.gstatic.com/generate_204}
 
 # # 过滤器
 BaseFilter: &base_filter '^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
@@ -58,16 +60,12 @@ FilterKR_NR: &filter_KR_NR '^(?!.*[×])(?i).*?(🇰🇷|韩国|\b(KR|South Korea
 FilterUS_NR: &filter_US_NR '^(?!.*[×])(?i).*?(🇺🇸|美国|\b(US|USA|United States)\b).*$'
 FilterSG_NR: &filter_SG_NR '^(?!.*[×])(?i).*?(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b).*$'
 FilterOT_NR: &filter_OT_NR '^(?!.*[×])(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
-# ## 特殊过滤
-FilterForEmbyNR: &filter_EmbyNR '^(?!.*(?i)([×]|🇯🇵|日本|(\b(JP|Japan)\b))).*$'
-FilterForEmbyLR: &filter_EmbyLR '^(?=.*(0\.1[×]|0\.01[×]|0\.1\b|0\.0[0-9]))(?!.*(🇯🇵|日本|\b(JP|Japan)\b)).*$'
-FilterForEmbySpecify: &filter_EmbySpecify '^(?!.*(?i)([×]|🇭🇰|香港|🇯🇵|日本|🇺🇸|美国|(\b(JP|Japan|HK|HongKong|Hong Kong|US|USA)\b))).*$'
 
 # # 全局策略组
-GlobalPG_GLOBAL: &gpg_global {type: select, proxies: [🚀 自动选择, ♻️ 智能选择, 🎯 直接连接]}
+GlobalPG_GLOBAL: &gpg_global {type: select, proxies: [🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🎯 直接连接]}
 GlobalPG_AUTO: &gpg_auto {<<: *pg_ut, proxies: [🇭🇰 香港自动, 🇨🇳 台湾自动, 🇯🇵 日本自动, 🇰🇷 韩国自动, 🇺🇸 美国自动, 🇸🇬 狮城自动]}
 GlobalPG_SMART: &gpg_smart {<<: *pg_sm, proxies: [🇭🇰 香港智能, 🇨🇳 台湾智能, 🇯🇵 日本智能, 🇰🇷 韩国智能, 🇺🇸 美国智能, 🇸🇬 狮城智能]}
-
+GlobalPG_MANUAL: &gpg_manual {<<: *pg_se}
 
 # ## 自定义smart
 SmartHK: &s_hk {<<: *pg_sm_h, policy-priority: '🇭🇰:6;🇨🇳:5;🇯🇵:4;🇰🇷:3;🇺🇸:2;🇸🇬:1'}
@@ -78,12 +76,9 @@ SmartUS: &s_us {<<: *pg_sm_h, policy-priority: '🇭🇰:2;🇨🇳:3;🇯🇵:4
 SmartSG: &s_sg {<<: *pg_sm_h, policy-priority: '🇭🇰:1;🇨🇳:2;🇯🇵:3;🇰🇷:4;🇺🇸:5;🇸🇬:6'}
 
 # ## 自定义默认初始选择
-HeadGlobal: &head_global {type: select, proxies: [🌐 全局选择, 🎯 直接连接, 🚀 自动选择, ♻️ 智能选择, 🇭🇰 香港自动, 🇭🇰 香港智能, 🇨🇳 台湾自动, 🇨🇳 台湾智能, 🇯🇵 日本自动, 🇯🇵 日本智能, 🇰🇷 韩国自动, 🇰🇷 韩国智能, 🇺🇸 美国自动, 🇺🇸 美国智能, 🇸🇬 狮城自动, 🇸🇬 狮城智能, 🌍 其他自动, 🌍 其他智能]}
-HeadDirect: &head_direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港自动, 🇭🇰 香港智能, 🇨🇳 台湾自动, 🇨🇳 台湾智能, 🇯🇵 日本自动, 🇯🇵 日本智能, 🇰🇷 韩国自动, 🇰🇷 韩国智能, 🇺🇸 美国自动, 🇺🇸 美国智能, 🇸🇬 狮城自动, 🇸🇬 狮城智能, 🌍 其他自动, 🌍 其他智能]}
-
-# ## 自定义Emby初始选择
-HeadGlobalEmby: &head_global_emby {type: select, proxies: [🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择]}
-HeadDirectEmby: &head_direct_emby {type: select, proxies: [🎯 直接连接, 🎬 Emby🪜, 🎬 Emby♿️, 🎬 Emby🈯️, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择]}
+HeadGlobal: &head_global {type: select, proxies: [🌐 全局选择, 🎯 直接连接, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🈲 禁止访问, ⚪ 丢弃请求,🇭🇰 香港自动, 🇭🇰 香港智能, 🇨🇳 台湾自动, 🇨🇳 台湾智能, 🇯🇵 日本自动, 🇯🇵 日本智能, 🇰🇷 韩国自动, 🇰🇷 韩国智能, 🇺🇸 美国自动, 🇺🇸 美国智能, 🇸🇬 狮城自动, 🇸🇬 狮城智能, 🌍 其他自动, 🌍 其他智能]}
+HeadDirect: &head_direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🈲 禁止访问, ⚪ 丢弃请求,🇭🇰 香港自动, 🇭🇰 香港智能, 🇨🇳 台湾自动, 🇨🇳 台湾智能, 🇯🇵 日本自动, 🇯🇵 日本智能, 🇰🇷 韩国自动, 🇰🇷 韩国智能, 🇺🇸 美国自动, 🇺🇸 美国智能, 🇸🇬 狮城自动, 🇸🇬 狮城智能, 🌍 其他自动, 🌍 其他智能]}
+HeadReject: &head_reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ♻️ 智能选择, 👋 手动选择]}
 # ========================= 核心配置 =========================
 mode: rule
 port: 7890
@@ -210,24 +205,15 @@ dns:
     - tls://dns.google
     - https://dns.google/dns-query
 ##############################################
-proxy-groups:
-  - {name: 🛫 所有订阅, <<: *pg_se, use: [我的订阅], filter: *base_filter, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
-  
+proxy-groups:  
   - {name: 🌐 全局选择, <<: *gpg_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
+  - {name: 👋 手动选择, <<: *gpg_manual, include-all: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
   - {name: 🚀 自动选择, <<: *gpg_auto, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png}
   - {name: ♻️ 智能选择, <<: *gpg_smart , icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
 
   - {name: 🚫 隐私拦截, <<: *head_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: 📵 软件升级, <<: *head_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_Update.png}
   - {name: ⛔ 让我访问, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
-
-  - {name: 🎬 Emby🪜,  <<: *s_sg, include-all: true, filter: *filter_EmbyNR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: 🎬 Emby♿️,  <<: *s_sg, include-all: true, filter: *filter_EmbyLR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: 🎬 Emby🈯️,  <<: *s_sg, include-all: true, filter: *filter_EmbySpecify, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-
-  - {name: 🎬 Emby🌐,  <<: *head_global_emby, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: 🎬 Emby💠,  <<: *head_global_emby, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: 🎬 Emby🎯,  <<: *head_direct_emby, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
 
   - {name: 🔞 限定应用, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png}
   - {name: 🇯🇵 整点烧鸟, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
@@ -462,16 +448,11 @@ rules:
   - RULE-SET,CYaml-SystemOTA,📵 软件升级
   - RULE-SET,DMrs-SystemOTA,📵 软件升级
 
-  # ####我的Emby Start#####
-  # ########其他需要的########
-  # ## 一些推流地址
-  - DOMAIN-SUFFIX,ctyunxs.cn,🎬 Emby🎯
-  # ####我的Emby End#####
-
 
   # ####自定义分流 Start####
   # # 萌娘百科
   - DOMAIN-SUFFIX,mooegirl.org.cn,🍔 整点汉堡
+
   # # bangumi
   - GEOSITE,bangumi,🔞 限定应用
   # # 禁漫天堂
@@ -523,10 +504,10 @@ rules:
   - RULE-SET,CYaml-Bahamut,📹 巴哈姆特
   - RULE-SET,CText-Bahamut,📹 巴哈姆特
   # 🎬 Emby
-  - RULE-SET,CYaml-Emby,🎬 Emby🌐
-  - RULE-SET,CText-Emby,🎬 Emby🌐
-  - RULE-SET,DMrs-Emby,🎬 Emby🌐
-  - RULE-SET,IMrs-Emby,🎬 Emby🌐
+  - RULE-SET,CYaml-Emby,🎥 国外媒体
+  - RULE-SET,CText-Emby,🎥 国外媒体
+  - RULE-SET,DMrs-Emby,🎥 国外媒体
+  - RULE-SET,IMrs-Emby,🎥 国外媒体
   # 🎥 国外媒体
   - RULE-SET,CYaml-YouTube,🎥 国外媒体
   - RULE-SET,CText-YouTube,🎥 国外媒体
