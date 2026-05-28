@@ -353,7 +353,7 @@ rule-providers:
   DMrs-Disney:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Disney.mrs}
   DMrs-Streaming:          {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Streaming.mrs}
   IMrs-Streaming:          {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Streaming.mrs}
-  CYaml-GlobalMedia:       {<<: *class_yaml, url: https://rule.kelee.one/Clash/GlobalMedia.yaml}
+  # CYaml-GlobalMedia:       {<<: *class_yaml, url: https://rule.kelee.one/Clash/GlobalMedia.yaml}
   CText-ProxyMedia:        {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/ProxyMedia.list}
   # 🎮 游戏平台
   CYaml-Game:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Game.yaml}
@@ -361,7 +361,7 @@ rule-providers:
   DMrs-Game:               {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Games.mrs}
   # 🤖 人工智能
   CYaml-OpenAI:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/OpenAI.yaml}
-  CText-OpenAI:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/OpenAI.list}
+  # CText-OpenAI:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/OpenAI.list}
   DMrs-OpenAI:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/OpenAI.mrs}
   CYaml-Gemini:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Gemini.yaml}
   DMrs-Gemini:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Gemini.mrs}
@@ -519,7 +519,7 @@ rules:
   - RULE-SET,DMrs-Disney,🎥 国外媒体
   - RULE-SET,DMrs-Streaming,🎥 国外媒体
   - RULE-SET,IMrs-Streaming,🎥 国外媒体
-  - RULE-SET,CYaml-GlobalMedia,🎥 国外媒体
+  # - RULE-SET,CYaml-GlobalMedia,🎥 国外媒体
   - RULE-SET,CText-ProxyMedia,🎥 国外媒体
   # 🎮 游戏平台
   - RULE-SET,CYaml-Game,🎮 游戏平台
@@ -527,7 +527,7 @@ rules:
   - RULE-SET,DMrs-Game,🎮 游戏平台
   # 🤖 人工智能
   - RULE-SET,CYaml-OpenAI,🤖 人工智能
-  - RULE-SET,CText-OpenAI,🤖 人工智能
+  # - RULE-SET,CText-OpenAI,🤖 人工智能
   - RULE-SET,DMrs-OpenAI,🤖 人工智能
   - RULE-SET,CYaml-Gemini,🤖 人工智能
   - RULE-SET,DMrs-Gemini,🤖 人工智能
