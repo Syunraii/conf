@@ -276,21 +276,21 @@ proxy-groups:
   - {name: 🇸🇬 狮城自动, <<: *pg_fb_h, proxies: [🛫 狮城, 🦄 狮城], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
   - {name: 🌍 其他自动, <<: *pg_fb_h, proxies: [🛫 其他, 🦄 其他], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
-  - {name: 🇭🇰 香港散列, <<: *pg_lb_ch_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_HK_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
-  - {name: 🇨🇳 台湾散列, <<: *pg_lb_ch_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_TW_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
-  - {name: 🇯🇵 日本散列, <<: *pg_lb_ch_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_JP_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
-  - {name: 🇰🇷 韩国散列, <<: *pg_lb_ch_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_KR_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
-  - {name: 🇺🇸 美国散列, <<: *pg_lb_ch_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_US_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: 🇸🇬 狮城散列, <<: *pg_lb_ch_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_SG_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: 🌍 其他散列, <<: *pg_lb_ch_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_OT_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+  - {name: 🇭🇰 香港散列, <<: *pg_lb_ch_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_HK_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾散列, <<: *pg_lb_ch_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_TW_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本散列, <<: *pg_lb_ch_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_JP_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国散列, <<: *pg_lb_ch_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_KR_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国散列, <<: *pg_lb_ch_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_US_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城散列, <<: *pg_lb_ch_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_SG_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他散列, <<: *pg_lb_ch_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_OT_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
   
-  - {name: 🇭🇰 香港轮询, <<: *pg_lb_rr_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_HK_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
-  - {name: 🇨🇳 台湾轮询, <<: *pg_lb_rr_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_TW_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
-  - {name: 🇯🇵 日本轮询, <<: *pg_lb_rr_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_JP_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
-  - {name: 🇰🇷 韩国轮询, <<: *pg_lb_rr_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_KR_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
-  - {name: 🇺🇸 美国轮询, <<: *pg_lb_rr_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_US_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: 🇸🇬 狮城轮询, <<: *pg_lb_rr_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_SG_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: 🌍 其他轮询, <<: *pg_lb_rr_h, include-all: true, exclude-filter: "[备]|[临]", filter: *filter_OT_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+  - {name: 🇭🇰 香港轮询, <<: *pg_lb_rr_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_HK_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾轮询, <<: *pg_lb_rr_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_TW_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本轮询, <<: *pg_lb_rr_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_JP_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国轮询, <<: *pg_lb_rr_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_KR_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国轮询, <<: *pg_lb_rr_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_US_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城轮询, <<: *pg_lb_rr_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_SG_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他轮询, <<: *pg_lb_rr_h, include-all-providers: true, exclude-filter: '备|临', filter: *filter_OT_NR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
   - {name: 🎯 直接连接, <<: *bpg_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: 🈲 禁止访问, <<: *bpg_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
