@@ -249,12 +249,12 @@ proxy-groups:
   - {name: 📹 巴哈姆特, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
   - {name: 🎥 国外媒体, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png}
   - {name: 🎮 游戏平台, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
+  - {name: 🐳 开发工具, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png}
   - {name: 🕊️ 谷歌服务, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
   - {name: Ⓜ️ 微软服务, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
   - {name: 🍎 苹果服务, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png}
   - {name: ☁️ 云服务商, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png}
   - {name: 🤖 人工智能, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png}
-  - {name: 🐳 开发工具, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png}
   - {name: 🍟 整点薯条, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png}
   - {name: 🍔 整点汉堡, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
 
@@ -398,6 +398,11 @@ rule-providers:
   CYaml-Game:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Game.yaml}
   CText-Game:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Game.list}
   DMrs-Game:               {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Games.mrs}
+  # 🐳 开发工具
+  CYaml-GitHub:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/GitHub.yaml}
+  CText-GitHub:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/GitHub.list}
+  DMrs-GitHub:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/GitHub.mrs}
+  CYaml-Developer:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Developer.yaml}
   # 🕊️ 谷歌服务
   CYaml-Google:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Google.yaml}
   CText-Google:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Google.list}
@@ -428,11 +433,6 @@ rule-providers:
   CText-AI:                {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/AI.list}
   DMrs-AI:                 {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/AI.mrs}
   IMrs-AI:                 {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/AI.mrs}
-  # 🐳 开发工具
-  CYaml-GitHub:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/GitHub.yaml}
-  CText-GitHub:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/GitHub.list}
-  DMrs-GitHub:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/GitHub.mrs}
-  CYaml-Developer:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Developer.yaml}
   # 🍟 整点薯条
   CYaml-SpeedTestInl:      {<<: *class_yaml, url: https://kelee.one/Tool/Clash/Rule/SpeedtestInternational.yaml}
   CYaml-IPTVOther:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/IPTVOther.yaml}
@@ -570,6 +570,11 @@ rules:
   - RULE-SET,CYaml-Game,🎮 游戏平台
   - RULE-SET,CText-Game,🎮 游戏平台
   - RULE-SET,DMrs-Game,🎮 游戏平台
+  # 🐳 开发工具
+  - RULE-SET,CYaml-GitHub,🐳 开发工具
+  - RULE-SET,CText-GitHub,🐳 开发工具
+  - RULE-SET,DMrs-GitHub,🐳 开发工具
+  - RULE-SET,CYaml-Developer,🐳 开发工具
   # 🕊️ 谷歌服务
   - RULE-SET,CYaml-Google,🕊️ 谷歌服务
   - RULE-SET,CText-Google,🕊️ 谷歌服务
@@ -600,11 +605,6 @@ rules:
   - RULE-SET,CText-AI,🤖 人工智能
   - RULE-SET,DMrs-AI,🤖 人工智能
   - RULE-SET,IMrs-AI,🤖 人工智能
-  # 🐳 开发工具
-  - RULE-SET,CYaml-GitHub,🐳 开发工具
-  - RULE-SET,CText-GitHub,🐳 开发工具
-  - RULE-SET,DMrs-GitHub,🐳 开发工具
-  - RULE-SET,CYaml-Developer,🐳 开发工具
   # 🍟 整点薯条
   - RULE-SET,CYaml-SpeedTestInl,🍟 整点薯条
   - RULE-SET,CYaml-IPTVOther,🍟 整点薯条
