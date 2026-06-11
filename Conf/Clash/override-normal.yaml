@@ -327,8 +327,8 @@ rule-providers:
   CText-TikTok:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/TikTok.list}
   DMrs-TikTok:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/TikTok.mrs}
   # 🍻 哔哩哔哩
-  CYaml-BiliBili:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/Telegram.yaml}
-  CText-BiliBili:          {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/BiliBili.list}
+  CYaml-BiliBili:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/BiliBili.yaml}
+  CText-BiliBili:          {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Bilibili.list}
   # 📹 巴哈姆特
   CYaml-Bahamut:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Bahamut.yaml}
   CText-Bahamut:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Bahamut.list}
@@ -358,7 +358,7 @@ rule-providers:
   DMrs-Game:               {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Games.mrs}
   # 🐳 开发工具
   CYaml-GitHub:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/GitHub.yaml}
-  CText-GitHub:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/GitHub.list}
+  CText-GitHub:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Github.list}
   DMrs-GitHub:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/GitHub.mrs}
   CYaml-Developer:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Developer.yaml}
   # 🕊️ 谷歌服务
