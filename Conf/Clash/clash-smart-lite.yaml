@@ -177,6 +177,7 @@ dns:
     - '*.lan'
     - '*.local'
     - '*.direct'
+    - stun.l.google.com
     - '*.msftconnecttest.com'
     - '*.msftncsi.com'
     - xbox.*.microsoft.com
