@@ -36,24 +36,28 @@ dns:
   - 119.29.29.29
   - 223.5.5.5
 real_ip_domains:
-- stun.l.google.com
-- lancache.steamcontent.com
+- +.push.apple.com
+- '*.lan'
+- '*.direct'
+- 'stun.*'
+- 'lancache.steamcontent.com'
+- 'dns.msftncsi.com'
 - '*.msftconnecttest.com'
 - '*.msftncsi.com'
 - '*.srv.nintendo.net'
-- '*.stun.playstation.net'
-- xbox.*.microsoft.com
+- 'xbox.*.microsoft.com'
 - '*.xboxlive.com'
-- '*.logon.battlenet.com.cn'
-- '*.logon.battle.net'
+- '*.battlenet.com.cn'
+- '*.battlenet.com'
 - '*.blzstatic.cn'
 - '*.battle.net'
+- '*.turn.twilio.com'
 - '*.cmpassport.com'
-- id6.me
-- open.e.189.cn
-- mdn.open.wo.cn
-- opencloud.wostore.cn
-- auth.wosms.cn
+- 'id6.me'
+- 'open.e.189.cn'
+- 'mdn.open.wo.cn'
+- 'opencloud.wostore.cn'
+- 'auth.wosms.cn'
 - '*.10099.com.cn'
 policy_groups:
 - external:
@@ -578,7 +582,7 @@ policy_groups:
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
     hidden: false
 - select:
-    name: 📚 我爱漫画
+    name: 📚 学术研究
     policies:
     - 🌐 全局选择
     - 🚀 自动选择
@@ -1239,12 +1243,12 @@ rules:
 - rule_set:
     name: 漫画平台-哔卡漫画
     match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Picacg/Picacg.list
-    policy: 📚 我爱漫画
+    policy: 📚 学术研究
     disabled: false
 - rule_set:
     name: 漫画平台-EHGallery
     match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/EHGallery/EHGallery.list
-    policy: 📚 我爱漫画
+    policy: 📚 学术研究
     disabled: false
 - rule_set:
     name: 应用分流-Telegram
@@ -1280,7 +1284,7 @@ rules:
     name: 社交平台-Facebook
     match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Facebook/Facebook.list
     policy: 💃 社交平台
-    disabled: false
+    disabled: true
 - rule_set:
     name: 社交平台-Instagram
     match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Instagram/Instagram.list
@@ -1446,4 +1450,3 @@ rules:
     policy: 🍔 整点汉堡
 - default:
     policy: ⛔ 让我访问
-default_proxy_group: 🌐 全局选择
