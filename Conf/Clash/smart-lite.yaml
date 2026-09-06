@@ -27,9 +27,13 @@ ProxyGroupSM_Hide: &pg_sm_h {<<: *base_PG, type: smart, hidden: true, uselightgb
 # # 过滤器
 BaseFilter: &base_filter '^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
 # ## 倍率过滤
-FilterHR: &filter_HR '^(?=.*[2-9][0-9]*[×x]).*$'
-FilterNR: &filter_NR '^[^×x]*$'
-FilterLR: &filter_LR '^(?=.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$'
+# ### 过滤高倍率（保留正常 + 低倍率）
+Filter_HR: &filter_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x]).*$'
+# ### 过滤所有倍率（仅保留正常倍率，无倍率符号）
+Filter_NR: &filter_NR '^(?!.*[×x]).*$'
+# ### 过滤低倍率（保留正常 + 高倍率）
+Filter_LR: &filter_LR '^(?!.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$'
+
 # ## 地区过滤
 FilterHK: &filter_HK '(?i)🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)'
 FilterTW: &filter_TW '(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)'
@@ -39,31 +43,31 @@ FilterUS: &filter_US '(?i)🇺🇸|美国|(\b(US|USA|United States)\b)'
 FilterSG: &filter_SG '(?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)'
 FilterOT: &filter_OT '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$'
 
-ExcludeHK: &exclude_HK '^(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b)).*$'
-ExcludeTW: &exclude_TW '^(?!.*(?i)(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b)).*$'
-ExcludeJP: &exclude_JP '^(?!.*(?i)(🇯🇵|日本|\b(JP|Japan)\b)).*$'
-ExcludeKR: &exclude_KR '^(?!.*(?i)(🇰🇷|韩国|\b(KR|South Korea)\b)).*$'
-ExcludeUS: &exclude_US '^(?!.*(?i)(🇺🇸|美国|\b(US|USA|United States)\b)).*$'
-ExcludeSG: &exclude_SG '^(?!.*(?i)(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
-ExcludeOT: &exclude_OT '(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))'
-
-# ## 正常倍率+地区过滤
-FilterHK_NR: &filter_HK_NR '^(?!.*[×])(?i).*?(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b).*$'
-FilterTW_NR: &filter_TW_NR '^(?!.*[×])(?i).*?(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b).*$'
-FilterJP_NR: &filter_JP_NR '^(?!.*[×])(?i).*?(🇯🇵|日本|\b(JP|Japan)\b).*$'
-FilterKR_NR: &filter_KR_NR '^(?!.*[×])(?i).*?(🇰🇷|韩国|\b(KR|South Korea)\b).*$'
-FilterUS_NR: &filter_US_NR '^(?!.*[×])(?i).*?(🇺🇸|美国|\b(US|USA|United States)\b).*$'
-FilterSG_NR: &filter_SG_NR '^(?!.*[×])(?i).*?(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b).*$'
-FilterOT_NR: &filter_OT_NR '^(?!.*[×])(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
-
-# ## 正常倍率+高倍率+地区过滤
-FilterHK_XR: &filter_HK_XR '^(?=.*[1-9][0-9]*[×x])(?=.*(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b)).*$'
-FilterTW_XR: &filter_TW_XR '^(?=.*[1-9][0-9]*[×x])(?=.*(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b)).*$'
-FilterJP_XR: &filter_JP_XR '^(?=.*[1-9][0-9]*[×x])(?=.*(🇯🇵|日本|\b(JP|Japan)\b)).*$'
-FilterKR_XR: &filter_KR_XR '^(?=.*[1-9][0-9]*[×x])(?=.*(🇰🇷|韩国|\b(KR|South Korea)\b)).*$'
-FilterUS_XR: &filter_US_XR '^(?=.*[1-9][0-9]*[×x])(?=.*(🇺🇸|美国|\b(US|USA|United States)\b)).*$'
-FilterSG_XR: &filter_SG_XR '^(?=.*[1-9][0-9]*[×x])(?=.*(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
-FilterOT_XR: &filter_OT_XR '^(?=.*[1-9][0-9]*[×x])(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
+# ## 倍率+地区过滤
+# ### 过滤高于正常倍率的
+FilterHK_HR: &filter_HK_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b)).*$'
+FilterTW_HR: &filter_TW_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b)).*$'
+FilterJP_HR: &filter_JP_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇯🇵|日本|\b(JP|Japan)\b)).*$'
+FilterKR_HR: &filter_KR_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇰🇷|韩国|\b(KR|South Korea)\b)).*$'
+FilterUS_HR: &filter_US_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇺🇸|美国|\b(US|USA|United States)\b)).*$'
+FilterSG_HR: &filter_SG_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
+FilterOT_HR: &filter_OT_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
+# ### 过滤含有倍率的
+FilterHK_NR: &filter_HK_NR '^(?!.*[×x])(?i).*?(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b).*$'
+FilterTW_NR: &filter_TW_NR '^(?!.*[×x])(?i).*?(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b).*$'
+FilterJP_NR: &filter_JP_NR '^(?!.*[×x])(?i).*?(🇯🇵|日本|\b(JP|Japan)\b).*$'
+FilterKR_NR: &filter_KR_NR '^(?!.*[×x])(?i).*?(🇰🇷|韩国|\b(KR|South Korea)\b).*$'
+FilterUS_NR: &filter_US_NR '^(?!.*[×x])(?i).*?(🇺🇸|美国|\b(US|USA|United States)\b).*$'
+FilterSG_NR: &filter_SG_NR '^(?!.*[×x])(?i).*?(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b).*$'
+FilterOT_NR: &filter_OT_NR '^(?!.*[×x])(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
+# ### 过滤小于正常倍率的
+FilterHK_LR: &filter_HK_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b)).*$'
+FilterTW_LR: &filter_TW_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b)).*$'
+FilterJP_LR: &filter_JP_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇯🇵|日本|\b(JP|Japan)\b)).*$'
+FilterKR_LR: &filter_KR_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇰🇷|韩国|\b(KR|South Korea)\b)).*$'
+FilterUS_LR: &filter_US_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇺🇸|美国|\b(US|USA|United States)\b)).*$'
+FilterSG_LR: &filter_SG_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
+FilterOT_LR: &filter_OT_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
 
 # # 全局策略组
 GlobalPG_GLOBAL: &gpg_global {type: select, proxies: [🚀 自动选择, ♻️ 智能选择, 👋 手动选择, 🎯 直接连接]}
@@ -252,21 +256,21 @@ proxy-groups:
   - {name: 🍔 整点汉堡, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
 
   # 取1x及以上倍率, 保证连接质量, 低倍率使用手动选择
-  - {name: 🇭🇰 香港自动, <<: *pg_ut_h, include-all: true, filter: *filter_HK_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
-  - {name: 🇨🇳 台湾自动, <<: *pg_ut_h, include-all: true, filter: *filter_TW_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
-  - {name: 🇯🇵 日本自动, <<: *pg_ut_h, include-all: true, filter: *filter_JP_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
-  - {name: 🇰🇷 韩国自动, <<: *pg_ut_h, include-all: true, filter: *filter_KR_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
-  - {name: 🇺🇸 美国自动, <<: *pg_ut_h, include-all: true, filter: *filter_US_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: 🇸🇬 狮城自动, <<: *pg_ut_h, include-all: true, filter: *filter_SG_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: 🌍 其他自动, <<: *pg_ut_h, include-all: true, filter: *filter_OT_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+  - {name: 🇭🇰 香港自动, <<: *pg_ut_h, include-all: true, filter: *filter_HK_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾自动, <<: *pg_ut_h, include-all: true, filter: *filter_TW_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本自动, <<: *pg_ut_h, include-all: true, filter: *filter_JP_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国自动, <<: *pg_ut_h, include-all: true, filter: *filter_KR_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国自动, <<: *pg_ut_h, include-all: true, filter: *filter_US_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城自动, <<: *pg_ut_h, include-all: true, filter: *filter_SG_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他自动, <<: *pg_ut_h, include-all: true, filter: *filter_OT_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
-  - {name: 🇭🇰 香港智能, <<: *pg_sm_h, include-all: true, filter: *filter_HK_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
-  - {name: 🇨🇳 台湾智能, <<: *pg_sm_h, include-all: true, filter: *filter_TW_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
-  - {name: 🇯🇵 日本智能, <<: *pg_sm_h, include-all: true, filter: *filter_JP_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
-  - {name: 🇰🇷 韩国智能, <<: *pg_sm_h, include-all: true, filter: *filter_KR_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
-  - {name: 🇺🇸 美国智能, <<: *pg_sm_h, include-all: true, filter: *filter_US_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: 🇸🇬 狮城智能, <<: *pg_sm_h, include-all: true, filter: *filter_SG_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: 🌍 其他智能, <<: *pg_sm_h, include-all: true, filter: *filter_OT_XR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+  - {name: 🇭🇰 香港智能, <<: *pg_sm_h, include-all: true, filter: *filter_HK_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾智能, <<: *pg_sm_h, include-all: true, filter: *filter_TW_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本智能, <<: *pg_sm_h, include-all: true, filter: *filter_JP_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国智能, <<: *pg_sm_h, include-all: true, filter: *filter_KR_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国智能, <<: *pg_sm_h, include-all: true, filter: *filter_US_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城智能, <<: *pg_sm_h, include-all: true, filter: *filter_SG_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他智能, <<: *pg_sm_h, include-all: true, filter: *filter_OT_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
   - {name: 🎯 直接连接, <<: *bpg_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: 🈲 禁止访问, <<: *bpg_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
