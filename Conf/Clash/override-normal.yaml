@@ -8,68 +8,45 @@ BaseProxyGroup: &base_PG {lazy: true}
 BasePGDirect: &bpg_direct {<<: *base_PG, type: select, hidden: true, proxies: [DIRECT]}
 BasePGReject: &bpg_reject {<<: *base_PG, type: select, hidden: true, proxies: [REJECT]}
 BasePGDrop: &bpg_drop {<<: *base_PG, type: select, hidden: true, proxies: [REJECT-DROP]}
+
 # ## 策略类型
-ProxyGroupSE: &pg_se {<<: *base_PG, type: select, url: http://latency-test.skk.moe/endpoint}
-ProxyGroupSE_Hide: &pg_se_h {<<: *base_PG, type: select, hidden: true, url: http://latency-test.skk.moe/endpoint}
+ProxyGroupSE: &pg_se {<<: *base_PG, type: select}
+ProxyGroupSE_Hide: &pg_se_h {<<: *base_PG, type: select, hidden: true}
 
-ProxyGroupUT: &pg_ut {<<: *base_PG, type: url-test, url: http://latency-test.skk.moe/endpoint}
-ProxyGroupUT_Hide: &pg_ut_h {<<: *base_PG, type: url-test, hidden: true, url: http://latency-test.skk.moe/endpoint}
+ProxyGroupUT: &pg_ut {<<: *base_PG, type: url-test}
+ProxyGroupUT_Hide: &pg_ut_h {<<: *base_PG, type: url-test, hidden: true}
 
-ProxyGroupFB: &pg_fb {<<: *base_PG, type: fallback, url: http://latency-test.skk.moe/endpoint}
-ProxyGroupFB_Hide: &pg_fb_h {<<: *base_PG, type: fallback, hidden: true, url: http://latency-test.skk.moe/endpoint}
+ProxyGroupFB: &pg_fb {<<: *base_PG, type: fallback}
+ProxyGroupFB_Hide: &pg_fb_h {<<: *base_PG, type: fallback, hidden: true}
 
-ProxyGroupLB_RR: &pg_lb_rr {<<: *base_PG, type: load-balance, strategy: round-robin, url: http://latency-test.skk.moe/endpoint}
-ProxyGroupLB_CH: &pg_lb_ch {<<: *base_PG, type: load-balance, strategy: consistent-hashing, url: http://latency-test.skk.moe/endpoint}
-ProxyGroupLB_RR_Hide: &pg_lb_rr_h {<<: *base_PG, type: load-balance, strategy: round-robin, hidden: true, url: http://latency-test.skk.moe/endpoint}
-ProxyGroupLB_CH_Hide: &pg_lb_ch_h {<<: *base_PG, type: load-balance, strategy: consistent-hashing, hidden: true, url: http://latency-test.skk.moe/endpoint}
+ProxyGroupLB_RR: &pg_lb_rr {<<: *base_PG, type: load-balance, strategy: round-robin}
+ProxyGroupLB_RR_Hide: &pg_lb_rr_h {<<: *base_PG, type: load-balance, strategy: round-robin, hidden: true}
+
+ProxyGroupLB_CH: &pg_lb_ch {<<: *base_PG, type: load-balance, strategy: consistent-hashing}
+ProxyGroupLB_CH_Hide: &pg_lb_ch_h {<<: *base_PG, type: load-balance, strategy: consistent-hashing, hidden: true}
 
 # # 过滤器
 BaseFilter: &base_filter '^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
-# ## 倍率过滤
-# ### 过滤高倍率（保留正常 + 低倍率）
-Filter_HR: &filter_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x]).*$'
-# ### 过滤所有倍率（仅保留正常倍率，无倍率符号）
-Filter_NR: &filter_NR '^(?!.*[×x]).*$'
-# ### 过滤低倍率（保留正常 + 高倍率）
-Filter_LR: &filter_LR '^(?!.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$'
 
-# ## 地区过滤
-FilterHK: &filter_HK '(?i)🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)'
-FilterTW: &filter_TW '(?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)'
-FilterJP: &filter_JP '(?i)🇯🇵|日本|(\b(JP|Japan)\b)'
-FilterKR: &filter_KR '(?i)🇰🇷|韩国|(\b(KR|South Korea)\b)'
-FilterUS: &filter_US '(?i)🇺🇸|美国|(\b(US|USA|United States)\b)'
-FilterSG: &filter_SG '(?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)'
-FilterOT: &filter_OT '^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$'
+FilterFor_HR: &filterForHR '^(?=.*(?:[2-9][0-9]*|[1-9][0-9]+\.[0-9]+)[×x]).*$'
+FilterOut_HR: &filterOutHR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x]).*$'
 
-# ## 倍率+地区过滤
-# ### 过滤高于正常倍率的
-FilterHK_HR: &filter_HK_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b)).*$'
-FilterTW_HR: &filter_TW_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b)).*$'
-FilterJP_HR: &filter_JP_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇯🇵|日本|\b(JP|Japan)\b)).*$'
-FilterKR_HR: &filter_KR_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇰🇷|韩国|\b(KR|South Korea)\b)).*$'
-FilterUS_HR: &filter_US_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇺🇸|美国|\b(US|USA|United States)\b)).*$'
-FilterSG_HR: &filter_SG_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?=.*(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
-FilterOT_HR: &filter_OT_HR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x])(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
-# ### 过滤含有倍率的
-FilterHK_NR: &filter_HK_NR '^(?!.*[×x])(?i).*?(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b).*$'
-FilterTW_NR: &filter_TW_NR '^(?!.*[×x])(?i).*?(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b).*$'
-FilterJP_NR: &filter_JP_NR '^(?!.*[×x])(?i).*?(🇯🇵|日本|\b(JP|Japan)\b).*$'
-FilterKR_NR: &filter_KR_NR '^(?!.*[×x])(?i).*?(🇰🇷|韩国|\b(KR|South Korea)\b).*$'
-FilterUS_NR: &filter_US_NR '^(?!.*[×x])(?i).*?(🇺🇸|美国|\b(US|USA|United States)\b).*$'
-FilterSG_NR: &filter_SG_NR '^(?!.*[×x])(?i).*?(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b).*$'
-FilterOT_NR: &filter_OT_NR '^(?!.*[×x])(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
-# ### 过滤小于正常倍率的
-FilterHK_LR: &filter_HK_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b)).*$'
-FilterTW_LR: &filter_TW_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b)).*$'
-FilterJP_LR: &filter_JP_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇯🇵|日本|\b(JP|Japan)\b)).*$'
-FilterKR_LR: &filter_KR_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇰🇷|韩国|\b(KR|South Korea)\b)).*$'
-FilterUS_LR: &filter_US_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇺🇸|美国|\b(US|USA|United States)\b)).*$'
-FilterSG_LR: &filter_SG_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
-FilterOT_LR: &filter_OT_LR '^(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?!.*(?i)(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
+FilterFor_NR: &filterForNR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+|0\.0?[0-9]+)[×x]).*$'
+FilterOut_NR: &filterOutNR '^(?!.*[×x]).*$'
+
+FilterFor_LR: &filterForLR '^(?=.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$'
+FilterOut_LR: &filterOutLR '^(?!.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$'
+
+FilterOutLR_HK: &filterOutLR_HK '^(?i)(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b)).*$'
+FilterOutLR_TW: &filterOutLR_TW '^(?i)(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b)).*$'
+FilterOutLR_JP: &filterOutLR_JP '^(?i)(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇯🇵|日本|\b(JP|Japan)\b)).*$'
+FilterOutLR_KR: &filterOutLR_KR '^(?i)(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇰🇷|韩国|\b(KR|South Korea)\b)).*$'
+FilterOutLR_US: &filterOutLR_US '^(?i)(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇺🇸|美国|\b(US|USA|United States)\b)).*$'
+FilterOutLR_SG: &filterOutLR_SG '^(?i)(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?=.*(🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
+FilterOutLR_OT: &filterOutLR_OT '^(?i)(?!.*(0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9]))(?!.*(🇭🇰|香港|\b(HK|HongKong|Hong Kong)\b|🇨🇳|🇹🇼|台湾|\b(TW|Taiwan)\b|🇯🇵|日本|\b(JP|Japan)\b|🇰🇷|韩国|\b(KR|South Korea)\b|🇺🇸|美国|\b(US|USA|United States)\b|🇸🇬|新加坡|狮城|\b(SG|Singapore)\b)).*$'
 
 # # 全局策略组
-GlobalPG_GLOBAL: &gpg_global {type: select, proxies: [🚀 自动选择, 👋 手动选择, ☣️ 散列选择, ☢️ 轮询选择, 🎯 直接连接]}
+GlobalPG_GLOBAL: &gpg_global {type: select, proxies: [🚀 自动选择, ☣️ 散列选择, ☢️ 轮询选择, 👋 手动选择,  🎯 直接连接]}
 GlobalPG_AUTO: &gpg_auto {<<: *pg_ut, proxies: [🇭🇰 香港自动, 🇨🇳 台湾自动, 🇯🇵 日本自动, 🇰🇷 韩国自动, 🇺🇸 美国自动, 🇸🇬 狮城自动]}
 
 GlobalPG_LB_CH: &gpg_lb_ch {<<: *pg_lb_ch, proxies: [🇭🇰 香港散列, 🇨🇳 台湾散列, 🇯🇵 日本散列, 🇰🇷 韩国散列, 🇺🇸 美国散列, 🇸🇬 狮城散列]}
@@ -78,9 +55,9 @@ GlobalPG_LB_RR: &gpg_lb_rr {<<: *pg_lb_rr, proxies: [🇭🇰 香港轮询, 🇨
 GlobalPG_MANUAL: &gpg_manual {<<: *pg_se}
 
 # ## 自定义默认初始选择
-HeadGlobal: &head_global {type: select, proxies: [🌐 全局选择, 🚀 自动选择, 👋 手动选择, ☣️ 散列选择, ☢️ 轮询选择, 🎯 直接连接, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港自动, 🇭🇰 香港散列, 🇭🇰 香港轮询, 🇨🇳 台湾自动, 🇨🇳 台湾散列, 🇨🇳 台湾轮询, 🇯🇵 日本自动, 🇯🇵 日本散列, 🇯🇵 日本轮询, 🇰🇷 韩国自动, 🇰🇷 韩国散列, 🇰🇷 韩国轮询, 🇺🇸 美国自动, 🇺🇸 美国散列, 🇺🇸 美国轮询, 🇸🇬 狮城自动, 🇸🇬 狮城散列, 🇸🇬 狮城轮询, 🌍 其他自动, 🌍 其他散列, 🌍 其他轮询]}
-HeadDirect: &head_direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🚀 自动选择, 👋 手动选择, ☣️ 散列选择, ☢️ 轮询选择, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港自动, 🇭🇰 香港散列, 🇭🇰 香港轮询, 🇨🇳 台湾自动, 🇨🇳 台湾散列, 🇨🇳 台湾轮询, 🇯🇵 日本自动, 🇯🇵 日本散列, 🇯🇵 日本轮询, 🇰🇷 韩国自动, 🇰🇷 韩国散列, 🇰🇷 韩国轮询, 🇺🇸 美国自动, 🇺🇸 美国散列, 🇺🇸 美国轮询, 🇸🇬 狮城自动, 🇸🇬 狮城散列, 🇸🇬 狮城轮询, 🌍 其他自动, 🌍 其他散列, 🌍 其他轮询]}
-HeadReject: &head_reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择, 👋 手动选择, ☣️ 散列选择, ☢️ 轮询选择]}
+HeadGlobal: &head_global {type: select, proxies: [🌐 全局选择, 🎯 直接连接, 🚀 自动选择, ☣️ 散列选择, ☢️ 轮询选择, 👋 手动选择, ♿️ 低倍选择, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港自动, 🇭🇰 香港散列, 🇭🇰 香港轮询, 🇨🇳 台湾自动, 🇨🇳 台湾散列, 🇨🇳 台湾轮询, 🇯🇵 日本自动, 🇯🇵 日本散列, 🇯🇵 日本轮询, 🇰🇷 韩国自动, 🇰🇷 韩国散列, 🇰🇷 韩国轮询, 🇺🇸 美国自动, 🇺🇸 美国散列, 🇺🇸 美国轮询, 🇸🇬 狮城自动, 🇸🇬 狮城散列, 🇸🇬 狮城轮询, 🌍 其他自动, 🌍 其他散列, 🌍 其他轮询]}
+HeadDirect: &head_direct {type: select, proxies: [🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ☣️ 散列选择, ☢️ 轮询选择, 👋 手动选择, ♿️ 低倍选择, 🈲 禁止访问, ⚪ 丢弃请求, 🇭🇰 香港自动, 🇭🇰 香港散列, 🇭🇰 香港轮询, 🇨🇳 台湾自动, 🇨🇳 台湾散列, 🇨🇳 台湾轮询, 🇯🇵 日本自动, 🇯🇵 日本散列, 🇯🇵 日本轮询, 🇰🇷 韩国自动, 🇰🇷 韩国散列, 🇰🇷 韩国轮询, 🇺🇸 美国自动, 🇺🇸 美国散列, 🇺🇸 美国轮询, 🇸🇬 狮城自动, 🇸🇬 狮城散列, 🇸🇬 狮城轮询, 🌍 其他自动, 🌍 其他散列, 🌍 其他轮询]}
+HeadReject: &head_reject {type: select, proxies: [🈲 禁止访问, ⚪ 丢弃请求, 🎯 直接连接, 🌐 全局选择, 🚀 自动选择, ☣️ 散列选择, ☢️ 轮询选择, 👋 手动选择, ♿️ 低倍选择]}
 # ========================= 核心配置 =========================
 mode: rule
 port: 7890
@@ -99,7 +76,7 @@ keep-alive-idle: 600
 keep-alive-interval: 15
 
 authentication:
-  - mihomo:6666666
+  - mihomo:666666
 skip-auth-prefixes:
   - 127.0.0.1/8
   - ::1/128
@@ -111,7 +88,7 @@ external-ui: ui
 external-ui-name: zashboard
 external-ui-url: https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip
 external-controller: 127.0.0.1:9090
-secret: 6666666
+secret: 666666
 
 geodata-mode: true
 geodata-loader: standard
@@ -175,13 +152,13 @@ dns:
     - rule-set:CText-Direct
     - rule-set:DMrs-Direct
     - rule-set:DMrs-Private
+    - geosite:private
 
     - +.push.apple.com
     - '*.lan'
     - '*.direct'
     - 'stun.*'
     - 'lancache.steamcontent.com'
-    - 'dns.msftncsi.com'
     - '*.msftconnecttest.com'
     - '*.msftncsi.com'
     - '*.srv.nintendo.net'
@@ -225,6 +202,8 @@ proxy-groups:
   - {name: ☢️ 轮询选择, <<: *gpg_lb_rr , icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ULB.png}
 
   - {name: 👋 手动选择, <<: *gpg_manual, include-all: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
+  - {name: ♿️ 低倍选择, <<: *pg_se, include-all: true, filter: *filterForLR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Loop.png}
+
   - {name: 🚫 隐私拦截, <<: *head_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: 📵 软件升级, <<: *head_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_Update.png}
   - {name: ⛔ 让我访问, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
@@ -238,6 +217,7 @@ proxy-groups:
   - {name: 🌟 抖音视频, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
   - {name: 🍻 哔哩哔哩, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
   - {name: 📹 巴哈姆特, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
+  - {name: 🎬 国内媒体, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/DomesticMedia.png}
   - {name: 🎥 国外媒体, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png}
   - {name: 🎮 游戏平台, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
   - {name: 🐳 开发工具, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png}
@@ -249,29 +229,29 @@ proxy-groups:
   - {name: 🍟 整点薯条, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png}
   - {name: 🍔 整点汉堡, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
 
-  - {name: 🇭🇰 香港自动, <<: *pg_ut_h, include-all: true, filter: *filter_HK_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
-  - {name: 🇨🇳 台湾自动, <<: *pg_ut_h, include-all: true, filter: *filter_TW_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
-  - {name: 🇯🇵 日本自动, <<: *pg_ut_h, include-all: true, filter: *filter_JP_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
-  - {name: 🇰🇷 韩国自动, <<: *pg_ut_h, include-all: true, filter: *filter_KR_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
-  - {name: 🇺🇸 美国自动, <<: *pg_ut_h, include-all: true, filter: *filter_US_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: 🇸🇬 狮城自动, <<: *pg_ut_h, include-all: true, filter: *filter_SG_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: 🌍 其他自动, <<: *pg_ut_h, include-all: true, filter: *filter_OT_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+  - {name: 🇭🇰 香港自动, <<: *pg_ut_h, include-all: true, filter: *filterOutLR_HK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾自动, <<: *pg_ut_h, include-all: true, filter: *filterOutLR_HK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本自动, <<: *pg_ut_h, include-all: true, filter: *filterOutLR_JP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国自动, <<: *pg_ut_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国自动, <<: *pg_ut_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城自动, <<: *pg_ut_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他自动, <<: *pg_ut_h, include-all: true, filter: *filterOutLR_OT, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
-  - {name: 🇭🇰 香港散列, <<: *pg_lb_ch_h, include-all: true, filter: *filter_HK_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
-  - {name: 🇨🇳 台湾散列, <<: *pg_lb_ch_h, include-all: true, filter: *filter_TW_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
-  - {name: 🇯🇵 日本散列, <<: *pg_lb_ch_h, include-all: true, filter: *filter_JP_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
-  - {name: 🇰🇷 韩国散列, <<: *pg_lb_ch_h, include-all: true, filter: *filter_KR_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
-  - {name: 🇺🇸 美国散列, <<: *pg_lb_ch_h, include-all: true, filter: *filter_US_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: 🇸🇬 狮城散列, <<: *pg_lb_ch_h, include-all: true, filter: *filter_SG_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: 🌍 其他散列, <<: *pg_lb_ch_h, include-all: true, filter: *filter_OT_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+  - {name: 🇭🇰 香港散列, <<: *pg_lb_ch_h, include-all: true, filter: *filterOutLR_HK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾散列, <<: *pg_lb_ch_h, include-all: true, filter: *filterOutLR_HK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本散列, <<: *pg_lb_ch_h, include-all: true, filter: *filterOutLR_JP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国散列, <<: *pg_lb_ch_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国散列, <<: *pg_lb_ch_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城散列, <<: *pg_lb_ch_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他散列, <<: *pg_lb_ch_h, include-all: true, filter: *filterOutLR_OT, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
   
-  - {name: 🇭🇰 香港轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filter_HK_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
-  - {name: 🇨🇳 台湾轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filter_TW_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
-  - {name: 🇯🇵 日本轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filter_JP_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
-  - {name: 🇰🇷 韩国轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filter_KR_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
-  - {name: 🇺🇸 美国轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filter_US_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
-  - {name: 🇸🇬 狮城轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filter_SG_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
-  - {name: 🌍 其他轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filter_OT_LR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
+  - {name: 🇭🇰 香港轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filterOutLR_HK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
+  - {name: 🇨🇳 台湾轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filterOutLR_HK, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png}
+  - {name: 🇯🇵 日本轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filterOutLR_JP, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
+  - {name: 🇰🇷 韩国轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png}
+  - {name: 🇺🇸 美国轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
+  - {name: 🇸🇬 狮城轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filterOutLR_KR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png}
+  - {name: 🌍 其他轮询, <<: *pg_lb_rr_h, include-all: true, filter: *filterOutLR_OT, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png}
 
   - {name: 🎯 直接连接, <<: *bpg_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: 🈲 禁止访问, <<: *bpg_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
@@ -311,7 +291,7 @@ rule-providers:
   CYaml-AdvertisingLite:   {<<: *class_yaml, url: https://rule.kelee.one/Clash/AdvertisingLite.yaml}
   CText-Prevent_DNS_Leaks: {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Prevent_DNS_Leaks.list}
   DMrs-Tracking:           {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Tracking.mrs}
-
+ 
   CText-RejectNoDropNonIp: {<<: *class_text, url: https://ruleset.skk.moe/Clash/non_ip/reject-no-drop.txt}
   CText-RejectDropNonIp:   {<<: *class_text, url: https://ruleset.skk.moe/Clash/non_ip/reject-drop.txt}
   CText-RejectNonIp:       {<<: *class_text, url: https://ruleset.skk.moe/Clash/non_ip/reject.txt}
@@ -323,6 +303,8 @@ rule-providers:
   DMrs-SystemOTA:          {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/SystemOTA.mrs}
   # 🔞 限定应用
   CText-Porn:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Porn.list}
+  CText-Crypto:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Crypto.list}
+  CYaml-Cryptocurrency:    {<<: *class_yaml, url: https://rule.kelee.one/Clash/Cryptocurrency.yaml}
   # 🇯🇵 整点烧鸟
   CYaml-Line:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Line.yaml}
   CYaml-Pixiv:             {<<: *class_yaml, url: https://rule.kelee.one/Clash/Pixiv.yaml}
@@ -364,12 +346,13 @@ rule-providers:
   # 📹 巴哈姆特
   CYaml-Bahamut:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Bahamut.yaml}
   CText-Bahamut:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Bahamut.list}
-  # 🎬 Emby
+  # 🎬 国外媒体
+  CYaml-ChinaMedia:        {<<: *class_yaml, url: https://rule.kelee.one/Clash/ChinaMedia.yaml}
+  # 🎥 国外媒体
   CYaml-Emby:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Emby.yaml}
   CText-Emby:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Emby.list}
   DMrs-Emby:               {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Emby.mrs}
   IMrs-Emby:               {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Emby.mrs}
-  # 🎥 国外媒体
   CYaml-YouTube:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/YouTube.yaml}
   CText-YouTube:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/YouTube.list}
   DMrs-YouTube:            {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/YouTube.mrs}
@@ -392,6 +375,7 @@ rule-providers:
   CYaml-GitHub:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/GitHub.yaml}
   CText-GitHub:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Github.list}
   DMrs-GitHub:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/GitHub.mrs}
+  DMrs-Dev:                {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Dev.mrs}
   CYaml-Developer:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Developer.yaml}
   # 🕊️ 谷歌服务
   CYaml-Google:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Google.yaml}
@@ -411,6 +395,9 @@ rule-providers:
   CText-Cloudflare:        {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Cloudflare.list}
   DMrs-Cloudflare:         {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Cloudflare.mrs}
   IMrs-Cloudflare:         {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Cloudflare.mrs}
+  CYaml-Oracle:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Oracle.yaml}
+  CText-Oracle:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Oracle.list}
+  CYaml-Akamai:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Akamai.yaml}
   # 🤖 人工智能
   CYaml-OpenAI:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/OpenAI.yaml}
   CText-OpenAI:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/OpenAI.list}
@@ -438,25 +425,21 @@ rule-providers:
   IMrs-Media:              {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/XPTV.mrs}
   DMrs-China:              {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/China.mrs}
   IMrs-China:              {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/China.mrs}
+  CYaml-ChinaMaxNoMedia:   {<<: *class_yaml, url: https://rule.kelee.one/Clash/ChinaMaxNoMedia.yaml}
 
 rules:
-  - IP-CIDR,10.0.0.0/8,🎯 直接连接
-  - IP-CIDR,172.16.0.0/12,🎯 直接连接
-  - IP-CIDR,192.168.0.0/16,🎯 直接连接
-  - IP-CIDR,100.64.0.0/10,🎯 直接连接
-  - IP-CIDR,127.0.0.0/8,🎯 直接连接
-  
   - RULE-SET,CYaml-Lan,🎯 直接连接
   - RULE-SET,CText-Lan,🎯 直接连接
   - RULE-SET,DMrs-Private,🎯 直接连接
   - RULE-SET,IMrs-Private,🎯 直接连接
   - GEOSITE,private,🎯 直接连接
   - GEOIP,private,🎯 直接连接
-  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT
+
+  - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
 
   - RULE-SET,CYaml-Download,🍔 整点汉堡
-  - RULE-SET,CYaml-GameDownload,🍔 整点汉堡
-  - RULE-SET,CYaml-GameDownloadCN,🍔 整点汉堡
+  - RULE-SET,CYaml-GameDownload,🍔 整点汉堡,no-resolve
+  - RULE-SET,CYaml-GameDownloadCN,🍔 整点汉堡,no-resolve
   - RULE-SET,CText-DownloadCDN_CN,🍔 整点汉堡
   - RULE-SET,DMrs-Download,🍔 整点汉堡
   - GEOSITE,steam@cn,🍔 整点汉堡
@@ -480,21 +463,29 @@ rules:
   - RULE-SET,CYaml-SystemOTA,📵 软件升级
   - RULE-SET,DMrs-SystemOTA,📵 软件升级
 
+  # ####我的Emby Start#####
+
+  # ####我的Emby End#####
+
+
   # ###自定义分流 Start####
   # # App-Follow
   - DOMAIN-SUFFIX,follow.is,🔞 限定应用
   # # Web-萌娘百科
   - DOMAIN-SUFFIX,moegirl.org.cn,🍔 整点汉堡
   - DOMAIN-KEYWORD,moegirl,🔞 限定应用
-  # # 其他-工具
-  - DOMAIN-SUFFIX,kelee.one,🍟 整点薯条
-  - DOMAIN-SUFFIX,lily.lat,🍟 整点薯条
-  - DOMAIN-SUFFIX,mjj.today,🍟 整点薯条
+  # # Web-bangumi
+  - DOMAIN-SUFFIX,bgm.tv,🔞 限定应用
+  - DOMAIN-SUFFIX,chii.in,🔞 限定应用
+  - DOMAIN-SUFFIX,bangumi.tv,🔞 限定应用
+  - GEOSITE,bangumi,🔞 限定应用
   # ###自定义分流 End####
 
 
   # 🔞 限定应用
   - RULE-SET,CText-Porn,🔞 限定应用
+  - RULE-SET,CText-Crypto,🔞 限定应用
+  - RULE-SET,CYaml-Cryptocurrency,🔞 限定应用
   # 🇯🇵 整点烧鸟
   - RULE-SET,CYaml-Line,🇯🇵 整点烧鸟
   - RULE-SET,CYaml-Pixiv,🇯🇵 整点烧鸟
@@ -508,6 +499,7 @@ rules:
   # 📚 学术研究
   - RULE-SET,CYaml-Picacg,📚 学术研究
   - RULE-SET,CYaml-EHGallery,📚 学术研究
+  - GEOSITE,18comic,📚 学术研究
   # 📱 电报通讯
   - RULE-SET,CYaml-Telegram,📱 电报通讯
   - RULE-SET,CText-Telegram,📱 电报通讯
@@ -520,12 +512,15 @@ rules:
   - RULE-SET,CYaml-Twitter,💃 社交平台
   - RULE-SET,CText-Twitter,💃 社交平台
   - RULE-SET,DMrs-Twitter,💃 社交平台
-  # - RULE-SET,CYaml-Facebook,💃 社交平台
-  # - RULE-SET,CText-Facebook,💃 社交平台
-  # - RULE-SET,DMrs-Facebook,💃 社交平台
   - RULE-SET,CYaml-Instagram,💃 社交平台
   - RULE-SET,CText-Instagram,💃 社交平台
   - RULE-SET,DMrs-Instagram,💃 社交平台
+  - RULE-SET,CYaml-Facebook,💃 社交平台
+  - RULE-SET,CText-Facebook,💃 社交平台
+  - RULE-SET,DMrs-Facebook,💃 社交平台
+  # 📹 巴哈姆特
+  - RULE-SET,CYaml-Bahamut,📹 巴哈姆特
+  - RULE-SET,CText-Bahamut,📹 巴哈姆特
   # 🌟 抖音视频
   - RULE-SET,CYaml-TikTok,🌟 抖音视频
   - RULE-SET,CText-TikTok,🌟 抖音视频
@@ -533,15 +528,13 @@ rules:
   # 🍻 哔哩哔哩
   - RULE-SET,CYaml-BiliBili,🍻 哔哩哔哩
   - RULE-SET,CText-BiliBili,🍻 哔哩哔哩
-  # 📹 巴哈姆特
-  - RULE-SET,CYaml-Bahamut,📹 巴哈姆特
-  - RULE-SET,CText-Bahamut,📹 巴哈姆特
-  # 🎬 Emby
+  # 🎬 国内媒体
+  - RULE-SET,CYaml-ChinaMedia,🎬 国内媒体
+  # 🎥 国外媒体
   - RULE-SET,CYaml-Emby,🎥 国外媒体
   - RULE-SET,CText-Emby,🎥 国外媒体
   - RULE-SET,DMrs-Emby,🎥 国外媒体
   - RULE-SET,IMrs-Emby,🎥 国外媒体
-  # 🎥 国外媒体
   - RULE-SET,CYaml-YouTube,🎥 国外媒体
   - RULE-SET,CText-YouTube,🎥 国外媒体
   - RULE-SET,DMrs-YouTube,🎥 国外媒体
@@ -553,22 +546,23 @@ rules:
   - RULE-SET,DMrs-Disney,🎥 国外媒体
   - RULE-SET,DMrs-Streaming,🎥 国外媒体
   - RULE-SET,IMrs-Streaming,🎥 国外媒体
-  # - RULE-SET,CYaml-GlobalMedia,🎥 国外媒体
+  - RULE-SET,CYaml-GlobalMedia,🎥 国外媒体
   - RULE-SET,CText-ProxyMedia,🎥 国外媒体
   # 🎮 游戏平台
   - RULE-SET,CYaml-Game,🎮 游戏平台
   - RULE-SET,CText-Game,🎮 游戏平台
   - RULE-SET,DMrs-Game,🎮 游戏平台
-  # 🐳 开发工具
-  - RULE-SET,CYaml-GitHub,🐳 开发工具
-  - RULE-SET,CText-GitHub,🐳 开发工具
-  - RULE-SET,DMrs-GitHub,🐳 开发工具
-  - RULE-SET,CYaml-Developer,🐳 开发工具
   # 🕊️ 谷歌服务
   - RULE-SET,CYaml-Google,🕊️ 谷歌服务
   - RULE-SET,CText-Google,🕊️ 谷歌服务
   - RULE-SET,DMrs-Google,🕊️ 谷歌服务
   - RULE-SET,IMrs-Google,🕊️ 谷歌服务
+  # 🐳 开发工具
+  - RULE-SET,CYaml-GitHub,🐳 开发工具
+  - RULE-SET,CText-GitHub,🐳 开发工具
+  - RULE-SET,DMrs-GitHub,🐳 开发工具
+  - RULE-SET,DMrs-Dev,🐳 开发工具
+  - RULE-SET,CYaml-Developer,🐳 开发工具
   # Ⓜ️ 微软服务
   - RULE-SET,CYaml-Microsoft,Ⓜ️ 微软服务
   - RULE-SET,CText-Microsoft,Ⓜ️ 微软服务
@@ -582,6 +576,9 @@ rules:
   - RULE-SET,CText-Cloudflare,☁️ 云服务商
   - RULE-SET,DMrs-Cloudflare,☁️ 云服务商
   - RULE-SET,IMrs-Cloudflare,☁️ 云服务商
+  - RULE-SET,CYaml-Oracle,☁️ 云服务商
+  - RULE-SET,CText-Oracle,☁️ 云服务商
+  - RULE-SET,CYaml-Akamai,☁️ 云服务商
   # 🤖 人工智能
   - RULE-SET,CYaml-OpenAI,🤖 人工智能
   - RULE-SET,CText-OpenAI,🤖 人工智能
@@ -609,9 +606,10 @@ rules:
   - RULE-SET,IMrs-Media,🍔 整点汉堡
   - RULE-SET,DMrs-China,🍔 整点汉堡
   - RULE-SET,IMrs-China,🍔 整点汉堡
+  - RULE-SET,CYaml-ChinaMaxNoMedia,🍔 整点汉堡
 
   - RULE-SET,CYaml-Direct,🎯 直接连接
   - RULE-SET,CText-Direct,🎯 直接连接
   - RULE-SET,DMrs-Direct,🎯 直接连接
-
+  
   - MATCH,⛔ 让我访问

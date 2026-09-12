@@ -1,0 +1,319 @@
+{
+  "$schema": "https://sing-box.sagernet.org/schema.json",
+  "log": {
+      "disabled": false,
+      "level": "info",
+      "output": "sing-box.log",
+      "timestamp": true
+  },
+  "http_clients": [
+    { 
+      "tag": "default",
+      "disable_version_fallback": true,
+      "version": 2,
+      "detour": "🌐 全局选择"
+    }
+  ],
+  "services": [
+    {
+      "type": "api",
+      "tag": "sing-box dashboard",
+      "listen": "127.0.0.1",
+      "listen_port": 9091,
+      "secret": "",
+      "access_control_allow_private_network": true,
+      "access_control_allow_origin": [
+        "http://sing-box-dashboard.sagernet.org",
+        "http://dash.sing-box.app"
+      ]
+    }
+  ],
+  "dns": {
+    "optimistic": true,
+    "reverse_mapping": true,
+    "strategy": "ipv4_only",
+    "final": "dns_DOH-Ali",
+    "servers": [
+      { "tag": "Fix_DNS", "type": "hosts",
+        "predefined":{
+          "dns.alidns.com": ["223.5.5.5", "223.6.6.6"],
+          "doh.pub": ["1.12.12.21", "120.53.53.53"]
+        }
+      },
+      { "tag": "dns_DOH-Ali", "type": "https", "server": "dns.alidns.com", "domain_resolver": "Fix_DNS" },
+      { "tag": "dns_UDP-Ali", "type": "udp", "server": "223.5.5.5" },
+      { "tag": "dns_DOH-Tx", "type": "https", "server": "doh.pub", "domain_resolver": "Fix_DNS" },
+      { "tag": "dns_UDP-Tx", "type": "udp", "server": "119.29.29.29" },
+      { "tag": "dns_FakeIP", "type": "fakeip", "inet4_range": "198.18.0.0/15", "inet6_range": "fc00::/18" },
+      { "tag": "dns_Local", "type": "local", "neighbor_domain": [".local", ".lan"] }
+    ],
+    "rules": [
+      
+      { "query_type": "HTTPS", "action": "reject"},
+      { "query_type": ["A", "AAAA"], "action":"route", "server": "dns_FakeIP", "rewrite_ttl": 1},
+
+      { "domain_suffix": ["lan", "direct", "local", "corp", "msftncsi.com", "msftconnecttest.com", "srv.nintendo.net", "xboxlive.com", "battlenet.com.cn", "battlenet.com", "blzstatic.cn", "battle.net", "turn.twilio.com", "cmpassport.com", "10099.com.cn"], "server": "dns_Local" },
+      { "domain": ["lancache.steamcontent.com", "id6.me", "open.e.189.cn", "mdn.open.wo.cn", "opencloud.wostore.cn", "auth.wosms.cn"], "server": "dns_Local" },
+
+      { "action": "evaluate", "server": "dns_DOH-Ali", "tag": "ali"},
+      { "action": "evaluate", "server": "dns_DOH-Tx", "tag": "tencent"},
+      { "match_response": "ali", "response_rcode": "NOERROR","action": "respond","race": true },
+      { "match_response": "tencent", "response_rcode": "NOERROR","action": "respond","race": true },
+
+      { "clash_mode": "Global", "action": "route", "server": "dns_FakeIP" },
+      { "clash_mode": "Direct", "action": "route", "server": "dns_Local" }
+    ]
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "in-MIXED",
+      "listen": "127.0.0.1",
+      "listen_port": 7080
+    },
+    {
+      "type" : "tun",
+      "tag": "in-TUN",
+      "auto_route": true,
+      "stack": "mixed",
+      "address": [
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7080
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    { "tag": "🌐 全局选择", "type": "selector", "interrupt_exist_connections": true, "default": "🎯 直接连接", "outbounds": ["🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🎯 直接连接"] },
+    { "tag": "🚀 自动选择", "type": "urltest", "interrupt_exist_connections": true, "outbounds": ["🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动"], "url": "http://latency-test.skk.moe/endpoint" },
+    { "tag": "👋 手动选择", "type": "selector", "interrupt_exist_connections": true, "outbounds": ["🎡 常规选择", "🦄 故障转移", "🪂 临时选择"] },
+    { "tag": "🎡 常规选择", "type": "selector", "interrupt_exist_connections": true, "outbounds": [] },
+    { "tag": "🦄 故障转移", "type": "selector", "interrupt_exist_connections": true, "outbounds": [] },
+    { "tag": "♿️ 低倍选择", "type": "selector", "interrupt_exist_connections": true, "outbounds": [] },
+    { "tag": "🪂 临时选择", "type": "selector", "interrupt_exist_connections": true, "outbounds": [] },
+    { "tag": "🚫 隐私拦截", "type": "selector", "interrupt_exist_connections": true, "outbounds": ["🎯 直接连接", "🌐 全局选择", "🈲 禁止连接"], "default": "🈲 禁止连接" },
+    { "tag": "📵 软件升级", "type": "selector", "interrupt_exist_connections": true, "outbounds": ["🎯 直接连接", "🌐 全局选择", "🈲 禁止连接"], "default": "🈲 禁止连接" },
+    { "tag": "⛔ 让我访问", "type": "selector", "interrupt_exist_connections": true, "outbounds": ["🎯 直接连接", "🌐 全局选择", "🈲 禁止连接"], "default": "🎯 直接连接" },
+    { "tag": "🔞 限定应用", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "📚 学术研究", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "📱 电报通讯", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "💃 社交平台", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🌟 抖音视频", "type": "selector", "interrupt_exist_connections": true, "default": "🎯 直接连接", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🍻 哔哩哔哩", "type": "selector", "interrupt_exist_connections": true, "default": "🎯 直接连接", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "📹 巴哈姆特", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🎬 国内媒体", "type": "selector", "interrupt_exist_connections": true, "default": "🎯 直接连接", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🎥 国外媒体", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🎮 游戏平台", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🐳 开发工具", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🕊️ 谷歌服务", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "Ⓜ️ 微软服务", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🍎 苹果服务", "type": "selector", "interrupt_exist_connections": true, "default": "🎯 直接连接", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "☁️ 云服务商", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🤖 人工智能", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🍟 整点薯条", "type": "selector", "interrupt_exist_connections": true, "default": "🌐 全局选择", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🍔 整点汉堡", "type": "selector", "interrupt_exist_connections": true, "default": "🎯 直接连接", "outbounds": ["🌐 全局选择", "🎯 直接连接", "🚀 自动选择", "👋 手动选择", "🦄 故障转移", "♿️ 低倍选择", "🪂 临时选择", "🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动", "🌍 其他自动"] },
+    { "tag": "🇭🇰 香港自动", "type": "urltest", "interrupt_exist_connections": true, "outbounds": [], "url": "http://latency-test.skk.moe/endpoint" },
+    { "tag": "🇨🇳 台湾自动", "type": "urltest", "interrupt_exist_connections": true, "outbounds": [], "url": "http://latency-test.skk.moe/endpoint" },
+    { "tag": "🇯🇵 日本自动", "type": "urltest", "interrupt_exist_connections": true, "outbounds": [], "url": "http://latency-test.skk.moe/endpoint" },
+    { "tag": "🇰🇷 韩国自动", "type": "urltest", "interrupt_exist_connections": true, "outbounds": [], "url": "http://latency-test.skk.moe/endpoint" },
+    { "tag": "🇺🇸 美国自动", "type": "urltest", "interrupt_exist_connections": true, "outbounds": [], "url": "http://latency-test.skk.moe/endpoint" },
+    { "tag": "🇸🇬 狮城自动", "type": "urltest", "interrupt_exist_connections": true, "outbounds": [], "url": "http://latency-test.skk.moe/endpoint" },
+    { "tag": "🌍 其他自动", "type": "urltest", "interrupt_exist_connections": true, "outbounds": [], "url": "http://latency-test.skk.moe/endpoint" },
+    { "tag": "🎯 直接连接", "type": "direct" },
+    { "tag": "🈲 禁止连接", "type": "block" }
+  ],
+  "route": {
+      "auto_detect_interface": true,
+      "default_http_client": "default",
+      "default_domain_resolver": "dns_UDP-Ali",
+      "final": "⛔ 让我访问",
+
+      "rule_set": [
+        { "tag": "Repcz_Lan", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Lan.srs" },
+        { "tag": "666OS_d_Private", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Private.srs" },
+        { "tag": "666OS_i_Private", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Private.srs" },
+        { "tag": "senshinya_Lan", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Lan/Lan.srs" },
+
+        { "tag": "Repcz_DownloadCDN_CN", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/DownloadCDN_CN.srs" },
+        { "tag": "666OS_Download", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Download.srs" },
+        { "tag": "senshinya_Download", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Download/Download.srs" },
+        { "tag": "senshinya_SteamCN", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/SteamCN/SteamCN.srs" },
+
+        { "tag": "Repcz_Reject", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Reject.srs" },
+        { "tag": "senshinya_Privacy", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Privacy/Privacy.srs" },
+        { "tag": "senshinya_Hijacking", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Hijacking/Hijacking.srs" },
+        { "tag": "senshinya_AdvertisingLite", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/AdvertisingLite/AdvertisingLite.srs" },
+        { "tag": "Repcz_Prevent_DNS_Leaks", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Prevent_DNS_Leaks.srs" },
+        { "tag": "666OS_Tracking", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Tracking.srs" },
+
+        { "tag": "666OS_SystemOTA", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/SystemOTA.srs" },
+        { "tag": "senshinya_SystemOTA", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/SystemOTA/SystemOTA.srs" },
+
+        { "tag": "Repcz_Porn", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Porn.srs" },
+        { "tag": "Repcz_Crypto", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Crypto.srs" },
+        { "tag": "senshinya_Crypto", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Crypto/Crypto.srs" },
+        { "tag": "senshinya_Cryptocurrency", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Cryptocurrency/Cryptocurrency.srs" },
+        { "tag": "senshinya_Line", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Line/Line.srs" },
+        { "tag": "senshinya_Pixiv", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Pixiv/Pixiv.srs" },
+        { "tag": "senshinya_Abema", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Abema/Abema.srs" },
+        { "tag": "senshinya_AbemaTV", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/AbemaTV/AbemaTV.srs" },
+        { "tag": "senshinya_Niconico", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Niconico/Niconico.srs" },
+        { "tag": "Repcz_PayPal", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/PayPal.srs" },
+        { "tag": "666OS_PayPal", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/PayPal.srs" },
+        { "tag": "senshinya_PayPal", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/PayPal/PayPal.srs" },
+
+        { "tag": "senshinya_Picacg", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Picacg/Picacg.srs" },
+        { "tag": "senshinya_EHGallery", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/EHGallery/EHGallery.srs" },
+
+        { "tag": "Repcz_Telegram_NoIP", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Telegram_NoIP.srs" },
+        { "tag": "Repcz_Telegram", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Telegram.srs" },
+        { "tag": "666OS_d_Telegram", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Telegram.srs" },
+        { "tag": "666OS_i_Telegram", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Telegram.srs" },
+        { "tag": "senshinya_Telegram", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Telegram/Telegram.srs" },
+
+        { "tag": "Repcz_Reddit", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Reddit.srs" },
+        { "tag": "senshinya_Reddit", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Reddit/Reddit.srs" },
+        { "tag": "senshinya_Tumblr", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Tumblr/Tumblr.srs" },
+        { "tag": "senshinya_Discord", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Discord/Discord.srs" },
+        { "tag": "Repcz_Twitter", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Twitter.srs" },
+        { "tag": "senshinya_Twitter", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Twitter/Twitter.srs" },
+        { "tag": "666OS_Twitter", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Twitter.srs" },
+        { "tag": "Repcz_Facebook", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Facebook.srs" },
+        { "tag": "666OS_Facebook", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Facebook.srs" },
+        { "tag": "senshinya_Facebook", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Facebook/Facebook.srs" },
+        { "tag": "Repcz_Instagram", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Instagram.srs" },
+        { "tag": "666OS_Instagram", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Instagram.srs" },
+        { "tag": "senshinya_Instagram", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Instagram/Instagram.srs" },
+
+        { "tag": "Repcz_TikTok", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/TikTok.srs" },
+        { "tag": "666OS_TikTok", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/TikTok.srs" },
+        { "tag": "senshinya_TikTok", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/TikTok/TikTok.srs" },
+
+        { "tag": "Repcz_Bilibili", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Bilibili.srs" },
+        { "tag": "senshinya_BiliBili", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/BiliBili/BiliBili.srs" },
+
+        { "tag": "Repcz_Bahamut", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Bahamut.srs" },
+        { "tag": "senshinya_Bahamut", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Bahamut/Bahamut.srs" },
+        
+        { "tag": "senshinya_ChinaMedia", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/ChinaMedia/ChinaMedia.srs" },
+
+        { "tag": "Repcz_Emby", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Emby.srs" },
+        { "tag": "666OS_d_Emby", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Emby.srs" },
+        { "tag": "666OS_i_Emby", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Emby.srs" },
+        { "tag": "senshinya_Emby", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Emby/Emby.srs" },
+        { "tag": "Repcz_YouTube", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/YouTube.srs" },
+        { "tag": "666OS_YouTube", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/YouTube.srs" },
+        { "tag": "senshinya_YouTube", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/YouTube/YouTube.srs" },
+        { "tag": "Repcz_Netflix", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Netflix.srs" },
+        { "tag": "666OS_Netflix", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Netflix.srs" },
+        { "tag": "senshinya_Netflix", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Netflix/Netflix.srs" },
+        { "tag": "Repcz_Disney", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Disney.srs" },
+        { "tag": "666OS_Disney", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Disney.srs" },
+        { "tag": "senshinya_Disney", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Disney/Disney.srs" },
+        { "tag": "666OS_d_Streaming", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Streaming.srs" },
+        { "tag": "666OS_i_Streaming", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Streaming.srs" },
+        { "tag": "Repcz_ProxyMedia", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/ProxyMedia.srs" },
+        { "tag": "senshinya_GlobalMedia", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/GlobalMedia/GlobalMedia.srs" },
+
+        { "tag": "Repcz_Game", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Game.srs" },
+        { "tag": "666OS_Games", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Games.srs" },
+        { "tag": "senshinya_Game", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Game/Game.srs" },
+
+        { "tag": "Repcz_Github", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Github.srs" },
+        { "tag": "666OS_GitHub", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/GitHub.srs" },
+        { "tag": "senshinya_Github", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Github/Github.srs" },
+        { "tag": "666OS_Dev", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Dev.srs" },
+        { "tag": "senshinya_Developer", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Developer/Developer.srs" },
+
+        { "tag": "Repcz_Google", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Google.srs" },
+        { "tag": "666OS_d_Google", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Google.srs" },
+        { "tag": "666OS_i_Google", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Google.srs" },
+        { "tag": "senshinya_Google", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Google/Google.srs" },
+
+        { "tag": "Repcz_Microsoft", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Microsoft.srs" },
+        { "tag": "666OS_Microsoft", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Microsoft.srs" },
+        { "tag": "senshinya_Microsoft", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Microsoft/Microsoft.srs" },
+
+        { "tag": "Repcz_Apple", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Apple.srs" },
+        { "tag": "666OS_d_Apple", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Apple.srs" },
+        { "tag": "666OS_i_Apple", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Apple.srs" },
+        { "tag": "senshinya_Apple", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Apple/Apple.srs" },
+
+        { "tag": "Repcz_Cloudflare", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Cloudflare.srs" },
+        { "tag": "666OS_d_Cloudflare", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Cloudflare.srs" },
+        { "tag": "666OS_i_Cloudflare", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Cloudflare.srs" },
+        { "tag": "senshinya_Cloudflare", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Cloudflare/Cloudflare.srs" },
+        { "tag": "Repcz_Oracle", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Oracle.srs" },
+        { "tag": "senshinya_Oracle", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Oracle/Oracle.srs" },
+        { "tag": "senshinya_Akamai", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Akamai/Akamai.srs" },
+        { "tag": "senshinya_AkamaiCloud", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/AkamaiCloud/AkamaiCloud.srs" },
+
+        { "tag": "Repcz_OpenAI", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/OpenAI.srs" },
+        { "tag": "666OS_d_OpenAI", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/OpenAI.srs" },
+        { "tag": "666OS_i_OpenAI", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/OpenAI.srs" },
+        { "tag": "senshinya_OpenAI", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/OpenAI/OpenAI.srs" },
+        { "tag": "666OS_Gemini", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Gemini.srs" },
+        { "tag": "senshinya_Gemini", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Gemini/Gemini.srs" },
+        { "tag": "Repcz_Claude", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Claude.srs" },
+        { "tag": "666OS_Claude", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Claude.srs" },
+        { "tag": "senshinya_Claude", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Claude/Claude.srs" },
+        { "tag": "Repcz_AI", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/AI.srs" },
+        { "tag": "666OS_d_AI", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/AI.srs" },
+        { "tag": "666OS_i_AI", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/AI.srs" },
+
+        { "tag": "Repcz_DownloadCDN_Global", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/DownloadCDN_Global.srs" },
+        { "tag": "senshinya_IPTVOther", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/IPTVOther/IPTVOther.srs" },
+        { "tag": "Repcz_Proxy", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Proxy.srs" },
+        { "tag": "666OS_d_Proxy", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Proxy.srs" },
+        { "tag": "666OS_i_Proxy", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Proxy.srs" },
+        { "tag": "senshinya_Proxy", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Proxy/Proxy.srs" },
+
+        { "tag": "senshinya_Cloudflarecn", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Cloudflarecn/Cloudflarecn.srs" },
+        { "tag": "senshinya_IPTVMainland", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/IPTVMainland/IPTVMainland.srs" },
+        { "tag": "666OS_d_XPTV", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/XPTV.srs" },
+        { "tag": "666OS_i_XPTV", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/XPTV.srs" },
+        { "tag": "Repcz_ChinaDomain", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/ChinaDomain.srs" },
+        { "tag": "Repcz_ChinaIP", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/ChinaIP.srs" },
+        { "tag": "666OS_d_China", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/China.srs" },
+        { "tag": "666OS_i_China", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/China.srs" },
+        { "tag": "senshinya_ChinaMax", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/ChinaMax/ChinaMax.srs" },
+
+        { "tag": "Repcz_Direct", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Direct.srs" },
+        { "tag": "666OS_Direct", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Direct.srs" },
+        { "tag": "senshinya_Direct", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Direct/Direct.srs" }
+      ],
+      "rules": [
+        { "outbound": "🎯 直接连接", "rule_set": ["Repcz_Lan", "666OS_d_Private", "666OS_i_Private", "senshinya_Lan"]},
+        { "outbound": "🍔 整点汉堡", "rule_set": ["Repcz_DownloadCDN_CN", "666OS_Download", "senshinya_Download", "senshinya_SteamCN"], "domain_suffix": ["moegirl.org.cn", "steamserver.net", "115cdn.net"],  "domain": ["myembylife.indevs.in"] },
+        { "outbound": "🍟 整点薯条", "domain": ["mikufans-danmu.vercel.app"]},
+
+        { "outbound": "🚫 隐私拦截", "rule_set": ["Repcz_Reject", "senshinya_Privacy", "senshinya_Hijacking", "senshinya_AdvertisingLite", "Repcz_Prevent_DNS_Leaks", "666OS_Tracking"] },
+        { "outbound": "📵 软件升级", "rule_set": ["666OS_SystemOTA", "senshinya_SystemOTA"] },
+        { "outbound": "🔞 限定应用", "rule_set": ["Repcz_Porn", "Repcz_Crypto", "senshinya_Crypto", "senshinya_Cryptocurrency", "senshinya_Line", "senshinya_Pixiv", "senshinya_Abema", "senshinya_AbemaTV", "senshinya_Niconico", "Repcz_PayPal", "666OS_PayPal", "senshinya_PayPal"], "domain_suffix": ["follow.is", "bgm.tv", "chii.in", "bangumi.tv", "pixiv.re", "iwara.tv", "hanime", "hanime1"], "domain_keyword": ["moegirl"] },
+        { "outbound": "📚 学术研究", "rule_set": ["senshinya_Picacg", "senshinya_EHGallery"],  "domain_suffix": ["yealico.site", "kox.moe", "mox.moe", "mangadex.org", "manhuadb.com"], "domain_keyword": ["18comic", "jmcomic", "copymanga", "mangacopy", "mangafuna", "relamanhua", "mangabz", "comicbz", "manhuagui"], "domain": ["wc3818290.home.blog"] },
+        { "outbound": "📱 电报通讯", "rule_set": ["Repcz_Telegram_NoIP", "Repcz_Telegram", "666OS_d_Telegram", "666OS_i_Telegram", "senshinya_Telegram"] },
+        { "outbound": "💃 社交平台", "rule_set": ["Repcz_Reddit", "senshinya_Reddit", "senshinya_Tumblr", "senshinya_Discord", "Repcz_Twitter", "senshinya_Twitter", "666OS_Twitter", "Repcz_Facebook", "666OS_Facebook", "senshinya_Facebook", "Repcz_Instagram", "666OS_Instagram", "senshinya_Instagram"] },
+        { "outbound": "🌟 抖音视频", "rule_set": ["Repcz_TikTok", "666OS_TikTok", "senshinya_TikTok"] },
+        { "outbound": "🍻 哔哩哔哩", "rule_set": ["Repcz_Bilibili", "senshinya_BiliBili"] },
+        { "outbound": "📹 巴哈姆特", "rule_set": ["Repcz_Bahamut", "senshinya_Bahamut"] },
+        { "outbound": "🎬 国内媒体", "rule_set": ["senshinya_ChinaMedia"] },
+        { "outbound": "🎥 国外媒体", "rule_set": ["Repcz_Emby", "666OS_d_Emby", "666OS_i_Emby", "senshinya_Emby", "Repcz_YouTube", "666OS_YouTube", "senshinya_YouTube", "Repcz_Netflix", "666OS_Netflix", "senshinya_Netflix", "Repcz_Disney", "666OS_Disney", "senshinya_Disney", "666OS_d_Streaming", "666OS_i_Streaming", "Repcz_ProxyMedia", "senshinya_GlobalMedia"] },
+        { "outbound": "🎮 游戏平台", "rule_set": ["Repcz_Game", "666OS_Games", "senshinya_Game"] },
+        { "outbound": "🐳 开发工具", "rule_set": ["Repcz_Github", "666OS_GitHub", "senshinya_Github", "666OS_Dev", "senshinya_Developer"] },
+        { "outbound": "🕊️ 谷歌服务", "rule_set": ["Repcz_Google", "666OS_d_Google", "666OS_i_Google", "senshinya_Google"] },
+        { "outbound": "Ⓜ️ 微软服务", "rule_set": ["Repcz_Microsoft", "666OS_Microsoft", "senshinya_Microsoft"] },
+        { "outbound": "🍎 苹果服务", "rule_set": ["Repcz_Apple", "666OS_d_Apple", "666OS_i_Apple", "senshinya_Apple"] },
+        { "outbound": "☁️ 云服务商", "rule_set": ["Repcz_Cloudflare", "666OS_d_Cloudflare", "666OS_i_Cloudflare", "senshinya_Cloudflare", "Repcz_Oracle", "senshinya_Oracle", "senshinya_Akamai", "senshinya_AkamaiCloud"], "domain": ["mikufans.indevs.in"] },
+        { "outbound": "🤖 人工智能", "rule_set": ["Repcz_OpenAI", "666OS_d_OpenAI", "666OS_i_OpenAI", "senshinya_OpenAI", "666OS_Gemini", "senshinya_Gemini", "Repcz_Claude", "666OS_Claude", "senshinya_Claude", "Repcz_AI", "666OS_d_AI", "666OS_i_AI"] },
+        { "outbound": "🍟 整点薯条", "rule_set": ["Repcz_DownloadCDN_Global", "senshinya_IPTVOther", "Repcz_Proxy", "666OS_d_Proxy", "666OS_i_Proxy", "senshinya_Proxy"] },
+        { "outbound": "🍔 整点汉堡", "rule_set": ["senshinya_Cloudflarecn", "senshinya_IPTVMainland", "666OS_d_XPTV", "666OS_i_XPTV", "Repcz_ChinaDomain", "Repcz_ChinaIP", "666OS_d_China", "666OS_i_China", "senshinya_ChinaMax"], "domain": ["mikufans.netlify.app", "dandanplay.net"] },
+        { "outbound": "🎯 直接连接", "rule_set": ["Repcz_Direct", "666OS_Direct", "senshinya_Direct"] }
+      ]
+  }
+}
