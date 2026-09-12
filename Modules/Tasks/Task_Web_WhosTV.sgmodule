@@ -7,7 +7,7 @@
 #!homepage=https://raw.githubusercontent.com/imzwr214/whos/refs/heads/main/WhosTVSignin.module
 
 #!arguments=获取:获取_WhosTV, 任务:任务_WhosTV, 系统通知:1, 执行时间:8 10 * * *, 超时时间:60, 主机:hostname
-#!arguments-desc=1️⃣ 使用方法\n\n登录https://www.whos.tv, 提示获取Cookie成功即可\n\n2️⃣ 任务\n\n执行任务, 输入#关闭
+#!arguments-desc=1️⃣ 使用方法\n\n登录https://www.whos.tv, 提示获取Cookie成功即可\n\n2️⃣ 任务\n\n执行任务, 输入#关闭3️⃣ 主机\n\n任务稳定执行后输入#禁用避免不必要的MITM
 
 [Script]
 # Tasks: WhosTV
