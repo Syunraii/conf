@@ -1,13 +1,14 @@
-##############################################
+# ==========================================================
 # 当前为override配置, 等效于手动填写订阅地址的smart-lite.yaml(无法分离多个订阅)
 # 可直接远程获取并覆写订阅配置
-##############################################
+# ========================= 基本锚点 =========================
 # # 基本策略组
 # ## 基础类型
 BaseProxyGroup: &base_PG {lazy: true}
 BasePGDirect: &bpg_direct {<<: *base_PG, type: select, hidden: true, proxies: [DIRECT]}
 BasePGReject: &bpg_reject {<<: *base_PG, type: select, hidden: true, proxies: [REJECT]}
 BasePGDrop: &bpg_drop {<<: *base_PG, type: select, hidden: true, proxies: [REJECT-DROP]}
+
 # ## 策略类型
 ProxyGroupSE: &pg_se {<<: *base_PG, type: select}
 ProxyGroupSE_Hide: &pg_se_h {<<: *base_PG, type: select, hidden: true}
@@ -26,8 +27,10 @@ BaseFilter: &base_filter '^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|�
 
 FilterFor_HR: &filterForHR '^(?=.*(?:[2-9][0-9]*|[1-9][0-9]+\.[0-9]+)[×x]).*$'
 FilterOut_HR: &filterOutHR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+)[×x]).*$'
+
 FilterFor_NR: &filterForNR '^(?!.*(?:[2-9][0-9]*|[1-9][0-9]*\.[0-9]+|0\.0?[0-9]+)[×x]).*$'
 FilterOut_NR: &filterOutNR '^(?!.*[×x]).*$'
+
 FilterFor_LR: &filterForLR '^(?=.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$'
 FilterOut_LR: &filterOutLR '^(?!.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$'
 
@@ -251,7 +254,7 @@ proxy-groups:
   - {name: 🈲 禁止访问, <<: *bpg_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png}
   - {name: ⚪ 丢弃请求, <<: *bpg_drop, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse_2.png}
 
-##############################################
+# ==========================================================
 rule-anchor:
   Class_Text: &class_text {type: http, behavior: classical, format: text, interval: 86400}
   Class_Yaml: &class_yaml {type: http, behavior: classical, format: yaml, interval: 86400}
@@ -263,29 +266,27 @@ rule-anchor:
   IP_MRS: &ip_mrs {type: http, behavior: ipcidr, format: mrs, interval: 86400}
   IP_TEXT: &ip_text {type: http, behavior: ipcidr, format: text, interval: 86400}
   IP_YAML: &ip_yaml {type: http, behavior: ipcidr, format: yaml, interval: 86400}
-  
+
 rule-providers:
   # 直连
   CYaml-Lan:               {<<: *class_yaml, url: https://rule.kelee.one/Clash/Lan.yaml}
   CText-Lan:               {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Lan.list}
-  CYaml-Direct:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Direct.yaml}
-  CText-Direct:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Direct.list}
-  DMrs-Direct:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Direct.mrs}
   DMrs-Private:            {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Private.mrs}
   IMrs-Private:            {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Private.mrs}
   # 下载 
   CYaml-Download:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/Download.yaml}
-  CYaml-GameDownload:      {<<: *class_yaml, url: https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml}
   CYaml-GameDownloadCN:    {<<: *class_yaml, url: https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN_No_Resolve.yaml}
+  CYaml-GameDownload:      {<<: *class_yaml, url: https://github.com/blackmatrix7/ios_rule_script/raw/master/rule/Clash/Game/GameDownload/GameDownload_No_Resolve.yaml}
   CText-DownloadCDN_CN:    {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/DownloadCDN_CN.list}
+  CText-DownloadCDN_Global: {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/DownloadCDN_Global.list}
   DMrs-Download:           {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Download.mrs}
   # 🚫 隐私拦截
   CText-Reject:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Reject.list}
   CYaml-Privacy:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Privacy.yaml}
   CYaml-Hijacking:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Hijacking.yaml}
-  CYaml-AdvertisingLite:   {<<: *class_yaml, url: https://rule.kelee.one/Clash/AdvertisingLite.yaml}
   CText-Prevent_DNS_Leaks: {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Prevent_DNS_Leaks.list}
   DMrs-Tracking:           {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Tracking.mrs}
+  CYaml-AdvertisingLite:   {<<: *class_yaml, url: https://rule.kelee.one/Clash/AdvertisingLite.yaml}
  
   CText-RejectNoDropNonIp: {<<: *class_text, url: https://ruleset.skk.moe/Clash/non_ip/reject-no-drop.txt}
   CText-RejectDropNonIp:   {<<: *class_text, url: https://ruleset.skk.moe/Clash/non_ip/reject-drop.txt}
@@ -299,6 +300,7 @@ rule-providers:
   # 🔞 限定应用
   CText-Porn:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Porn.list}
   CText-Crypto:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Crypto.list}
+  CYaml-Crypto:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Crypto.yaml}
   CYaml-Cryptocurrency:    {<<: *class_yaml, url: https://rule.kelee.one/Clash/Cryptocurrency.yaml}
   # 🇯🇵 整点烧鸟
   CYaml-Line:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Line.yaml}
@@ -307,95 +309,96 @@ rule-providers:
   CYaml-AbemaTV:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/AbemaTV.yaml}
   CYaml-Niconico:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/Niconico.yaml}
   # 🇺🇸 整点炸鸡
-  CYaml-PayPal:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/PayPal.yaml}
   CText-PayPal:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/PayPal.list}
+  CYaml-PayPal:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/PayPal.yaml}
   DMrs-PayPal:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/PayPal.mrs}
   # 📚 学术研究
   CYaml-Picacg:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Picacg.yaml}
   CYaml-EHGallery:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/EHGallery.yaml}
   # 📱 电报通讯
-  CYaml-Telegram:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/Telegram.yaml}
   CText-Telegram:          {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Telegram.list}
+  CYaml-TelegramSG:        {<<: *class_yaml, url: https://rule.kelee.one/Clash/TelegramSG.yaml}
+  CYaml-Telegram:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/Telegram.yaml}
   DMrs-Telegram:           {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Telegram.mrs}
   IMrs-Telegram:           {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Telegram.mrs}
   # 💃 社交平台
   CYaml-Reddit:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Reddit.yaml}
   CYaml-Tumblr:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Tumblr.yaml}
   CYaml-Discord:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Discord.yaml}
-  CYaml-Twitter:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Twitter.yaml}
   CText-Twitter:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Twitter.list}
+  CYaml-Twitter:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Twitter.yaml}
   DMrs-Twitter:            {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Twitter.mrs}
-  CYaml-Facebook:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/Facebook.yaml}
-  CText-Facebook:          {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Facebook.list}
-  DMrs-Facebook:           {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Facebook.mrs}
-  CYaml-Instagram:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Instagram.yaml}
   CText-Instagram:         {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Instagram.list}
+  CYaml-Instagram:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Instagram.yaml}
   DMrs-Instagram:          {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Instagram.mrs}
+  CText-Facebook:          {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Facebook.list}
+  CYaml-Facebook:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/Facebook.yaml}
+  DMrs-Facebook:           {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Facebook.mrs}
+  # 📹 巴哈姆特
+  CText-Bahamut:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Bahamut.list}
+  CYaml-Bahamut:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Bahamut.yaml}
   # 🌟 抖音视频
-  CYaml-TikTok:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/TikTok.yaml}
   CText-TikTok:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/TikTok.list}
+  CYaml-TikTok:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/TikTok.yaml}
   DMrs-TikTok:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/TikTok.mrs}
   # 🍻 哔哩哔哩
-  CYaml-BiliBili:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/BiliBili.yaml}
   CText-BiliBili:          {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Bilibili.list}
-  # 📹 巴哈姆特
-  CYaml-Bahamut:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Bahamut.yaml}
-  CText-Bahamut:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Bahamut.list}
+  CYaml-BiliBili:          {<<: *class_yaml, url: https://rule.kelee.one/Clash/BiliBili.yaml}
   # 🎬 国外媒体
   CYaml-ChinaMedia:        {<<: *class_yaml, url: https://rule.kelee.one/Clash/ChinaMedia.yaml}
   # 🎥 国外媒体
-  CYaml-Emby:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Emby.yaml}
   CText-Emby:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Emby.list}
+  CYaml-Emby:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Emby.yaml}
   DMrs-Emby:               {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Emby.mrs}
   IMrs-Emby:               {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Emby.mrs}
   CYaml-YouTube:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/YouTube.yaml}
   CText-YouTube:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/YouTube.list}
   DMrs-YouTube:            {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/YouTube.mrs}
-  CYaml-Netflix:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Netflix.yaml}
   CText-Netflix:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Netflix.list}
+  CYaml-Netflix:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/Netflix.yaml}
   DMrs-Netflix:            {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Netflix.mrs}
   IMrs-Netflix:            {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Netflix.mrs}
-  CYaml-Disney:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Disney.yaml}
   CText-Disney:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Disney.list}
+  CYaml-Disney:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Disney.yaml}
   DMrs-Disney:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Disney.mrs}
   DMrs-Streaming:          {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Streaming.mrs}
   IMrs-Streaming:          {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Streaming.mrs}
-  CYaml-GlobalMedia:       {<<: *class_yaml, url: https://rule.kelee.one/Clash/GlobalMedia.yaml}
   CText-ProxyMedia:        {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/ProxyMedia.list}
+  CYaml-GlobalMedia:       {<<: *class_yaml, url: https://rule.kelee.one/Clash/GlobalMedia.yaml}
   # 🎮 游戏平台
-  CYaml-Game:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Game.yaml}
   CText-Game:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Game.list}
-  DMrs-Game:               {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Games.mrs}
+  CYaml-Game:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Game.yaml}
+  DMrs-Games:              {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Games.mrs}
   # 🐳 开发工具
-  CYaml-GitHub:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/GitHub.yaml}
   CText-GitHub:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Github.list}
+  CYaml-GitHub:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/GitHub.yaml}
   DMrs-GitHub:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/GitHub.mrs}
   DMrs-Dev:                {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Dev.mrs}
   CYaml-Developer:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Developer.yaml}
   # 🕊️ 谷歌服务
-  CYaml-Google:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Google.yaml}
   CText-Google:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Google.list}
+  CYaml-Google:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Google.yaml}
   DMrs-Google:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Google.mrs}
   IMrs-Google:             {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Google.mrs}
   # Ⓜ️ 微软服务
-  CYaml-Microsoft:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Microsoft.yaml}
   CText-Microsoft:         {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Microsoft.list}
+  CYaml-Microsoft:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/Microsoft.yaml}
   DMrs-Microsoft:          {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Microsoft.mrs}
   # 🍎 苹果服务
-  CYaml-Apple:             {<<: *class_yaml, url: https://rule.kelee.one/Clash/Apple.yaml}
   CText-Apple:             {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Apple.list}
+  CYaml-Apple:             {<<: *class_yaml, url: https://rule.kelee.one/Clash/Apple.yaml}
   DMrs-Apple:              {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Apple.mrs}
   # ☁️ 云服务商
-  CYaml-Cloudflare:        {<<: *class_yaml, url: https://rule.kelee.one/Clash/Cloudflare.yaml}
   CText-Cloudflare:        {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Cloudflare.list}
+  CYaml-Cloudflare:        {<<: *class_yaml, url: https://rule.kelee.one/Clash/Cloudflare.yaml}
   DMrs-Cloudflare:         {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Cloudflare.mrs}
   IMrs-Cloudflare:         {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Cloudflare.mrs}
-  CYaml-Oracle:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Oracle.yaml}
   CText-Oracle:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Oracle.list}
+  CYaml-Oracle:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Oracle.yaml}
   CYaml-Akamai:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Akamai.yaml}
   # 🤖 人工智能
-  CYaml-OpenAI:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/OpenAI.yaml}
   CText-OpenAI:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/OpenAI.list}
+  CYaml-OpenAI:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/OpenAI.yaml}
   DMrs-OpenAI:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/OpenAI.mrs}
   CYaml-Gemini:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Gemini.yaml}
   DMrs-Gemini:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Gemini.mrs}
@@ -408,19 +411,22 @@ rule-providers:
   # 🍟 整点薯条
   CYaml-SpeedTestInl:      {<<: *class_yaml, url: https://kelee.one/Tool/Clash/Rule/SpeedtestInternational.yaml}
   CYaml-IPTVOther:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/IPTVOther.yaml}
-  CYaml-Proxy:             {<<: *class_yaml, url: https://rule.kelee.one/Clash/Proxy.yaml}
   CText-Proxy:             {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Proxy.list}
+  CYaml-Proxy:             {<<: *class_yaml, url: https://rule.kelee.one/Clash/Proxy.yaml}
   DMrs-Proxy:              {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Proxy.mrs}
   IMrs-Proxy:              {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Proxy.mrs}
+  CYaml-Global:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Global.yaml}
   # 🍔 整点汉堡
   CYaml-SpeedTestCN:       {<<: *class_yaml, url: https://kelee.one/Tool/Clash/Rule/SpeedtestChina.yaml}
   CYaml-CloudflareCN:      {<<: *class_text, url: https://rule.kelee.one/Clash/Cloudflarecn.yaml}
   CYaml-IPTVMainland:      {<<: *class_yaml, url: https://rule.kelee.one/Clash/IPTVMainland.yaml}
-  DMrs-Media:              {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/XPTV.mrs}
-  IMrs-Media:              {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/XPTV.mrs}
+  CYaml-ChinaMaxNoMedia:   {<<: *class_yaml, url: https://rule.kelee.one/Clash/ChinaMaxNoMedia.yaml}
   DMrs-China:              {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/China.mrs}
   IMrs-China:              {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/China.mrs}
-  CYaml-ChinaMaxNoMedia:   {<<: *class_yaml, url: https://rule.kelee.one/Clash/ChinaMaxNoMedia.yaml}
+  # 兜底直连
+  CText-Direct:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Direct.list}
+  CYaml-Direct:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Direct.yaml}
+  DMrs-Direct:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Direct.mrs}
 
 rules:
   - RULE-SET,CYaml-Lan,🎯 直接连接
@@ -433,15 +439,15 @@ rules:
   - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
 
   - RULE-SET,CYaml-Download,🍔 整点汉堡
-  - RULE-SET,CYaml-GameDownload,🍔 整点汉堡,no-resolve
   - RULE-SET,CYaml-GameDownloadCN,🍔 整点汉堡,no-resolve
+  - RULE-SET,CYaml-GameDownload,🍔 整点汉堡,no-resolve
   - RULE-SET,CText-DownloadCDN_CN,🍔 整点汉堡
+  - RULE-SET,CText-DownloadCDN_Global,🍔 整点汉堡
   - RULE-SET,DMrs-Download,🍔 整点汉堡
   - GEOSITE,steam@cn,🍔 整点汉堡
   # 🚫 隐私拦截
   - RULE-SET,CText-Reject,🚫 隐私拦截
   - RULE-SET,CYaml-Privacy,🚫 隐私拦截
-  - RULE-SET,CYaml-Hijacking,🚫 隐私拦截
   - RULE-SET,CYaml-Hijacking,🚫 隐私拦截
   - RULE-SET,CText-Prevent_DNS_Leaks,🚫 隐私拦截
   - RULE-SET,DMrs-Tracking,🚫 隐私拦截
@@ -480,6 +486,7 @@ rules:
   # 🔞 限定应用
   - RULE-SET,CText-Porn,🔞 限定应用
   - RULE-SET,CText-Crypto,🔞 限定应用
+  - RULE-SET,CYaml-Crypto,🔞 限定应用
   - RULE-SET,CYaml-Cryptocurrency,🔞 限定应用
   # 🇯🇵 整点烧鸟
   - RULE-SET,CYaml-Line,🇯🇵 整点烧鸟
@@ -488,95 +495,97 @@ rules:
   - RULE-SET,CYaml-AbemaTV,🇯🇵 整点烧鸟
   - RULE-SET,CYaml-Niconico,🇯🇵 整点烧鸟
   # 🇺🇸 整点炸鸡
-  - RULE-SET,CYaml-PayPal,🇺🇸 整点炸鸡
   - RULE-SET,CText-PayPal,🇺🇸 整点炸鸡
+  - RULE-SET,CYaml-PayPal,🇺🇸 整点炸鸡
   - RULE-SET,DMrs-PayPal,🇺🇸 整点炸鸡
   # 📚 学术研究
   - RULE-SET,CYaml-Picacg,📚 学术研究
   - RULE-SET,CYaml-EHGallery,📚 学术研究
   - GEOSITE,18comic,📚 学术研究
   # 📱 电报通讯
-  - RULE-SET,CYaml-Telegram,📱 电报通讯
   - RULE-SET,CText-Telegram,📱 电报通讯
+  - RULE-SET,CYaml-TelegramSG,📱 电报通讯
+  - RULE-SET,CYaml-Telegram,📱 电报通讯
   - RULE-SET,DMrs-Telegram,📱 电报通讯
   - RULE-SET,IMrs-Telegram,📱 电报通讯
   # 💃 社交平台
   - RULE-SET,CYaml-Reddit,💃 社交平台
   - RULE-SET,CYaml-Tumblr,💃 社交平台
   - RULE-SET,CYaml-Discord,💃 社交平台
-  - RULE-SET,CYaml-Twitter,💃 社交平台
   - RULE-SET,CText-Twitter,💃 社交平台
+  - RULE-SET,CYaml-Twitter,💃 社交平台
   - RULE-SET,DMrs-Twitter,💃 社交平台
-  - RULE-SET,CYaml-Instagram,💃 社交平台
   - RULE-SET,CText-Instagram,💃 社交平台
   - RULE-SET,DMrs-Instagram,💃 社交平台
-  - RULE-SET,CYaml-Facebook,💃 社交平台
+  - RULE-SET,CYaml-Instagram,💃 社交平台
   - RULE-SET,CText-Facebook,💃 社交平台
+  - RULE-SET,CYaml-Facebook,💃 社交平台
   - RULE-SET,DMrs-Facebook,💃 社交平台
   # 📹 巴哈姆特
-  - RULE-SET,CYaml-Bahamut,📹 巴哈姆特
   - RULE-SET,CText-Bahamut,📹 巴哈姆特
+  - RULE-SET,CYaml-Bahamut,📹 巴哈姆特
   # 🌟 抖音视频
-  - RULE-SET,CYaml-TikTok,🌟 抖音视频
   - RULE-SET,CText-TikTok,🌟 抖音视频
+  - RULE-SET,CYaml-TikTok,🌟 抖音视频
   - RULE-SET,DMrs-TikTok,🌟 抖音视频
   # 🍻 哔哩哔哩
-  - RULE-SET,CYaml-BiliBili,🍻 哔哩哔哩
   - RULE-SET,CText-BiliBili,🍻 哔哩哔哩
+  - RULE-SET,CYaml-BiliBili,🍻 哔哩哔哩
   # 🎬 国内媒体
   - RULE-SET,CYaml-ChinaMedia,🎬 国内媒体
   # 🎥 国外媒体
-  - RULE-SET,CYaml-Emby,🎥 国外媒体
   - RULE-SET,CText-Emby,🎥 国外媒体
+  - RULE-SET,CYaml-Emby,🎥 国外媒体
   - RULE-SET,DMrs-Emby,🎥 国外媒体
   - RULE-SET,IMrs-Emby,🎥 国外媒体
-  - RULE-SET,CYaml-YouTube,🎥 国外媒体
   - RULE-SET,CText-YouTube,🎥 国外媒体
+  - RULE-SET,CYaml-YouTube,🎥 国外媒体
   - RULE-SET,DMrs-YouTube,🎥 国外媒体
-  - RULE-SET,CYaml-Netflix,🎥 国外媒体
   - RULE-SET,CText-Netflix,🎥 国外媒体
+  - RULE-SET,CYaml-Netflix,🎥 国外媒体
   - RULE-SET,DMrs-Netflix,🎥 国外媒体
   - RULE-SET,IMrs-Netflix,🎥 国外媒体
   - RULE-SET,CText-Disney,🎥 国外媒体
+  - RULE-SET,CYaml-Disney,🎥 国外媒体
   - RULE-SET,DMrs-Disney,🎥 国外媒体
   - RULE-SET,DMrs-Streaming,🎥 国外媒体
   - RULE-SET,IMrs-Streaming,🎥 国外媒体
-  - RULE-SET,CYaml-GlobalMedia,🎥 国外媒体
   - RULE-SET,CText-ProxyMedia,🎥 国外媒体
+  - RULE-SET,CYaml-GlobalMedia,🎥 国外媒体
   # 🎮 游戏平台
-  - RULE-SET,CYaml-Game,🎮 游戏平台
   - RULE-SET,CText-Game,🎮 游戏平台
-  - RULE-SET,DMrs-Game,🎮 游戏平台
-  # 🕊️ 谷歌服务
-  - RULE-SET,CYaml-Google,🕊️ 谷歌服务
-  - RULE-SET,CText-Google,🕊️ 谷歌服务
-  - RULE-SET,DMrs-Google,🕊️ 谷歌服务
-  - RULE-SET,IMrs-Google,🕊️ 谷歌服务
+  - RULE-SET,CYaml-Game,🎮 游戏平台
+  - RULE-SET,DMrs-Games,🎮 游戏平台
   # 🐳 开发工具
-  - RULE-SET,CYaml-GitHub,🐳 开发工具
   - RULE-SET,CText-GitHub,🐳 开发工具
+  - RULE-SET,CYaml-GitHub,🐳 开发工具
   - RULE-SET,DMrs-GitHub,🐳 开发工具
   - RULE-SET,DMrs-Dev,🐳 开发工具
   - RULE-SET,CYaml-Developer,🐳 开发工具
+  # 🕊️ 谷歌服务
+  - RULE-SET,CText-Google,🕊️ 谷歌服务
+  - RULE-SET,CYaml-Google,🕊️ 谷歌服务
+  - RULE-SET,DMrs-Google,🕊️ 谷歌服务
+  - RULE-SET,IMrs-Google,🕊️ 谷歌服务
   # Ⓜ️ 微软服务
-  - RULE-SET,CYaml-Microsoft,Ⓜ️ 微软服务
   - RULE-SET,CText-Microsoft,Ⓜ️ 微软服务
+  - RULE-SET,CYaml-Microsoft,Ⓜ️ 微软服务
   - RULE-SET,DMrs-Microsoft,Ⓜ️ 微软服务
   # 🍎 苹果服务
-  - RULE-SET,CYaml-Apple,🍎 苹果服务
   - RULE-SET,CText-Apple,🍎 苹果服务
+  - RULE-SET,CYaml-Apple,🍎 苹果服务
   - RULE-SET,DMrs-Apple,🍎 苹果服务
   # ☁️ 云服务商
-  - RULE-SET,CYaml-Cloudflare,☁️ 云服务商
   - RULE-SET,CText-Cloudflare,☁️ 云服务商
+  - RULE-SET,CYaml-Cloudflare,☁️ 云服务商
   - RULE-SET,DMrs-Cloudflare,☁️ 云服务商
   - RULE-SET,IMrs-Cloudflare,☁️ 云服务商
-  - RULE-SET,CYaml-Oracle,☁️ 云服务商
   - RULE-SET,CText-Oracle,☁️ 云服务商
+  - RULE-SET,CYaml-Oracle,☁️ 云服务商
   - RULE-SET,CYaml-Akamai,☁️ 云服务商
   # 🤖 人工智能
-  - RULE-SET,CYaml-OpenAI,🤖 人工智能
   - RULE-SET,CText-OpenAI,🤖 人工智能
+  - RULE-SET,CYaml-OpenAI,🤖 人工智能
   - RULE-SET,DMrs-OpenAI,🤖 人工智能
   - RULE-SET,CYaml-Gemini,🤖 人工智能
   - RULE-SET,DMrs-Gemini,🤖 人工智能
@@ -589,22 +598,21 @@ rules:
   # 🍟 整点薯条
   - RULE-SET,CYaml-SpeedTestInl,🍟 整点薯条
   - RULE-SET,CYaml-IPTVOther,🍟 整点薯条
-  - RULE-SET,CYaml-Proxy,🍟 整点薯条
   - RULE-SET,CText-Proxy,🍟 整点薯条
+  - RULE-SET,CYaml-Proxy,🍟 整点薯条
   - RULE-SET,DMrs-Proxy,🍟 整点薯条
   - RULE-SET,IMrs-Proxy,🍟 整点薯条
+  - RULE-SET,CYaml-Global,🍟 整点薯条
   # 🍔 整点汉堡
   - RULE-SET,CYaml-SpeedTestCN,🍔 整点汉堡
   - RULE-SET,CYaml-CloudflareCN,🍔 整点汉堡
   - RULE-SET,CYaml-IPTVMainland,🍔 整点汉堡
-  - RULE-SET,DMrs-Media,🍔 整点汉堡
-  - RULE-SET,IMrs-Media,🍔 整点汉堡
+  - RULE-SET,CYaml-ChinaMaxNoMedia,🍔 整点汉堡
   - RULE-SET,DMrs-China,🍔 整点汉堡
   - RULE-SET,IMrs-China,🍔 整点汉堡
-  - RULE-SET,CYaml-ChinaMaxNoMedia,🍔 整点汉堡
 
-  - RULE-SET,CYaml-Direct,🎯 直接连接
   - RULE-SET,CText-Direct,🎯 直接连接
+  - RULE-SET,CYaml-Direct,🎯 直接连接
   - RULE-SET,DMrs-Direct,🎯 直接连接
   
   - MATCH,⛔ 让我访问

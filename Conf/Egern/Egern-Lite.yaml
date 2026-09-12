@@ -61,239 +61,125 @@ real_ip_domains:
 - '*.10099.com.cn'
 policy_groups:
 - external:
-    name: 🛫 常规订阅
+    name: 🛫 我的订阅
     type: select
     urls:
     - 填入订阅链接
-    hidden: true
-- external:
-    name: 🛫 优质订阅
-    type: select
-    urls:
-    - 填入订阅链接
-    hidden: true
-- external:
-    name: 🛫 备用订阅
-    type: select
-    urls:
-    - 填入订阅链接
-    hidden: true
-- external:
-    name: 🛫 临时订阅
-    type: select
-    urls:
-    - 填入订阅链接
-    hidden: true
-- auto_test:
-    name: 🎡 香港
-    policies:
-    - 🎡 常规过滤
-    flatten: true
-    filter: (?i)🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)
-    hidden: true
-- auto_test:
-    name: 🎡 台湾
-    policies:
-    - 🎡 常规过滤
-    flatten: true
-    filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)
-    hidden: true
-- auto_test:
-    name: 🎡 日本
-    policies:
-    - 🎡 常规过滤
-    flatten: true
-    filter: (?i)🇯🇵|日本|(\b(JP|Japan)\b)
-    hidden: true
-- auto_test:
-    name: 🎡 韩国
-    policies:
-    - 🎡 常规过滤
-    flatten: true
-    filter: (?i)🇰🇷|韩国|(\b(KR|South Korea)\b)
-    hidden: true
-- auto_test:
-    name: 🎡 美国
-    policies:
-    - 🎡 常规过滤
-    flatten: true
-    filter: (?i)🇺🇸|美国|(\b(US|USA|United States)\b)
-    hidden: true
-- auto_test:
-    name: 🎡 狮城
-    policies:
-    - 🎡 常规过滤
-    flatten: true
-    filter: (?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)
-    hidden: true
-- auto_test:
-    name: 🎡 其他
-    policies:
-    - 🎡 常规过滤
-    flatten: true
-    filter: ^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$
-    hidden: true
-- fallback:
-    name: 🦄 香港
-    policies:
-    - 🦄 优质过滤
-    flatten: true
-    filter: (?i)🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)
-    hidden: true
-- fallback:
-    name: 🦄 台湾
-    policies:
-    - 🦄 优质过滤
-    flatten: true
-    filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)
-    hidden: true
-- fallback:
-    name: 🦄 日本
-    policies:
-    - 🦄 优质过滤
-    flatten: true
-    filter: (?i)🇯🇵|日本|(\b(JP|Japan)\b)
-    hidden: true
-- fallback:
-    name: 🦄 韩国
-    policies:
-    - 🦄 优质过滤
-    flatten: true
-    filter: (?i)🇰🇷|韩国|(\b(KR|South Korea)\b)
-    hidden: true
-- fallback:
-    name: 🦄 美国
-    policies:
-    - 🦄 优质过滤
-    flatten: true
-    filter: (?i)🇺🇸|美国|(\b(US|USA|United States)\b)
-    hidden: true
-- fallback:
-    name: 🦄 狮城
-    policies:
-    - 🦄 优质过滤
-    flatten: true
-    filter: (?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)
-    hidden: true
-- fallback:
-    name: 🦄 其他
-    policies:
-    - 🦄 优质过滤
-    flatten: true
-    filter: ^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$
     hidden: true
 - fallback:
     name: 🇭🇰 香港自动
     policies:
-    - 🎡 香港
-    - 🦄 香港
-    flatten: false
+    - 🎡 自动过滤
+    flatten: true
+    filter: (?i)🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
     hidden: true
 - fallback:
     name: 🇨🇳 台湾自动
     policies:
-    - 🎡 台湾
-    - 🦄 台湾
-    flatten: false
+    - 🎡 自动过滤
+    flatten: true
+    filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
     hidden: true
 - fallback:
     name: 🇯🇵 日本自动
     policies:
-    - 🎡 日本
-    - 🦄 日本
-    flatten: false
+    - 🎡 自动过滤
+    flatten: true
+    filter: (?i)🇯🇵|日本|(\b(JP|Japan)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
     hidden: true
 - fallback:
     name: 🇰🇷 韩国自动
     policies:
-    - 🎡 韩国
-    - 🦄 韩国
-    flatten: false
+    - 🎡 自动过滤
+    flatten: true
+    filter: (?i)🇰🇷|韩国|(\b(KR|South Korea)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
     hidden: true
 - fallback:
     name: 🇺🇸 美国自动
     policies:
-    - 🎡 美国
-    - 🦄 美国
-    flatten: false
+    - 🎡 自动过滤
+    flatten: true
+    filter: (?i)🇺🇸|美国|(\b(US|USA|United States)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
     hidden: true
 - fallback:
     name: 🇸🇬 狮城自动
     policies:
-    - 🎡 狮城
-    - 🦄 狮城
-    flatten: false
+    - 🎡 自动过滤
+    flatten: true
+    filter: (?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
     hidden: true
 - fallback:
     name: 🌍 其他自动
     policies:
-    - 🎡 其他
-    - 🦄 其他
-    flatten: false
+    - 🎡 自动过滤
+    flatten: true
+    filter: ^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png
     hidden: true
+
 - smart:
     name: 🇭🇰 香港智能
     policies:
-    - 🎡 香港
-    - 🦄 香港
+    - 🦄 智能过滤
     flatten: true
+    filter: (?i)🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
     hidden: true
 - smart:
     name: 🇨🇳 台湾智能
     policies:
-    - 🎡 台湾
-    - 🦄 台湾
+    - 🦄 智能过滤
     flatten: true
+    filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
     hidden: true
 - smart:
     name: 🇯🇵 日本智能
     policies:
-    - 🎡 日本
-    - 🦄 日本
+    - 🦄 智能过滤
     flatten: true
+    filter: (?i)🇯🇵|日本|(\b(JP|Japan)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
     hidden: true
 - smart:
     name: 🇰🇷 韩国智能
     policies:
-    - 🎡 韩国
-    - 🦄 韩国
+    - 🦄 智能过滤
     flatten: true
+    filter: (?i)🇰🇷|韩国|(\b(KR|South Korea)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
     hidden: true
 - smart:
     name: 🇺🇸 美国智能
     policies:
-    - 🎡 美国
-    - 🦄 美国
+    - 🦄 智能过滤
     flatten: true
+    filter: (?i)🇺🇸|美国|(\b(US|USA|United States)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png
     hidden: true
 - smart:
     name: 🇸🇬 狮城智能
     policies:
-    - 🎡 狮城
-    - 🦄 狮城
+    - 🦄 智能过滤
     flatten: true
+    filter: (?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
     hidden: true
 - smart:
     name: 🌍 其他智能
     policies:
-    - 🎡 其他
-    - 🦄 其他
+    - 🦄 智能过滤
     flatten: true
+    filter: ^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png
     hidden: true
+
 - select:
     name: 🌐 全局选择
     policies:
@@ -331,38 +217,22 @@ policy_groups:
 - select:
     name: 👋 手动选择
     policies:
-    - 🎡 常规选择
-    - 🦄 故障转移
-    - 🪂 临时选择
-    flatten: false
+    - 🛫 我的订阅
+    flatten: true
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png
     hidden: false
 - select:
-    name: 🎡 常规选择
+    name: 🎡 自动过滤
     policies:
-    - 🛫 常规订阅
-    flatten: true
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png
-    hidden: false
-- select:
-    name: 🎡 常规过滤
-    policies:
-    - 🛫 常规订阅
+    - 🛫 我的订阅
     flatten: true
     filter: ^(?!.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png
     hidden: true
 - select:
-    name: 🦄 故障转移
+    name: 🦄 智能过滤
     policies:
-    - 🛫 优质订阅
-    flatten: true
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png
-    hidden: false
-- select:
-    name: 🦄 优质过滤
-    policies:
-    - 🛫 优质订阅
+    - 🛫 我的订阅
     flatten: true
     filter: ^(?!.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png
@@ -370,7 +240,7 @@ policy_groups:
 - smart:
     name: ♿️ 低倍选择
     policies:
-    - 🛫 备用订阅
+    - 🛫 我的订阅
     flatten: true
     filter: ^(?=.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Loop.png
@@ -382,13 +252,6 @@ policy_groups:
       🇨🇳: 0.4
       🇺🇸: 0.2
       🇸🇬: 0.0
-- select:
-    name: 🪂 临时选择
-    policies:
-    - 🛫 临时订阅
-    flatten: true
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
-    hidden: false
 - select:
     name: 🚫 隐私拦截
     policies:
@@ -1047,7 +910,431 @@ rules:
     match: msmp.abchina.com.cn
     policy: 🈲 禁止连接
     disabled: false
-
+- domain_suffix:
+    name: 软件升级
+    match: paddleapi.com
+    policy: 📵 软件升级
+    disabled: false
+- domain:
+    name: Emby-反代面板
+    match: myembylife.indevs.in
+    policy: 🎬 国内媒体
+    disabled: false
+- domain:
+    name: Emby-白-电视台
+    match: emby.ichinosekotomi.com
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-白-电视台
+    match: white.ichinosekotomi.com
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-白-银河列车
+    match: yuanshen.help
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-白-银河列车
+    match: ciallo.party
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-无需保号-Hohai
+    match: 115.hohai.eu.org
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-无需保号-Hohai
+    match: hohai.eu.org
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-无需保号-Doubon
+    match: 114514.quest
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-无需保号-佬友记
+    match: emby.605305.xyz
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-无需保号-佬友记
+    match: ofo.033388.xyz
+    policy: 🎬 国内媒体
+    disabled: false
+- domain:
+    name: Emby-无需保号-佬友记
+    match: lyj.ysz.dpdns.org
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-无需保号-佬友记
+    match: cdn.605305.xyz
+    policy: 🎬 国内媒体
+    disabled: false
+- domain:
+    name: Emby-无需保号-佬友记
+    match: reverse.605305.xyz
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-无需保号-emos
+    match: emos.lol
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-无需保号-emos
+    match: emos.best
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-无需保号-动漫城
+    match: emby.sl.al
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-无需保号-Shrek
+    match: shrekmedia.org
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-Etflix
+    match: entertang.work
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-终点站
+    match: emby.wtf
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-签到-结束乐队
+    match: 5okyats-2lruf01f.biliblili.uk
+    policy: 🎬 国内媒体
+    disabled: false
+- domain:
+    name: Emby-签到-结束乐队
+    match: bilibiliv6.43992026.xyz
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-结束乐队
+    match: biliblili.uk
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-结束乐队
+    match: 43992026.xyz
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-AniSaga
+    match: anisaga.tv
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-Nayovo
+    match: 007.us.kg
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-稳健
+    match: wenjian.de
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-Lily
+    match: lilyemby.com
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-Lily
+    match: lilyemby.cc
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-Lily
+    match: lilyya.top
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-Lily
+    match: lilyemby.app
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-惊蛰
+    match: jingzhe.pro
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-月饼
+    match: emby.my
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-飞了个喵
+    match: meowfly.de
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-Yezi网盘服
+    match: lyezi.cc
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-Levilde Luminia
+    match: levilde.bond
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-Unbound
+    match: faemby.vip
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-星影
+    match: xying1314.xyz
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-这只猫
+    match: zzm.li
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-临境
+    match: liminalnet.com
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-麦当劳
+    match: saodu.wang
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-麦当劳
+    match: saodu6.top
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-麦当劳
+    match: saodu6.cn
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-麦当劳
+    match: 5165163.xyz
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-乐蛙影视站
+    match: taotu.ink
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-乐蛙影视站
+    match: atrct.cn
+    policy: 🎬 国内媒体
+    disabled: false
+- domain:
+    name: Emby-签到-乐观
+    match: yxrkemby.haosao.de
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-乐观
+    match: dijia.de
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-乐观
+    match: haosao.de
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-憨豆普通服
+    match: handoumedia.top
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签到-假日飞行
+    match: cr18.eu.org
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-狗剩eoos
+    match: eoos.top
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-Lunaris Vault
+    match: lunarisvault.com
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-nyamedia
+    match: bangumi.ca
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-纸片人
+    match: embyplus.org
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-二刺猿
+    match: media.nijigem.by
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-二刺猿
+    match: cdn.bgp.yt
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-SNTP Lite
+    match: cn2gias.uk
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-墨云阁
+    match: mobaiemby.site
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-影迹
+    match: aixj.de
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-影迹
+    match: cinetrail.live
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-签记-起点站
+    match: freestream.startspoint.com
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-起点站
+    match: 28.al
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-起点站
+    match: aemby.de
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-茶百道
+    match: teawaya.com
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-非越媒体库
+    match: sfcj.org
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-非越媒体库
+    match: emby.pro
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-签记-Youno
+    match: emby.younoyes.com
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-Youno
+    match: younoyes.com
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-SDL
+    match: saturdayent.top
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-Mirai
+    match: miraiemby.com
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-悲伤小鸡
+    match: sadchicktv.com
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-飞跃彩虹
+    match: feiyue.lol
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-Nebula星云
+    match: nebula-media.org
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-签记-小虾米
+    match: xxm.kingemby.xyz
+    policy: 🎥 国外媒体
+    disabled: false
+- domain:
+    name: Emby-签记-小虾米
+    match: fd1.kingemby.xyz
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-小虾米
+    match: aurx.top
+    policy: 🎬 国内媒体
+    disabled: false
+- domain:
+    name: Emby-签记-Msky
+    match: wcf.3msky.com
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-游骑兵(nsfw)
+    match: heisi.org
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-游骑兵(nsfw)
+    match: alien666.de5.net
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-Cookie(nsfw)
+    match: nas.edu.kg
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-Cookie(nsfw)
+    match: cookieadd.dpdns.org
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-签记-风月阁(nsfw)
+    match: huohuo.ggff.net
+    policy: 🎥 国外媒体
+    disabled: false
+- domain_suffix:
+    name: Emby-其他-推流-直连
+    match: ctyunxs.cn
+    policy: 🎬 国内媒体
+    disabled: false
+- domain_suffix:
+    name: App-Forward
+    match: vvebo.vip
+    policy: 🍔 整点汉堡
+    disabled: false
 - domain_suffix:
     name: App-Follow
     match: follow.is
@@ -1078,7 +1365,181 @@ rules:
     match: bangumi.tv
     policy: 🔞 限定应用
     disabled: false
-
+- domain_suffix:
+    name: 🔞 pixiv转发
+    match: pixiv.re
+    policy: 🔞 限定应用
+    disabled: false
+- domain_suffix:
+    name: 🔞 javlibrary
+    match: javlibrary.com
+    policy: 🔞 限定应用
+    disabled: false
+- domain_suffix:
+    name: 🔞 jable
+    match: jable.tv
+    policy: 🔞 限定应用
+    disabled: false
+- domain_suffix:
+    name: 🔞 javday
+    match: javday.app
+    policy: 🔞 限定应用
+    disabled: false
+- domain_suffix:
+    name: 🔞 missav
+    match: missav.ai
+    policy: 🔞 限定应用
+    disabled: false
+- domain_suffix:
+    name: 🔞 missav
+    match: missav.ws
+    policy: 🔞 限定应用
+    disabled: false
+- domain_suffix:
+    name: 🔞 missav
+    match: surrit.com
+    policy: 🔞 限定应用
+    disabled: false
+- domain_suffix:
+    name: 🔞 iwara
+    match: iwara.tv
+    policy: 🔞 限定应用
+    disabled: false
+- domain_keyword:
+    name: 🔞 hanime
+    match: hanime
+    policy: 🔞 限定应用
+    disabled: false
+- domain_keyword:
+    name: 🔞 hanime
+    match: hanime1
+    policy: 🔞 限定应用
+    disabled: false
+- domain:
+    name: 漫画-Yealico
+    match: wc3818290.home.blog
+    policy: 📚 学术研究
+    disabled: false
+- domain_suffix:
+    name: 漫画-Yealico
+    match: yealico.site
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-禁漫天堂
+    match: 18comic
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-禁漫天堂
+    match: jmcomic
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-拷贝漫画
+    match: copymanga
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-拷贝漫画
+    match: mangacopy
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-热辣漫画
+    match: relamanhua
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-热辣漫画
+    match: hotmanga
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-漫画巴士
+    match: mangabz
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-漫画巴士
+    match: comicbz
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-漫画柜
+    match: manhuagui
+    policy: 📚 学术研究
+    disabled: false
+- domain_suffix:
+    name: 漫画-moe
+    match: mox.moe
+    policy: 📚 学术研究
+    disabled: false
+- domain_suffix:
+    name: 漫画-moe
+    match: kox.moe
+    policy: 📚 学术研究
+    disabled: false
+- domain_suffix:
+    name: 漫画-mangadex
+    match: mangadex.org
+    policy: 📚 学术研究
+    disabled: false
+- domain_keyword:
+    name: 漫画-cola漫画
+    match: colamanga
+    policy: 📚 学术研究
+    disabled: false
+- domain_suffix:
+    name: 漫画-漫画DB
+    match: manhuadb.com
+    policy: 📚 学术研究
+    disabled: false
+- domain:
+    name: 其他-弹幕
+    match: mikufans.indevs.in
+    policy: ☁️ 云服务商
+    disabled: false
+- domain:
+    name: 其他-弹幕
+    match: mikufans-danmu.vercel.app
+    policy: 🍟 整点薯条
+    disabled: false
+- domain:
+    name: 其他-弹幕
+    match: mikufans.netlify.app
+    policy: 🍔 整点汉堡
+    disabled: false
+- domain_suffix:
+    name: 其他-弹幕
+    match: dandanplay.net
+    policy: 🍔 整点汉堡
+    disabled: false
+- domain_suffix:
+    name: 其他-下载
+    match: steamserver.net
+    policy: 🍔 整点汉堡
+    disabled: false
+- domain_suffix:
+    name: 其他-下载
+    match: 115cdn.net
+    policy: 🍔 整点汉堡
+    disabled: false
+- domain_suffix:
+    name: 其他-工具
+    match: kelee.one
+    policy: 🍟 整点薯条
+    disabled: false
+- domain_suffix:
+    name: 其他-工具
+    match: lily.lat
+    policy: 🍟 整点薯条
+    disabled: false
+- domain_suffix:
+    name: 其他-工具
+    match: mjj.today
+    policy: 🍟 整点薯条
+    disabled: false
 - rule_set:
     name: 局域网-Lan
     match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Lan/Lan.list
@@ -1691,5 +2152,3 @@ rules:
     policy: ⛔ 让我访问
 default_subscription_group: 🌐 全局选择
 default_proxy_group: 🌐 全局选择
-
-

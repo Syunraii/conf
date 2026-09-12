@@ -1,4 +1,4 @@
-# 将订阅填入[订阅地址]
+# 搜索[填入订阅链接]替换订阅链接
 # 在 配置->"..."->"策略配置"中打开"隐藏自动策略组"
 
 [General]
@@ -32,10 +32,10 @@ ipasn-url = https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb
 
 
 [Remote Proxy]
-🛫 优质订阅 = 填入订阅地址,udp=default,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true
-🛫 常规订阅 = 填入订阅地址,udp=default,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true
-🛫 备用订阅 = 填入订阅地址,udp=default,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true
-🛫 临时订阅 = 填入订阅地址,udp=default,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true
+🛫 优质订阅 = 填入订阅链接,udp=default,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true
+🛫 常规订阅 = 填入订阅链接,udp=default,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true
+🛫 备用订阅 = 填入订阅链接,udp=default,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true
+🛫 临时订阅 = 填入订阅链接,udp=default,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=default,enabled=true,flexible-sni=true
 
 [Proxy Chain]
 
@@ -64,7 +64,7 @@ ipasn-url = https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb
 📹 巴哈姆特 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,🦄 故障转移,♿️ 低倍选择,🪂 临时选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
 🌟 抖音视频 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,🦄 故障转移,♿️ 低倍选择,🪂 临时选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
 🍻 哔哩哔哩 = select,🎯 直接连接,🌐 全局选择,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,🦄 故障转移,♿️ 低倍选择,🪂 临时选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png
-🎬 国内媒体 = select,🎯 直接连接,🌐 全局选择,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,🦄 故障转移,♿️ 低倍选择,🪂 临时选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png
+🎬 国内媒体 = select,🎯 直接连接,🌐 全局选择,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,🦄 故障转移,♿️ 低倍选择,🪂 临时选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/DomesticMedia.png
 🎥 国外媒体 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,🦄 故障转移,♿️ 低倍选择,🪂 临时选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png
 🎮 游戏平台 = select,🎯 直接连接,🌐 全局选择,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,🦄 故障转移,♿️ 低倍选择,🪂 临时选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png
 🐳 开发工具 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,🦄 故障转移,♿️ 低倍选择,🪂 临时选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Copilot.png
@@ -153,6 +153,7 @@ DOMAIN,msmp.abchina.com.cn,🈲 禁止连接
 
 
 # ####我的Emby Start#####
+
 # ####我的Emby End#####
 
 
@@ -185,17 +186,15 @@ https://rule.kelee.one/Loon/Download.lsr, policy=🍔 整点汉堡, tag=下载�
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Reject.list, policy=🚫 隐私拦截, tag=隐私拦截, enabled=true
 https://rule.kelee.one/Loon/Hijacking.lsr, policy=🚫 隐私拦截, tag=隐私拦截, enabled=true
 https://rule.kelee.one/Loon/Privacy.lsr, policy=🚫 隐私拦截, tag=隐私拦截, enabled=true
-https://rule.kelee.one/Loon/AdvertisingLite.lsr, policy=🚫 隐私拦截, tag=隐私拦截, enabled=true
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Prevent_DNS_Leaks.list, policy=🚫 隐私拦截, tag=隐私拦截, enabled=true
+https://rule.kelee.one/Loon/AdvertisingLite.lsr, policy=🚫 隐私拦截, tag=隐私拦截, enabled=true
 # 📵 软件升级
 https://rule.kelee.one/Loon/SystemOTA.lsr, policy=📵 软件升级, tag=软件升级, enabled=true
 # 🔞 限定应用
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Porn.list, policy=🔞 限定应用, tag=限定应用, enabled=true
+https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Crypto.list, policy=🔞 限定应用, tag=限定应用, enabled=true
 https://rule.kelee.one/Loon/Crypto.lsr, policy=🔞 限定应用, tag=限定应用, enabled=true
 https://rule.kelee.one/Loon/Cryptocurrency.lsr, policy=🔞 限定应用, tag=限定应用, enabled=true
-https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Crypto.list, policy=🔞 限定应用, tag=限定应用, enabled=true
-https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Crypto/Crypto.list, policy=🔞 限定应用, tag=限定应用, enabled=true
-https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Cryptocurrency/Cryptocurrency.list, policy=🔞 限定应用, tag=限定应用, enabled=true
 # 🇯🇵 整点烧鸟
 https://rule.kelee.one/Loon/Line.lsr, policy=🇯🇵 整点烧鸟, tag=日本限定, enabled=true
 https://rule.kelee.one/Loon/Pixiv.lsr, policy=🇯🇵 整点烧鸟, tag=日本限定, enabled=true
@@ -208,9 +207,9 @@ https://rule.kelee.one/Loon/PayPal.lsr, policy=🇺🇸 整点炸鸡, tag=美国
 https://rule.kelee.one/Loon/Picacg.lsr, policy=📚 学术研究, tag=漫画平台, enabled=true
 https://rule.kelee.one/Loon/EHGallery.lsr, policy=📚 学术研究, tag=漫画平台, enabled=true
 # 📱 电报通讯
-https://rule.kelee.one/Loon/Telegram.lsr, policy=📱 电报通讯, tag=电报通讯, enabled=true
-https://rule.kelee.one/Loon/TelegramSG.lsr, policy=📱 电报通讯, tag=电报通讯, enabled=true
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Telegram.list, policy=📱 电报通讯, tag=电报通讯, enabled=true
+https://rule.kelee.one/Loon/TelegramSG.lsr, policy=📱 电报通讯, tag=电报通讯, enabled=true
+https://rule.kelee.one/Loon/Telegram.lsr, policy=📱 电报通讯, tag=电报通讯, enabled=true
 # 💃 社交平台
 https://rule.kelee.one/Loon/Reddit.lsr, policy=💃 社交平台, tag=社交平台, enabled=true
 https://rule.kelee.one/Loon/Tumblr.lsr, policy=💃 社交平台, tag=社交平台, enabled=true
@@ -227,8 +226,8 @@ https://rule.kelee.one/Loon/BiliBili.lsr, policy=🍻 哔哩哔哩, tag=应用�
 # 🎬 国内媒体
 https://rule.kelee.one/Loon/ChinaMedia.lsr, policy=🎬 国内媒体, tag=国内媒体, enabled=true
 # 🎥 国外媒体
-https://rule.kelee.one/Loon/Emby.lsr, policy=🎥 国外媒体, tag=国外媒体, enabled=true
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Emby.list, policy=🎥 国外媒体, tag=国外媒体, enabled=true
+https://rule.kelee.one/Loon/Emby.lsr, policy=🎥 国外媒体, tag=国外媒体, enabled=true
 https://rule.kelee.one/Loon/YouTube.lsr, policy=🎥 国外媒体, tag=国外媒体, enabled=true
 https://rule.kelee.one/Loon/Netflix.lsr, policy=🎥 国外媒体, tag=国外媒体, enabled=true
 https://rule.kelee.one/Loon/Disney.lsr, policy=🎥 国外媒体, tag=国外媒体, enabled=true
@@ -254,11 +253,11 @@ https://rule.kelee.one/Loon/Cloudflare.lsr, policy=☁️ 云服务商, tag=云�
 https://rule.kelee.one/Loon/Oracle.lsr, policy=☁️ 云服务商, tag=云服务商, enabled=true
 https://rule.kelee.one/Loon/Akamai.lsr, policy=☁️ 云服务商, tag=云服务商, enabled=true
 # 🤖 人工智能
-https://rule.kelee.one/Loon/OpenAI.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/OpenAI.list, policy=🤖 人工智能, tag=AI平台, enabled=true
+https://rule.kelee.one/Loon/OpenAI.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
 https://rule.kelee.one/Loon/Gemini.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
-https://rule.kelee.one/Loon/Claude.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Claude.list, policy=🤖 人工智能, tag=AI平台, enabled=true
+https://rule.kelee.one/Loon/Claude.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/AI.list, policy=🤖 人工智能, tag=AI平台, enabled=true
 https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
 # 🍟 整点薯条
@@ -270,7 +269,7 @@ https://rule.kelee.one/Loon/Global.lsr, policy=🍟 整点薯条, tag=国外兜�
 https://kelee.one/Tool/Loon/Lsr/SpeedtestChina.lsr, policy=🍔 整点汉堡, tag=国内兜底, enabled=true
 https://rule.kelee.one/Loon/Cloudflarecn.lsr, policy=🍔 整点汉堡, tag=国内兜底, enabled=true
 https://rule.kelee.one/Loon/IPTVMainland.lsr, policy=🍔 整点汉堡, tag=国内兜底, enabled=true
-https://www.nsloon.com/openloon/import?rules=https://rule.kelee.one/Loon/ChinaMaxNoMedia.lsr, policy=🍔 整点汉堡, tag=国内兜底, enabled=true
+https://rule.kelee.one/Loon/ChinaMaxNoMedia.lsr, policy=🍔 整点汉堡, tag=国内兜底, enabled=true
 # 兜底
 https://rule.kelee.one/Loon/Direct.lsr, policy=🍔 整点汉堡, tag=直连修正, enabled=true
 
