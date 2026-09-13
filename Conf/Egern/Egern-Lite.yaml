@@ -1606,9 +1606,9 @@ rules:
     policy: 🚫 隐私拦截
     disabled: false
 - rule_set:
-    name: 超级拦截-non_ipreject-drop
+    name: 超级拦截-non_ip-reject-drop
     match: https://raw.githubusercontent.com/SukkaW/Surge/refs/heads/master/Source/non_ip/reject-drop.conf
-    policy: 🚫 隐私拦截
+    policy: REJECT-DROP
     disabled: false
 - rule_set:
     name: 超级拦截-reject
@@ -1626,19 +1626,19 @@ rules:
     policy: 🚫 隐私拦截
     disabled: false
 - rule_set:
-    name: 超级拦截-non_ip-reject_extra
+    name: 超级拦截-non_ip-reject
     match: https://raw.githubusercontent.com/SukkaW/Surge/refs/heads/master/Source/non_ip/reject.conf
     policy: 🚫 隐私拦截
     disabled: false
 - rule_set:
     name: 超级拦截-non_ip-reject-no-drop
     match: https://raw.githubusercontent.com/SukkaW/Surge/refs/heads/master/Source/non_ip/reject-no-drop.conf
-    policy: 🚫 隐私拦截
+    policy: REJECT-DROP
     disabled: false
 - rule_set:
     name: 超级拦截-ip-reject
     match: https://raw.githubusercontent.com/SukkaW/Surge/refs/heads/master/Source/ip/reject.conf
-    policy: 🚫 隐私拦截
+    policy: REJECT-DROP
     disabled: false
 - rule_set:
     name: 软件升级-SystemOTA
@@ -1831,12 +1831,12 @@ rules:
     policy: 🌟 抖音视频
     disabled: false
 - rule_set:
-    name: 应用分流-BiliBili
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/BiliBili.list
+    name: 应用分流-Bilibili
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/Bilibili.list
     policy: 🍻 哔哩哔哩
     disabled: false
 - rule_set:
-    name: 应用分流-BiliBili
+    name: 应用分流-Bilibili
     match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/BiliBili/BiliBili.list
     policy: 🍻 哔哩哔哩
     disabled: false
