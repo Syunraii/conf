@@ -228,7 +228,6 @@ https://rule.kelee.one/Loon/YouTube.lsr, policy=🎥 国外媒体, tag=国外媒
 https://rule.kelee.one/Loon/Netflix.lsr, policy=🎥 国外媒体, tag=国外媒体, enabled=true
 https://rule.kelee.one/Loon/Disney.lsr, policy=🎥 国外媒体, tag=国外媒体, enabled=true
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/ProxyMedia.list, policy=🎥 国外媒体, tag=国外媒体, enabled=true
-https://rule.kelee.one/Loon/GlobalMedia.lsr, policy=🎥 国外媒体, tag=国外媒体, enabled=true
 # 🎮 游戏平台
 https://rule.kelee.one/Loon/Game.lsr, policy=🎮 游戏平台, tag=游戏平台, enabled=true
 # 🐳 开发工具
@@ -259,6 +258,7 @@ https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=🤖 人工智能, tag=AI平台, 
 # 🍟 整点薯条
 https://kelee.one/Tool/Loon/Lsr/SpeedtestInternational.lsr, policy=🍟 整点薯条, tag=国外兜底, enabled=true
 https://rule.kelee.one/Loon/IPTVOther.lsr, policy=🍟 整点薯条, tag=国外兜底, enabled=true
+https://rule.kelee.one/Loon/GlobalMedia.lsr, policy=🍟 整点薯条, tag=国外兜底, enabled=true
 https://rule.kelee.one/Loon/Proxy.lsr, policy=🍟 整点薯条, tag=国外兜底, enabled=true
 https://rule.kelee.one/Loon/Global.lsr, policy=🍟 整点薯条, tag=国外兜底, enabled=true
 # 🍔 整点汉堡

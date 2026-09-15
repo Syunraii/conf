@@ -216,32 +216,31 @@
         { "tag": "666OS_d_Streaming", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Streaming.srs" },
         { "tag": "666OS_i_Streaming", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Streaming.srs" },
         { "tag": "Repcz_ProxyMedia", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/ProxyMedia.srs" },
-        { "tag": "senshinya_GlobalMedia", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/GlobalMedia/GlobalMedia.srs" },
-
+        
         { "tag": "Repcz_Game", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Game.srs" },
         { "tag": "666OS_Games", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Games.srs" },
         { "tag": "senshinya_Game", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Game/Game.srs" },
-
+        
         { "tag": "Repcz_Github", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Github.srs" },
         { "tag": "666OS_GitHub", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/GitHub.srs" },
         { "tag": "senshinya_Github", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Github/Github.srs" },
         { "tag": "666OS_Dev", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Dev.srs" },
         { "tag": "senshinya_Developer", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Developer/Developer.srs" },
-
+        
         { "tag": "Repcz_Google", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Google.srs" },
         { "tag": "666OS_d_Google", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Google.srs" },
         { "tag": "666OS_i_Google", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Google.srs" },
         { "tag": "senshinya_Google", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Google/Google.srs" },
-
+        
         { "tag": "Repcz_Microsoft", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Microsoft.srs" },
         { "tag": "666OS_Microsoft", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Microsoft.srs" },
         { "tag": "senshinya_Microsoft", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Microsoft/Microsoft.srs" },
-
+        
         { "tag": "Repcz_Apple", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Apple.srs" },
         { "tag": "666OS_d_Apple", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Apple.srs" },
         { "tag": "666OS_i_Apple", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Apple.srs" },
         { "tag": "senshinya_Apple", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Apple/Apple.srs" },
-
+        
         { "tag": "Repcz_Cloudflare", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Cloudflare.srs" },
         { "tag": "666OS_d_Cloudflare", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Cloudflare.srs" },
         { "tag": "666OS_i_Cloudflare", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Cloudflare.srs" },
@@ -250,7 +249,7 @@
         { "tag": "senshinya_Oracle", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Oracle/Oracle.srs" },
         { "tag": "senshinya_Akamai", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Akamai/Akamai.srs" },
         { "tag": "senshinya_AkamaiCloud", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/AkamaiCloud/AkamaiCloud.srs" },
-
+        
         { "tag": "Repcz_OpenAI", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/OpenAI.srs" },
         { "tag": "666OS_d_OpenAI", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/OpenAI.srs" },
         { "tag": "666OS_i_OpenAI", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/OpenAI.srs" },
@@ -263,9 +262,10 @@
         { "tag": "Repcz_AI", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/AI.srs" },
         { "tag": "666OS_d_AI", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/AI.srs" },
         { "tag": "666OS_i_AI", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/AI.srs" },
-
+        
         { "tag": "Repcz_DownloadCDN_Global", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/DownloadCDN_Global.srs" },
         { "tag": "senshinya_IPTVOther", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/IPTVOther/IPTVOther.srs" },
+        { "tag": "senshinya_GlobalMedia", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/GlobalMedia/GlobalMedia.srs" },
         { "tag": "Repcz_Proxy", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Proxy.srs" },
         { "tag": "666OS_d_Proxy", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Proxy.srs" },
         { "tag": "666OS_i_Proxy", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/ip/Proxy.srs" },
@@ -300,7 +300,7 @@
         { "outbound": "🍻 哔哩哔哩", "rule_set": ["Repcz_Bilibili", "senshinya_BiliBili"] },
         { "outbound": "📹 巴哈姆特", "rule_set": ["Repcz_Bahamut", "senshinya_Bahamut"] },
         { "outbound": "🎬 国内媒体", "rule_set": ["senshinya_ChinaMedia"] },
-        { "outbound": "🎥 国外媒体", "rule_set": ["Repcz_Emby", "666OS_d_Emby", "666OS_i_Emby", "senshinya_Emby", "Repcz_YouTube", "666OS_YouTube", "senshinya_YouTube", "Repcz_Netflix", "666OS_Netflix", "senshinya_Netflix", "Repcz_Disney", "666OS_Disney", "senshinya_Disney", "666OS_d_Streaming", "666OS_i_Streaming", "Repcz_ProxyMedia", "senshinya_GlobalMedia"] },
+        { "outbound": "🎥 国外媒体", "rule_set": ["Repcz_Emby", "666OS_d_Emby", "666OS_i_Emby", "senshinya_Emby", "Repcz_YouTube", "666OS_YouTube", "senshinya_YouTube", "Repcz_Netflix", "666OS_Netflix", "senshinya_Netflix", "Repcz_Disney", "666OS_Disney", "senshinya_Disney", "666OS_d_Streaming", "666OS_i_Streaming", "Repcz_ProxyMedia"] },
         { "outbound": "🎮 游戏平台", "rule_set": ["Repcz_Game", "666OS_Games", "senshinya_Game"] },
         { "outbound": "🐳 开发工具", "rule_set": ["Repcz_Github", "666OS_GitHub", "senshinya_Github", "666OS_Dev", "senshinya_Developer"] },
         { "outbound": "🕊️ 谷歌服务", "rule_set": ["Repcz_Google", "666OS_d_Google", "666OS_i_Google", "senshinya_Google"] },
@@ -308,7 +308,7 @@
         { "outbound": "🍎 苹果服务", "rule_set": ["Repcz_Apple", "666OS_d_Apple", "666OS_i_Apple", "senshinya_Apple"] },
         { "outbound": "☁️ 云服务商", "rule_set": ["Repcz_Cloudflare", "666OS_d_Cloudflare", "666OS_i_Cloudflare", "senshinya_Cloudflare", "Repcz_Oracle", "senshinya_Oracle", "senshinya_Akamai", "senshinya_AkamaiCloud"], "domain": ["mikufans.indevs.in"] },
         { "outbound": "🤖 人工智能", "rule_set": ["Repcz_OpenAI", "666OS_d_OpenAI", "666OS_i_OpenAI", "senshinya_OpenAI", "666OS_Gemini", "senshinya_Gemini", "Repcz_Claude", "666OS_Claude", "senshinya_Claude", "Repcz_AI", "666OS_d_AI", "666OS_i_AI"] },
-        { "outbound": "🍟 整点薯条", "rule_set": ["Repcz_DownloadCDN_Global", "senshinya_IPTVOther", "Repcz_Proxy", "666OS_d_Proxy", "666OS_i_Proxy", "senshinya_Proxy"] },
+        { "outbound": "🍟 整点薯条", "rule_set": ["Repcz_DownloadCDN_Global", "senshinya_IPTVOther", "senshinya_GlobalMedia", "Repcz_Proxy", "666OS_d_Proxy", "666OS_i_Proxy", "senshinya_Proxy"] },
         { "outbound": "🍔 整点汉堡", "rule_set": ["senshinya_Cloudflarecn", "senshinya_IPTVMainland", "666OS_d_XPTV", "666OS_i_XPTV", "Repcz_ChinaDomain", "Repcz_ChinaIP", "666OS_d_China", "666OS_i_China", "senshinya_ChinaMax"], "domain": ["mikufans.netlify.app", "dandanplay.net"] },
         { "outbound": "🎯 直接连接", "rule_set": ["Repcz_Direct", "666OS_Direct", "senshinya_Direct"] }
       ]

@@ -1441,11 +1441,6 @@ rules:
     policy: 🎥 国外媒体
     disabled: false
 - rule_set:
-    name: 国外媒体-兜底-GlobalMedia
-    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia_All_No_Resolve.list
-    policy: 🎥 国外媒体
-    disabled: false
-- rule_set:
     name: 游戏平台-Game
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/Game.list
     policy: 🎮 游戏平台
@@ -1613,6 +1608,11 @@ rules:
 - rule_set:
     name: 国外兜底-IPTVOther
     match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/IPTVOther/IPTVOther_All_No_Resolve.list
+    policy: 🍟 整点薯条
+    disabled: false
+- rule_set:
+    name: 国外兜底-GlobalMedia
+    match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/GlobalMedia/GlobalMedia_All_No_Resolve.list
     policy: 🍟 整点薯条
     disabled: false
 - rule_set:

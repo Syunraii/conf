@@ -371,7 +371,6 @@ rule-providers:
   DMrs-Streaming:          {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Streaming.mrs}
   IMrs-Streaming:          {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Streaming.mrs}
   CText-ProxyMedia:        {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/ProxyMedia.list}
-  CYaml-GlobalMedia:       {<<: *class_yaml, url: https://rule.kelee.one/Clash/GlobalMedia.yaml}
   # 🎮 游戏平台
   CText-Game:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Game.list}
   CYaml-Game:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Game.yaml}
@@ -418,6 +417,7 @@ rule-providers:
   # 🍟 整点薯条
   CYaml-SpeedTestInl:      {<<: *class_yaml, url: https://kelee.one/Tool/Clash/Rule/SpeedtestInternational.yaml}
   CYaml-IPTVOther:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/IPTVOther.yaml}
+  CYaml-GlobalMedia:       {<<: *class_yaml, url: https://rule.kelee.one/Clash/GlobalMedia.yaml}
   CText-Proxy:             {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Proxy.list}
   CYaml-Proxy:             {<<: *class_yaml, url: https://rule.kelee.one/Clash/Proxy.yaml}
   DMrs-Proxy:              {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Proxy.mrs}
@@ -558,7 +558,6 @@ rules:
   - RULE-SET,DMrs-Streaming,🎥 国外媒体
   - RULE-SET,IMrs-Streaming,🎥 国外媒体
   - RULE-SET,CText-ProxyMedia,🎥 国外媒体
-  - RULE-SET,CYaml-GlobalMedia,🎥 国外媒体
   # 🎮 游戏平台
   - RULE-SET,CText-Game,🎮 游戏平台
   - RULE-SET,CYaml-Game,🎮 游戏平台
@@ -605,6 +604,7 @@ rules:
   # 🍟 整点薯条
   - RULE-SET,CYaml-SpeedTestInl,🍟 整点薯条
   - RULE-SET,CYaml-IPTVOther,🍟 整点薯条
+  - RULE-SET,CYaml-GlobalMedia,🍟 整点薯条
   - RULE-SET,CText-Proxy,🍟 整点薯条
   - RULE-SET,CYaml-Proxy,🍟 整点薯条
   - RULE-SET,DMrs-Proxy,🍟 整点薯条
