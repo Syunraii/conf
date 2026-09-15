@@ -87,98 +87,98 @@ policy_groups:
 - auto_test:
     name: 🎡 香港
     policies:
-    - 🎡 常规过滤
+    - 🎡 常规选择
     flatten: true
     filter: (?i)🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)
     hidden: true
 - auto_test:
     name: 🎡 台湾
     policies:
-    - 🎡 常规过滤
+    - 🎡 常规选择
     flatten: true
     filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)
     hidden: true
 - auto_test:
     name: 🎡 日本
     policies:
-    - 🎡 常规过滤
+    - 🎡 常规选择
     flatten: true
     filter: (?i)🇯🇵|日本|(\b(JP|Japan)\b)
     hidden: true
 - auto_test:
     name: 🎡 韩国
     policies:
-    - 🎡 常规过滤
+    - 🎡 常规选择
     flatten: true
     filter: (?i)🇰🇷|韩国|(\b(KR|South Korea)\b)
     hidden: true
 - auto_test:
     name: 🎡 美国
     policies:
-    - 🎡 常规过滤
+    - 🎡 常规选择
     flatten: true
     filter: (?i)🇺🇸|美国|(\b(US|USA|United States)\b)
     hidden: true
 - auto_test:
     name: 🎡 狮城
     policies:
-    - 🎡 常规过滤
+    - 🎡 常规选择
     flatten: true
     filter: (?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)
     hidden: true
 - auto_test:
     name: 🎡 其他
     policies:
-    - 🎡 常规过滤
+    - 🎡 常规选择
     flatten: true
     filter: ^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$
     hidden: true
 - fallback:
     name: 🦄 香港
     policies:
-    - 🦄 优质过滤
+    - 🦄 故障转移
     flatten: true
     filter: (?i)🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)
     hidden: true
 - fallback:
     name: 🦄 台湾
     policies:
-    - 🦄 优质过滤
+    - 🦄 故障转移
     flatten: true
     filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)
     hidden: true
 - fallback:
     name: 🦄 日本
     policies:
-    - 🦄 优质过滤
+    - 🦄 故障转移
     flatten: true
     filter: (?i)🇯🇵|日本|(\b(JP|Japan)\b)
     hidden: true
 - fallback:
     name: 🦄 韩国
     policies:
-    - 🦄 优质过滤
+    - 🦄 故障转移
     flatten: true
     filter: (?i)🇰🇷|韩国|(\b(KR|South Korea)\b)
     hidden: true
 - fallback:
     name: 🦄 美国
     policies:
-    - 🦄 优质过滤
+    - 🦄 故障转移
     flatten: true
     filter: (?i)🇺🇸|美国|(\b(US|USA|United States)\b)
     hidden: true
 - fallback:
     name: 🦄 狮城
     policies:
-    - 🦄 优质过滤
+    - 🦄 故障转移
     flatten: true
     filter: (?i)🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b)
     hidden: true
 - fallback:
     name: 🦄 其他
     policies:
-    - 🦄 优质过滤
+    - 🦄 故障转移
     flatten: true
     filter: ^(?!.*(?i)(🇭🇰|香港|(\b(HK|HongKong|Hong Kong)\b)|🇨🇳|🇹🇼|台湾|(\b(TW|Taiwan)\b)|🇯🇵|日本|(\b(JP|Japan)\b)|🇰🇷|韩国|(\b(KR|South Korea)\b)|🇺🇸|美国|(\b(US|USA|United States)\b)|🇸🇬|新加坡|狮城|(\b(SG|Singapore)\b))).*$
     hidden: true
@@ -342,31 +342,17 @@ policy_groups:
     policies:
     - 🛫 常规订阅
     flatten: true
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png
-    hidden: false
-- select:
-    name: 🎡 常规过滤
-    policies:
-    - 🛫 常规订阅
-    flatten: true
     filter: ^(?!.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png
-    hidden: true
+    hidden: false
 - select:
     name: 🦄 故障转移
     policies:
     - 🛫 优质订阅
     flatten: true
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png
-    hidden: false
-- select:
-    name: 🦄 优质过滤
-    policies:
-    - 🛫 优质订阅
-    flatten: true
     filter: ^(?!.*(?:0\.1[×x]|0\.01[×x]|0\.1\b|0\.0[0-9])).*$
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png
-    hidden: true
+    hidden: false
 - smart:
     name: ♿️ 低倍选择
     policies:
