@@ -191,15 +191,15 @@
         { "tag": "666OS_Instagram", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/Instagram.srs" },
         { "tag": "senshinya_Instagram", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Instagram/Instagram.srs" },
 
+        { "tag": "Repcz_Bahamut", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Bahamut.srs" },
+        { "tag": "senshinya_Bahamut", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Bahamut/Bahamut.srs" },
+
         { "tag": "Repcz_TikTok", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/TikTok.srs" },
         { "tag": "666OS_TikTok", "type": "remote", "format": "binary", "url": "https://github.com/666OS/rules/raw/release/singbox/domain/TikTok.srs" },
         { "tag": "senshinya_TikTok", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/TikTok/TikTok.srs" },
 
         { "tag": "Repcz_Bilibili", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Bilibili.srs" },
         { "tag": "senshinya_BiliBili", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/BiliBili/BiliBili.srs" },
-
-        { "tag": "Repcz_Bahamut", "type": "remote", "format": "binary", "url": "https://github.com/Repcz/Tool/raw/X/sing-box/Rules/Bahamut.srs" },
-        { "tag": "senshinya_Bahamut", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/Bahamut/Bahamut.srs" },
         
         { "tag": "senshinya_ChinaMedia", "type": "remote", "format": "binary", "url": "https://github.com/senshinya/singbox_ruleset/raw/main/rule/ChinaMedia/ChinaMedia.srs" },
 
@@ -299,9 +299,9 @@
         { "outbound": "📚 学术研究", "rule_set": ["senshinya_Picacg", "senshinya_EHGallery"],  "domain_suffix": ["yealico.site", "kox.moe", "mox.moe", "mangadex.org", "manhuadb.com"], "domain_keyword": ["18comic", "jmcomic", "copymanga", "mangacopy", "mangafuna", "relamanhua", "mangabz", "comicbz", "manhuagui"], "domain": ["wc3818290.home.blog"] },
         { "outbound": "📱 电报通讯", "rule_set": ["Repcz_Telegram_NoIP", "Repcz_Telegram", "666OS_d_Telegram", "666OS_i_Telegram", "senshinya_Telegram"] },
         { "outbound": "💃 社交平台", "rule_set": ["Repcz_Reddit", "senshinya_Reddit", "senshinya_Tumblr", "senshinya_Discord", "Repcz_Twitter", "senshinya_Twitter", "666OS_Twitter", "Repcz_Facebook", "666OS_Facebook", "senshinya_Facebook", "Repcz_Instagram", "666OS_Instagram", "senshinya_Instagram"] },
+        { "outbound": "📹 巴哈姆特", "rule_set": ["Repcz_Bahamut", "senshinya_Bahamut"] },
         { "outbound": "🌟 抖音视频", "rule_set": ["Repcz_TikTok", "666OS_TikTok", "senshinya_TikTok"] },
         { "outbound": "🍻 哔哩哔哩", "rule_set": ["Repcz_Bilibili", "senshinya_BiliBili"] },
-        { "outbound": "📹 巴哈姆特", "rule_set": ["Repcz_Bahamut", "senshinya_Bahamut"] },
         { "outbound": "🎬 国内媒体", "rule_set": ["senshinya_ChinaMedia"] },
         { "outbound": "🎥 国外媒体", "rule_set": ["Repcz_Emby", "666OS_d_Emby", "666OS_i_Emby", "senshinya_Emby", "Repcz_YouTube", "666OS_YouTube", "senshinya_YouTube", "Repcz_Netflix", "666OS_Netflix", "senshinya_Netflix", "Repcz_Disney", "666OS_Disney", "senshinya_Disney", "666OS_d_Streaming", "666OS_i_Streaming", "Repcz_ProxyMedia"] },
         { "outbound": "🎮 游戏平台", "rule_set": ["Repcz_Game", "666OS_Games", "senshinya_Game"] },
