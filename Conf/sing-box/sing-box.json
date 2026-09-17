@@ -304,13 +304,14 @@
             ],
             "action": "hijack-dns"
         },
-        { "outbound": "🎯 直接连接", "action": "route", "ip_is_private": true},
+        { "action": "reject", "domain": "msmp.abchina.com.cn" },
+        { "outbound": "🎯 直接连接", "action": "route", "ip_is_private": true },
         { "outbound": "🎯 直接连接", "rule_set": ["Repcz_Lan", "666OS_d_Private", "666OS_i_Private", "senshinya_Lan"]},
         { "outbound": "🍔 整点汉堡", "rule_set": ["Repcz_DownloadCDN_CN", "666OS_Download", "senshinya_Download", "senshinya_SteamCN"], "domain_suffix": ["moegirl.org.cn", "steamserver.net", "115cdn.net"],  "domain": ["myembylife.indevs.in"] },
-        { "outbound": "🍟 整点薯条", "domain": ["mikufans-danmu.vercel.app"]},
+        { "outbound": "🍟 整点薯条", "domain": ["mikufans-danmu.vercel.app"] },
 
         { "outbound": "🚫 隐私拦截", "rule_set": ["Repcz_Reject", "senshinya_Privacy", "senshinya_Hijacking", "senshinya_AdvertisingLite", "Repcz_Prevent_DNS_Leaks", "666OS_Tracking"] },
-        { "outbound": "📵 软件升级", "rule_set": ["666OS_SystemOTA", "senshinya_SystemOTA"] },
+        { "outbound": "📵 软件升级", "rule_set": ["666OS_SystemOTA", "senshinya_SystemOTA"], "domain_suffix": ["paddleapi.com", "daisydiskapp.com"] },
         { "outbound": "🔞 限定应用", "rule_set": ["Repcz_Porn", "Repcz_Crypto", "senshinya_Crypto", "senshinya_Cryptocurrency", "senshinya_Line", "senshinya_Pixiv", "senshinya_Abema", "senshinya_AbemaTV", "senshinya_Niconico", "Repcz_PayPal", "666OS_PayPal", "senshinya_PayPal"], "domain_suffix": ["follow.is", "bgm.tv", "chii.in", "bangumi.tv", "pixiv.re", "iwara.tv", "hanime", "hanime1"], "domain_keyword": ["moegirl"] },
         { "outbound": "📚 学术研究", "rule_set": ["senshinya_Picacg", "senshinya_EHGallery"],  "domain_suffix": ["yealico.site", "kox.moe", "mox.moe", "mangadex.org", "manhuadb.com"], "domain_keyword": ["18comic", "jmcomic", "copymanga", "mangacopy", "mangafuna", "relamanhua", "mangabz", "comicbz", "manhuagui"], "domain": ["wc3818290.home.blog"] },
         { "outbound": "📱 电报通讯", "rule_set": ["Repcz_Telegram_NoIP", "Repcz_Telegram", "666OS_d_Telegram", "666OS_i_Telegram", "senshinya_Telegram"] },
