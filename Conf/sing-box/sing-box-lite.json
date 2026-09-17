@@ -50,20 +50,20 @@
       { "tag": "dns_Local", "type": "local", "neighbor_domain": [".local", ".lan"] }
     ],
     "rules": [
-      
       { "query_type": ["HTTPS", "SVCB"], "action": "reject"},
-      { "query_type": ["A", "AAAA"], "action":"route", "server": "dns_FakeIP", "rewrite_ttl": 1},
-
+      
       { "domain_suffix": ["lan", "direct", "local", "corp", "msftncsi.com", "msftconnecttest.com", "srv.nintendo.net", "xboxlive.com", "battlenet.com.cn", "battlenet.com", "blzstatic.cn", "battle.net", "turn.twilio.com", "cmpassport.com", "10099.com.cn"], "server": "dns_Local" },
       { "domain": ["lancache.steamcontent.com", "id6.me", "open.e.189.cn", "mdn.open.wo.cn", "opencloud.wostore.cn", "auth.wosms.cn"], "server": "dns_Local" },
-
-      { "action": "evaluate", "server": "dns_DOH-Ali", "tag": "ali"},
-      { "action": "evaluate", "server": "dns_DOH-Tx", "tag": "tencent"},
-      { "match_response": "ali", "response_rcode": "NOERROR","action": "respond","race": true },
-      { "match_response": "tencent", "response_rcode": "NOERROR","action": "respond","race": true },
-
+      { "clash_mode": "Direct", "action": "route", "server": "dns_Local" },
+      { "query_type": ["A", "AAAA"], "action":"route", "server": "dns_FakeIP", "rewrite_ttl": 1},
       { "clash_mode": "Global", "action": "route", "server": "dns_FakeIP" },
-      { "clash_mode": "Direct", "action": "route", "server": "dns_Local" }
+
+      { "action": "evaluate", "server": "dns_DOH-Ali", "tag": "rep_ali", "speculative": true},
+      { "action": "evaluate", "server": "dns_DOH-Tx", "tag": "rep_tx", "speculative": true},
+      { "match_response": "rep_ali", "ip_is_private": true, "action": "reject", "race": true},
+      { "match_response": "rep_tx", "ip_is_private": true, "action": "reject", "race": true},
+      { "match_response": "rep_ali", "response_rcode": "NOERROR","action": "respond","race": true },
+      { "match_response": "rep_tx", "response_rcode": "NOERROR","action": "respond","race": true }
     ]
   },
   "inbounds": [
