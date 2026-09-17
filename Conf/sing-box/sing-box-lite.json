@@ -90,7 +90,7 @@
     }
   ],
   "outbounds": [
-    { "tag": "🌐 全局选择", "type": "selector", "interrupt_exist_connections": true, "default": "🎯 直接连接", "outbounds": ["🚀 自动选择", "👋 手动选择", "♿️ 低倍选择", "🎯 直接连接"] },
+    { "tag": "🌐 全局选择", "type": "selector", "interrupt_exist_connections": true, "default": "🚀 自动选择", "outbounds": ["🚀 自动选择", "👋 手动选择", "♿️ 低倍选择", "🎯 直接连接"] },
     { "tag": "🚀 自动选择", "type": "urltest", "interrupt_exist_connections": true, "outbounds": ["🇭🇰 香港自动", "🇨🇳 台湾自动", "🇯🇵 日本自动", "🇰🇷 韩国自动", "🇺🇸 美国自动", "🇸🇬 狮城自动"], "url": "http://latency-test.skk.moe/endpoint" },
     { "tag": "👋 手动选择", "type": "selector", "interrupt_exist_connections": true, "outbounds": [] },
     { "tag": "♿️ 低倍选择", "type": "selector", "interrupt_exist_connections": true, "outbounds": [] },
