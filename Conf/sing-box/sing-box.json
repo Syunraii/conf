@@ -240,8 +240,7 @@
         { "tag": "senshinya_Microsoft", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/Microsoft/Microsoft.srs" },
         
         { "tag": "Repcz_Apple", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/Repcz/Tool/refs/heads/X/sing-box/Rules/Apple.srs" },
-        { "tag": "666OS_d_Apple", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/666OS/rules/refs/heads/release/singbox/domain/Apple.srs" },
-        { "tag": "666OS_i_Apple", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/666OS/rules/refs/heads/release/singbox/ip/Apple.srs" },
+        { "tag": "666OS_Apple", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/666OS/rules/refs/heads/release/singbox/domain/Apple.srs" },
         { "tag": "senshinya_Apple", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/senshinya/singbox_ruleset/refs/heads/main/rule/Apple/Apple.srs" },
         
         { "tag": "Repcz_Cloudflare", "type": "remote", "format": "binary", "url": "https://raw.githubusercontent.com/Repcz/Tool/refs/heads/X/sing-box/Rules/Cloudflare.srs" },
@@ -308,7 +307,7 @@
         { "outbound": "🐳 开发工具", "rule_set": ["Repcz_Github", "666OS_GitHub", "senshinya_GitHub", "666OS_Dev", "senshinya_Developer"] },
         { "outbound": "🕊️ 谷歌服务", "rule_set": ["Repcz_Google", "666OS_d_Google", "666OS_i_Google", "senshinya_Google"] },
         { "outbound": "Ⓜ️ 微软服务", "rule_set": ["Repcz_Microsoft", "666OS_Microsoft", "senshinya_Microsoft"] },
-        { "outbound": "🍎 苹果服务", "rule_set": ["Repcz_Apple", "666OS_d_Apple", "666OS_i_Apple", "senshinya_Apple"] },
+        { "outbound": "🍎 苹果服务", "rule_set": ["Repcz_Apple", "666OS_Apple", "senshinya_Apple"] },
         { "outbound": "☁️ 云服务商", "rule_set": ["Repcz_Cloudflare", "666OS_d_Cloudflare", "666OS_i_Cloudflare", "senshinya_Cloudflare", "Repcz_Oracle", "senshinya_Oracle", "senshinya_Akamai", "senshinya_AkamaiCloud"], "domain": ["mikufans.indevs.in"] },
         { "outbound": "🤖 人工智能", "rule_set": ["Repcz_OpenAI", "666OS_d_OpenAI", "666OS_i_OpenAI", "senshinya_OpenAI", "666OS_Gemini", "senshinya_Gemini", "Repcz_Claude", "666OS_Claude", "senshinya_Claude", "Repcz_AI", "666OS_d_AI", "666OS_i_AI"] },
         { "outbound": "🍟 整点薯条", "rule_set": ["Repcz_DownloadCDN_Global", "senshinya_IPTVOther", "senshinya_GlobalMedia", "Repcz_Proxy", "666OS_d_Proxy", "666OS_i_Proxy", "senshinya_Proxy"] },
