@@ -58,13 +58,19 @@
       { "query_type": ["A", "AAAA"], "action":"route", "server": "dns_FakeIP", "rewrite_ttl": 1},
       { "clash_mode": "Global", "action": "route", "server": "dns_FakeIP" },
 
-      { "action": "evaluate", "server": "dns_DOH-Ali", "tag": "rep_ali", "speculative": true},
-      { "action": "evaluate", "server": "dns_DOH-Tx", "tag": "rep_tx", "speculative": true},
-      { "match_response": "rep_ali", "ip_is_private": true, "action": "reject", "race": true},
-      { "match_response": "rep_tx", "ip_is_private": true, "action": "reject", "race": true},
-      { "match_response": "rep_ali", "response_rcode": "NOERROR","action": "respond","race": true },
-      { "match_response": "rep_tx", "response_rcode": "NOERROR","action": "respond","race": true }
+      { "action": "evaluate", "tag": "rep_ali", "server": "dns_DOH-Ali",  "speculative": true},
+      { "action": "evaluate", "tag": "rep_tx", "server": "dns_DOH-Tx",  "speculative": true},
+      { "match_response": ["rep_ali", "rep_tx"], "ip_is_private": true, "action": "reject", "race": true},
+      { "match_response": ["rep_ali", "rep_tx"], "response_rcode": "NOERROR","action": "respond","race": true }
     ]
+  },
+  "experimental": {
+      "cache_file": {
+          "enabled": true,
+          "path": "cache.db",
+          "store_fakeip": true,
+          "store_dns": true
+      }
   },
   "inbounds": [
     {
