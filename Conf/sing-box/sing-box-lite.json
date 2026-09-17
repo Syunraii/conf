@@ -51,7 +51,7 @@
     ],
     "rules": [
       
-      { "query_type": "HTTPS", "action": "reject"},
+      { "query_type": ["HTTPS", "SVCB"], "action": "reject"},
       { "query_type": ["A", "AAAA"], "action":"route", "server": "dns_FakeIP", "rewrite_ttl": 1},
 
       { "domain_suffix": ["lan", "direct", "local", "corp", "msftncsi.com", "msftconnecttest.com", "srv.nintendo.net", "xboxlive.com", "battlenet.com.cn", "battlenet.com", "blzstatic.cn", "battle.net", "turn.twilio.com", "cmpassport.com", "10099.com.cn"], "server": "dns_Local" },
