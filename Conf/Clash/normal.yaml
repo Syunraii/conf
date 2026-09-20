@@ -211,7 +211,7 @@ proxy-groups:
   - {name: ☢️ 轮询选择, <<: *gpg_lb_rr , icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ULB.png}
   
   - {name: 👋 手动选择, <<: *gpg_manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
-  - {name: 🎡 常规选择, <<: *pg_se, use: [常规订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
+  - {name: 🎡 常规选择, <<: *pg_se, use: [常规订阅], filter: *filterOutLR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
   - {name: 🦄 故障转移, <<: *pg_se, use: [优质订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
   - {name: ♿️ 低倍选择, <<: *pg_se, use: [备用订阅], filter: *filterForLR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Loop.png}
   - {name: 🪂 临时选择, <<: *pg_se, use: [临时订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
@@ -575,8 +575,6 @@ rules:
   # 🎥 国外媒体
   - RULE-SET,CText-Emby,🎥 国外媒体
   - RULE-SET,CYaml-Emby,🎥 国外媒体
-  - RULE-SET,DMrs-Emby,🎥 国外媒体
-  - RULE-SET,IMrs-Emby,🎥 国外媒体
   - RULE-SET,CText-YouTube,🎥 国外媒体
   - RULE-SET,CYaml-YouTube,🎥 国外媒体
   - RULE-SET,DMrs-YouTube,🎥 国外媒体

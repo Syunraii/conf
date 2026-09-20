@@ -215,7 +215,7 @@ proxy-groups:
   - {name: ♻️ 智能选择, <<: *gpg_smart , icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
   - {name: 👋 手动选择, <<: *gpg_manual, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Clubhouse.png}
   
-  - {name: 🎡 常规选择, <<: *pg_se, use: [常规订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
+  - {name: 🎡 常规选择, <<: *pg_se, use: [常规订阅], filter: *filterOutLR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Airport.png}
   - {name: 🦄 故障转移, <<: *pg_se, use: [优质订阅], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Flamingo.png}
   # 或自定义优先级的x_sm, 另外, 如果客户端的smart策略组支持临时select(macOS目前已有的客户端未发现支持), 可改为pg_sm
   - {name: ♿️ 低倍选择, <<: *pg_se, use: [备用订阅], filter: *filterForLR, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Loop.png}
@@ -377,8 +377,6 @@ rule-providers:
   # 🎥 国外媒体
   CText-Emby:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Emby.list}
   CYaml-Emby:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Emby.yaml}
-  DMrs-Emby:               {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Emby.mrs}
-  IMrs-Emby:               {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Emby.mrs}
   CYaml-YouTube:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/YouTube.yaml}
   CText-YouTube:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/YouTube.list}
   DMrs-YouTube:            {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/YouTube.mrs}
@@ -564,8 +562,6 @@ rules:
   # 🎥 国外媒体
   - RULE-SET,CText-Emby,🎥 国外媒体
   - RULE-SET,CYaml-Emby,🎥 国外媒体
-  - RULE-SET,DMrs-Emby,🎥 国外媒体
-  - RULE-SET,IMrs-Emby,🎥 国外媒体
   - RULE-SET,CText-YouTube,🎥 国外媒体
   - RULE-SET,CYaml-YouTube,🎥 国外媒体
   - RULE-SET,DMrs-YouTube,🎥 国外媒体
