@@ -51,6 +51,7 @@ ipasn-url = https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb
 📵 软件升级 = select,🈲 禁止连接,🗑️ 丢弃请求,🎯 直接连接,🌐 全局选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_Update.png
 ⛔ 让我访问 = select,🎯 直接连接,🈲 禁止连接,🗑️ 丢弃请求,🌐 全局选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png
 
+🤖 人工智能 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png
 🔞 限定应用 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png
 🇯🇵 整点烧鸟 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
 🇺🇸 整点炸鸡 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
@@ -68,7 +69,6 @@ ipasn-url = https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb
 Ⓜ️ 微软服务 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
 🍎 苹果服务 = select,🎯 直接连接,🌐 全局选择,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
 ☁️ 云服务商 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
-🤖 人工智能 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png
 🍟 整点薯条 = select,🌐 全局选择,🎯 直接连接,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png
 🍔 整点汉堡 = select,🎯 直接连接,🌐 全局选择,🚀 自动选择,☣️ 散列选择,☢️ 轮询选择,👋 手动选择,♿️ 低倍选择,🈲 禁止连接,🇭🇰 香港自动,🇭🇰 香港散列,🇭🇰 香港轮询,🇨🇳 台湾自动,🇨🇳 台湾散列,🇨🇳 台湾轮询,🇯🇵 日本自动,🇯🇵 日本散列,🇯🇵 日本轮询,🇰🇷 韩国自动,🇰🇷 韩国散列,🇰🇷 韩国轮询,🇺🇸 美国自动,🇺🇸 美国散列,🇺🇸 美国轮询,🇸🇬 狮城自动,🇸🇬 狮城散列,🇸🇬 狮城轮询,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
 
@@ -186,6 +186,14 @@ https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Prevent_DNS_Leaks.list
 https://rule.kelee.one/Loon/AdvertisingLite.lsr, policy=🚫 隐私拦截, tag=隐私拦截, enabled=true
 # 📵 软件升级
 https://rule.kelee.one/Loon/SystemOTA.lsr, policy=📵 软件升级, tag=软件升级, enabled=true
+# 🤖 人工智能
+https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/OpenAI.list, policy=🤖 人工智能, tag=AI平台, enabled=false
+https://rule.kelee.one/Loon/OpenAI.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
+https://rule.kelee.one/Loon/Gemini.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
+https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Claude.list, policy=🤖 人工智能, tag=AI平台, enabled=true
+https://rule.kelee.one/Loon/Claude.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
+https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/AI.list, policy=🤖 人工智能, tag=AI平台, enabled=true
+https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
 # 🔞 限定应用
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Porn.list, policy=🔞 限定应用, tag=限定应用, enabled=true
 https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Crypto.list, policy=🔞 限定应用, tag=限定应用, enabled=true
@@ -247,14 +255,6 @@ https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Oracle.list, policy=�
 https://rule.kelee.one/Loon/Cloudflare.lsr, policy=☁️ 云服务商, tag=云服务商, enabled=true
 https://rule.kelee.one/Loon/Oracle.lsr, policy=☁️ 云服务商, tag=云服务商, enabled=true
 https://rule.kelee.one/Loon/Akamai.lsr, policy=☁️ 云服务商, tag=云服务商, enabled=true
-# 🤖 人工智能
-https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/OpenAI.list, policy=🤖 人工智能, tag=AI平台, enabled=true
-https://rule.kelee.one/Loon/OpenAI.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
-https://rule.kelee.one/Loon/Gemini.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
-https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Claude.list, policy=🤖 人工智能, tag=AI平台, enabled=true
-https://rule.kelee.one/Loon/Claude.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
-https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/AI.list, policy=🤖 人工智能, tag=AI平台, enabled=true
-https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=🤖 人工智能, tag=AI平台, enabled=true
 # 🍟 整点薯条
 https://kelee.one/Tool/Loon/Lsr/SpeedtestInternational.lsr, policy=🍟 整点薯条, tag=国外兜底, enabled=true
 https://rule.kelee.one/Loon/IPTVOther.lsr, policy=🍟 整点薯条, tag=国外兜底, enabled=true

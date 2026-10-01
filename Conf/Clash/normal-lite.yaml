@@ -212,6 +212,7 @@ proxy-groups:
   - {name: 📵 软件升级, <<: *head_reject, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_Update.png}
   - {name: ⛔ 让我访问, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png}
 
+  - {name: 🤖 人工智能, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png}
   - {name: 🔞 限定应用, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apeach.png}
   - {name: 🇯🇵 整点烧鸟, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png}
   - {name: 🇺🇸 整点炸鸡, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png}
@@ -229,7 +230,6 @@ proxy-groups:
   - {name: Ⓜ️ 微软服务, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
   - {name: 🍎 苹果服务, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png}
   - {name: ☁️ 云服务商, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png}
-  - {name: 🤖 人工智能, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AI.png}
   - {name: 🍟 整点薯条, <<: *head_global, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Fries.png}
   - {name: 🍔 整点汉堡, <<: *head_direct, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png}
 
@@ -304,6 +304,18 @@ rule-providers:
   # 📵 软件升级
   CYaml-SystemOTA:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/SystemOTA.yaml}
   DMrs-SystemOTA:          {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/SystemOTA.mrs}
+  # 🤖 人工智能
+  CText-OpenAI:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/OpenAI.list}
+  CYaml-OpenAI:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/OpenAI.yaml}
+  DMrs-OpenAI:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/OpenAI.mrs}
+  CYaml-Gemini:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Gemini.yaml}
+  DMrs-Gemini:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Gemini.mrs}
+  CText-Claude:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Claude.list}
+  CYaml-Claude:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Claude.yaml}
+  DMrs-Claude:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Claude.mrs}
+  CText-AI:                {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/AI.list}
+  DMrs-AI:                 {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/AI.mrs}
+  IMrs-AI:                 {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/AI.mrs}
   # 🔞 限定应用
   CText-Porn:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Porn.list}
   CText-Crypto:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Crypto.list}
@@ -356,8 +368,6 @@ rule-providers:
   # 🎥 国外媒体
   CText-Emby:              {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Emby.list}
   CYaml-Emby:              {<<: *class_yaml, url: https://rule.kelee.one/Clash/Emby.yaml}
-  DMrs-Emby:               {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Emby.mrs}
-  IMrs-Emby:               {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/Emby.mrs}
   CYaml-YouTube:           {<<: *class_yaml, url: https://rule.kelee.one/Clash/YouTube.yaml}
   CText-YouTube:           {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/YouTube.list}
   DMrs-YouTube:            {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/YouTube.mrs}
@@ -402,18 +412,6 @@ rule-providers:
   CText-Oracle:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Oracle.list}
   CYaml-Oracle:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Oracle.yaml}
   CYaml-Akamai:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Akamai.yaml}
-  # 🤖 人工智能
-  CText-OpenAI:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/OpenAI.list}
-  CYaml-OpenAI:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/OpenAI.yaml}
-  DMrs-OpenAI:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/OpenAI.mrs}
-  CYaml-Gemini:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Gemini.yaml}
-  DMrs-Gemini:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Gemini.mrs}
-  CText-Claude:            {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/Claude.list}
-  CYaml-Claude:            {<<: *class_yaml, url: https://rule.kelee.one/Clash/Claude.yaml}
-  DMrs-Claude:             {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/Claude.mrs}
-  CText-AI:                {<<: *class_text, url: https://raw.githubusercontent.com/Repcz/Tool/X/mihomo/Rules/AI.list}
-  DMrs-AI:                 {<<: *domain_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/domain/AI.mrs}
-  IMrs-AI:                 {<<: *ip_mrs, url: https://github.com/666OS/rules/raw/release/mihomo/ip/AI.mrs}
   # 🍟 整点薯条
   CYaml-SpeedTestInl:      {<<: *class_yaml, url: https://kelee.one/Tool/Clash/Rule/SpeedtestInternational.yaml}
   CYaml-IPTVOther:         {<<: *class_yaml, url: https://rule.kelee.one/Clash/IPTVOther.yaml}
@@ -490,6 +488,18 @@ rules:
   # ###自定义分流 End####
 
 
+  # 🤖 人工智能
+  # - RULE-SET,CText-OpenAI,🤖 人工智能
+  - RULE-SET,CYaml-OpenAI,🤖 人工智能
+  - RULE-SET,DMrs-OpenAI,🤖 人工智能
+  - RULE-SET,CYaml-Gemini,🤖 人工智能
+  - RULE-SET,DMrs-Gemini,🤖 人工智能
+  - RULE-SET,CText-Claude,🤖 人工智能
+  - RULE-SET,CYaml-Claude,🤖 人工智能
+  - RULE-SET,DMrs-Claude,🤖 人工智能
+  - RULE-SET,CText-AI,🤖 人工智能
+  - RULE-SET,DMrs-AI,🤖 人工智能
+  - RULE-SET,IMrs-AI,🤖 人工智能
   # 🔞 限定应用
   - RULE-SET,CText-Porn,🔞 限定应用
   - RULE-SET,CText-Crypto,🔞 限定应用
@@ -587,18 +597,6 @@ rules:
   - RULE-SET,CText-Oracle,☁️ 云服务商
   - RULE-SET,CYaml-Oracle,☁️ 云服务商
   - RULE-SET,CYaml-Akamai,☁️ 云服务商
-  # 🤖 人工智能
-  - RULE-SET,CText-OpenAI,🤖 人工智能
-  - RULE-SET,CYaml-OpenAI,🤖 人工智能
-  - RULE-SET,DMrs-OpenAI,🤖 人工智能
-  - RULE-SET,CYaml-Gemini,🤖 人工智能
-  - RULE-SET,DMrs-Gemini,🤖 人工智能
-  - RULE-SET,CText-Claude,🤖 人工智能
-  - RULE-SET,CYaml-Claude,🤖 人工智能
-  - RULE-SET,DMrs-Claude,🤖 人工智能
-  - RULE-SET,CText-AI,🤖 人工智能
-  - RULE-SET,DMrs-AI,🤖 人工智能
-  - RULE-SET,IMrs-AI,🤖 人工智能
   # 🍟 整点薯条
   - RULE-SET,CYaml-SpeedTestInl,🍟 整点薯条
   - RULE-SET,CYaml-IPTVOther,🍟 整点薯条
