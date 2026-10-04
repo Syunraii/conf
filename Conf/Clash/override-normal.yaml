@@ -582,7 +582,7 @@ rules:
   - RULE-SET,CYaml-Oracle,☁️ 云服务商
   - RULE-SET,CYaml-Akamai,☁️ 云服务商
   # 🤖 人工智能
-  - RULE-SET,CText-OpenAI,🤖 人工智能
+  # - RULE-SET,CText-OpenAI,🤖 人工智能
   - RULE-SET,CYaml-OpenAI,🤖 人工智能
   - RULE-SET,DMrs-OpenAI,🤖 人工智能
   - RULE-SET,CYaml-Gemini,🤖 人工智能
@@ -591,8 +591,8 @@ rules:
   - RULE-SET,CYaml-Claude,🤖 人工智能
   - RULE-SET,DMrs-Claude,🤖 人工智能
   - RULE-SET,CText-AI,🤖 人工智能
-  - RULE-SET,DMrs-AI,🤖 人工智能
-  - RULE-SET,IMrs-AI,🤖 人工智能
+  # - RULE-SET,DMrs-AI,🤖 人工智能
+  # - RULE-SET,IMrs-AI,🤖 人工智能
   # 🍟 整点薯条
   - RULE-SET,CYaml-SpeedTestInl,🍟 整点薯条
   - RULE-SET,CYaml-IPTVOther,🍟 整点薯条

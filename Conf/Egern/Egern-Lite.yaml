@@ -1099,7 +1099,7 @@ rules:
     name: AI平台-兜底
     match: https://github.com/666OS/rules/raw/release/surge/AI.txt
     policy: 🤖 人工智能
-    disabled: false
+    disabled: true
 - rule_set:
     name: 限定应用-Porn
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Rules/Porn.list

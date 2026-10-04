@@ -530,8 +530,8 @@ rules:
   - RULE-SET,CYaml-Claude,🤖 人工智能
   - RULE-SET,DMrs-Claude,🤖 人工智能
   - RULE-SET,CText-AI,🤖 人工智能
-  - RULE-SET,DMrs-AI,🤖 人工智能
-  - RULE-SET,IMrs-AI,🤖 人工智能
+  # - RULE-SET,DMrs-AI,🤖 人工智能
+  # - RULE-SET,IMrs-AI,🤖 人工智能
   # 🔞 限定应用
   - RULE-SET,CText-Porn,🔞 限定应用
   - RULE-SET,CText-Crypto,🔞 限定应用
