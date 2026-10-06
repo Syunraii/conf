@@ -130,9 +130,7 @@ sniffer:
 tun:
   enable: false
   stack: mixed
-  dns-hijack:
-    - "any:53"
-    - "tcp://any:53"
+  dns-hijack: [any:53]
   auto-route: true
   auto-redirect: true
   auto-detect-interface: true
@@ -181,21 +179,17 @@ dns:
     - 'auth.wosms.cn'
     - '*.10099.com.cn'
   default-nameserver:
-    - 119.29.29.29
     - 223.5.5.5
-    - 114.114.114.114
-    - 180.76.76.76
+    - 119.29.29.29
   nameserver:
-    - system
-    - quic://223.5.5.5
-    - tls://dot.pub:853
-    - tls://dns.alidns.com
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
-  fallback:
-    - tls://1.1.1.1:853
-    - tls://dns.google
-    - https://dns.google/dns-query
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+hosts:
+  dns.alidns.com: [223.5.5.5,223.6.6.6]
+  doh.pub: [1.12.12.21,120.53.53.53]
 
 # ========================= 代理策略 =========================
 proxy-groups:
