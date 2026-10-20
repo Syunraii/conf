@@ -96,7 +96,7 @@ BaseDirect: &base_direct {type: select, hidden: true, proxies: [DIRECT]}
 BaseReject: &base_reject {type: select, hidden: true, proxies: [REJECT]}
 BaseDrop: &base_drop {type: select, hidden: true, proxies: [REJECT-DROP]}
 
-BaseSelect: &base_select {type: select, hidden: true, empty-fallback: REJECT}
+BaseSelect: &base_select {type: select, hidden: false, empty-fallback: REJECT}
 BaseSmart: &base_smart {type: smart, hidden: true, empty-fallback: REJECT}
 BaseURLTest: &base_urltest {type: url-test, hidden: true, empty-fallback: REJECT}
 BaseFallback: &base_fallback {type: fallback, hidden: true, empty-fallback: REJECT}
